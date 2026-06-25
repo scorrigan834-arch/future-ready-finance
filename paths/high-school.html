@@ -4,8 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>High School Path — Future Ready Finance</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
 a{text-decoration:none}
 .nav{position:sticky;top:0;z-index:100;background:#0B1929;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px}
@@ -37,10 +36,19 @@ a{text-decoration:none}
 .q-item{display:flex;gap:.75rem;align-items:flex-start;border:1px solid #E2E8F0;border-radius:9px;padding:.8rem 1rem;background:#fff;margin-bottom:.5rem;font-size:.9rem}
 .q-mark{color:#0EA5A0;font-weight:800;flex-shrink:0}
 .btn-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem}
+.budget-section{background:#F5F7F6;border-radius:14px;padding:2rem;margin-top:2.5rem}
+.budget-section h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:.5rem;color:#0B1929}
+.budget-section .sub{color:#64748B;font-size:.9rem;margin-bottom:1.5rem}
+.budget-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem}
+.budget-card{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:1.25rem}
+.budget-card h4{font-weight:700;font-size:.9rem;margin-bottom:.4rem;color:#0B1929}
+.budget-card p{font-size:.83rem;color:#64748B;line-height:1.6}
+.budget-rule{background:#0B1929;border-radius:10px;padding:1.25rem 1.5rem;margin-top:1rem}
+.budget-rule h4{font-family:'Playfair Display',serif;color:#0EA5A0;margin-bottom:.4rem;font-size:.95rem}
+.budget-rule p{color:rgba(255,255,255,.75);font-size:.875rem;line-height:1.65}
 .footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
-@media(max-width:640px){.nav-links{display:none}}
-</style>
+@media(max-width:640px){.nav-links{display:none}.budget-grid{grid-template-columns:1fr}}</style>
 </head>
 <body>
 <nav class="nav">
@@ -68,10 +76,58 @@ a{text-decoration:none}
 </div>
 <div class="section"><div class="section-inner">
   <div class="goal"><div class="goal-label">Your Goal</div><p>Explain the financial consequences of your first major adult decisions — before you make them.</p></div>
-  <div class="step-card"><div class="step-num">1</div><div class="step-content"><h3>Money Mindset</h3><p>Learn how money works, how habits shape outcomes, and why long-term thinking matters more than any single decision.</p><a href="../big-decisions.html" class="btn">Start Module</a></div></div>
-  <div class="step-card"><div class="step-num">2</div><div class="step-content"><h3>Budgeting Basics</h3><p>Understand income, expenses, needs, wants, emergency savings, and cash flow — the foundation of every financial decision.</p><a href="../guides.html" class="btn">Start Module</a></div></div>
-  <div class="step-card"><div class="step-num">3</div><div class="step-content"><h3>College ROI</h3><p>Compare college costs, student loans, future income, and long-term debt impact before signing anything.</p><a href="../decisions/student-debt.html" class="btn">Read Guide</a></div></div>
-  <div class="step-card"><div class="step-num">4</div><div class="step-content"><h3>Design Your Future</h3><p>Model your future based on education, career, debt, housing, saving, and investing choices — see how they connect.</p><a href="../simulations.html" class="btn">Start Capstone</a></div></div>
+
+  <div class="step-card"><div class="step-num">1</div><div class="step-content">
+    <h3>Money Mindset</h3>
+    <p>Learn how money works, how habits shape outcomes, and why long-term thinking matters more than any single decision.</p>
+    <a href="../big-decisions.html" class="btn">Start Module</a>
+  </div></div>
+
+  <div class="step-card"><div class="step-num">2</div><div class="step-content">
+    <h3>Budgeting Basics</h3>
+    <p>Understand income, expenses, needs, wants, and emergency savings — the foundation of every sound financial decision.</p>
+    <a href="../guides.html" class="btn">Start Module</a>
+  </div></div>
+
+  <div class="step-card"><div class="step-num">3</div><div class="step-content">
+    <h3>College ROI</h3>
+    <p>Compare college costs, student loans, future income, and long-term debt impact before signing anything.</p>
+    <a href="../decisions/student-debt.html" class="btn">Read Guide</a>
+  </div></div>
+
+  <div class="step-card"><div class="step-num">4</div><div class="step-content">
+    <h3>Design Your Future</h3>
+    <p>Model your future based on education, career, debt, housing, saving, and investing choices — see how they connect.</p>
+    <a href="../simulations.html" class="btn">Start Capstone</a>
+  </div></div>
+
+  <div class="budget-section">
+    <h2>💰 Budgeting for High Schoolers</h2>
+    <p class="sub">Your first budget doesn't need to be complicated. It needs to be honest.</p>
+    <div class="budget-grid">
+      <div class="budget-card">
+        <h4>Track Every Dollar In</h4>
+        <p>Job income, allowance, gifts, side hustles. Write down every dollar you receive each month — most people underestimate their income.</p>
+      </div>
+      <div class="budget-card">
+        <h4>Know Your Fixed Costs</h4>
+        <p>Phone bill, subscriptions, transportation costs. These come out whether you plan for them or not — list them first.</p>
+      </div>
+      <div class="budget-card">
+        <h4>Save Before You Spend</h4>
+        <p>Move money to savings the day you get paid, not whatever's left over. Even $20/month builds a habit that compounds for life.</p>
+      </div>
+      <div class="budget-card">
+        <h4>Name Every Dollar</h4>
+        <p>Give each dollar a job — savings, needs, wants. Unplanned spending is where budgets fall apart at every age.</p>
+      </div>
+    </div>
+    <div class="budget-rule">
+      <h4>The High School Budget Rule: 50 / 30 / 20</h4>
+      <p>50% of income → needs and fixed costs &nbsp;|&nbsp; 30% → wants and entertainment &nbsp;|&nbsp; 20% → savings. Start here and adjust as your income grows. The habit of saving 20% now will be worth far more than the amount itself.</p>
+    </div>
+  </div>
+
   <div class="divider"></div>
   <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:1.25rem">Key Questions</h2>
   <div class="q-item"><span class="q-mark">?</span><span>Should I go to college, trade school, or start working?</span></div>
