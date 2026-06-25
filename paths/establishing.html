@@ -4,8 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Establishing Path — Future Ready Finance</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
 a{text-decoration:none}
 .nav{position:sticky;top:0;z-index:100;background:#0B1929;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px}
@@ -37,10 +36,19 @@ a{text-decoration:none}
 .q-item{display:flex;gap:.75rem;align-items:flex-start;border:1px solid #E2E8F0;border-radius:9px;padding:.8rem 1rem;background:#fff;margin-bottom:.5rem;font-size:.9rem}
 .q-mark{color:#0EA5A0;font-weight:800;flex-shrink:0}
 .btn-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem}
+.budget-section{background:#F5F7F6;border-radius:14px;padding:2rem;margin-top:2.5rem}
+.budget-section h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:.5rem;color:#0B1929}
+.budget-section .sub{color:#64748B;font-size:.9rem;margin-bottom:1.5rem}
+.budget-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem}
+.budget-card{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:1.25rem}
+.budget-card h4{font-weight:700;font-size:.9rem;margin-bottom:.4rem;color:#0B1929}
+.budget-card p{font-size:.83rem;color:#64748B;line-height:1.6}
+.budget-rule{background:#0B1929;border-radius:10px;padding:1.25rem 1.5rem;margin-top:1rem}
+.budget-rule h4{font-family:'Playfair Display',serif;color:#0EA5A0;margin-bottom:.4rem;font-size:.95rem}
+.budget-rule p{color:rgba(255,255,255,.75);font-size:.875rem;line-height:1.65}
 .footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
-@media(max-width:640px){.nav-links{display:none}}
-</style>
+@media(max-width:640px){.nav-links{display:none}.budget-grid{grid-template-columns:1fr}}</style>
 </head>
 <body>
 <nav class="nav">
@@ -68,10 +76,58 @@ a{text-decoration:none}
 </div>
 <div class="section"><div class="section-inner">
   <div class="goal"><div class="goal-label">Your Goal</div><p>Establish the habits, plans, and systems that build long-term wealth.</p></div>
-  <div class="step-card"><div class="step-num">1</div><div class="step-content"><h3>Homeownership Reality Check</h3><p>Think through affordability, mortgage pressure, down payment requirements, and the long-term financial tradeoffs of buying vs renting.</p><a href="../big-decisions.html" class="btn">Explore Guide</a></div></div>
-  <div class="step-card"><div class="step-num">2</div><div class="step-content"><h3>Fix Past Mistakes</h3><p>Review debt, spending patterns, and lifestyle inflation. Chart a clear path to financial recovery without judgment, with a plan.</p><a href="../guides.html" class="btn">Check Progress</a></div></div>
-  <div class="step-card"><div class="step-num">3</div><div class="step-content"><h3>Family Finances</h3><p>Navigate shared money decisions, insurance gaps, childcare costs, and future planning with a partner.</p><a href="../big-decisions.html" class="btn">Explore Guide</a></div></div>
-  <div class="step-card"><div class="step-num">4</div><div class="step-content"><h3>Long-Term Wealth Planning</h3><p>Maximize retirement contributions, build net worth, and start thinking about what financial freedom actually looks like for you.</p><a href="../simulations.html" class="btn">Build Your Plan</a></div></div>
+
+  <div class="step-card"><div class="step-num">1</div><div class="step-content">
+    <h3>Homeownership Reality Check</h3>
+    <p>Think through affordability, mortgage pressure, down payment requirements, and the long-term financial tradeoffs of buying vs renting.</p>
+    <a href="../big-decisions.html" class="btn">Explore Guide</a>
+  </div></div>
+
+  <div class="step-card"><div class="step-num">2</div><div class="step-content">
+    <h3>Fix Past Mistakes</h3>
+    <p>Review debt, spending patterns, and lifestyle inflation. Chart a clear path to financial recovery without judgment, with a plan.</p>
+    <a href="../guides.html" class="btn">Check Progress</a>
+  </div></div>
+
+  <div class="step-card"><div class="step-num">3</div><div class="step-content">
+    <h3>Family Finances</h3>
+    <p>Navigate shared money decisions, insurance gaps, childcare costs, and future planning with a partner.</p>
+    <a href="../big-decisions.html" class="btn">Explore Guide</a>
+  </div></div>
+
+  <div class="step-card"><div class="step-num">4</div><div class="step-content">
+    <h3>Long-Term Wealth Planning</h3>
+    <p>Maximize retirement contributions, build net worth, and start thinking about what financial freedom actually looks like for you.</p>
+    <a href="../simulations.html" class="btn">Build Your Plan</a>
+  </div></div>
+
+  <div class="budget-section">
+    <h2>💰 Budgeting When Life Gets More Expensive</h2>
+    <p class="sub">Mortgages, kids, aging parents, career changes — your budget needs to grow up with you.</p>
+    <div class="budget-grid">
+      <div class="budget-card">
+        <h4>Budget as a Household, Not an Individual</h4>
+        <p>If you share finances with a partner, budget together monthly. Misaligned spending is the #1 financial conflict in relationships — a shared budget removes the guesswork.</p>
+      </div>
+      <div class="budget-card">
+        <h4>Add a "Future Fund" Line</h4>
+        <p>Beyond emergency savings, budget monthly for upcoming large expenses: home repairs, new car, kids' activities, medical costs. $200/month now prevents a $2,400 emergency later.</p>
+      </div>
+      <div class="budget-card">
+        <h4>Review Your Budget After Every Life Change</h4>
+        <p>New job, new home, new baby, new debt — each one changes your numbers. Review and rewrite your budget within 30 days of any major life event.</p>
+      </div>
+      <div class="budget-card">
+        <h4>Track Net Worth, Not Just Cash Flow</h4>
+        <p>At this stage, budgeting is about building wealth — not just covering expenses. Track your net worth monthly so you can see whether your budget is actually working.</p>
+      </div>
+    </div>
+    <div class="budget-rule">
+      <h4>The Establishing Budget Rule: Percentage of Income</h4>
+      <p>Housing ≤ 28% of gross income &nbsp;|&nbsp; All debt payments ≤ 36% of gross income &nbsp;|&nbsp; Retirement savings ≥ 15% of gross income &nbsp;|&nbsp; If any of these are off, that's where to start fixing your budget.</p>
+    </div>
+  </div>
+
   <div class="divider"></div>
   <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:1.25rem">Key Questions</h2>
   <div class="q-item"><span class="q-mark">?</span><span>How much house can I actually afford right now?</span></div>
