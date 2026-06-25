@@ -4,8 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Early Career Path — Future Ready Finance</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
 a{text-decoration:none}
 .nav{position:sticky;top:0;z-index:100;background:#0B1929;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px}
@@ -37,10 +36,19 @@ a{text-decoration:none}
 .q-item{display:flex;gap:.75rem;align-items:flex-start;border:1px solid #E2E8F0;border-radius:9px;padding:.8rem 1rem;background:#fff;margin-bottom:.5rem;font-size:.9rem}
 .q-mark{color:#0EA5A0;font-weight:800;flex-shrink:0}
 .btn-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem}
+.budget-section{background:#F5F7F6;border-radius:14px;padding:2rem;margin-top:2.5rem}
+.budget-section h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:.5rem;color:#0B1929}
+.budget-section .sub{color:#64748B;font-size:.9rem;margin-bottom:1.5rem}
+.budget-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem}
+.budget-card{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:1.25rem}
+.budget-card h4{font-weight:700;font-size:.9rem;margin-bottom:.4rem;color:#0B1929}
+.budget-card p{font-size:.83rem;color:#64748B;line-height:1.6}
+.budget-rule{background:#0B1929;border-radius:10px;padding:1.25rem 1.5rem;margin-top:1rem}
+.budget-rule h4{font-family:'Playfair Display',serif;color:#0EA5A0;margin-bottom:.4rem;font-size:.95rem}
+.budget-rule p{color:rgba(255,255,255,.75);font-size:.875rem;line-height:1.65}
 .footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
-@media(max-width:640px){.nav-links{display:none}}
-</style>
+@media(max-width:640px){.nav-links{display:none}.budget-grid{grid-template-columns:1fr}}</style>
 </head>
 <body>
 <nav class="nav">
@@ -68,10 +76,58 @@ a{text-decoration:none}
 </div>
 <div class="section"><div class="section-inner">
   <div class="goal"><div class="goal-label">Your Goal</div><p>Build a solid financial foundation in your first 3 years of full-time work.</p></div>
-  <div class="step-card"><div class="step-num">1</div><div class="step-content"><h3>First Full-Time Job</h3><p>Understand paychecks, taxes, benefits, retirement accounts, and what your take-home pay actually looks like after deductions.</p><a href="../big-decisions.html" class="btn">Explore Guide</a></div></div>
-  <div class="step-card"><div class="step-num">2</div><div class="step-content"><h3>Start Investing</h3><p>Learn why time is your most powerful advantage and how to start — even small — right away. Especially if your employer offers a 401(k) match.</p><a href="../decisions/investing.html" class="btn">Read Guide</a></div></div>
-  <div class="step-card"><div class="step-num">3</div><div class="step-content"><h3>Avoid Lifestyle Inflation</h3><p>More income should mean more progress, not just more spending. Learn to keep the gap between income and expenses wide as your salary grows.</p><a href="../guides.html" class="btn">Learn More</a></div></div>
-  <div class="step-card"><div class="step-num">4</div><div class="step-content"><h3>Emergency Fund</h3><p>Build a 3–6 month safety net before focusing on aggressive investing or debt payoff. This is your financial foundation.</p><a href="../guides.html" class="btn">Start Here</a></div></div>
+
+  <div class="step-card"><div class="step-num">1</div><div class="step-content">
+    <h3>First Full-Time Job</h3>
+    <p>Understand paychecks, taxes, benefits, retirement accounts, and what your take-home pay actually looks like after deductions.</p>
+    <a href="../big-decisions.html" class="btn">Explore Guide</a>
+  </div></div>
+
+  <div class="step-card"><div class="step-num">2</div><div class="step-content">
+    <h3>Start Investing</h3>
+    <p>Learn why time is your most powerful advantage and how to start — even small — right away. Especially if your employer offers a 401(k) match.</p>
+    <a href="../decisions/investing.html" class="btn">Read Guide</a>
+  </div></div>
+
+  <div class="step-card"><div class="step-num">3</div><div class="step-content">
+    <h3>Avoid Lifestyle Inflation</h3>
+    <p>More income should mean more progress, not just more spending. Learn to keep the gap between income and expenses wide as your salary grows.</p>
+    <a href="../guides.html" class="btn">Learn More</a>
+  </div></div>
+
+  <div class="step-card"><div class="step-num">4</div><div class="step-content">
+    <h3>Emergency Fund</h3>
+    <p>Build a 3–6 month safety net before focusing on aggressive investing or debt payoff. This is your financial foundation.</p>
+    <a href="../guides.html" class="btn">Start Here</a>
+  </div></div>
+
+  <div class="budget-section">
+    <h2>💰 Budgeting on Your First Real Salary</h2>
+    <p class="sub">Your paycheck is bigger than ever — and so are the temptations. Budget before you spend.</p>
+    <div class="budget-grid">
+      <div class="budget-card">
+        <h4>Budget Your Net Pay, Not Gross</h4>
+        <p>Taxes, health insurance, and 401(k) contributions come out before you see your paycheck. Budget based on what actually hits your bank account.</p>
+      </div>
+      <div class="budget-card">
+        <h4>Automate Savings on Day One</h4>
+        <p>Set up automatic transfers to savings and retirement the day your first paycheck arrives. You'll never miss money you never see.</p>
+      </div>
+      <div class="budget-card">
+        <h4>Freeze Your Lifestyle for 90 Days</h4>
+        <p>When you start a new job, keep your current lifestyle for 90 days before upgrading anything. Let your savings rate rise before your spending does.</p>
+      </div>
+      <div class="budget-card">
+        <h4>Budget for Annual Expenses</h4>
+        <p>Car registration, holiday gifts, annual subscriptions hit you once a year but need to be budgeted monthly. Divide annual costs by 12 and set that aside each month.</p>
+      </div>
+    </div>
+    <div class="budget-rule">
+      <h4>The Early Career Budget Rule: Pay Yourself First</h4>
+      <p>Before any other spending decision, set these three amounts automatically: retirement (at least enough to get the employer match), emergency fund top-up (until you hit 3 months), and student loan payment. Everything else is what's left to live on.</p>
+    </div>
+  </div>
+
   <div class="divider"></div>
   <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:1.25rem">Key Questions</h2>
   <div class="q-item"><span class="q-mark">?</span><span>How do I evaluate a job offer beyond just salary?</span></div>
