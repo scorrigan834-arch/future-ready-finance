@@ -14,13 +14,43 @@ a{text-decoration:none}
 .page-hero{background:#0B1929;padding:3.5rem 2rem 2.75rem}.page-hero-inner{max-width:1100px;margin:0 auto}
 .eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#0EA5A0;display:block;margin-bottom:.7rem}
 .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
-.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:540px;line-height:1.75}
+.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:600px;line-height:1.75}
+.section{padding:4rem 2rem}.section-inner{max-width:1100px;margin:0 auto}
+.content{max-width:760px;margin:0 auto;padding:3rem 2rem}
+.breadcrumb{font-size:.82rem;color:#888;margin-bottom:1.5rem}.breadcrumb a{color:#0EA5A0}
+h2{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;margin:2rem 0 .75rem;color:#0B1929}
+h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin:1.5rem 0 .6rem;color:#0B1929}
+p{color:#64748B;font-size:.95rem;line-height:1.8;margin-bottom:1rem}
+ul,ol{padding-left:1.4rem;color:#64748B;font-size:.95rem;line-height:1.8;margin-bottom:1rem}
+li{margin-bottom:.4rem}
+strong{color:#0B1929}
+table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.875rem}
+th{background:#0B1929;color:#fff;padding:.65rem 1rem;text-align:left;font-weight:600}
+td{padding:.6rem 1rem;border-bottom:1px solid #E2E8F0;color:#64748B}
+tr:nth-child(even) td{background:#F5F7F6}
+.callout{background:rgba(14,165,160,.07);border:1px solid rgba(14,165,160,.22);border-left:4px solid #0EA5A0;border-radius:8px;padding:1.1rem 1.25rem;margin:1.5rem 0;font-size:.925rem;line-height:1.7;color:#0B1929}
+.callout strong{color:#0EA5A0}
+.rulebox{background:#0B1929;border-radius:10px;padding:1.35rem 1.5rem;margin:1.5rem 0}
+.rulebox h4{font-family:'Playfair Display',serif;font-size:1rem;color:#0EA5A0;margin-bottom:.5rem}
+.rulebox p{color:rgba(255,255,255,.75);font-size:.9rem;line-height:1.7;margin:0}
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.25rem 0}
+.compare-card{background:#fff;border:1.5px solid #E2E8F0;border-radius:10px;padding:1.25rem}
+.compare-card h4{color:#0EA5A0;font-size:.95rem;margin-bottom:.5rem;font-family:'Playfair Display',serif;font-weight:700}
+.compare-card ul{padding-left:1.2rem;font-size:.85rem;color:#64748B;line-height:1.65}
+.btn-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:2.5rem}
+.btn{display:inline-block;background:#0EA5A0;color:#fff;padding:.6rem 1.4rem;border-radius:7px;font-weight:700;font-size:.875rem;text-decoration:none}
+.btn:hover{background:#0C7D79;color:#fff}
+.btn-outline{background:transparent;color:#0B1929;border:1.5px solid #E2E8F0}
+.btn-outline:hover{border-color:#0EA5A0;color:#0EA5A0}
+.legal{font-size:.75rem;color:#999;margin-top:2.5rem;border-top:1px solid #E2E8F0;padding-top:1.25rem;line-height:1.7}
+.footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
+.footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
+@media(max-width:640px){.nav-links{display:none}.compare-grid{grid-template-columns:1fr}.content{padding:2rem 1.25rem}}
 .rail{display:flex;overflow-x:auto;background:#fff;border-bottom:1px solid #E2E8F0;padding:0 2rem}
 .rail-step{display:flex;align-items:center;gap:.55rem;padding:.85rem 1.15rem;white-space:nowrap;border-bottom:2.5px solid transparent;color:#64748B;font-size:.8rem;font-weight:500}
 .rail-step.active{color:#0EA5A0;border-bottom-color:#0EA5A0;font-weight:700}
 .rail-dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;background:#E2E8F0;color:#64748B}
 .rail-step.active .rail-dot{background:#0EA5A0;color:#fff}
-.section{padding:4rem 2rem}.section-inner{max-width:1100px;margin:0 auto}
 .goal{background:rgba(14,165,160,.07);border:1px solid rgba(14,165,160,.22);border-radius:10px;padding:1.1rem 1.4rem;margin-bottom:2.5rem}
 .goal-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#0EA5A0;margin-bottom:.3rem}
 .goal p{font-weight:600;font-size:.95rem;line-height:1.6;color:#0B1929}
@@ -46,9 +76,18 @@ a{text-decoration:none}
 .budget-rule{background:#0B1929;border-radius:10px;padding:1.25rem 1.5rem;margin-top:1rem}
 .budget-rule h4{font-family:'Playfair Display',serif;color:#0EA5A0;margin-bottom:.4rem;font-size:.95rem}
 .budget-rule p{color:rgba(255,255,255,.75);font-size:.875rem;line-height:1.65}
+.related-guides{margin-top:2.5rem;border:1px solid #E2E8F0;border-radius:12px;overflow:hidden}
+.related-guides-header{background:#0B1929;padding:.85rem 1.25rem}
+.related-guides-header h4{font-family:'Playfair Display',serif;color:#fff;font-size:1rem;font-weight:700}
+.related-guide-item{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.25rem;border-bottom:1px solid #E2E8F0;text-decoration:none;color:#0B1929;transition:background .15s}
+.related-guide-item:last-child{border-bottom:none}
+.related-guide-item:hover{background:#F5F7F6}
+.related-guide-item span{font-size:.875rem;font-weight:500}
+.related-arrow{color:#0EA5A0;font-weight:700;font-size:.85rem}
 .footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
-@media(max-width:640px){.nav-links{display:none}.budget-grid{grid-template-columns:1fr}}</style>
+@media(max-width:640px){.nav-links{display:none}.budget-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <nav class="nav">
@@ -80,7 +119,7 @@ a{text-decoration:none}
   <div class="step-card"><div class="step-num">1</div><div class="step-content">
     <h3>First Full-Time Job</h3>
     <p>Understand paychecks, taxes, benefits, retirement accounts, and what your take-home pay actually looks like after deductions.</p>
-    <a href="../big-decisions.html" class="btn">Explore Guide</a>
+    <a href="../decisions/total-compensation.html" class="btn">How to Evaluate a Job Offer →</a>
   </div></div>
 
   <div class="step-card"><div class="step-num">2</div><div class="step-content">
@@ -105,22 +144,10 @@ a{text-decoration:none}
     <h2>💰 Budgeting on Your First Real Salary</h2>
     <p class="sub">Your paycheck is bigger than ever — and so are the temptations. Budget before you spend.</p>
     <div class="budget-grid">
-      <div class="budget-card">
-        <h4>Budget Your Net Pay, Not Gross</h4>
-        <p>Taxes, health insurance, and 401(k) contributions come out before you see your paycheck. Budget based on what actually hits your bank account.</p>
-      </div>
-      <div class="budget-card">
-        <h4>Automate Savings on Day One</h4>
-        <p>Set up automatic transfers to savings and retirement the day your first paycheck arrives. You'll never miss money you never see.</p>
-      </div>
-      <div class="budget-card">
-        <h4>Freeze Your Lifestyle for 90 Days</h4>
-        <p>When you start a new job, keep your current lifestyle for 90 days before upgrading anything. Let your savings rate rise before your spending does.</p>
-      </div>
-      <div class="budget-card">
-        <h4>Budget for Annual Expenses</h4>
-        <p>Car registration, holiday gifts, annual subscriptions hit you once a year but need to be budgeted monthly. Divide annual costs by 12 and set that aside each month.</p>
-      </div>
+      <div class="budget-card"><h4>Budget Your Net Pay, Not Gross</h4><p>Taxes, health insurance, and 401(k) contributions come out before you see your paycheck. Budget based on what actually hits your bank account.</p></div>
+      <div class="budget-card"><h4>Automate Savings on Day One</h4><p>Set up automatic transfers to savings and retirement the day your first paycheck arrives. You'll never miss money you never see.</p></div>
+      <div class="budget-card"><h4>Freeze Your Lifestyle for 90 Days</h4><p>When you start a new job, keep your current lifestyle for 90 days before upgrading anything. Let your savings rate rise before your spending does.</p></div>
+      <div class="budget-card"><h4>Budget for Annual Expenses</h4><p>Car registration, holiday gifts, annual subscriptions hit you once a year. Divide annual costs by 12 and set that aside each month.</p></div>
     </div>
     <div class="budget-rule">
       <h4>The Early Career Budget Rule: Pay Yourself First</h4>
@@ -128,11 +155,20 @@ a{text-decoration:none}
     </div>
   </div>
 
+  <div class="related-guides">
+    <div class="related-guides-header"><h4>Guides for This Stage</h4></div>
+    <a class="related-guide-item" href="../decisions/total-compensation.html"><span>How Do I Evaluate a Job Offer?</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/investing.html"><span>Should I Start Investing Now?</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/retirement-accounts.html"><span>Roth vs Traditional vs HSA: Which Account?</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/insurance.html"><span>What Insurance Do I Need?</span><span class="related-arrow">→</span></a>
+  </div>
+
   <div class="divider"></div>
   <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:1.25rem">Key Questions</h2>
   <div class="q-item"><span class="q-mark">?</span><span>How do I evaluate a job offer beyond just salary?</span></div>
   <div class="q-item"><span class="q-mark">?</span><span>Should I pay off student loans or start investing?</span></div>
   <div class="q-item"><span class="q-mark">?</span><span>What is a 401(k) and should I contribute?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>Roth or Traditional — which is better for me right now?</span></div>
   <div class="q-item"><span class="q-mark">?</span><span>How do I avoid lifestyle inflation as my income rises?</span></div>
   <div class="btn-row">
     <a href="../big-decisions.html" class="btn">Explore Decisions</a>
