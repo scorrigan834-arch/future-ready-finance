@@ -2,35 +2,38 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulations — Future Ready Finance</title>
+<title>Simulations &amp; Calculators — Future Ready Finance</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
+body{font-family:"DM Sans",sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
 a{text-decoration:none}
 .nav{position:sticky;top:0;z-index:100;background:#0B1929;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px}
-.nav-brand{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none}.nav-brand span{color:#0EA5A0}
+.nav-brand{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none}.nav-brand span{color:#0EA5A0}
 .nav-links{display:flex;gap:.15rem;flex-wrap:wrap}
 .nav-link{color:rgba(255,255,255,.65);padding:.38rem .7rem;border-radius:6px;font-size:.8rem;font-weight:500;text-decoration:none}.nav-link:hover,.nav-link.active{color:#0EA5A0}
 .page-hero{background:#0B1929;padding:3.5rem 2rem 2.75rem}.page-hero-inner{max-width:1100px;margin:0 auto}
 .eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#0EA5A0;display:block;margin-bottom:.7rem}
-.page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
-.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:540px;line-height:1.75}
+.page-hero h1{font-family:"Playfair Display",serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
+.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:600px;line-height:1.75}
 .section{padding:4rem 2rem}.section-inner{max-width:1100px;margin:0 auto}
-.sim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem}
-.sim-card{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:1.75rem;display:flex;flex-direction:column;gap:.75rem;position:relative;overflow:hidden}
-.sim-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0EA5A0,#0C7D79)}
-.sim-card.featured{border-color:#0EA5A0;grid-column:1/-1}
-.sim-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#0B1929}
-.sim-card p{color:#64748B;font-size:.875rem;line-height:1.65}
+.sim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem}
+.sim-card{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.75rem;display:flex;flex-direction:column;gap:.75rem;position:relative;overflow:hidden;transition:border-color .2s,box-shadow .2s,transform .2s}
+.sim-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0EA5A0,#0C7D79)}
+.sim-card.live{border-color:rgba(14,165,160,.3)}
+.sim-card.live:hover{border-color:#0EA5A0;box-shadow:0 6px 24px rgba(14,165,160,.14);transform:translateY(-2px)}
+.live-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#059669;background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.2);padding:.2rem .6rem;border-radius:999px}
+.soon-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;background:#F5F7F6;border:1px solid #E2E8F0;padding:.2rem .6rem;border-radius:999px}
+.sim-card h3{font-family:"Playfair Display",serif;font-size:1.15rem;font-weight:700;color:#0B1929}
+.sim-card p{color:#64748B;font-size:.875rem;line-height:1.65;flex:1}
 .sim-tags{display:flex;flex-wrap:wrap;gap:.4rem}
 .sim-tag{font-size:.68rem;font-weight:600;padding:.18rem .55rem;border-radius:999px;background:rgba(14,165,160,.08);color:#0EA5A0;border:1px solid rgba(14,165,160,.18)}
-.badge{display:inline-block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:.18rem .6rem;border-radius:999px;background:rgba(14,165,160,.1);color:#0EA5A0;border:1px solid rgba(14,165,160,.22)}
-.btn{display:inline-block;background:#0EA5A0;color:#fff;padding:.55rem 1.1rem;border-radius:7px;font-weight:700;font-size:.8rem;align-self:flex-start;margin-top:.35rem;text-decoration:none}
-.btn:hover{background:#0C7D79;color:#fff}
+.launch-btn{display:inline-block;background:#0EA5A0;color:#fff;padding:.6rem 1.25rem;border-radius:7px;font-weight:700;font-size:.83rem;text-decoration:none;align-self:flex-start;transition:background .15s}
+.launch-btn:hover{background:#0C7D79;color:#fff}
+.soon-btn{display:inline-block;background:#F5F7F6;color:#94a3b8;padding:.6rem 1.25rem;border-radius:7px;font-weight:700;font-size:.83rem;cursor:default;align-self:flex-start;border:1px solid #E2E8F0}
 .footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
-@media(max-width:640px){.nav-links{display:none}.sim-card.featured{grid-column:1}}
+@media(max-width:640px){.nav-links{display:none}.sim-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -47,44 +50,78 @@ a{text-decoration:none}
   </div>
 </nav>
 <div class="page-hero"><div class="page-hero-inner">
-  <span class="eyebrow">Simulations</span>
-  <h1>Learn by experiencing decisions before they become real.</h1>
-  <p>Safe, free simulations that let you explore financial choices and their potential consequences — with zero real-world risk.</p>
+  <span class="eyebrow">Simulations &amp; Calculators</span>
+  <h1>See your real numbers — before the decision is real.</h1>
+  <p>Enter your actual situation. Get actual answers. No guessing, no national averages — just your numbers played out over time.</p>
 </div></div>
 <div class="section"><div class="section-inner">
   <div class="sim-grid">
-    <div class="sim-card featured">
-      <span class="badge">⭐ Capstone Experience</span>
+
+    <div class="sim-card live">
+      <span class="live-badge">✓ Live Now</span>
+      <h3>📈 Compound Interest Calculator</h3>
+      <p>Enter your starting amount, monthly contribution, return rate, and time horizon. See exactly what your money becomes — and what starting 5 years later costs you in real dollars.</p>
+      <div class="sim-tags"><span class="sim-tag">Investing</span><span class="sim-tag">Retirement</span><span class="sim-tag">Savings</span></div>
+      <a href="simulations/compound-interest.html" class="launch-btn">Open Calculator →</a>
+    </div>
+
+    <div class="sim-card">
+      <span class="soon-badge">Coming Soon</span>
+      <h3>🎓 College ROI Calculator</h3>
+      <p>Compare college paths, debt levels, and expected salaries. Find which option produces the best long-term financial outcome for your specific major and school type.</p>
+      <div class="sim-tags"><span class="sim-tag">College</span><span class="sim-tag">Student Debt</span><span class="sim-tag">Career</span></div>
+      <div class="soon-btn">Coming Soon</div>
+    </div>
+
+    <div class="sim-card">
+      <span class="soon-badge">Coming Soon</span>
+      <h3>💼 Take-Home Pay Calculator</h3>
+      <p>Enter a job offer salary. See exactly what hits your bank account after federal taxes, state taxes, Social Security, Medicare, health insurance, and 401k contributions.</p>
+      <div class="sim-tags"><span class="sim-tag">Salary</span><span class="sim-tag">Taxes</span><span class="sim-tag">Benefits</span></div>
+      <div class="soon-btn">Coming Soon</div>
+    </div>
+
+    <div class="sim-card">
+      <span class="soon-badge">Coming Soon</span>
+      <h3>🏠 Rent vs Buy Calculator</h3>
+      <p>Model the long-term financial difference between renting and buying based on your local market, timeline, and down payment — not national averages.</p>
+      <div class="sim-tags"><span class="sim-tag">Housing</span><span class="sim-tag">Mortgage</span><span class="sim-tag">Wealth</span></div>
+      <div class="soon-btn">Coming Soon</div>
+    </div>
+
+    <div class="sim-card">
+      <span class="soon-badge">Coming Soon</span>
+      <h3>💳 Debt Payoff Calculator</h3>
+      <p>Enter all your debts with their interest rates. Compare the avalanche vs snowball method side by side — see total interest paid and months to debt freedom for each.</p>
+      <div class="sim-tags"><span class="sim-tag">Debt</span><span class="sim-tag">Credit Cards</span><span class="sim-tag">Student Loans</span></div>
+      <div class="soon-btn">Coming Soon</div>
+    </div>
+
+    <div class="sim-card">
+      <span class="soon-badge">Coming Soon</span>
+      <h3>🚗 Car Affordability Calculator</h3>
+      <p>Run the true cost of a vehicle including loan payments, insurance, fuel, maintenance, and depreciation — then see it as a percentage of your income.</p>
+      <div class="sim-tags"><span class="sim-tag">Car</span><span class="sim-tag">Loan</span><span class="sim-tag">True Cost</span></div>
+      <div class="soon-btn">Coming Soon</div>
+    </div>
+
+    <div class="sim-card">
+      <span class="soon-badge">Coming Soon</span>
+      <h3>📊 Net Worth Tracker</h3>
+      <p>Add your assets and liabilities. See your net worth, benchmark it against your age and income, and project where it's heading based on your current trajectory.</p>
+      <div class="sim-tags"><span class="sim-tag">Net Worth</span><span class="sim-tag">Assets</span><span class="sim-tag">Progress</span></div>
+      <div class="soon-btn">Coming Soon</div>
+    </div>
+
+    <div class="sim-card">
+      <span class="soon-badge">Coming Soon</span>
       <h3>📈 Design Your Financial Future</h3>
-      <p>Build a complete long-term financial roadmap. Make decisions about education, housing, debt, saving, and family — and see how each choice compounds over time.</p>
-      <div class="sim-tags"><span class="sim-tag">Education</span><span class="sim-tag">Career</span><span class="sim-tag">Housing</span><span class="sim-tag">Investing</span><span class="sim-tag">Family</span></div>
-      <a href="#" class="btn">Launch Simulation</a>
+      <p>The full capstone experience. Make decisions about education, career, housing, investing, and family — and see how each choice compounds across your entire financial life.</p>
+      <div class="sim-tags"><span class="sim-tag">Life Planning</span><span class="sim-tag">All Topics</span><span class="sim-tag">Long Term</span></div>
+      <div class="soon-btn">Coming Soon</div>
     </div>
-    <div class="sim-card">
-      <h3>🎓 College ROI Simulator</h3>
-      <p>Compare different college paths, debt amounts, and expected salaries to find the option with the best long-term outcome for you.</p>
-      <div class="sim-tags"><span class="sim-tag">College Options</span><span class="sim-tag">Debt Levels</span><span class="sim-tag">Salaries</span></div>
-      <a href="#" class="btn">Coming Soon</a>
-    </div>
-    <div class="sim-card">
-      <h3>🚗 Car Affordability Simulator</h3>
-      <p>Run the real numbers on buying a car — including loan terms, insurance, maintenance, and how total cost compares to your income.</p>
-      <div class="sim-tags"><span class="sim-tag">New vs Used</span><span class="sim-tag">Loan Terms</span><span class="sim-tag">Insurance</span></div>
-      <a href="#" class="btn">Coming Soon</a>
-    </div>
-    <div class="sim-card">
-      <h3>🏠 Rent vs Buy Simulator</h3>
-      <p>Model the long-term financial difference between renting and buying based on your specific situation, not a national average.</p>
-      <div class="sim-tags"><span class="sim-tag">Renting</span><span class="sim-tag">Homeownership</span><span class="sim-tag">Wealth Impact</span></div>
-      <a href="#" class="btn">Coming Soon</a>
-    </div>
-    <div class="sim-card">
-      <h3>💼 First Job Simulator</h3>
-      <p>See exactly what a job offer is worth after taxes, retirement contributions, health insurance, and other deductions.</p>
-      <div class="sim-tags"><span class="sim-tag">Salary</span><span class="sim-tag">Benefits</span><span class="sim-tag">Taxes</span></div>
-      <a href="#" class="btn">Coming Soon</a>
-    </div>
+
   </div>
 </div></div>
-<footer class="footer"><a href="index.html">Home</a><a href="guides.html">Guides</a><a href="big-decisions.html">Big Decisions</a><br><br>Educational content only. Not financial, legal, tax, or investment advice.</footer>
+<footer class="footer"><a href="index.html">Home</a><a href="guides.html">Guides</a><a href="big-decisions.html">Big Decisions</a><br><br>Educational content only. Not financial or investment advice. Calculators use simplified models for educational purposes.</footer>
 </body></html>
