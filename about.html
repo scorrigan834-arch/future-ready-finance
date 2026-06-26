@@ -1,90 +1,257 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About — Future Ready Finance</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
 a{text-decoration:none}
-.nav{position:sticky;top:0;z-index:100;background:#0B1929;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px}
-.nav-brand{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none}.nav-brand span{color:#0EA5A0}
-.nav-links{display:flex;gap:.15rem;flex-wrap:wrap}
-.nav-link{color:rgba(255,255,255,.65);padding:.38rem .7rem;border-radius:6px;font-size:.8rem;font-weight:500;text-decoration:none}.nav-link:hover,.nav-link.active{color:#0EA5A0}
+.nav{position:sticky;top:0;z-index:200;background:rgba(11,25,41,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px;border-bottom:1px solid rgba(255,255,255,.07)}
+.nav-brand{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none;z-index:2}.nav-brand span{color:#0EA5A0}
+.nav-links{display:flex;gap:.1rem;align-items:center}
+.nav-item{position:relative}
+.nav-link{display:inline-flex;align-items:center;gap:.3rem;color:rgba(255,255,255,.66);padding:.45rem .8rem;border-radius:7px;font-size:.8rem;font-weight:500;transition:color .18s,background .18s;cursor:pointer;background:none;border:none;font-family:"DM Sans",sans-serif;text-decoration:none}
+.nav-link:hover,.nav-item:hover .nav-link,.nav-item.open .nav-link,.nav-link.active{color:#0EA5A0;background:rgba(14,165,160,.08)}
+.nav-caret{width:.55rem;height:.55rem;fill:none;stroke:currentColor;stroke-width:2.5;transition:transform .25s ease;opacity:.7}
+.nav-item:hover .nav-caret,.nav-item.open .nav-caret{transform:rotate(180deg)}
+.nav-dd{position:absolute;top:calc(100% + 10px);left:0;min-width:250px;background:rgba(15,30,48,.97);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:.55rem;box-shadow:0 24px 60px rgba(0,0,0,.45);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .22s ease,transform .22s ease,visibility .22s;z-index:210}
+.nav-dd::before{content:"";position:absolute;top:-14px;left:0;right:0;height:14px}
+.nav-item:hover .nav-dd,.nav-item.open .nav-dd{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-dd-wide{min-width:430px;display:grid;grid-template-columns:1fr 1fr;gap:.15rem}
+.nav-dd a{display:flex;flex-direction:column;gap:.1rem;padding:.55rem .7rem;border-radius:9px;color:rgba(255,255,255,.85);transition:background .15s,color .15s;text-decoration:none}
+.nav-dd a:hover{background:rgba(14,165,160,.12)}
+.nav-dd a .dd-t{font-size:.83rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:.45rem}
+.nav-dd a:hover .dd-t{color:#0EA5A0}
+.nav-dd a .dd-d{font-size:.71rem;color:rgba(255,255,255,.45);line-height:1.4}
+.nav-dd-head{grid-column:1/-1;font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0EA5A0;padding:.5rem .7rem .3rem}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:9px;cursor:pointer;padding:0;z-index:2}
+.nav-burger span{display:block;width:19px;height:2px;background:#fff;border-radius:2px;margin:0 auto;transition:transform .28s ease,opacity .28s ease}
+.nav-burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.active span:nth-child(2){opacity:0}
+.nav-burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{position:fixed;top:58px;left:0;right:0;bottom:0;background:rgba(11,25,41,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:190;padding:1.25rem 1.5rem 2.5rem;overflow-y:auto;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);visibility:hidden}
+.mobile-menu.open{transform:translateX(0);visibility:visible}
+.mm-group{border-bottom:1px solid rgba(255,255,255,.08)}
+.mm-top{width:100%;display:flex;align-items:center;justify-content:space-between;background:none;border:none;color:#fff;font-family:"DM Sans",sans-serif;font-size:1rem;font-weight:600;padding:1.05rem .25rem;cursor:pointer;text-align:left}
+.mm-top a{color:#fff;text-decoration:none}
+.mm-caret{width:.8rem;height:.8rem;fill:none;stroke:#0EA5A0;stroke-width:2.5;transition:transform .25s ease;flex-shrink:0}
+.mm-group.open .mm-caret{transform:rotate(180deg)}
+.mm-sub{max-height:0;overflow:hidden;transition:max-height .3s ease;padding-bottom:0}
+.mm-group.open .mm-sub{max-height:600px;padding-bottom:.6rem}
+.mm-sub a{display:block;color:rgba(255,255,255,.7);font-size:.9rem;padding:.6rem .25rem .6rem 1rem;text-decoration:none;border-left:2px solid rgba(14,165,160,.3);margin-left:.25rem}
+.mm-sub a:hover{color:#0EA5A0}
 .page-hero{background:#0B1929;padding:3.5rem 2rem 2.75rem}.page-hero-inner{max-width:1100px;margin:0 auto}
 .eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#0EA5A0;display:block;margin-bottom:.7rem}
-.page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
-.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:540px;line-height:1.75}
-.section{padding:4rem 2rem}.section-inner{max-width:760px;margin:0 auto}
-h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin:2rem 0 .75rem;color:#0B1929}
-p{color:#64748B;font-size:.95rem;line-height:1.8;margin-bottom:1rem}
-strong{color:#0B1929}
-.divider{border:none;border-top:1px solid #E2E8F0;margin:2rem 0}
-.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.85rem;margin:1.25rem 0 2rem}
-.pillar{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:1.1rem;text-align:center}
-.pillar span{font-size:1.4rem;display:block;margin-bottom:.4rem}
-.pillar h4{font-weight:700;font-size:.85rem;color:#0B1929}
-.audience{display:flex;flex-direction:column;gap:.45rem;margin:1rem 0 2rem}
-.aud-item{display:flex;gap:.75rem;align-items:center;border:1px solid #E2E8F0;border-radius:9px;padding:.7rem 1rem;background:#fff;font-size:.9rem}
-.check{color:#0EA5A0;font-weight:800}
-.cta-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:2rem}
-.btn{display:inline-block;background:#0EA5A0;color:#fff;padding:.6rem 1.4rem;border-radius:7px;font-weight:700;font-size:.875rem;text-decoration:none}
-.btn:hover{background:#0C7D79;color:#fff}
-.btn-outline{background:transparent;color:#0B1929;border:1.5px solid #E2E8F0}
-.btn-outline:hover{border-color:#0EA5A0;color:#0EA5A0}
-.legal{font-size:.75rem;color:#999;border-top:1px solid #E2E8F0;padding-top:1.25rem;margin-top:2.5rem;line-height:1.7}
-.footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
+.page-hero h1{font-family:"Playfair Display",serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
+.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:600px;line-height:1.75}
+.wrap{max-width:1000px;margin:0 auto;padding:3rem 2rem}
+.cat-h{font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:700;margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1.5px solid #E2E8F0;color:#0B1929}
+.cat-h:first-child{margin-top:0}
+.link-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.7rem;margin-bottom:1rem}
+.lcard{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:.85rem 1.1rem;color:#0B1929;transition:border-color .2s,transform .2s}
+.lcard:hover{border-color:#0EA5A0;transform:translateY(-2px)}
+.lcard span{font-size:.875rem;font-weight:500}
+.lcard .ar{color:#0EA5A0;font-weight:700}
+.lcard.soon{opacity:.55;pointer-events:none}
+.pill-soon{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;background:#F0F0F0;color:#999;padding:.15rem .5rem;border-radius:999px}
+.footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center;margin-top:2rem}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
-@media(max-width:640px){.nav-links{display:none}}
-</style>
-</head>
-<body>
+@media(max-width:640px){.nav-links{display:none}.nav-burger{display:flex}.wrap{padding:2rem 1.25rem}}
+.wrap{max-width:760px}
+.sec-h{font-family:"Playfair Display",serif;font-size:1.5rem;font-weight:700;margin:2.5rem 0 .8rem;color:#0B1929}
+.sec-h:first-child{margin-top:0}
+.wrap p{color:#64748B;font-size:.95rem;line-height:1.8;margin-bottom:1rem}
+.wrap p strong{color:#0B1929}
+.diff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:1.5rem 0}
+.diff{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:1.25rem;text-align:center;transition:border-color .2s,transform .2s}
+.diff:hover{border-color:rgba(14,165,160,.4);transform:translateY(-3px)}
+.diff .ic{width:48px;height:48px;border-radius:12px;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.2);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto .7rem}
+.diff h4{font-size:.9rem;font-weight:700;color:#0B1929}
+.who{list-style:none;margin:1rem 0}
+.who li{display:flex;align-items:center;gap:.6rem;padding:.5rem 0;font-size:.92rem;color:#64748B}
+.who li::before{content:"✓";color:#0EA5A0;font-weight:700;flex-shrink:0}
+.cta-row{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:2rem}
+.btn{display:inline-block;font-weight:700;font-size:.9rem;border-radius:9px;padding:.8rem 1.7rem;transition:all .18s}
+.btn-primary{background:#0EA5A0;color:#fff}.btn-primary:hover{background:#0C7D79;transform:translateY(-2px)}
+.btn-ghost{background:#fff;color:#0B1929;border:1.5px solid #E2E8F0}.btn-ghost:hover{border-color:#0EA5A0;color:#0EA5A0}
+</style></head><body>
 <nav class="nav">
   <a href="index.html" class="nav-brand">Future Ready <span>Finance</span></a>
   <div class="nav-links">
     <a href="start-here.html" class="nav-link">Start Here</a>
-    <a href="life-stages.html" class="nav-link">Life Stages</a>
-    <a href="guides.html" class="nav-link">Guides</a>
-    <a href="big-decisions.html" class="nav-link">Big Decisions</a>
-    <a href="simulations.html" class="nav-link">Simulations</a>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Life Stages <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd">
+        <a href="paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
+        <a href="paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
+        <a href="paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
+        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Guides <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd nav-dd-wide">
+        <div class="nav-dd-head">Browse by Topic</div>
+        <a href="guides.html"><span class="dd-t">🏛️ Banking & Cash</span></a>
+        <a href="guides.html"><span class="dd-t">💳 Credit & Debt</span></a>
+        <a href="guides.html"><span class="dd-t">🧾 Taxes</span></a>
+        <a href="guides.html"><span class="dd-t">🎓 Education</span></a>
+        <a href="guides.html"><span class="dd-t">💼 Career</span></a>
+        <a href="guides.html"><span class="dd-t">🏠 Housing</span></a>
+        <a href="guides.html"><span class="dd-t">📈 Investing</span></a>
+        <a href="guides.html"><span class="dd-t">🛡️ Insurance</span></a>
+        <a href="guides.html"><span class="dd-t">👨‍👩‍👧 Family</span></a>
+        <a href="guides.html"><span class="dd-t">📚 View All Guides →</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Calculators <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd">
+        <a href="simulations/compound-interest.html"><span class="dd-t">📈 Compound Interest</span><span class="dd-d">What your money becomes</span></a>
+        <a href="simulations/net-worth.html"><span class="dd-t">💰 Net Worth</span><span class="dd-d">Own vs. owe</span></a>
+        <a href="simulations/debt-payoff.html"><span class="dd-t">💳 Debt Payoff</span><span class="dd-d">Fastest way out</span></a>
+        <a href="simulations/take-home-pay.html"><span class="dd-t">💼 Take-Home Pay</span><span class="dd-d">Paycheck after taxes</span></a>
+        <a href="simulations/roth-vs-traditional.html"><span class="dd-t">🏦 Roth vs Traditional</span><span class="dd-d">Which 401(k) wins</span></a>
+        <a href="simulations.html"><span class="dd-t">🔢 All Calculators →</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Big Decisions <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd">
+        <a href="big-decisions.html"><span class="dd-t">🎓 Education Decisions</span><span class="dd-d">College, debt, grad school</span></a>
+        <a href="big-decisions.html"><span class="dd-t">💼 Career Decisions</span><span class="dd-d">Offers, raises, job changes</span></a>
+        <a href="big-decisions.html"><span class="dd-t">🏠 Housing Decisions</span><span class="dd-d">Rent vs buy, affordability</span></a>
+        <a href="big-decisions.html"><span class="dd-t">📈 Investing Decisions</span><span class="dd-d">When, how much, which account</span></a>
+        <a href="big-decisions.html"><span class="dd-t">🚗 Cars, Debt & Family</span><span class="dd-d">Major life purchases</span></a>
+        <a href="big-decisions.html"><span class="dd-t">🧭 Decision Framework →</span></a>
+      </div>
+    </div>
     <a href="resources.html" class="nav-link">Resources</a>
     <a href="about.html" class="nav-link active">About</a>
   </div>
+  <button class="nav-burger" id="navBurger" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-group"><button class="mm-top"><a href="start-here.html">Start Here</a></button></div>
+  <div class="mm-group">
+    <button class="mm-top" type="button">Life Stages <svg class="mm-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+    <div class="mm-sub">
+      <a href="paths/high-school.html">🎓 High School</a>
+      <a href="paths/college.html">📚 College</a>
+      <a href="paths/early-career.html">🚀 Early Career</a>
+      <a href="paths/establishing.html">🏡 Establishing</a>
+      <a href="paths/starting-from-ahead.html">💎 Starting From Ahead</a>
+    </div>
+  </div>
+  <div class="mm-group">
+    <button class="mm-top" type="button">Guides <svg class="mm-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+    <div class="mm-sub">
+      <a href="guides.html">🏛️ Banking & Cash</a>
+      <a href="guides.html">💳 Credit & Debt</a>
+      <a href="guides.html">🧾 Taxes</a>
+      <a href="guides.html">🎓 Education</a>
+      <a href="guides.html">💼 Career</a>
+      <a href="guides.html">🏠 Housing</a>
+      <a href="guides.html">📈 Investing</a>
+      <a href="guides.html">📚 View All Guides →</a>
+    </div>
+  </div>
+  <div class="mm-group">
+    <button class="mm-top" type="button">Calculators <svg class="mm-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+    <div class="mm-sub">
+      <a href="simulations/compound-interest.html">📈 Compound Interest</a>
+      <a href="simulations/net-worth.html">💰 Net Worth</a>
+      <a href="simulations/debt-payoff.html">💳 Debt Payoff</a>
+      <a href="simulations/take-home-pay.html">💼 Take-Home Pay</a>
+      <a href="simulations/roth-vs-traditional.html">🏦 Roth vs Traditional</a>
+      <a href="simulations.html">🔢 All Calculators →</a>
+    </div>
+  </div>
+  <div class="mm-group">
+    <button class="mm-top" type="button">Big Decisions <svg class="mm-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+    <div class="mm-sub">
+      <a href="big-decisions.html">🎓 Education Decisions</a>
+      <a href="big-decisions.html">💼 Career Decisions</a>
+      <a href="big-decisions.html">🏠 Housing Decisions</a>
+      <a href="big-decisions.html">📈 Investing Decisions</a>
+      <a href="big-decisions.html">🚗 Cars, Debt & Family</a>
+      <a href="big-decisions.html">🧭 Decision Framework →</a>
+    </div>
+  </div>
+  <div class="mm-group"><button class="mm-top"><a href="resources.html">Resources</a></button></div>
+  <div class="mm-group"><button class="mm-top"><a href="about.html">About</a></button></div>
+</div>
 <div class="page-hero"><div class="page-hero-inner">
   <span class="eyebrow">About</span>
   <h1>Why Future Ready Finance exists.</h1>
   <p>Most people make major financial decisions before they fully understand the consequences. We exist to change that.</p>
 </div></div>
-<div class="section"><div class="section-inner">
-  <h2>Our Mission</h2>
+<div class="wrap">
+  <div class="sec-h">Our Mission</div>
   <p>Help people make better financial decisions <strong>before the consequences become real.</strong></p>
   <p>Student loans. Credit cards. Apartments. Cars. Careers. Investing. Homes. Family planning. Future Ready Finance helps people learn these lessons before the mistakes become expensive.</p>
-  <div class="divider"></div>
-  <h2>What Makes Us Different</h2>
-  <p>Most financial education teaches vocabulary. Future Ready Finance teaches decision-making through life stages, real-world guides, simulations, and frameworks.</p>
-  <div class="pillars">
-    <div class="pillar"><span>🏁</span><h4>Life Stages</h4></div>
-    <div class="pillar"><span>🧭</span><h4>Real Decisions</h4></div>
-    <div class="pillar"><span>📖</span><h4>Practical Guides</h4></div>
-    <div class="pillar"><span>🔮</span><h4>Simulations</h4></div>
-    <div class="pillar"><span>📊</span><h4>Scorecards</h4></div>
-    <div class="pillar"><span>🗺️</span><h4>Frameworks</h4></div>
+  <div class="sec-h">What Makes Us Different</div>
+  <p>Most financial education teaches vocabulary. Future Ready Finance teaches decision-making through life stages, real-world guides, calculators, and frameworks.</p>
+  <div class="diff-grid">
+    <div class="diff"><div class="ic">🏁</div><h4>Life Stages</h4></div>
+    <div class="diff"><div class="ic">🧭</div><h4>Real Decisions</h4></div>
+    <div class="diff"><div class="ic">📖</div><h4>Practical Guides</h4></div>
+    <div class="diff"><div class="ic">🔢</div><h4>Calculators</h4></div>
+    <div class="diff"><div class="ic">📊</div><h4>Scorecards</h4></div>
+    <div class="diff"><div class="ic">🗺️</div><h4>Frameworks</h4></div>
   </div>
-  <div class="divider"></div>
-  <h2>Who This Is For</h2>
-  <div class="audience">
-    <div class="aud-item"><span class="check">✓</span>High school students (ages 14–18)</div>
-    <div class="aud-item"><span class="check">✓</span>College students (ages 17–23)</div>
-    <div class="aud-item"><span class="check">✓</span>Early career professionals (ages 21–28)</div>
-    <div class="aud-item"><span class="check">✓</span>People establishing their financial lives (ages 26–35)</div>
-  </div>
+  <div class="sec-h">Who This Is For</div>
+  <ul class="who">
+    <li>High school students (ages 14–18)</li>
+    <li>College students (ages 17–23)</li>
+    <li>Early career professionals (ages 21–28)</li>
+    <li>People establishing their financial lives (ages 26–35)</li>
+  </ul>
   <div class="cta-row">
-    <a href="start-here.html" class="btn">Get Started</a>
-    <a href="life-stages.html" class="btn btn-outline">Choose Your Stage</a>
+    <a href="start-here.html" class="btn btn-primary">Get Started</a>
+    <a href="life-stages.html" class="btn btn-ghost">Choose Your Stage</a>
   </div>
-  <p class="legal">Educational content only. Not financial, legal, tax, or investment advice.</p>
-</div></div>
-<footer class="footer"><a href="index.html">Home</a><a href="guides.html">Guides</a><a href="simulations.html">Simulations</a><br><br>Educational content only. Not financial, legal, tax, or investment advice.</footer>
+</div>
+<footer class="footer"><a href="index.html">Home</a><a href="guides.html">Guides</a><a href="simulations.html">Calculators</a><br><br>Educational content only. Not financial, legal, tax, or investment advice.</footer>
+<script>
+(function(){
+  var burger = document.getElementById('navBurger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (burger && mobileMenu){
+    burger.addEventListener('click', function(){
+      burger.classList.toggle('active');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('.mm-top').forEach(function(btn){
+      var group = btn.parentElement;
+      var sub = group.querySelector('.mm-sub');
+      if (sub){ btn.addEventListener('click', function(){ group.classList.toggle('open'); }); }
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        burger.classList.remove('active');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+  var navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(function(item){
+    var btn = item.querySelector('.nav-link');
+    if (btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var wasOpen = item.classList.contains('open');
+        navItems.forEach(function(i){ i.classList.remove('open'); });
+        if (!wasOpen) item.classList.add('open');
+      });
+    }
+  });
+  document.addEventListener('click', function(){
+    navItems.forEach(function(i){ i.classList.remove('open'); });
+  });
+})();
+</script>
 </body></html>
