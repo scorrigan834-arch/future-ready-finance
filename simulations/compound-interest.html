@@ -24,11 +24,11 @@ a{text-decoration:none}
 .field{margin-bottom:1.2rem}
 .field label{display:block;font-size:.8rem;font-weight:700;color:#0B1929;margin-bottom:.3rem}
 .hint{font-size:.73rem;color:#94a3b8;display:block;margin-bottom:.35rem}
-.pw{position:relative}
-.pw .pfx{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:.9rem;font-weight:600;pointer-events:none;z-index:1}
+.pw{display:flex;align-items:stretch}
+.pw .pfx{display:flex;align-items:center;justify-content:center;min-width:2.4rem;padding:0 .7rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-right:none;border-radius:8px 0 0 8px;color:#64748B;font-size:.95rem;font-weight:700;flex-shrink:0}
 input[type=number]{width:100%;padding:.6rem .85rem;border:1.5px solid #E2E8F0;border-radius:8px;font-size:.9rem;font-family:"DM Sans",sans-serif;color:#0B1929;outline:none;transition:border-color .15s}
 input[type=number]:focus{border-color:#0EA5A0}
-.pfinput{padding-left:2.1rem}
+.pfinput{border-radius:0 8px 8px 0;border-left:none}
 input[type=range]{width:100%;accent-color:#0EA5A0;margin-top:.4rem;cursor:pointer}
 .range-labels{display:flex;justify-content:space-between;font-size:.73rem;color:#94a3b8;margin-top:.2rem}
 .range-labels strong{color:#0B1929;font-size:.82rem}
@@ -96,19 +96,19 @@ canvas{display:block;width:100%;height:180px}
       <div class="field">
         <label>Starting Amount</label>
         <span class="hint">What you're investing today — can be $0</span>
-        <div class="pw"><span class="pfx">$</span><input type="number" id="principal" class="pfinput" value="1000" min="0" step="100"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="principal" class="pfinput" min="0" step="100"></div>
       </div>
 
       <div class="field">
         <label>Monthly Contribution</label>
         <span class="hint">How much you'll add every month going forward</span>
-        <div class="pw"><span class="pfx">$</span><input type="number" id="monthly" class="pfinput" value="200" min="0" step="25"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="monthly" class="pfinput" min="0" step="25"></div>
       </div>
 
       <div class="field">
         <label>Annual Return Rate</label>
         <span class="hint">S&amp;P 500 historical average ≈ 10% nominal, 7% after inflation</span>
-        <div class="pw"><span class="pfx">%</span><input type="number" id="rate" class="pfinput" value="7" min="0" max="30" step="0.5"></div>
+        <div class="pw"><span class="pfx">%</span><input placeholder="0" type="number" id="rate" class="pfinput" min="0" max="30" step="0.5"></div>
       </div>
 
       <div class="field">
