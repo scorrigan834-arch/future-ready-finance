@@ -214,6 +214,30 @@ a{text-decoration:none}
   .stat-item .stat-num{font-size:2rem}
   .pop-head{flex-direction:column;gap:.6rem}
 }
+
+/* SITE SEARCH */
+.search-wrap{position:relative;max-width:480px;margin:0 0 1.6rem;z-index:30}
+.search-box{display:flex;align-items:center;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.16);border-radius:13px;padding:.15rem .15rem .15rem 1rem;transition:border-color .2s,background .2s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.search-box:focus-within{border-color:#0EA5A0;background:rgba(255,255,255,.1)}
+.search-box svg{flex-shrink:0;opacity:.5}
+.search-box input{flex:1;background:none;border:none;outline:none;color:#fff;font-family:"DM Sans",sans-serif;font-size:1rem;padding:.85rem .7rem}
+.search-box input::placeholder{color:rgba(255,255,255,.45)}
+.search-kbd{flex-shrink:0;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:7px;padding:.5rem .7rem;font-size:.78rem;color:rgba(255,255,255,.5);font-weight:600;margin-right:.15rem}
+.search-results{position:absolute;top:calc(100% + .6rem);left:0;right:0;background:#0f1e30;border:1.5px solid rgba(255,255,255,.14);border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.5);max-height:60vh;overflow-y:auto;display:none;padding:.5rem}
+.search-results.show{display:block}
+.sr-item{display:flex;align-items:center;gap:.85rem;padding:.7rem .85rem;border-radius:9px;text-decoration:none;transition:background .15s}
+.sr-item:hover,.sr-item.active{background:rgba(14,165,160,.14)}
+.sr-icon{width:38px;height:38px;border-radius:9px;background:rgba(14,165,160,.14);border:1px solid rgba(14,165,160,.25);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+.sr-text{flex:1;min-width:0}
+.sr-title{color:#fff;font-size:.92rem;font-weight:600;line-height:1.3;margin-bottom:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-desc{color:rgba(255,255,255,.5);font-size:.78rem;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-cat{flex-shrink:0;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:.22rem .55rem;border-radius:999px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6)}
+.sr-cat.Calculator{background:rgba(14,165,160,.16);color:#3fd0c9}
+.sr-cat.Guide{background:rgba(217,119,6,.18);color:#f5c889}
+.sr-cat.Section{background:rgba(255,255,255,.08);color:rgba(255,255,255,.55)}
+.sr-empty{padding:1.5rem;text-align:center;color:rgba(255,255,255,.5);font-size:.88rem}
+.sr-head{padding:.5rem .85rem .3rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.35)}
+@media(max-width:640px){.search-kbd{display:none}.search-wrap{max-width:100%}}
 </style>
 </head>
 <body>
@@ -335,6 +359,14 @@ a{text-decoration:none}
       <span class="eyebrow"><span class="dot"></span>Free · No Signup · Ages 14–35</span>
       <h1>Learn the financial lessons<br>most people discover <em>too late.</em></h1>
       <p class="hero-sub">Future Ready Finance helps students, young adults, and early professionals make smarter money decisions — before the consequences become real.</p>
+      <div class="search-wrap" id="siteSearch">
+        <div class="search-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+          <input type="text" id="searchInput" placeholder="Search guides, calculators, topics..." autocomplete="off" aria-label="Search the site">
+          <span class="search-kbd">↵</span>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+      </div>
       <div class="hero-ctas">
         <a href="#calculators" class="btn btn-primary">Try a Calculator</a>
         <a href="start-here.html" class="btn btn-ghost">Get Started</a>
@@ -625,6 +657,91 @@ a{text-decoration:none}
   } else {
     statNums.forEach(function(el){ el.textContent = el.getAttribute('data-count') + (el.getAttribute('data-suffix')||''); });
   }
+})();
+</script>
+<script>
+(function(){
+  var IDX = [{"t":"Compound Interest Calculator","d":"See what your money becomes over time — and what waiting costs you.","k":"compound interest growth investing savings returns retirement future value time","u":"simulations/compound-interest.html","c":"Calculator","i":"📈"},{"t":"Take-Home Pay Calculator","d":"What actually hits your bank account after taxes and deductions.","k":"take home pay salary taxes paycheck net income withholding deductions federal state","u":"simulations/take-home-pay.html","c":"Calculator","i":"💼"},{"t":"Roth vs Pre-Tax 401(k) Calculator","d":"Which retirement account leaves you with more, based on your taxes now vs later.","k":"roth traditional 401k retirement pretax tax bracket ira contribution","u":"simulations/roth-vs-traditional.html","c":"Calculator","i":"🏦"},{"t":"Debt Payoff Calculator","d":"The fastest way out of debt — avalanche vs snowball.","k":"debt payoff avalanche snowball credit card loan interest payment","u":"simulations/debt-payoff.html","c":"Calculator","i":"💳"},{"t":"Net Worth Calculator","d":"What you own versus what you owe — your financial snapshot.","k":"net worth assets liabilities own owe wealth balance sheet","u":"simulations/net-worth.html","c":"Calculator","i":"💰"},{"t":"How Much Student Debt Is Too Much?","d":"A simple rule to know how much you can safely borrow.","k":"student debt loans college borrowing salary rule federal private repayment","u":"decisions/student-debt.html","c":"Guide","i":"🎓"},{"t":"Can I Afford This Apartment?","d":"The full cost of living on your own — not just the rent.","k":"apartment rent housing afford 30 percent rule utilities deposit move in lease","u":"decisions/apartment.html","c":"Guide","i":"🏠"},{"t":"Should I Start Investing Now?","d":"Why time is your most powerful wealth-building advantage.","k":"investing start early compound index funds stocks order of operations 401k match","u":"decisions/investing.html","c":"Guide","i":"📈"},{"t":"Should I Go To College?","d":"Weigh the cost against the payoff, and see cheaper paths.","k":"college university degree cost roi community college trade school scholarship","u":"decisions/college.html","c":"Guide","i":"🎓"},{"t":"How to Pay Off Debt: Avalanche vs Snowball","d":"Two proven payoff strategies and how to pick one.","k":"debt payoff avalanche snowball strategy credit card interest minimum payment","u":"decisions/debt-payoff.html","c":"Guide","i":"💳"},{"t":"Banking Basics: Checking, Savings & High-Yield","d":"The right account setup costs nothing and earns you more.","k":"banking checking savings high yield hysa account fees fdic interest credit union","u":"decisions/banking-basics.html","c":"Guide","i":"🏛️"},{"t":"How Credit Scores Work and How to Build One","d":"The habits that build the number shaping your financial life.","k":"credit score build fico payment history utilization secured card report","u":"decisions/credit-basics.html","c":"Guide","i":"💳"},{"t":"How to Build an Emergency Fund","d":"The foundation everything else stands on, built in stages.","k":"emergency fund savings safety net 3 6 months expenses cushion","u":"decisions/emergency-fund.html","c":"Guide","i":"🛟"},{"t":"Understanding Your First Paycheck","d":"Why take-home is smaller than your salary, line by line.","k":"first paycheck pay stub gross net taxes deductions withholding w4 social security","u":"decisions/first-paycheck.html","c":"Guide","i":"💵"},{"t":"Taxes 101: The Basics Everyone Should Know","d":"How brackets, deductions, and withholding really work.","k":"taxes 101 brackets marginal deduction standard withholding refund w2 filing","u":"decisions/taxes-101.html","c":"Guide","i":"🧾"},{"t":"Should I Negotiate My Salary?","d":"A few minutes of conversation worth tens of thousands.","k":"salary negotiation raise offer pay market rate ask compensation","u":"decisions/salary-negotiation.html","c":"Guide","i":"💼"},{"t":"Do I Owe Taxes on My Side Hustle?","d":"Side income is usually taxable — here's how to handle it.","k":"side income hustle taxes freelance 1099 self employment quarterly estimated deductions","u":"decisions/side-income-taxes.html","c":"Guide","i":"🧾"},{"t":"The Money Mistakes Your Brain Wants You to Make","d":"Outsmart your own psychology and biases.","k":"behavioral finance psychology bias present loss aversion herd lifestyle creep habits","u":"decisions/behavioral-finance.html","c":"Guide","i":"🧠"},{"t":"Capital Gains: How Investment Taxes Work","d":"What you owe when investments grow.","k":"capital gains tax investment short long term brokerage stocks selling","u":"decisions/capital-gains.html","c":"Guide","i":"📊"},{"t":"Changing Jobs: What to Know Financially","d":"Benefits, 401(k)s, and money moves when you switch.","k":"changing jobs switch career 401k rollover benefits salary transition quit","u":"decisions/changing-jobs.html","c":"Guide","i":"🔄"},{"t":"Managing Money as a Couple","d":"Combining finances, budgets, and goals together.","k":"couples money relationship partner joint accounts budget shared finances marriage","u":"decisions/couples-money.html","c":"Guide","i":"💑"},{"t":"Couples & Money: Advanced Strategies","d":"Deeper tactics for merging finances and planning.","k":"couples money advanced joint prenup accounts strategy partner marriage planning","u":"decisions/couples-money-advanced.html","c":"Guide","i":"💑"},{"t":"Is Grad School Worth It?","d":"Weighing the cost and payoff of an advanced degree.","k":"grad school graduate degree masters phd cost roi debt career worth","u":"decisions/grad-school.html","c":"Guide","i":"🎓"},{"t":"How Much House Can I Afford?","d":"The real cost of buying, beyond the sticker price.","k":"house home buy afford mortgage down payment closing costs property tax","u":"decisions/how-much-house.html","c":"Guide","i":"🏡"},{"t":"Index Funds vs Individual Stocks","d":"Which approach builds wealth more reliably.","k":"index funds individual stocks etf diversification passive active investing portfolio","u":"decisions/index-funds-vs-stocks.html","c":"Guide","i":"📈"},{"t":"Mental Health & Money","d":"The link between financial stress and wellbeing.","k":"mental health money stress anxiety wellbeing financial therapy spending emotions","u":"decisions/mental-health-money.html","c":"Guide","i":"💚"},{"t":"New vs Used Car: Which Should You Buy?","d":"The smarter financial choice for your first car.","k":"car new used buy auto depreciation loan financing afford vehicle","u":"decisions/new-vs-used-car.html","c":"Guide","i":"🚗"},{"t":"Should I Rent or Buy?","d":"When buying makes sense — and when renting wins.","k":"rent buy home house mortgage afford break even own property","u":"decisions/rent-vs-buy.html","c":"Guide","i":"🏠"},{"t":"Social Security: How It Works","d":"What it is, how it's funded, and what to expect.","k":"social security retirement benefits fica payroll tax government future","u":"decisions/social-security.html","c":"Guide","i":"🏛️"},{"t":"Big Decisions","d":"The major financial choices that shape your future.","k":"big decisions major choices financial life","u":"big-decisions.html","c":"Section","i":"🧭"},{"t":"All Guides","d":"Practical guides organized around real-life money questions.","k":"guides all browse topics library","u":"guides.html","c":"Section","i":"📚"},{"t":"All Calculators","d":"Enter your real numbers. See how they play out.","k":"calculators simulations tools all browse","u":"simulations.html","c":"Section","i":"🔢"},{"t":"Life Stages","d":"The right financial lessons for where you are today.","k":"life stages high school college early career path","u":"life-stages.html","c":"Section","i":"🌱"},{"t":"Resources","d":"Glossary and helpful references.","k":"resources glossary terms references help","u":"resources.html","c":"Section","i":"📖"},{"t":"Start Here","d":"New? Begin your financial journey here.","k":"start here begin getting started intro first","u":"start-here.html","c":"Section","i":"🚀"}];
+  var input = document.getElementById('searchInput');
+  var results = document.getElementById('searchResults');
+  if (!input || !results) return;
+  var activeIdx = -1;
+  var current = [];
+
+  function score(item, q){
+    var s = 0;
+    var title = item.t.toLowerCase();
+    var desc = item.d.toLowerCase();
+    var keys = item.k.toLowerCase();
+    if (title.indexOf(q) === 0) s += 100;
+    else if (title.indexOf(q) > -1) s += 60;
+    if (keys.indexOf(q) > -1) s += 30;
+    if (desc.indexOf(q) > -1) s += 15;
+    // word-boundary bonus
+    var words = q.split(' ');
+    for (var i=0;i<words.length;i++){
+      if (words[i] && (title+' '+keys).indexOf(words[i]) > -1) s += 8;
+    }
+    return s;
+  }
+
+  function render(matches, q){
+    if (!q){ results.classList.remove('show'); results.innerHTML=''; return; }
+    if (matches.length === 0){
+      results.innerHTML = '<div class="sr-empty">No results for "<strong>'+escapeHtml(q)+'</strong>". Try a different word.</div>';
+      results.classList.add('show');
+      return;
+    }
+    var html = '';
+    for (var i=0;i<matches.length;i++){
+      var m = matches[i];
+      html += '<a class="sr-item" href="'+m.u+'" data-i="'+i+'">'
+        + '<span class="sr-icon">'+m.i+'</span>'
+        + '<span class="sr-text"><span class="sr-title">'+escapeHtml(m.t)+'</span><span class="sr-desc">'+escapeHtml(m.d)+'</span></span>'
+        + '<span class="sr-cat '+m.c+'">'+m.c+'</span></a>';
+    }
+    results.innerHTML = html;
+    results.classList.add('show');
+  }
+
+  function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function search(q){
+    q = q.trim().toLowerCase();
+    activeIdx = -1;
+    if (!q){ current=[]; render([], ''); return; }
+    var scored = [];
+    for (var i=0;i<IDX.length;i++){
+      var sc = score(IDX[i], q);
+      if (sc > 0) scored.push({item:IDX[i], s:sc});
+    }
+    scored.sort(function(a,b){ return b.s - a.s; });
+    current = scored.slice(0, 8).map(function(x){ return x.item; });
+    render(current, q);
+  }
+
+  input.addEventListener('input', function(){ search(this.value); });
+  input.addEventListener('focus', function(){ if (this.value.trim()) search(this.value); });
+
+  input.addEventListener('keydown', function(e){
+    var items = results.querySelectorAll('.sr-item');
+    if (e.key === 'ArrowDown'){ e.preventDefault(); activeIdx = Math.min(activeIdx+1, items.length-1); updateActive(items); }
+    else if (e.key === 'ArrowUp'){ e.preventDefault(); activeIdx = Math.max(activeIdx-1, -1); updateActive(items); }
+    else if (e.key === 'Enter'){
+      if (activeIdx >= 0 && items[activeIdx]){ window.location.href = items[activeIdx].getAttribute('href'); }
+      else if (current.length > 0){ window.location.href = current[0].u; }
+    }
+    else if (e.key === 'Escape'){ input.blur(); results.classList.remove('show'); }
+  });
+
+  function updateActive(items){
+    for (var i=0;i<items.length;i++){ items[i].classList.toggle('active', i===activeIdx); }
+    if (activeIdx >= 0 && items[activeIdx]) items[activeIdx].scrollIntoView({block:'nearest'});
+  }
+
+  document.addEventListener('click', function(e){
+    if (!document.getElementById('siteSearch').contains(e.target)){ results.classList.remove('show'); }
+  });
 })();
 </script>
 </body>
