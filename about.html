@@ -52,7 +52,7 @@ a{text-decoration:none}
 .lcard span{font-size:.875rem;font-weight:500}
 .lcard .ar{color:#0EA5A0;font-weight:700}
 .lcard.soon{opacity:.55;pointer-events:none}
-.pill-soon{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;background:#F0F0F0;color:#999;padding:.15rem .5rem;border-radius:999px}
+.pill-soon{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;background:#ECF1F0;color:#999;padding:.15rem .5rem;border-radius:999px}
 .footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center;margin-top:2rem}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
 @media(max-width:640px){.nav-links{display:none}.nav-burger{display:flex}.wrap{padding:2rem 1.25rem}}
@@ -73,6 +73,27 @@ a{text-decoration:none}
 .btn{display:inline-block;font-weight:700;font-size:.9rem;border-radius:9px;padding:.8rem 1.7rem;transition:all .18s}
 .btn-primary{background:#0EA5A0;color:#fff}.btn-primary:hover{background:#0C7D79;transform:translateY(-2px)}
 .btn-ghost{background:#fff;color:#0B1929;border:1.5px solid #E2E8F0}.btn-ghost:hover{border-color:#0EA5A0;color:#0EA5A0}
+
+/* PREMIUM: animated mesh hero */
+.page-hero{position:relative;overflow:hidden}
+.mesh{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.mesh span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
+.mesh .m1{width:480px;height:480px;background:radial-gradient(circle,rgba(14,165,160,.45),transparent 65%);top:-160px;left:-100px;animation:drift1 20s ease-in-out infinite}
+.mesh .m2{width:420px;height:420px;background:radial-gradient(circle,rgba(63,208,201,.28),transparent 65%);bottom:-180px;right:-90px;animation:drift2 24s ease-in-out infinite}
+.mesh .m3{width:340px;height:340px;background:radial-gradient(circle,rgba(14,165,160,.24),transparent 65%);top:30%;left:55%;animation:drift3 28s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,50px) scale(1.1)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-60px,-45px) scale(1.12)}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,35px) scale(1.08)}}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 85%);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 85%);pointer-events:none}
+.page-hero-inner{position:relative;z-index:1}
+.eyebrow{box-shadow:0 0 24px rgba(14,165,160,.15)}
+/* PREMIUM: scroll reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.07s}.reveal[data-d="2"]{transition-delay:.14s}.reveal[data-d="3"]{transition-delay:.21s}.reveal[data-d="4"]{transition-delay:.28s}.reveal[data-d="5"]{transition-delay:.35s}.reveal[data-d="6"]{transition-delay:.42s}
+/* PREMIUM: card depth */
+.lcard,.dcard,.diff,.step,.guide-item:not(.dim),.pop-card,.sim-card,.path-card,.stage-card{transition:border-color .25s,box-shadow .25s,transform .25s !important}
+.lcard:hover,.dcard:hover,.diff:hover,.guide-item:not(.dim):hover,.pop-card:hover,.path-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(11,25,41,.1)}
 </style></head><body>
 <nav class="nav">
   <a href="index.html" class="nav-brand">Future Ready <span>Finance</span></a>
@@ -182,18 +203,19 @@ a{text-decoration:none}
   <div class="mm-group"><button class="mm-top"><a href="resources.html">Resources</a></button></div>
   <div class="mm-group"><button class="mm-top"><a href="about.html">About</a></button></div>
 </div>
-<div class="page-hero"><div class="page-hero-inner">
+<div class="page-hero"><div class="mesh"><span class="m1"></span><span class="m2"></span><span class="m3"></span></div>
+  <div class="hero-dots"></div><div class="page-hero-inner">
   <span class="eyebrow">About</span>
   <h1>Why Future Ready Finance exists.</h1>
   <p>Most people make major financial decisions before they fully understand the consequences. We exist to change that.</p>
 </div></div>
 <div class="wrap">
-  <div class="sec-h">Our Mission</div>
+  <div class="sec-h reveal" data-d="1">Our Mission</div>
   <p>Help people make better financial decisions <strong>before the consequences become real.</strong></p>
   <p>Student loans. Credit cards. Apartments. Cars. Careers. Investing. Homes. Family planning. Future Ready Finance helps people learn these lessons before the mistakes become expensive.</p>
-  <div class="sec-h">What Makes Us Different</div>
+  <div class="sec-h reveal" data-d="2">What Makes Us Different</div>
   <p>Most financial education teaches vocabulary. Future Ready Finance teaches decision-making through life stages, real-world guides, calculators, and frameworks.</p>
-  <div class="diff-grid">
+  <div class="diff-grid reveal" data-d="2">
     <div class="diff"><div class="ic">🏁</div><h4>Life Stages</h4></div>
     <div class="diff"><div class="ic">🧭</div><h4>Real Decisions</h4></div>
     <div class="diff"><div class="ic">📖</div><h4>Practical Guides</h4></div>
@@ -201,14 +223,14 @@ a{text-decoration:none}
     <div class="diff"><div class="ic">📊</div><h4>Scorecards</h4></div>
     <div class="diff"><div class="ic">🗺️</div><h4>Frameworks</h4></div>
   </div>
-  <div class="sec-h">Who This Is For</div>
+  <div class="sec-h reveal" data-d="3">Who This Is For</div>
   <ul class="who">
     <li>High school students (ages 14–18)</li>
     <li>College students (ages 17–23)</li>
     <li>Early career professionals (ages 21–28)</li>
     <li>People establishing their financial lives (ages 26–35)</li>
   </ul>
-  <div class="cta-row">
+  <div class="cta-row reveal">
     <a href="start-here.html" class="btn btn-primary">Get Started</a>
     <a href="life-stages.html" class="btn btn-ghost">Choose Your Stage</a>
   </div>
@@ -252,6 +274,19 @@ a{text-decoration:none}
   document.addEventListener('click', function(){
     navItems.forEach(function(i){ i.classList.remove('open'); });
   });
+})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(function(el){ obs.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('in'); });
+  }
 })();
 </script>
 </body></html>
