@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banking Basics — Future Ready Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
+a{text-decoration:none}
+.nav{position:sticky;top:0;z-index:100;background:#0B1929;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px}
+.nav-brand{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none}.nav-brand span{color:#0EA5A0}
+.nav-links{display:flex;gap:.15rem;flex-wrap:wrap}
+.nav-link{color:rgba(255,255,255,.65);padding:.38rem .7rem;border-radius:6px;font-size:.8rem;font-weight:500;text-decoration:none}.nav-link:hover,.nav-link.active{color:#0EA5A0}
+.page-hero{background:#0B1929;padding:3.5rem 2rem 2.75rem}.page-hero-inner{max-width:1100px;margin:0 auto}
+.eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#0EA5A0;display:block;margin-bottom:.7rem}
+.page-hero h1{font-family:"Playfair Display",serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
+.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:600px;line-height:1.75}
+.content{max-width:760px;margin:0 auto;padding:3rem 2rem}
+.breadcrumb{font-size:.82rem;color:#888;margin-bottom:1.5rem}.breadcrumb a{color:#0EA5A0}
+h2{font-family:"Playfair Display",serif;font-size:1.35rem;font-weight:700;margin:2rem 0 .75rem;color:#0B1929}
+h3{font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:700;margin:1.5rem 0 .6rem;color:#0B1929}
+p{color:#64748B;font-size:.95rem;line-height:1.8;margin-bottom:1rem}
+ul,ol{padding-left:1.4rem;color:#64748B;font-size:.95rem;line-height:1.8;margin-bottom:1rem}
+li{margin-bottom:.4rem}strong{color:#0B1929}
+table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.875rem}
+th{background:#0B1929;color:#fff;padding:.65rem 1rem;text-align:left;font-weight:600}
+td{padding:.6rem 1rem;border-bottom:1px solid #E2E8F0;color:#64748B}
+tr:nth-child(even) td{background:#F5F7F6}
+.callout{background:rgba(14,165,160,.07);border:1px solid rgba(14,165,160,.22);border-left:4px solid #0EA5A0;border-radius:8px;padding:1.1rem 1.25rem;margin:1.5rem 0;font-size:.925rem;line-height:1.7;color:#0B1929}
+.callout strong{color:#0EA5A0}
+.rulebox{background:#0B1929;border-radius:10px;padding:1.35rem 1.5rem;margin:1.5rem 0}
+.rulebox h4{font-family:"Playfair Display",serif;font-size:1rem;color:#0EA5A0;margin-bottom:.5rem}
+.rulebox p{color:rgba(255,255,255,.75);font-size:.9rem;line-height:1.7;margin:0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.25rem 0}
+.card{background:#fff;border:1.5px solid #E2E8F0;border-radius:10px;padding:1.25rem}
+.card h4{color:#0EA5A0;font-size:.95rem;margin-bottom:.5rem;font-family:"Playfair Display",serif;font-weight:700}
+.card ul{padding-left:1.2rem;font-size:.85rem;color:#64748B;line-height:1.65}
+.card p{font-size:.85rem;color:#64748B;line-height:1.65;margin:0}
+.next-links{background:#F5F7F6;border-radius:12px;padding:1.5rem;margin-top:2.5rem}
+.next-links h4{font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;margin-bottom:1rem;color:#0B1929}
+.next-link-item{display:flex;align-items:center;justify-content:space-between;border:1px solid #E2E8F0;border-radius:8px;padding:.75rem 1rem;background:#fff;text-decoration:none;color:#0B1929;margin-bottom:.5rem;transition:border-color .15s}
+.next-link-item:hover{border-color:#0EA5A0}
+.next-link-item span{font-size:.875rem;font-weight:500}
+.next-arrow{color:#0EA5A0;font-weight:700}
+.btn-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:2.5rem}
+.btn{display:inline-block;background:#0EA5A0;color:#fff;padding:.6rem 1.4rem;border-radius:7px;font-weight:700;font-size:.875rem;text-decoration:none}
+.btn:hover{background:#0C7D79;color:#fff}
+.btn-outline{background:transparent;color:#0B1929;border:1.5px solid #E2E8F0}
+.btn-outline:hover{border-color:#0EA5A0;color:#0EA5A0}
+.legal{font-size:.75rem;color:#999;margin-top:2.5rem;border-top:1px solid #E2E8F0;padding-top:1.25rem;line-height:1.7}
+.footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
+.footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
+@media(max-width:640px){.nav-links{display:none}.content{padding:2rem 1.25rem}.grid2{grid-template-columns:1fr}}</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="../index.html" class="nav-brand">Future Ready <span>Finance</span></a>
+  <div class="nav-links">
+    <a href="../start-here.html" class="nav-link">Start Here</a>
+    <a href="../life-stages.html" class="nav-link">Life Stages</a>
+    <a href="../guides.html" class="nav-link active">Guides</a>
+    <a href="../big-decisions.html" class="nav-link">Big Decisions</a>
+    <a href="../simulations.html" class="nav-link">Simulations</a>
+    <a href="../resources.html" class="nav-link">Resources</a>
+    <a href="../about.html" class="nav-link">About</a>
+  </div>
+</nav>
+<div class="page-hero"><div class="page-hero-inner">
+  <span class="eyebrow">Guide · Banking &amp; Cash Management</span>
+  <h1>Banking Basics: Everything You Need Before Anything Else</h1>
+  <p>Before investing, budgeting, or building credit — you need a bank account set up correctly. Here's everything to know about where your money lives.</p>
+</div></div>
+<div class="content">
+  <p class="breadcrumb"><a href="../index.html">Home</a> › <a href="../guides.html">Guides</a> › Banking Basics</p>
+
+  <div class="callout"><strong>Start here if:</strong> You just got your first job, are opening your first account, or have a basic account but aren't sure you're using it right. This is the foundation everything else is built on.</div>
+
+  <h2>Checking vs Savings: What Each One Is Actually For</h2>
+  <p>Most people know they need both — but most people use them wrong. Here's the actual purpose of each account:</p>
+  <div class="grid2">
+    <div class="card">
+      <h4>Checking Account</h4>
+      <ul>
+        <li>Your everyday spending account</li>
+        <li>Receives your paycheck (direct deposit)</li>
+        <li>Pays bills, rent, subscriptions</li>
+        <li>Linked to your debit card</li>
+        <li>Should never have more than 1–2 months of expenses in it</li>
+        <li>Typically earns 0% interest — money here should be working, not sitting</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Savings Account</h4>
+      <ul>
+        <li>Your money storage account — not for daily spending</li>
+        <li>Emergency fund lives here</li>
+        <li>Short-term goals (car, travel, move)</li>
+        <li>Should earn interest — see HYSA below</li>
+        <li>Slightly harder to access by design (keeps you from spending it)</li>
+        <li>Keep 3–6 months of expenses here once you're employed</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>High-Yield Savings Accounts (HYSA): The Upgrade Most People Don't Know About</h2>
+  <p>A traditional savings account at a big bank (Chase, Bank of America, Wells Fargo) typically pays 0.01% interest per year. That means 0,000 earns  annually.</p>
+  <p>A high-yield savings account at an online bank currently pays 4–5% per year. That same 0,000 earns 00–500 annually — for doing absolutely nothing different.</p>
+  <div class="rulebox">
+    <h4>HYSA vs Traditional Savings — Real Numbers</h4>
+    <p>,000 emergency fund sitting in a traditional savings account at 0.01% APY: earns /bin/sh.50/year.<br><br>
+    Same ,000 in a high-yield savings account at 4.5% APY: earns 25/year.<br><br>
+    The money is equally safe (both FDIC insured up to 50,000). The only difference is where you keep it. Popular HYSAs: Marcus by Goldman Sachs, Ally Bank, SoFi, and Marcus by Goldman Sachs.</p>
+  </div>
+
+  <h2>Banks vs Credit Unions: What's the Difference?</h2>
+  <p><strong>Banks</strong> are for-profit companies owned by shareholders. They make money from fees and interest. Large national banks offer convenience — more ATMs, more branches, better apps.</p>
+  <p><strong>Credit unions</strong> are nonprofit cooperatives owned by their members (you). Because they're not profit-driven, they typically offer lower loan rates, higher savings rates, fewer fees, and better customer service. The downside: fewer locations and sometimes older technology.</p>
+  <ul>
+    <li>Most credit unions require you to qualify by living in a certain area, working for a certain employer, or belonging to a certain group — but many community credit unions are open to anyone in the area</li>
+    <li>Credit unions are insured by NCUA instead of FDIC — equally safe, up to 50,000</li>
+    <li>For a first account: either works. For loans later in life (car, mortgage), always check the credit union rate first</li>
+  </ul>
+
+  <h2>Overdrafts: The Fee That Catches Everyone Once</h2>
+  <p>An overdraft happens when you spend more money than is in your account. Banks typically charge 5–35 per transaction when this happens. If you buy three things on a day your account is empty, that's 5–105 in fees — for purchases that might total 0.</p>
+  <ul>
+    <li><strong>Opt out of overdraft "protection"</strong> — it's not protection, it's a fee trap. When opted out, your card is simply declined if you have no money, which is the better outcome</li>
+    <li><strong>Set up low-balance alerts</strong> — most banking apps let you get a text or notification when your balance drops below 0 or 00</li>
+    <li><strong>Link a savings account as backup</strong> — if you do overdraft, many banks will pull from linked savings for free instead of charging a fee</li>
+    <li><strong>Know your real balance</strong> — pending transactions may not show immediately. Your "available balance" is what you can actually spend</li>
+  </ul>
+
+  <h2>Direct Deposit: Set This Up Before Anything Else</h2>
+  <p>Direct deposit means your employer sends your paycheck electronically straight to your bank account — no waiting for a check, no trip to the bank, money available the same day it's sent. Here's how to set it up:</p>
+  <ol>
+    <li>Log into your bank account and find your <strong>routing number</strong> (9 digits, identifies your bank) and <strong>account number</strong> (identifies your specific account)</li>
+    <li>Give both numbers to your employer's HR or payroll department — usually a form called "Direct Deposit Authorization"</li>
+    <li>Takes 1–2 pay cycles to activate. Until then you'll receive a paper check</li>
+  </ol>
+  <div class="callout"><strong>Pro tip:</strong> Many banks unlock features, waive fees, or give you earlier access to paychecks when you set up direct deposit. It's almost always worth doing immediately.</div>
+
+  <h2>Automating Your Money: The Most Powerful Habit</h2>
+  <p>The goal is to make good financial behavior require zero willpower. Set these up once and they run forever:</p>
+  <ul>
+    <li><strong>Automatic savings transfer:</strong> The day your paycheck hits, automatically move a set amount to savings. Start with 5 if that's all you can manage — the habit matters more than the amount</li>
+    <li><strong>Automatic bill payments:</strong> Any bill with a fixed amount (phone, internet, subscriptions) should be on autopay — eliminates late fees and stress</li>
+    <li><strong>Variable bills with alerts:</strong> Bills that change monthly (utilities, credit cards) should have email alerts instead of autopay — so you see the number before it's charged</li>
+  </ul>
+
+  <h2>What You Need to Open an Account</h2>
+  <ul>
+    <li>Government-issued photo ID (driver's license, state ID, or passport)</li>
+    <li>Social Security number</li>
+    <li>A small opening deposit (some accounts require 5–100; many online banks require /bin/sh)</li>
+    <li>If under 18: a parent or guardian will need to be a joint account holder at most banks</li>
+  </ul>
+
+  <div class="next-links">
+    <h4>Read These Next</h4>
+    <a class="next-link-item" href="credit-basics.html"><span>How Credit Scores Work and How to Build One</span><span class="next-arrow">→</span></a>
+    <a class="next-link-item" href="taxes-101.html"><span>Taxes 101: How They Work and What You Actually Owe</span><span class="next-arrow">→</span></a>
+    <a class="next-link-item" href="../decisions/investing.html"><span>Should I Start Investing Now?</span><span class="next-arrow">→</span></a>
+  </div>
+
+  <div class="btn-row">
+    <a href="../guides.html" class="btn-outline btn">Back to Guides</a>
+  </div>
+  <p class="legal">Educational content only. Not financial, legal, tax, or investment advice.</p>
+</div>
+<footer class="footer"><a href="../index.html">Home</a><a href="../guides.html">Guides</a><a href="../big-decisions.html">Big Decisions</a><br><br>Educational content only. Not financial, legal, tax, or investment advice.</footer>
+</body></html>
