@@ -23,9 +23,9 @@ a{text-decoration:none}
 .panel .ph{font-size:.78rem;color:#94a3b8;margin-bottom:1.25rem}
 .row{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.7rem}
 .row label{font-size:.82rem;color:#0B1929;font-weight:500;flex:1}
-.pw{position:relative;width:135px}
-.pw .pfx{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:.85rem;font-weight:600;pointer-events:none;z-index:1}
-input[type=number]{width:100%;padding:.5rem .65rem .5rem 1.9rem;border:1.5px solid #E2E8F0;border-radius:7px;font-size:.85rem;font-family:"DM Sans",sans-serif;color:#0B1929;outline:none;transition:border-color .15s}
+.pw{display:flex;align-items:stretch;width:135px}
+.pw .pfx{display:flex;align-items:center;justify-content:center;min-width:2rem;padding:0 .55rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-right:none;border-radius:7px 0 0 7px;color:#64748B;font-size:.9rem;font-weight:700;flex-shrink:0}
+input[type=number]{width:100%;padding:.5rem .65rem;border:1.5px solid #E2E8F0;border-radius:0 7px 7px 0;border-left:none;font-size:.85rem;font-family:"DM Sans",sans-serif;color:#0B1929;outline:none;transition:border-color .15s}
 input[type=number]:focus{border-color:#0EA5A0}
 .subtotal{display:flex;justify-content:space-between;border-top:1.5px solid #E2E8F0;margin-top:.85rem;padding-top:.85rem;font-weight:700;font-size:.9rem}
 .subtotal.assets{color:#059669}
@@ -80,22 +80,22 @@ input[type=number]:focus{border-color:#0EA5A0}
     <div class="panel">
       <h2>What You Own</h2>
       <p class="ph">Assets — cash, investments, property, and valuables</p>
-      <div class="row"><label>Cash &amp; checking</label><div class="pw"><span class="pfx">$</span><input type="number" id="cash" value="2000" min="0" step="100"></div></div>
-      <div class="row"><label>Savings</label><div class="pw"><span class="pfx">$</span><input type="number" id="savings" value="5000" min="0" step="100"></div></div>
-      <div class="row"><label>Investments &amp; retirement</label><div class="pw"><span class="pfx">$</span><input type="number" id="investments" value="10000" min="0" step="100"></div></div>
-      <div class="row"><label>Home / real estate</label><div class="pw"><span class="pfx">$</span><input type="number" id="property" value="0" min="0" step="1000"></div></div>
-      <div class="row"><label>Vehicles</label><div class="pw"><span class="pfx">$</span><input type="number" id="vehicles" value="8000" min="0" step="500"></div></div>
-      <div class="row"><label>Other valuables</label><div class="pw"><span class="pfx">$</span><input type="number" id="other-assets" value="0" min="0" step="100"></div></div>
+      <div class="row"><label>Cash &amp; checking</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="cash" min="0" step="100"></div></div>
+      <div class="row"><label>Savings</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="savings" min="0" step="100"></div></div>
+      <div class="row"><label>Investments &amp; retirement</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="investments" min="0" step="100"></div></div>
+      <div class="row"><label>Home / real estate</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="property" min="0" step="1000"></div></div>
+      <div class="row"><label>Vehicles</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="vehicles" min="0" step="500"></div></div>
+      <div class="row"><label>Other valuables</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="other-assets" min="0" step="100"></div></div>
       <div class="subtotal assets"><span>Total Assets</span><span id="total-assets">$0</span></div>
     </div>
     <div class="panel">
       <h2>What You Owe</h2>
       <p class="ph">Debts — loans, balances, and money owed</p>
-      <div class="row"><label>Credit card debt</label><div class="pw"><span class="pfx">$</span><input type="number" id="credit-cards" value="1500" min="0" step="100"></div></div>
-      <div class="row"><label>Student loans</label><div class="pw"><span class="pfx">$</span><input type="number" id="student-loans" value="18000" min="0" step="500"></div></div>
-      <div class="row"><label>Car loans</label><div class="pw"><span class="pfx">$</span><input type="number" id="car-loans" value="6000" min="0" step="500"></div></div>
-      <div class="row"><label>Mortgage</label><div class="pw"><span class="pfx">$</span><input type="number" id="mortgage" value="0" min="0" step="1000"></div></div>
-      <div class="row"><label>Other debt</label><div class="pw"><span class="pfx">$</span><input type="number" id="other-debt" value="0" min="0" step="100"></div></div>
+      <div class="row"><label>Credit card debt</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="credit-cards" min="0" step="100"></div></div>
+      <div class="row"><label>Student loans</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="student-loans" min="0" step="500"></div></div>
+      <div class="row"><label>Car loans</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="car-loans" min="0" step="500"></div></div>
+      <div class="row"><label>Mortgage</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="mortgage" min="0" step="1000"></div></div>
+      <div class="row"><label>Other debt</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="other-debt" min="0" step="100"></div></div>
       <div class="subtotal debts"><span>Total Debts</span><span id="total-debts">$0</span></div>
     </div>
   </div>
