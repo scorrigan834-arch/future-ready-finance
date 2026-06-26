@@ -4,66 +4,116 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Future Ready Finance — Learn the financial lessons most people discover too late</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"DM Sans",sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{text-decoration:none}
-.nav{position:sticky;top:0;z-index:100;background:#0B1929;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px;box-shadow:0 1px 0 rgba(255,255,255,.06)}
-.nav-brand{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none}.nav-brand span{color:#0EA5A0}
-.nav-links{display:flex;gap:.15rem;flex-wrap:wrap}
-.nav-link{color:rgba(255,255,255,.65);padding:.38rem .7rem;border-radius:6px;font-size:.8rem;font-weight:500;text-decoration:none;transition:color .15s}.nav-link:hover{color:#0EA5A0}
-.hero{background:#0B1929;padding:5.5rem 2rem 4.5rem;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;top:-100px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.13) 0%,transparent 70%);pointer-events:none}
-.eyebrow{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#0EA5A0;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.28);padding:.28rem .85rem;border-radius:999px;margin-bottom:1.5rem}
-.hero h1{font-family:"Playfair Display",serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;color:#fff;line-height:1.08;margin-bottom:1.25rem;letter-spacing:-.02em}
-.hero h1 em{color:#0EA5A0;font-style:italic}
-.hero-sub{max-width:520px;margin:0 auto 2.25rem;color:rgba(255,255,255,.65);font-size:1.05rem;line-height:1.75}
-.hero-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-block;font-family:"DM Sans",sans-serif;font-weight:700;font-size:.875rem;border:none;border-radius:7px;cursor:pointer;padding:.7rem 1.6rem;text-decoration:none;transition:background .15s,transform .15s}
-.btn-primary{background:#0EA5A0;color:#fff}.btn-primary:hover{background:#0C7D79;color:#fff;transform:translateY(-1px)}
-.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25)}.btn-ghost:hover{background:rgba(255,255,255,.18)}
-.section{padding:4rem 2rem}.section-inner{max-width:1100px;margin:0 auto}
-.section-light{background:#EEF2F1}.section-dark{background:#0B1929}
-.section-label{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#0EA5A0;display:block;margin-bottom:.6rem}
-.section-title{font-family:"Playfair Display",serif;font-size:clamp(1.5rem,3vw,2.1rem);font-weight:700;line-height:1.2;margin-bottom:.5rem;color:#0B1929}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(11,25,41,.92);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;border-bottom:1px solid rgba(255,255,255,.07)}
+.nav-brand{font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:-.01em}.nav-brand span{color:#0EA5A0}
+.nav-links{display:flex;gap:.1rem;flex-wrap:wrap}
+.nav-link{color:rgba(255,255,255,.62);padding:.4rem .8rem;border-radius:7px;font-size:.8rem;font-weight:500;transition:color .18s,background .18s}
+.nav-link:hover{color:#0EA5A0;background:rgba(14,165,160,.08)}
+
+/* HERO */
+.hero{background:#0B1929;padding:6.5rem 2rem 5rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-160px;right:-120px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.16) 0%,transparent 68%);pointer-events:none}
+.hero::after{content:"";position:absolute;bottom:-200px;left:-150px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.09) 0%,transparent 70%);pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.8),transparent 75%);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.8),transparent 75%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:780px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#0EA5A0;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.3);padding:.32rem .95rem;border-radius:999px;margin-bottom:1.75rem}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:#0EA5A0;box-shadow:0 0 0 3px rgba(14,165,160,.25)}
+.hero h1{font-family:"Playfair Display",serif;font-size:clamp(2.3rem,5.2vw,4rem);font-weight:900;line-height:1.06;margin-bottom:1.4rem;letter-spacing:-.025em;color:#fff;background:linear-gradient(180deg,#ffffff 0%,#cfe8e6 140%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero h1 em{font-style:italic;background:linear-gradient(135deg,#0EA5A0,#3fd0c9);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{max-width:540px;margin:0 auto 2.4rem;color:rgba(255,255,255,.66);font-size:1.08rem;line-height:1.75}
+.hero-ctas{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.75rem}
+.btn{display:inline-block;font-family:"DM Sans",sans-serif;font-weight:700;font-size:.9rem;border:none;border-radius:9px;cursor:pointer;padding:.8rem 1.7rem;transition:background .18s,transform .18s,box-shadow .18s}
+.btn-primary{background:#0EA5A0;color:#fff;box-shadow:0 6px 20px rgba(14,165,160,.32)}
+.btn-primary:hover{background:#0C7D79;color:#fff;transform:translateY(-2px);box-shadow:0 10px 28px rgba(14,165,160,.42)}
+.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.22)}
+.btn-ghost:hover{background:rgba(255,255,255,.16);transform:translateY(-2px)}
+.hero-stats{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;padding-top:.5rem}
+.hero-stat{text-align:center}
+.hero-stat .num{font-family:"Playfair Display",serif;font-size:1.7rem;font-weight:700;color:#fff;line-height:1}
+.hero-stat .lbl{display:block;margin-top:.35rem;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.hero-stat-divider{width:1px;background:rgba(255,255,255,.12);align-self:stretch}
+
+/* SECTIONS */
+.section{padding:4.5rem 2rem}.section-inner{max-width:1100px;margin:0 auto}
+.section-light{background:#ECF1F0}.section-dark{background:#0B1929}
+.section-head{margin-bottom:2.5rem}
+.section-label{display:inline-flex;align-items:center;gap:.55rem;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#0EA5A0;margin-bottom:.85rem}
+.section-label::before{content:"";width:22px;height:2px;background:#0EA5A0;border-radius:2px}
+.section-title{font-family:"Playfair Display",serif;font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:700;line-height:1.18;margin-bottom:.55rem;color:#0B1929;letter-spacing:-.02em}
 .section-title-light{color:#fff}
-.section-sub{color:#64748B;font-size:.95rem;margin-bottom:2.25rem}
-.stage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem}
-.stage-card{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:1.75rem 1.5rem;display:flex;flex-direction:column;gap:.4rem;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s,transform .2s}
-.stage-card:hover{border-color:#0EA5A0;box-shadow:0 6px 24px rgba(14,165,160,.12);transform:translateY(-3px)}
-.stage-emoji{font-size:1.9rem;display:block;margin-bottom:.3rem}
-.stage-card h3{font-family:"Playfair Display",serif;font-size:1.2rem;font-weight:700;color:#0B1929}
-.stage-age{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#0EA5A0}
-.stage-card p{color:#64748B;font-size:.875rem;line-height:1.65;flex:1;margin-top:.2rem}
-.stage-cta{color:#0EA5A0;font-weight:700;font-size:.83rem;margin-top:.5rem}
-.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.1rem}
-.card{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:1.5rem;display:flex;flex-direction:column;gap:.5rem}
-.card h4{font-family:"Playfair Display",serif;font-weight:700;font-size:1.05rem;line-height:1.3;color:#0B1929}
+.section-sub{color:#64748B;font-size:.98rem;max-width:540px}
+
+/* STAGE CARDS */
+.stage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:1.25rem}
+.stage-card{position:relative;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.85rem 1.6rem;display:flex;flex-direction:column;gap:.4rem;color:inherit;overflow:hidden;transition:border-color .22s,box-shadow .22s,transform .22s}
+.stage-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0EA5A0,#3fd0c9);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.stage-card:hover{border-color:rgba(14,165,160,.4);box-shadow:0 14px 40px rgba(11,25,41,.1);transform:translateY(-4px)}
+.stage-card:hover::before{transform:scaleX(1)}
+.stage-index{position:absolute;top:1.3rem;right:1.5rem;font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:700;color:#E2E8F0;transition:color .22s}
+.stage-card:hover .stage-index{color:rgba(14,165,160,.5)}
+.stage-emoji{font-size:2rem;display:block;margin-bottom:.4rem}
+.stage-card h3{font-family:"Playfair Display",serif;font-size:1.25rem;font-weight:700;color:#0B1929}
+.stage-age{font-size:.71rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#0EA5A0}
+.stage-card p{color:#64748B;font-size:.875rem;line-height:1.65;flex:1;margin-top:.3rem}
+.stage-cta{color:#0EA5A0;font-weight:700;font-size:.83rem;margin-top:.65rem;display:inline-flex;align-items:center;gap:.3rem;transition:gap .2s}
+.stage-card:hover .stage-cta{gap:.6rem}
+
+/* POPULAR CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:1.2rem}
+.card{position:relative;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.65rem;display:flex;flex-direction:column;gap:.6rem;transition:border-color .22s,box-shadow .22s,transform .22s}
+.card:hover{border-color:rgba(14,165,160,.4);box-shadow:0 14px 40px rgba(11,25,41,.1);transform:translateY(-4px)}
+.card h4{font-family:"Playfair Display",serif;font-weight:700;font-size:1.1rem;line-height:1.3;color:#0B1929}
 .card p{color:#64748B;font-size:.875rem;line-height:1.65;flex:1}
-.card-link{color:#0EA5A0;font-weight:700;font-size:.83rem;text-decoration:none}
-.badge{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.18rem .6rem;border-radius:999px;background:rgba(14,165,160,.1);color:#0EA5A0;border:1px solid rgba(14,165,160,.22)}
-.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.1rem}
-.why-card{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:1.5rem}
-.why-card-dark{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.5rem}
-.why-icon{font-size:1.6rem;margin-bottom:.7rem;display:block}
-.why-card h4,.why-card-dark h4{font-weight:700;font-size:.95rem;margin-bottom:.35rem;color:#0B1929}
-.why-card-dark h4{color:#fff}
+.card-link{color:#0EA5A0;font-weight:700;font-size:.83rem;display:inline-flex;align-items:center;gap:.3rem;transition:gap .2s}
+.card:hover .card-link{gap:.6rem}
+.badge{display:inline-block;width:fit-content;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.22rem .7rem;border-radius:999px;background:rgba(14,165,160,.1);color:#0C7D79;border:1px solid rgba(14,165,160,.24)}
+
+/* WHY / EXPLORE GRID */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(218px,1fr));gap:1.2rem}
+.why-card{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.7rem;transition:border-color .22s,box-shadow .22s,transform .22s}
+.why-card:hover{border-color:rgba(14,165,160,.4);box-shadow:0 14px 40px rgba(11,25,41,.08);transform:translateY(-3px)}
+.why-icon-wrap{width:48px;height:48px;border-radius:12px;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.2);display:flex;align-items:center;justify-content:center;font-size:1.45rem;margin-bottom:1rem}
+.why-card h4{font-weight:700;font-size:1rem;margin-bottom:.4rem;color:#0B1929}
 .why-card p{color:#64748B;font-size:.875rem;line-height:1.65}
-.why-card-dark p{color:rgba(255,255,255,.6);font-size:.875rem;line-height:1.65}
-.why-card a,.why-card-dark a{color:#0EA5A0;font-weight:700;font-size:.83rem;text-decoration:none;display:inline-block;margin-top:.65rem}
-.banner{background:rgba(255,255,255,.04);border:1px solid rgba(14,165,160,.2);border-radius:14px;padding:2.5rem 2rem}
-.banner h3{font-family:"Playfair Display",serif;font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:.65rem}
-.banner p{color:rgba(255,255,255,.7);font-size:.95rem;line-height:1.75;max-width:520px;margin-bottom:1.25rem}
-.banner-btns{display:flex;gap:1rem;flex-wrap:wrap}
-.footer{background:#0B1929;padding:3rem 2rem 2rem;color:rgba(255,255,255,.55)}
+.why-card a{color:#0EA5A0;font-weight:700;font-size:.83rem;display:inline-flex;align-items:center;gap:.3rem;margin-top:.8rem;transition:gap .2s}
+.why-card:hover a{gap:.6rem}
+
+/* CLOSING BANNER */
+.banner{position:relative;background:linear-gradient(135deg,rgba(14,165,160,.12),rgba(14,165,160,.03));border:1px solid rgba(14,165,160,.25);border-radius:18px;padding:3rem 2.5rem;overflow:hidden}
+.banner::before{content:"";position:absolute;top:-80px;right:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.14) 0%,transparent 70%);pointer-events:none}
+.banner-inner{position:relative;z-index:1}
+.banner h3{font-family:"Playfair Display",serif;font-size:clamp(1.5rem,3vw,1.9rem);font-weight:700;color:#fff;margin-bottom:.75rem;letter-spacing:-.01em}
+.banner p{color:rgba(255,255,255,.72);font-size:1rem;line-height:1.75;max-width:540px;margin-bottom:1.5rem}
+.banner-btns{display:flex;gap:.9rem;flex-wrap:wrap}
+
+/* FOOTER */
+.footer{background:#0B1929;padding:3.5rem 2rem 2rem;color:rgba(255,255,255,.55);border-top:1px solid rgba(255,255,255,.06)}
 .footer-inner{max-width:1100px;margin:0 auto}
-.footer-brand{font-family:"Playfair Display",serif;font-size:1.1rem;color:#fff;font-weight:700;margin-bottom:.4rem}.footer-brand span{color:#0EA5A0}
-.footer-tagline{font-size:.83rem;margin-bottom:1.75rem;line-height:1.6}
-.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.75rem}
-.footer-links a{color:rgba(255,255,255,.5);font-size:.8rem;text-decoration:none;transition:color .15s}.footer-links a:hover{color:#0EA5A0}
-.footer-legal{font-size:.72rem;border-top:1px solid rgba(255,255,255,.08);padding-top:1.25rem;line-height:1.7}
-@media(max-width:640px){.nav-links{display:none}.hero,.section{padding-left:1.25rem;padding-right:1.25rem}.stage-grid,.card-grid,.why-grid{grid-template-columns:1fr}}
+.footer-top{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-bottom:2rem}
+.footer-brand{font-family:"Playfair Display",serif;font-size:1.2rem;color:#fff;font-weight:700;margin-bottom:.5rem}.footer-brand span{color:#0EA5A0}
+.footer-tagline{font-size:.84rem;line-height:1.65;max-width:320px}
+.footer-links{display:flex;gap:1.4rem;flex-wrap:wrap;align-content:flex-start}
+.footer-links a{color:rgba(255,255,255,.5);font-size:.82rem;transition:color .15s}.footer-links a:hover{color:#0EA5A0}
+.footer-legal{font-size:.73rem;border-top:1px solid rgba(255,255,255,.08);padding-top:1.5rem;line-height:1.7}
+
+@media(max-width:640px){
+  .nav-links{display:none}
+  .hero{padding:4.5rem 1.25rem 3.5rem}
+  .section{padding:3.25rem 1.25rem}
+  .stage-grid,.card-grid,.why-grid{grid-template-columns:1fr}
+  .hero-stat-divider{display:none}
+  .hero-stats{gap:1.75rem}
+  .banner{padding:2.25rem 1.5rem}
+  .footer-top{flex-direction:column;gap:1.5rem}
+}
 </style>
 </head>
 <body>
@@ -82,48 +132,64 @@ a{text-decoration:none}
 </nav>
 
 <div class="hero">
-  <span class="eyebrow">Free · No Signup · Ages 14–35</span>
-  <h1>Learn the financial lessons<br>most people discover <em>too late.</em></h1>
-  <p class="hero-sub">Future Ready Finance helps students, young adults, and early professionals make smarter money decisions — before the consequences become real.</p>
-  <div class="hero-ctas">
-    <a href="start-here.html" class="btn btn-primary">Get Started</a>
-    <a href="life-stages.html" class="btn btn-ghost">Choose Your Stage</a>
-    <a href="big-decisions.html" class="btn btn-ghost">Explore Decisions</a>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <span class="eyebrow"><span class="dot"></span>Free · No Signup · Ages 14–35</span>
+    <h1>Learn the financial lessons<br>most people discover <em>too late.</em></h1>
+    <p class="hero-sub">Future Ready Finance helps students, young adults, and early professionals make smarter money decisions — before the consequences become real.</p>
+    <div class="hero-ctas">
+      <a href="start-here.html" class="btn btn-primary">Get Started</a>
+      <a href="life-stages.html" class="btn btn-ghost">Choose Your Stage</a>
+      <a href="big-decisions.html" class="btn btn-ghost">Explore Decisions</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">100%</span><span class="lbl">Free Forever</span></div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat"><span class="num">Zero</span><span class="lbl">Signup Required</span></div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat"><span class="num">14–35</span><span class="lbl">Built For Your Stage</span></div>
+    </div>
   </div>
 </div>
 
 <div class="section">
   <div class="section-inner">
-    <span class="section-label">Life Stages</span>
-    <div class="section-title">Choose Your Path</div>
-    <p class="section-sub">The right financial lessons for where you are today.</p>
+    <div class="section-head">
+      <span class="section-label">Life Stages</span>
+      <div class="section-title">Choose Your Path</div>
+      <p class="section-sub">The right financial lessons for where you are today.</p>
+    </div>
     <div class="stage-grid">
-      <a href="paths/high-school.html" class="stage-card"><span class="stage-emoji">🎓</span><h3>High School</h3><span class="stage-age">Ages 14–18 · Preparing for Adulthood</span><p>First jobs, college decisions, student loans, budgeting basics, and financial confidence.</p><div class="stage-cta">Start Path →</div></a>
-      <a href="paths/college.html" class="stage-card"><span class="stage-emoji">📚</span><h3>College</h3><span class="stage-age">Ages 17–23 · Navigating Independence</span><p>Student loans, credit cards, apartment living, internships, budgeting, and building credit.</p><div class="stage-cta">Start Path →</div></a>
-      <a href="paths/early-career.html" class="stage-card"><span class="stage-emoji">🚀</span><h3>Early Career</h3><span class="stage-age">Ages 21–28 · Building Your Foundation</span><p>First full-time job, benefits, retirement accounts, investing, emergency funds, and salary growth.</p><div class="stage-cta">Start Path →</div></a>
-      <a href="paths/establishing.html" class="stage-card"><span class="stage-emoji">🏡</span><h3>Establishing</h3><span class="stage-age">Ages 26–35 · Building Life &amp; Wealth</span><p>Earning more, correcting past mistakes, buying a home, growing a family, and planning ahead.</p><div class="stage-cta">Start Path →</div></a>
+      <a href="paths/high-school.html" class="stage-card"><span class="stage-index">01</span><span class="stage-emoji">🎓</span><h3>High School</h3><span class="stage-age">Ages 14–18 · Preparing for Adulthood</span><p>First jobs, college decisions, student loans, budgeting basics, and financial confidence.</p><div class="stage-cta">Start Path →</div></a>
+      <a href="paths/college.html" class="stage-card"><span class="stage-index">02</span><span class="stage-emoji">📚</span><h3>College</h3><span class="stage-age">Ages 17–23 · Navigating Independence</span><p>Student loans, credit cards, apartment living, internships, budgeting, and building credit.</p><div class="stage-cta">Start Path →</div></a>
+      <a href="paths/early-career.html" class="stage-card"><span class="stage-index">03</span><span class="stage-emoji">🚀</span><h3>Early Career</h3><span class="stage-age">Ages 21–28 · Building Your Foundation</span><p>First full-time job, benefits, retirement accounts, investing, emergency funds, and salary growth.</p><div class="stage-cta">Start Path →</div></a>
+      <a href="paths/establishing.html" class="stage-card"><span class="stage-index">04</span><span class="stage-emoji">🏡</span><h3>Establishing</h3><span class="stage-age">Ages 26–35 · Building Life &amp; Wealth</span><p>Earning more, correcting past mistakes, buying a home, growing a family, and planning ahead.</p><div class="stage-cta">Start Path →</div></a>
     </div>
   </div>
 </div>
 
-<div class="section section-light" style="padding-top:3rem;padding-bottom:3rem">
+<div class="section section-light">
   <div class="section-inner">
-    <span class="section-label">Why Future Ready Finance</span>
-    <div class="section-title">Built differently.</div>
-    <p class="section-sub">Most financial education teaches definitions. We teach decisions.</p>
+    <div class="section-head">
+      <span class="section-label">Why Future Ready Finance</span>
+      <div class="section-title">Built differently.</div>
+      <p class="section-sub">Most financial education teaches definitions. We teach decisions.</p>
+    </div>
     <div class="why-grid">
-      <div class="why-card"><span class="why-icon">🎯</span><h4>Decision Focused</h4><p>Learn through real financial decisions you're actually facing — not textbook vocabulary.</p></div>
-      <div class="why-card"><span class="why-icon">🚀</span><h4>Life Stage Based</h4><p>Content matched to where you are today and the decisions coming next for you.</p></div>
-      <div class="why-card"><span class="why-icon">📈</span><h4>Built for the Future</h4><p>Make better choices before they become expensive lessons. That's the entire point.</p></div>
+      <div class="why-card"><div class="why-icon-wrap">🎯</div><h4>Decision Focused</h4><p>Learn through real financial decisions you're actually facing — not textbook vocabulary.</p></div>
+      <div class="why-card"><div class="why-icon-wrap">🚀</div><h4>Life Stage Based</h4><p>Content matched to where you are today and the decisions coming next for you.</p></div>
+      <div class="why-card"><div class="why-icon-wrap">📈</div><h4>Built for the Future</h4><p>Make better choices before they become expensive lessons. That's the entire point.</p></div>
     </div>
   </div>
 </div>
 
 <div class="section">
   <div class="section-inner">
-    <span class="section-label">Most Popular</span>
-    <div class="section-title">Start with the decisions that matter most.</div>
-    <p class="section-sub">Real guides for real questions.</p>
+    <div class="section-head">
+      <span class="section-label">Most Popular</span>
+      <div class="section-title">Start with the decisions that matter most.</div>
+      <p class="section-sub">Real guides for real questions.</p>
+    </div>
     <div class="card-grid">
       <div class="card"><span class="badge">🎓 Student Debt</span><h4>How Much Student Debt Is Too Much?</h4><p>Understand how borrowing decisions affect your future flexibility.</p><a href="decisions/student-debt.html" class="card-link">Read Guide →</a></div>
       <div class="card"><span class="badge">🏠 Housing</span><h4>Can I Afford This Apartment?</h4><p>Evaluate the full cost of living independently — not just rent.</p><a href="decisions/apartment.html" class="card-link">Read Guide →</a></div>
@@ -132,27 +198,31 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="section section-light" style="padding-top:3rem;padding-bottom:3rem">
+<div class="section section-light">
   <div class="section-inner">
-    <span class="section-label">Explore More</span>
-    <div class="section-title">Everything is free.</div>
-    <p class="section-sub">No signup, no paywall, no catch.</p>
+    <div class="section-head">
+      <span class="section-label">Explore More</span>
+      <div class="section-title">Everything is free.</div>
+      <p class="section-sub">No signup, no paywall, no catch.</p>
+    </div>
     <div class="why-grid">
-      <div class="why-card"><span class="why-icon">🧭</span><h4>Big Decisions</h4><p>The major financial choices that shape your future.</p><a href="big-decisions.html">Explore →</a></div>
-      <div class="why-card"><span class="why-icon">📚</span><h4>Guides</h4><p>Practical guides organized around real-life money questions.</p><a href="guides.html">View Guides →</a></div>
-      <div class="why-card"><span class="why-icon">🔢</span><h4>Calculators</h4><p>Enter your real numbers. See exactly how they play out over time.</p><a href="simulations.html">Try Now →</a></div>
+      <div class="why-card"><div class="why-icon-wrap">🧭</div><h4>Big Decisions</h4><p>The major financial choices that shape your future.</p><a href="big-decisions.html">Explore →</a></div>
+      <div class="why-card"><div class="why-icon-wrap">📚</div><h4>Guides</h4><p>Practical guides organized around real-life money questions.</p><a href="guides.html">View Guides →</a></div>
+      <div class="why-card"><div class="why-icon-wrap">🔢</div><h4>Calculators</h4><p>Enter your real numbers. See exactly how they play out over time.</p><a href="simulations.html">Try Now →</a></div>
     </div>
   </div>
-  
 </div>
+
 <div class="section section-dark">
   <div class="section-inner">
     <div class="banner">
-      <h3>Ready to become Future Ready?</h3>
-      <p>Start with your life stage, explore the decisions ahead of you, and learn the lessons most people discover too late.</p>
-      <div class="banner-btns">
-        <a href="start-here.html" class="btn btn-primary">Start Here</a>
-        <a href="life-stages.html" class="btn btn-ghost">Choose Your Path</a>
+      <div class="banner-inner">
+        <h3>Ready to become Future Ready?</h3>
+        <p>Start with your life stage, explore the decisions ahead of you, and learn the lessons most people discover too late.</p>
+        <div class="banner-btns">
+          <a href="start-here.html" class="btn btn-primary">Start Here</a>
+          <a href="life-stages.html" class="btn btn-ghost">Choose Your Path</a>
+        </div>
       </div>
     </div>
   </div>
@@ -160,10 +230,14 @@ a{text-decoration:none}
 
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-brand">Future Ready <span>Finance</span></div>
-    <div class="footer-tagline">Helping people make better financial decisions before the consequences become real.<br>Free · No signup · Ages 14–35</div>
-    <div class="footer-links">
-      <a href="start-here.html">Start Here</a><a href="life-stages.html">Life Stages</a><a href="guides.html">Guides</a><a href="big-decisions.html">Big Decisions</a><a href="simulations.html">Simulations</a><a href="resources.html">Resources</a><a href="about.html">About</a>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Future Ready <span>Finance</span></div>
+        <div class="footer-tagline">Helping people make better financial decisions before the consequences become real.<br>Free · No signup · Ages 14–35</div>
+      </div>
+      <div class="footer-links">
+        <a href="start-here.html">Start Here</a><a href="life-stages.html">Life Stages</a><a href="guides.html">Guides</a><a href="big-decisions.html">Big Decisions</a><a href="simulations.html">Simulations</a><a href="resources.html">Resources</a><a href="about.html">About</a>
+      </div>
     </div>
     <div class="footer-legal">Educational content only. Not financial, legal, tax, or investment advice.</div>
   </div>
