@@ -23,11 +23,11 @@ a{text-decoration:none}
 .field{margin-bottom:1.2rem}
 .field label{display:block;font-size:.8rem;font-weight:700;color:#0B1929;margin-bottom:.3rem}
 .hint{font-size:.73rem;color:#94a3b8;display:block;margin-bottom:.35rem}
-.pw{position:relative}
-.pw .pfx{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:.9rem;font-weight:600;pointer-events:none;z-index:1}
+.pw{display:flex;align-items:stretch}
+.pw .pfx{display:flex;align-items:center;justify-content:center;min-width:2.4rem;padding:0 .7rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-right:none;border-radius:8px 0 0 8px;color:#64748B;font-size:.95rem;font-weight:700;flex-shrink:0}
 input[type=number]{width:100%;padding:.6rem .85rem;border:1.5px solid #E2E8F0;border-radius:8px;font-size:.9rem;font-family:"DM Sans",sans-serif;color:#0B1929;outline:none;transition:border-color .15s}
 input[type=number]:focus{border-color:#0EA5A0}
-.pfinput{padding-left:2.1rem}
+.pfinput{border-radius:0 8px 8px 0;border-left:none}
 .toggle{display:flex;gap:.5rem;margin-top:1.4rem}
 .toggle button{flex:1;border:1.5px solid #E2E8F0;border-radius:9px;padding:.7rem .5rem;text-align:center;cursor:pointer;background:#fff;font-family:"DM Sans",sans-serif;transition:all .15s}
 .toggle button.active{border-color:#0EA5A0;background:rgba(14,165,160,.07)}
@@ -81,22 +81,22 @@ input[type=number]:focus{border-color:#0EA5A0}
       <div class="field">
         <label>Total Balance</label>
         <span class="hint">What you currently owe</span>
-        <div class="pw"><span class="pfx">$</span><input type="number" id="balance" class="pfinput" value="8000" min="0" step="100"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="balance" class="pfinput" min="0" step="100"></div>
       </div>
       <div class="field">
         <label>Interest Rate (APR)</label>
         <span class="hint">Credit cards average 20–24%</span>
-        <div class="pw"><span class="pfx">%</span><input type="number" id="apr" class="pfinput" value="22" min="0" max="40" step="0.5"></div>
+        <div class="pw"><span class="pfx">%</span><input placeholder="0" type="number" id="apr" class="pfinput" min="0" max="40" step="0.5"></div>
       </div>
       <div class="field">
         <label>Monthly Payment</label>
         <span class="hint">What you pay each month</span>
-        <div class="pw"><span class="pfx">$</span><input type="number" id="payment" class="pfinput" value="250" min="0" step="25"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="payment" class="pfinput" min="0" step="25"></div>
       </div>
       <div class="field">
         <label>Extra Monthly Payment</label>
         <span class="hint">Anything additional you could add</span>
-        <div class="pw"><span class="pfx">$</span><input type="number" id="extra" class="pfinput" value="0" min="0" step="25"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="extra" class="pfinput" min="0" step="25"></div>
       </div>
     </div>
     <div class="results">
