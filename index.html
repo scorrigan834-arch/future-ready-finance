@@ -19,37 +19,55 @@ a{text-decoration:none}
 .nav-link:hover{color:#0EA5A0;background:rgba(14,165,160,.08)}
 
 /* HERO */
-.hero{background:#0B1929;padding:6.5rem 2rem 5rem;text-align:center;position:relative;overflow:hidden}
+.hero{background:#0B1929;padding:5rem 2rem 4rem;text-align:center;position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;top:-160px;right:-120px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.16) 0%,transparent 68%);pointer-events:none}
 .hero::after{content:"";position:absolute;bottom:-200px;left:-150px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.09) 0%,transparent 70%);pointer-events:none}
-.hero-grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.8),transparent 75%);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.8),transparent 75%);pointer-events:none}
-.hero-inner{position:relative;z-index:1;max-width:780px;margin:0 auto}
-.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#0EA5A0;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.3);padding:.32rem .95rem;border-radius:999px;margin-bottom:1.75rem}
+.hero-grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.8),transparent 80%);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.8),transparent 80%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#0EA5A0;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.3);padding:.32rem .95rem;border-radius:999px;margin-bottom:1.5rem}
 .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:#0EA5A0;box-shadow:0 0 0 3px rgba(14,165,160,.25)}
-.hero h1{font-family:"Playfair Display",serif;font-size:clamp(2.3rem,5.2vw,4rem);font-weight:900;line-height:1.06;margin-bottom:1.4rem;letter-spacing:-.025em;color:#fff;background:linear-gradient(180deg,#ffffff 0%,#cfe8e6 140%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero h1{font-family:"Playfair Display",serif;font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;line-height:1.07;margin-bottom:1.3rem;letter-spacing:-.025em;color:#fff;background:linear-gradient(180deg,#ffffff 0%,#cfe8e6 140%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .hero h1 em{font-style:italic;background:linear-gradient(135deg,#0EA5A0,#3fd0c9);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.hero-sub{max-width:540px;margin:0 auto 2.4rem;color:rgba(255,255,255,.66);font-size:1.08rem;line-height:1.75}
-.hero-ctas{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.75rem}
+.hero-sub{max-width:530px;margin:0 auto 2.2rem;color:rgba(255,255,255,.66);font-size:1.05rem;line-height:1.75}
+.hero-ctas{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
 .btn{display:inline-block;font-family:"DM Sans",sans-serif;font-weight:700;font-size:.9rem;border:none;border-radius:9px;cursor:pointer;padding:.8rem 1.7rem;transition:background .18s,transform .18s,box-shadow .18s}
 .btn-primary{background:#0EA5A0;color:#fff;box-shadow:0 6px 20px rgba(14,165,160,.32)}
 .btn-primary:hover{background:#0C7D79;color:#fff;transform:translateY(-2px);box-shadow:0 10px 28px rgba(14,165,160,.42)}
 .btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.22)}
 .btn-ghost:hover{background:rgba(255,255,255,.16);transform:translateY(-2px)}
-.hero-stats{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;padding-top:.5rem}
+.hero-stats{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;padding-top:.25rem}
 .hero-stat{text-align:center}
-.hero-stat .num{font-family:"Playfair Display",serif;font-size:1.7rem;font-weight:700;color:#fff;line-height:1}
+.hero-stat .num{font-family:"Playfair Display",serif;font-size:1.6rem;font-weight:700;color:#fff;line-height:1}
 .hero-stat .lbl{display:block;margin-top:.35rem;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.45)}
 .hero-stat-divider{width:1px;background:rgba(255,255,255,.12);align-self:stretch}
 
 /* SECTIONS */
-.section{padding:4.5rem 2rem}.section-inner{max-width:1100px;margin:0 auto}
+.section{padding:4rem 2rem}.section-inner{max-width:1100px;margin:0 auto}
 .section-light{background:#ECF1F0}.section-dark{background:#0B1929}
-.section-head{margin-bottom:2.5rem}
+.section-head{margin-bottom:2.25rem}
+.section-head-center{text-align:center;margin-left:auto;margin-right:auto}
 .section-label{display:inline-flex;align-items:center;gap:.55rem;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#0EA5A0;margin-bottom:.85rem}
 .section-label::before{content:"";width:22px;height:2px;background:#0EA5A0;border-radius:2px}
+.section-label-center{justify-content:center}
 .section-title{font-family:"Playfair Display",serif;font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:700;line-height:1.18;margin-bottom:.55rem;color:#0B1929;letter-spacing:-.02em}
 .section-title-light{color:#fff}
 .section-sub{color:#64748B;font-size:.98rem;max-width:540px}
+.section-sub-center{margin-left:auto;margin-right:auto}
+
+/* CALCULATOR SHOWCASE (the highlight) */
+.calc-section{background:#0B1929;padding:4rem 2rem;position:relative;overflow:hidden}
+.calc-section::before{content:"";position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(14,165,160,.1) 0%,transparent 70%);pointer-events:none}
+.calc-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem}
+.calc-card{position:relative;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:1.85rem 1.6rem;display:flex;flex-direction:column;gap:.45rem;overflow:hidden;transition:border-color .22s,background .22s,transform .22s,box-shadow .22s}
+.calc-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0EA5A0,#3fd0c9);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.calc-card:hover{border-color:rgba(14,165,160,.5);background:rgba(14,165,160,.07);transform:translateY(-5px);box-shadow:0 18px 44px rgba(0,0,0,.3)}
+.calc-card:hover::before{transform:scaleX(1)}
+.calc-icon{width:52px;height:52px;border-radius:13px;background:rgba(14,165,160,.14);border:1px solid rgba(14,165,160,.3);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:.55rem}
+.calc-card h3{font-family:"Playfair Display",serif;font-size:1.18rem;font-weight:700;color:#fff;line-height:1.25}
+.calc-card p{color:rgba(255,255,255,.6);font-size:.85rem;line-height:1.6;flex:1}
+.calc-cta{color:#0EA5A0;font-weight:700;font-size:.83rem;margin-top:.6rem;display:inline-flex;align-items:center;gap:.3rem;transition:gap .2s}
+.calc-card:hover .calc-cta{gap:.6rem}
 
 /* STAGE CARDS */
 .stage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:1.25rem}
@@ -66,28 +84,31 @@ a{text-decoration:none}
 .stage-cta{color:#0EA5A0;font-weight:700;font-size:.83rem;margin-top:.65rem;display:inline-flex;align-items:center;gap:.3rem;transition:gap .2s}
 .stage-card:hover .stage-cta{gap:.6rem}
 
-/* POPULAR CARDS */
-.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:1.2rem}
-.card{position:relative;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.65rem;display:flex;flex-direction:column;gap:.6rem;transition:border-color .22s,box-shadow .22s,transform .22s}
-.card:hover{border-color:rgba(14,165,160,.4);box-shadow:0 14px 40px rgba(11,25,41,.1);transform:translateY(-4px)}
-.card h4{font-family:"Playfair Display",serif;font-weight:700;font-size:1.1rem;line-height:1.3;color:#0B1929}
-.card p{color:#64748B;font-size:.875rem;line-height:1.65;flex:1}
-.card-link{color:#0EA5A0;font-weight:700;font-size:.83rem;display:inline-flex;align-items:center;gap:.3rem;transition:gap .2s}
-.card:hover .card-link{gap:.6rem}
-.badge{display:inline-block;width:fit-content;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.22rem .7rem;border-radius:999px;background:rgba(14,165,160,.1);color:#0C7D79;border:1px solid rgba(14,165,160,.24)}
-
-/* WHY / EXPLORE GRID */
-.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(218px,1fr));gap:1.2rem}
+/* WHY GRID */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(218px,1fr));gap:1.2rem;margin-bottom:2.5rem}
 .why-card{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.7rem;transition:border-color .22s,box-shadow .22s,transform .22s}
 .why-card:hover{border-color:rgba(14,165,160,.4);box-shadow:0 14px 40px rgba(11,25,41,.08);transform:translateY(-3px)}
 .why-icon-wrap{width:48px;height:48px;border-radius:12px;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.2);display:flex;align-items:center;justify-content:center;font-size:1.45rem;margin-bottom:1rem}
 .why-card h4{font-weight:700;font-size:1rem;margin-bottom:.4rem;color:#0B1929}
 .why-card p{color:#64748B;font-size:.875rem;line-height:1.65}
-.why-card a{color:#0EA5A0;font-weight:700;font-size:.83rem;display:inline-flex;align-items:center;gap:.3rem;margin-top:.8rem;transition:gap .2s}
-.why-card:hover a{gap:.6rem}
+
+/* POPULAR GUIDES ROW (folded into merged section) */
+.pop-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.1rem;padding-top:.5rem;border-top:1px solid #DCE3E1}
+.pop-head h4{font-family:"Playfair Display",serif;font-size:1.15rem;font-weight:700;color:#0B1929}
+.pop-head-links{display:flex;gap:1.1rem;flex-wrap:wrap}
+.pop-head-links a{color:#0EA5A0;font-weight:700;font-size:.83rem;display:inline-flex;align-items:center;gap:.25rem;transition:gap .2s}
+.pop-head-links a:hover{gap:.55rem}
+.pop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}
+.pop-card{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:1.3rem 1.4rem;display:flex;flex-direction:column;gap:.45rem;transition:border-color .22s,box-shadow .22s,transform .22s}
+.pop-card:hover{border-color:rgba(14,165,160,.4);box-shadow:0 12px 32px rgba(11,25,41,.08);transform:translateY(-3px)}
+.badge{display:inline-block;width:fit-content;font-size:.67rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.2rem .65rem;border-radius:999px;background:rgba(14,165,160,.1);color:#0C7D79;border:1px solid rgba(14,165,160,.24)}
+.pop-card h5{font-family:"Playfair Display",serif;font-weight:700;font-size:1rem;line-height:1.3;color:#0B1929}
+.pop-card p{color:#64748B;font-size:.84rem;line-height:1.6;flex:1}
+.pop-link{color:#0EA5A0;font-weight:700;font-size:.82rem;display:inline-flex;align-items:center;gap:.3rem;transition:gap .2s}
+.pop-card:hover .pop-link{gap:.6rem}
 
 /* CLOSING BANNER */
-.banner{position:relative;background:linear-gradient(135deg,rgba(14,165,160,.12),rgba(14,165,160,.03));border:1px solid rgba(14,165,160,.25);border-radius:18px;padding:3rem 2.5rem;overflow:hidden}
+.banner{position:relative;background:linear-gradient(135deg,rgba(14,165,160,.12),rgba(14,165,160,.03));border:1px solid rgba(14,165,160,.25);border-radius:18px;padding:2.75rem 2.5rem;overflow:hidden}
 .banner::before{content:"";position:absolute;top:-80px;right:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.14) 0%,transparent 70%);pointer-events:none}
 .banner-inner{position:relative;z-index:1}
 .banner h3{font-family:"Playfair Display",serif;font-size:clamp(1.5rem,3vw,1.9rem);font-weight:700;color:#fff;margin-bottom:.75rem;letter-spacing:-.01em}
@@ -106,13 +127,14 @@ a{text-decoration:none}
 
 @media(max-width:640px){
   .nav-links{display:none}
-  .hero{padding:4.5rem 1.25rem 3.5rem}
-  .section{padding:3.25rem 1.25rem}
-  .stage-grid,.card-grid,.why-grid{grid-template-columns:1fr}
+  .hero{padding:3.75rem 1.25rem 3rem}
+  .section,.calc-section{padding:3rem 1.25rem}
+  .calc-grid,.stage-grid,.why-grid,.pop-grid{grid-template-columns:1fr}
   .hero-stat-divider{display:none}
   .hero-stats{gap:1.75rem}
   .banner{padding:2.25rem 1.5rem}
   .footer-top{flex-direction:column;gap:1.5rem}
+  .pop-head{flex-direction:column;gap:.6rem}
 }
 </style>
 </head>
@@ -138,9 +160,9 @@ a{text-decoration:none}
     <h1>Learn the financial lessons<br>most people discover <em>too late.</em></h1>
     <p class="hero-sub">Future Ready Finance helps students, young adults, and early professionals make smarter money decisions — before the consequences become real.</p>
     <div class="hero-ctas">
-      <a href="start-here.html" class="btn btn-primary">Get Started</a>
+      <a href="#calculators" class="btn btn-primary">Try a Calculator</a>
+      <a href="start-here.html" class="btn btn-ghost">Get Started</a>
       <a href="life-stages.html" class="btn btn-ghost">Choose Your Stage</a>
-      <a href="big-decisions.html" class="btn btn-ghost">Explore Decisions</a>
     </div>
     <div class="hero-stats">
       <div class="hero-stat"><span class="num">100%</span><span class="lbl">Free Forever</span></div>
@@ -148,6 +170,22 @@ a{text-decoration:none}
       <div class="hero-stat"><span class="num">Zero</span><span class="lbl">Signup Required</span></div>
       <div class="hero-stat-divider"></div>
       <div class="hero-stat"><span class="num">14–35</span><span class="lbl">Built For Your Stage</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="calc-section" id="calculators">
+  <div class="calc-inner">
+    <div class="section-head section-head-center">
+      <span class="section-label section-label-center">Real Numbers, Real Answers</span>
+      <div class="section-title section-title-light">Calculators that show you exactly where you stand.</div>
+      <p class="section-sub section-sub-center" style="color:rgba(255,255,255,.6)">Enter your own numbers and see how today's decisions play out over time. No signup required.</p>
+    </div>
+    <div class="calc-grid">
+      <a href="simulations/compound-interest.html" class="calc-card"><div class="calc-icon">📈</div><h3>Compound Interest</h3><p>See what your money becomes over time — and what waiting really costs.</p><div class="calc-cta">Open Calculator →</div></a>
+      <a href="simulations/net-worth.html" class="calc-card"><div class="calc-icon">💰</div><h3>Net Worth</h3><p>Track everything you own versus everything you owe in one clear number.</p><div class="calc-cta">Open Calculator →</div></a>
+      <a href="simulations/debt-payoff.html" class="calc-card"><div class="calc-icon">💳</div><h3>Debt Payoff</h3><p>Find the fastest way out of debt and see how much interest you'll save.</p><div class="calc-cta">Open Calculator →</div></a>
+      <a href="simulations/take-home-pay.html" class="calc-card"><div class="calc-icon">💼</div><h3>Take-Home Pay</h3><p>Your real paycheck after taxes, 401(k), and deductions — in any state.</p><div class="calc-cta">Open Calculator →</div></a>
     </div>
   </div>
 </div>
@@ -180,35 +218,17 @@ a{text-decoration:none}
       <div class="why-card"><div class="why-icon-wrap">🚀</div><h4>Life Stage Based</h4><p>Content matched to where you are today and the decisions coming next for you.</p></div>
       <div class="why-card"><div class="why-icon-wrap">📈</div><h4>Built for the Future</h4><p>Make better choices before they become expensive lessons. That's the entire point.</p></div>
     </div>
-  </div>
-</div>
-
-<div class="section">
-  <div class="section-inner">
-    <div class="section-head">
-      <span class="section-label">Most Popular</span>
-      <div class="section-title">Start with the decisions that matter most.</div>
-      <p class="section-sub">Real guides for real questions.</p>
+    <div class="pop-head">
+      <h4>Most Popular Guides</h4>
+      <div class="pop-head-links">
+        <a href="big-decisions.html">Big Decisions →</a>
+        <a href="guides.html">All Guides →</a>
+      </div>
     </div>
-    <div class="card-grid">
-      <div class="card"><span class="badge">🎓 Student Debt</span><h4>How Much Student Debt Is Too Much?</h4><p>Understand how borrowing decisions affect your future flexibility.</p><a href="decisions/student-debt.html" class="card-link">Read Guide →</a></div>
-      <div class="card"><span class="badge">🏠 Housing</span><h4>Can I Afford This Apartment?</h4><p>Evaluate the full cost of living independently — not just rent.</p><a href="decisions/apartment.html" class="card-link">Read Guide →</a></div>
-      <div class="card"><span class="badge">📈 Investing</span><h4>Should I Start Investing Now?</h4><p>See why time is your most powerful wealth-building advantage.</p><a href="decisions/investing.html" class="card-link">Read Guide →</a></div>
-    </div>
-  </div>
-</div>
-
-<div class="section section-light">
-  <div class="section-inner">
-    <div class="section-head">
-      <span class="section-label">Explore More</span>
-      <div class="section-title">Everything is free.</div>
-      <p class="section-sub">No signup, no paywall, no catch.</p>
-    </div>
-    <div class="why-grid">
-      <div class="why-card"><div class="why-icon-wrap">🧭</div><h4>Big Decisions</h4><p>The major financial choices that shape your future.</p><a href="big-decisions.html">Explore →</a></div>
-      <div class="why-card"><div class="why-icon-wrap">📚</div><h4>Guides</h4><p>Practical guides organized around real-life money questions.</p><a href="guides.html">View Guides →</a></div>
-      <div class="why-card"><div class="why-icon-wrap">🔢</div><h4>Calculators</h4><p>Enter your real numbers. See exactly how they play out over time.</p><a href="simulations.html">Try Now →</a></div>
+    <div class="pop-grid">
+      <div class="pop-card"><span class="badge">🎓 Student Debt</span><h5>How Much Student Debt Is Too Much?</h5><p>Understand how borrowing decisions affect your future flexibility.</p><a href="decisions/student-debt.html" class="pop-link">Read Guide →</a></div>
+      <div class="pop-card"><span class="badge">🏠 Housing</span><h5>Can I Afford This Apartment?</h5><p>Evaluate the full cost of living independently — not just rent.</p><a href="decisions/apartment.html" class="pop-link">Read Guide →</a></div>
+      <div class="pop-card"><span class="badge">📈 Investing</span><h5>Should I Start Investing Now?</h5><p>See why time is your most powerful wealth-building advantage.</p><a href="decisions/investing.html" class="pop-link">Read Guide →</a></div>
     </div>
   </div>
 </div>
