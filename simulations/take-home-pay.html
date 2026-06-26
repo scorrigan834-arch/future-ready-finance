@@ -25,13 +25,13 @@ a{text-decoration:none}
 .field{margin-bottom:.85rem}
 .field label{display:block;font-size:.8rem;font-weight:600;color:#0B1929;margin-bottom:.3rem}
 .field .sub-hint{font-size:.71rem;color:#94a3b8;font-weight:400}
-.pw{position:relative}
-.pw .pfx{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:.88rem;font-weight:600;pointer-events:none;z-index:1}
-.pw .sfx{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:.78rem;font-weight:500;pointer-events:none;z-index:1}
+.pw{display:flex;align-items:stretch}
+.pw .pfx{display:flex;align-items:center;justify-content:center;min-width:2.3rem;padding:0 .65rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-right:none;border-radius:8px 0 0 8px;color:#64748B;font-size:.9rem;font-weight:700;flex-shrink:0}
+.pw .sfx{display:flex;align-items:center;justify-content:center;padding:0 .7rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-left:none;border-radius:0 8px 8px 0;color:#64748B;font-size:.72rem;font-weight:600;white-space:nowrap;flex-shrink:0}
 input[type=number]{width:100%;padding:.55rem .85rem;border:1.5px solid #E2E8F0;border-radius:8px;font-size:.88rem;font-family:"DM Sans",sans-serif;color:#0B1929;outline:none;transition:border-color .15s}
 input[type=number]:focus{border-color:#0EA5A0}
-.pfinput{padding-left:2.1rem}
-.sfinput{padding-right:2.4rem}
+.pfinput{border-radius:0 8px 8px 0;border-left:none}
+.sfinput{border-radius:0;border-right:none}
 select{width:100%;padding:.55rem .85rem;border:1.5px solid #E2E8F0;border-radius:8px;font-size:.88rem;font-family:"DM Sans",sans-serif;color:#0B1929;outline:none;background:#fff;cursor:pointer}
 select:focus{border-color:#0EA5A0}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
@@ -106,7 +106,7 @@ canvas{display:block;margin:0 auto}
       <div class="section-label">Income &amp; Location</div>
       <div class="field">
         <label>Annual Salary</label>
-        <div class="pw"><span class="pfx">$</span><input type="number" id="salary" class="pfinput" value="65000" min="0" step="1000"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="salary" class="pfinput" min="0" step="1000"></div>
       </div>
       <div class="two-col">
         <div class="field">
@@ -135,7 +135,7 @@ canvas{display:block;margin:0 auto}
       <div class="section-label">Pre-Tax Deductions</div>
       <div class="field">
         <label>401(k) / 403(b) Contribution</label>
-        <div class="pw"><span class="pfx" id="k401-pfx">%</span><input type="number" id="k401" class="pfinput sfinput" value="6" min="0" step="1"><span class="sfx" id="k401-sfx">of salary</span></div>
+        <div class="pw"><span class="pfx" id="k401-pfx">%</span><input placeholder="0" type="number" id="k401" class="pfinput sfinput" min="0" step="1"><span class="sfx" id="k401-sfx">of salary</span></div>
         <div class="contrib-type">
           <button id="k401-pct" class="active" onclick="setK401Type('pct')">Percent</button>
           <button id="k401-dol" onclick="setK401Type('dol')">Dollars/yr</button>
@@ -143,26 +143,26 @@ canvas{display:block;margin:0 auto}
       </div>
       <div class="field">
         <label>Health Insurance Premium <span class="sub-hint">per paycheck</span></label>
-        <div class="pw"><span class="pfx">$</span><input type="number" id="health" class="pfinput" value="120" min="0" step="10"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="health" class="pfinput" min="0" step="10"></div>
       </div>
       <div class="two-col">
         <div class="field">
           <label>Dental <span class="sub-hint">/check</span></label>
-          <div class="pw"><span class="pfx">$</span><input type="number" id="dental" class="pfinput" value="15" min="0" step="5"></div>
+          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="dental" class="pfinput" min="0" step="5"></div>
         </div>
         <div class="field">
           <label>Vision <span class="sub-hint">/check</span></label>
-          <div class="pw"><span class="pfx">$</span><input type="number" id="vision" class="pfinput" value="8" min="0" step="2"></div>
+          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="vision" class="pfinput" min="0" step="2"></div>
         </div>
       </div>
       <div class="two-col">
         <div class="field">
           <label>HSA / FSA <span class="sub-hint">/yr</span></label>
-          <div class="pw"><span class="pfx">$</span><input type="number" id="hsa" class="pfinput" value="0" min="0" step="100"></div>
+          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="hsa" class="pfinput" min="0" step="100"></div>
         </div>
         <div class="field">
           <label>Commuter <span class="sub-hint">/check</span></label>
-          <div class="pw"><span class="pfx">$</span><input type="number" id="commuter" class="pfinput" value="0" min="0" step="10"></div>
+          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="commuter" class="pfinput" min="0" step="10"></div>
         </div>
       </div>
 
@@ -170,11 +170,11 @@ canvas{display:block;margin:0 auto}
       <div class="two-col">
         <div class="field">
           <label>Roth 401(k) <span class="sub-hint">/check</span></label>
-          <div class="pw"><span class="pfx">$</span><input type="number" id="roth" class="pfinput" value="0" min="0" step="10"></div>
+          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="roth" class="pfinput" min="0" step="10"></div>
         </div>
         <div class="field">
           <label>Other <span class="sub-hint">/check</span></label>
-          <div class="pw"><span class="pfx">$</span><input type="number" id="other-post" class="pfinput" value="0" min="0" step="10"></div>
+          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="other-post" class="pfinput" min="0" step="10"></div>
         </div>
       </div>
     </div>
@@ -287,11 +287,11 @@ function setK401Type(type) {
   if (type === 'pct') {
     getEl('k401-pfx').textContent = '%';
     getEl('k401-sfx').textContent = 'of salary';
-    getEl('k401').value = 6;
+    getEl('k401').value = '';
   } else {
     getEl('k401-pfx').textContent = '$';
     getEl('k401-sfx').textContent = 'per year';
-    getEl('k401').value = 4000;
+    getEl('k401').value = '';
   }
   calculate();
 }
