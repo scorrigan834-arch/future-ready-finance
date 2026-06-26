@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Credit Scores Work — Future Ready Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
+a{text-decoration:none}
+.nav{position:sticky;top:0;z-index:100;background:#0B1929;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px}
+.nav-brand{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none}.nav-brand span{color:#0EA5A0}
+.nav-links{display:flex;gap:.15rem;flex-wrap:wrap}
+.nav-link{color:rgba(255,255,255,.65);padding:.38rem .7rem;border-radius:6px;font-size:.8rem;font-weight:500;text-decoration:none}.nav-link:hover,.nav-link.active{color:#0EA5A0}
+.page-hero{background:#0B1929;padding:3.5rem 2rem 2.75rem}.page-hero-inner{max-width:1100px;margin:0 auto}
+.eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#0EA5A0;display:block;margin-bottom:.7rem}
+.page-hero h1{font-family:"Playfair Display",serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
+.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:600px;line-height:1.75}
+.content{max-width:760px;margin:0 auto;padding:3rem 2rem}
+.breadcrumb{font-size:.82rem;color:#888;margin-bottom:1.5rem}.breadcrumb a{color:#0EA5A0}
+h2{font-family:"Playfair Display",serif;font-size:1.35rem;font-weight:700;margin:2rem 0 .75rem;color:#0B1929}
+h3{font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:700;margin:1.5rem 0 .6rem;color:#0B1929}
+p{color:#64748B;font-size:.95rem;line-height:1.8;margin-bottom:1rem}
+ul,ol{padding-left:1.4rem;color:#64748B;font-size:.95rem;line-height:1.8;margin-bottom:1rem}
+li{margin-bottom:.4rem}strong{color:#0B1929}
+table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.875rem}
+th{background:#0B1929;color:#fff;padding:.65rem 1rem;text-align:left;font-weight:600}
+td{padding:.6rem 1rem;border-bottom:1px solid #E2E8F0;color:#64748B}
+tr:nth-child(even) td{background:#F5F7F6}
+.callout{background:rgba(14,165,160,.07);border:1px solid rgba(14,165,160,.22);border-left:4px solid #0EA5A0;border-radius:8px;padding:1.1rem 1.25rem;margin:1.5rem 0;font-size:.925rem;line-height:1.7;color:#0B1929}
+.callout strong{color:#0EA5A0}
+.rulebox{background:#0B1929;border-radius:10px;padding:1.35rem 1.5rem;margin:1.5rem 0}
+.rulebox h4{font-family:"Playfair Display",serif;font-size:1rem;color:#0EA5A0;margin-bottom:.5rem}
+.rulebox p{color:rgba(255,255,255,.75);font-size:.9rem;line-height:1.7;margin:0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.25rem 0}
+.card{background:#fff;border:1.5px solid #E2E8F0;border-radius:10px;padding:1.25rem}
+.card h4{color:#0EA5A0;font-size:.95rem;margin-bottom:.5rem;font-family:"Playfair Display",serif;font-weight:700}
+.card ul{padding-left:1.2rem;font-size:.85rem;color:#64748B;line-height:1.65}
+.card p{font-size:.85rem;color:#64748B;line-height:1.65;margin:0}
+.score-bar{display:flex;align-items:center;gap:1rem;margin:.5rem 0;font-size:.875rem}
+.score-label{width:120px;flex-shrink:0;color:#64748B}
+.score-track{flex:1;height:10px;background:#E2E8F0;border-radius:999px;overflow:hidden}
+.score-fill{height:100%;border-radius:999px;background:#0EA5A0}
+.score-num{width:60px;text-align:right;font-weight:700;color:#0B1929;font-size:.85rem}
+.next-links{background:#F5F7F6;border-radius:12px;padding:1.5rem;margin-top:2.5rem}
+.next-links h4{font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;margin-bottom:1rem;color:#0B1929}
+.next-link-item{display:flex;align-items:center;justify-content:space-between;border:1px solid #E2E8F0;border-radius:8px;padding:.75rem 1rem;background:#fff;text-decoration:none;color:#0B1929;margin-bottom:.5rem;transition:border-color .15s}
+.next-link-item:hover{border-color:#0EA5A0}
+.next-link-item span{font-size:.875rem;font-weight:500}
+.next-arrow{color:#0EA5A0;font-weight:700}
+.btn-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:2.5rem}
+.btn{display:inline-block;background:#0EA5A0;color:#fff;padding:.6rem 1.4rem;border-radius:7px;font-weight:700;font-size:.875rem;text-decoration:none}
+.btn:hover{background:#0C7D79;color:#fff}
+.btn-outline{background:transparent;color:#0B1929;border:1.5px solid #E2E8F0}
+.btn-outline:hover{border-color:#0EA5A0;color:#0EA5A0}
+.legal{font-size:.75rem;color:#999;margin-top:2.5rem;border-top:1px solid #E2E8F0;padding-top:1.25rem;line-height:1.7}
+.footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
+.footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
+@media(max-width:640px){.nav-links{display:none}.content{padding:2rem 1.25rem}.grid2{grid-template-columns:1fr}}</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="../index.html" class="nav-brand">Future Ready <span>Finance</span></a>
+  <div class="nav-links">
+    <a href="../start-here.html" class="nav-link">Start Here</a>
+    <a href="../life-stages.html" class="nav-link">Life Stages</a>
+    <a href="../guides.html" class="nav-link active">Guides</a>
+    <a href="../big-decisions.html" class="nav-link">Big Decisions</a>
+    <a href="../simulations.html" class="nav-link">Simulations</a>
+    <a href="../resources.html" class="nav-link">Resources</a>
+    <a href="../about.html" class="nav-link">About</a>
+  </div>
+</nav>
+<div class="page-hero"><div class="page-hero-inner">
+  <span class="eyebrow">Guide · Credit &amp; Debt</span>
+  <h1>How Credit Scores Work — and How to Build One</h1>
+  <p>Your credit score is a number that follows you for decades. It affects your rent, your car loan, your mortgage, and sometimes even your job. Here's exactly how it works.</p>
+</div></div>
+<div class="content">
+  <p class="breadcrumb"><a href="../index.html">Home</a> › <a href="../guides.html">Guides</a> › Credit Basics</p>
+
+  <div class="callout"><strong>Why this matters at 16:</strong> You can start building credit before you need it. The people who get the best mortgage rates at 28 are the ones who opened a credit card responsibly at 18. Credit history takes time — start early.</div>
+
+  <h2>What a Credit Score Actually Is</h2>
+  <p>A credit score is a 3-digit number (300–850) that summarizes how reliably you've repaid money you've borrowed. Lenders use it to decide whether to lend to you — and at what interest rate. The higher your score, the lower the rate you'll be offered, which translates to thousands of dollars of real savings over a lifetime.</p>
+
+  <h3>What the Numbers Mean</h3>
+  <table>
+    <tr><th>Score Range</th><th>Rating</th><th>What It Means</th></tr>
+    <tr><td>800–850</td><td>Exceptional</td><td>Best rates on everything. Approvals are automatic.</td></tr>
+    <tr><td>740–799</td><td>Very Good</td><td>Near-best rates. Minimal difference from exceptional.</td></tr>
+    <tr><td>670–739</td><td>Good</td><td>Approved for most things. Slightly higher rates.</td></tr>
+    <tr><td>580–669</td><td>Fair</td><td>Approved for some things, higher rates, more deposits required.</td></tr>
+    <tr><td>Below 580</td><td>Poor</td><td>Difficult to get loans, apartments, or credit cards.</td></tr>
+  </table>
+
+  <h2>What Goes Into Your Score</h2>
+  <p>The FICO score (the most widely used model) is calculated from five factors:</p>
+
+  <div class="score-bar"><span class="score-label">Payment History</span><div class="score-track"><div class="score-fill" style="width:35%"></div></div><span class="score-num">35%</span></div>
+  <div class="score-bar"><span class="score-label">Amounts Owed</span><div class="score-track"><div class="score-fill" style="width:30%"></div></div><span class="score-num">30%</span></div>
+  <div class="score-bar"><span class="score-label">Credit History</span><div class="score-track"><div class="score-fill" style="width:15%"></div></div><span class="score-num">15%</span></div>
+  <div class="score-bar"><span class="score-label">Credit Mix</span><div class="score-track"><div class="score-fill" style="width:10%"></div></div><span class="score-num">10%</span></div>
+  <div class="score-bar"><span class="score-label">New Credit</span><div class="score-track"><div class="score-fill" style="width:10%"></div></div><span class="score-num">10%</span></div>
+
+  <ul style="margin-top:1rem">
+    <li><strong>Payment History (35%):</strong> Do you pay on time? One missed payment can drop your score 60–110 points. This is the single most important factor.</li>
+    <li><strong>Amounts Owed / Credit Utilization (30%):</strong> What percentage of your available credit are you using? Below 30% is good. Below 10% is excellent. Using 80% of your credit limit hurts significantly.</li>
+    <li><strong>Length of Credit History (15%):</strong> How long have your accounts been open? Older accounts help. This is why you should never close your first credit card.</li>
+    <li><strong>Credit Mix (10%):</strong> Do you have a variety of credit types (credit card, auto loan, student loan)? A mix helps slightly.</li>
+    <li><strong>New Credit (10%):</strong> How many new accounts or hard inquiries have you had recently? Opening many accounts in a short period hurts temporarily.</li>
+  </ul>
+
+  <h2>How to Build Credit From Zero</h2>
+  <p>If you have no credit history, here are the most reliable paths to building it:</p>
+
+  <h3>Option 1: Secured Credit Card</h3>
+  <p>A secured card requires a deposit (usually 00–500) that becomes your credit limit. You use it like a normal card and pay it off monthly. After 12–18 months of on-time payments, most cards upgrade you to a regular (unsecured) card and return your deposit. This is the most common first step.</p>
+
+  <h3>Option 2: Become an Authorized User</h3>
+  <p>If a parent or trusted family member has good credit and a credit card in good standing, they can add you as an authorized user. Their payment history on that card appears on your credit report. You don't even need to use the card — just being listed builds your history.</p>
+
+  <h3>Option 3: Student Credit Card</h3>
+  <p>Many issuers offer credit cards specifically for college students with no credit history — lower limits, no annual fee, and easier approval. Discover it Student, Chase Freedom Student, and Capital One Journey are common starting points.</p>
+
+  <h3>Option 4: Credit-Builder Loan</h3>
+  <p>Some credit unions offer credit-builder loans specifically designed to help people establish credit. You make payments on a small loan (00–1,500), and the funds are released to you when the loan is paid off. You build credit history while saving money.</p>
+
+  <h2>The Rules for Using a Credit Card Responsibly</h2>
+  <div class="rulebox">
+    <h4>The Only Three Rules You Need</h4>
+    <p>1. <strong style="color:#0EA5A0">Pay the full balance every month</strong> — never just the minimum. The minimum payment is designed to keep you in debt for years.<br><br>
+    2. <strong style="color:#0EA5A0">Keep utilization below 30%</strong> — if your limit is ,000, never carry more than 00 on the card at any time.<br><br>
+    3. <strong style="color:#0EA5A0">Treat it like a debit card</strong> — only charge what you already have the cash to pay. A credit card is not extra money.</p>
+  </div>
+
+  <h2>What Is APR and Why It Matters</h2>
+  <p>APR (Annual Percentage Rate) is the interest rate charged on your balance if you don't pay it off in full each month. Most credit cards charge 20–30% APR.</p>
+  <p>If you carry a ,000 balance on a 24% APR card and only make minimum payments, you'll pay approximately 30 in interest and take over 5 years to pay it off — for a ,000 purchase. This is how credit card debt destroys financial progress.</p>
+  <p><strong>If you pay your full balance every month, your APR is irrelevant</strong> — you never pay interest. The APR only matters if you carry a balance.</p>
+
+  <div class="callout"><strong>Check your score for free:</strong> You can check your credit score for free through Credit Karma, Experian, or directly through many bank apps. Checking your own score is a "soft inquiry" and does not hurt your score at all.</div>
+
+  <h2>What Hurts Your Credit Score Most</h2>
+  <ul>
+    <li><strong>Missing a payment</strong> — even one missed payment stays on your credit report for 7 years</li>
+    <li><strong>High utilization</strong> — using more than 30–50% of your available credit</li>
+    <li><strong>Applying for too many cards at once</strong> — each application creates a hard inquiry that temporarily lowers your score</li>
+    <li><strong>Closing old accounts</strong> — shortens your credit history and reduces available credit (raising utilization)</li>
+    <li><strong>Collections</strong> — unpaid bills sent to collections (medical, phone, utilities) severely damage your score</li>
+  </ul>
+
+  <div class="next-links">
+    <h4>Read These Next</h4>
+    <a class="next-link-item" href="banking-basics.html"><span>Banking Basics: Checking, Savings, and HYSAs</span><span class="next-arrow">→</span></a>
+    <a class="next-link-item" href="taxes-101.html"><span>Taxes 101: How They Work and What You Owe</span><span class="next-arrow">→</span></a>
+    <a class="next-link-item" href="../decisions/apartment.html"><span>Can I Afford This Apartment?</span><span class="next-arrow">→</span></a>
+  </div>
+
+  <div class="btn-row"><a href="../guides.html" class="btn btn-outline">Back to Guides</a></div>
+  <p class="legal">Educational content only. Not financial, legal, tax, or investment advice.</p>
+</div>
+<footer class="footer"><a href="../index.html">Home</a><a href="../guides.html">Guides</a><a href="../big-decisions.html">Big Decisions</a><br><br>Educational content only. Not financial, legal, tax, or investment advice.</footer>
+</body></html>
