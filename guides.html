@@ -58,11 +58,32 @@ a{text-decoration:none}
 .guide-item.dim{opacity:.55;pointer-events:none}
 .pill{flex-shrink:0;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.14rem .48rem;border-radius:999px}
 .pill-new{background:rgba(14,165,160,.12);color:#0EA5A0;border:1px solid rgba(14,165,160,.25)}
-.pill-soon{background:#F0F0F0;color:#999;border:1px solid #E2E8F0}
+.pill-soon{background:#ECF1F0;color:#999;border:1px solid #E2E8F0}
 .footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
 @media(max-width:640px){.nav-links{display:none}
   .nav-burger{display:flex}}
+
+/* PREMIUM: animated mesh hero */
+.page-hero{position:relative;overflow:hidden}
+.mesh{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.mesh span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
+.mesh .m1{width:480px;height:480px;background:radial-gradient(circle,rgba(14,165,160,.45),transparent 65%);top:-160px;left:-100px;animation:drift1 20s ease-in-out infinite}
+.mesh .m2{width:420px;height:420px;background:radial-gradient(circle,rgba(63,208,201,.28),transparent 65%);bottom:-180px;right:-90px;animation:drift2 24s ease-in-out infinite}
+.mesh .m3{width:340px;height:340px;background:radial-gradient(circle,rgba(14,165,160,.24),transparent 65%);top:30%;left:55%;animation:drift3 28s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,50px) scale(1.1)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-60px,-45px) scale(1.12)}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,35px) scale(1.08)}}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 85%);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 85%);pointer-events:none}
+.page-hero-inner{position:relative;z-index:1}
+.eyebrow{box-shadow:0 0 24px rgba(14,165,160,.15)}
+/* PREMIUM: scroll reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.07s}.reveal[data-d="2"]{transition-delay:.14s}.reveal[data-d="3"]{transition-delay:.21s}.reveal[data-d="4"]{transition-delay:.28s}.reveal[data-d="5"]{transition-delay:.35s}.reveal[data-d="6"]{transition-delay:.42s}
+/* PREMIUM: card depth */
+.lcard,.dcard,.diff,.step,.guide-item:not(.dim),.pop-card,.sim-card,.path-card,.stage-card{transition:border-color .25s,box-shadow .25s,transform .25s !important}
+.lcard:hover,.dcard:hover,.diff:hover,.guide-item:not(.dim):hover,.pop-card:hover,.path-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(11,25,41,.1)}
 </style>
 </head>
 <body>
@@ -174,14 +195,15 @@ a{text-decoration:none}
   <div class="mm-group"><button class="mm-top"><a href="resources.html">Resources</a></button></div>
   <div class="mm-group"><button class="mm-top"><a href="about.html">About</a></button></div>
 </div>
-<div class="page-hero"><div class="page-hero-inner">
+<div class="page-hero"><div class="mesh"><span class="m1"></span><span class="m2"></span><span class="m3"></span></div>
+  <div class="hero-dots"></div><div class="page-hero-inner">
   <span class="eyebrow">Guides</span>
   <h1>Practical guidance for real decisions.</h1>
   <p>Organized around the questions people actually ask — not textbook definitions.</p>
 </div></div>
 <div class="section"><div class="section-inner">
 
-<div class="cat">
+<div class="cat reveal" data-d="1">
   <div class="cat-title">🏛️ Banking &amp; Cash Management</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/banking-basics.html"><div class="guide-item-left"><span class="guide-name">Banking Basics: Checking, Savings, and High-Yield Accounts</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -189,7 +211,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat">
+<div class="cat reveal" data-d="2">
   <div class="cat-title">💳 Credit &amp; Debt</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/credit-basics.html"><div class="guide-item-left"><span class="guide-name">How Credit Scores Work and How to Build One</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -198,7 +220,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat">
+<div class="cat reveal" data-d="3">
   <div class="cat-title">🧾 Taxes</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/taxes-101.html"><div class="guide-item-left"><span class="guide-name">Taxes 101: How Brackets, Withholding, and Filing Work</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -208,7 +230,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat">
+<div class="cat reveal" data-d="4">
   <div class="cat-title">🎓 Education</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/student-debt.html"><div class="guide-item-left"><span class="guide-name">How Much Student Debt Is Too Much?</span></div><span class="guide-arrow">→</span></a>
@@ -217,7 +239,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat">
+<div class="cat reveal" data-d="5">
   <div class="cat-title">💼 Career</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/total-compensation.html"><div class="guide-item-left"><span class="guide-name">How Do I Evaluate a Job Offer?</span></div><span class="guide-arrow">→</span></a>
@@ -226,7 +248,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat">
+<div class="cat reveal" data-d="6">
   <div class="cat-title">🏠 Housing</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/apartment.html"><div class="guide-item-left"><span class="guide-name">Can I Afford This Apartment?</span></div><span class="guide-arrow">→</span></a>
@@ -235,7 +257,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat">
+<div class="cat reveal" data-d="1">
   <div class="cat-title">📈 Investing</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/investing.html"><div class="guide-item-left"><span class="guide-name">Should I Start Investing Now?</span></div><span class="guide-arrow">→</span></a>
@@ -246,7 +268,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat">
+<div class="cat reveal" data-d="2">
   <div class="cat-title">🛡️ Protection &amp; Insurance</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/insurance.html"><div class="guide-item-left"><span class="guide-name">What Insurance Do I Need and When? (Life, DI, LTC, Liability)</span></div><span class="guide-arrow">→</span></a>
@@ -255,7 +277,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat">
+<div class="cat reveal" data-d="3">
   <div class="cat-title">⚡ Side Income &amp; Self-Employment</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/side-income-taxes.html"><div class="guide-item-left"><span class="guide-name">Side Hustle Taxes: Self-Employment and Quarterly Payments</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -264,7 +286,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat">
+<div class="cat reveal" data-d="4">
   <div class="cat-title">🚗 Transportation</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/new-vs-used-car.html"><div class="guide-item-left"><span class="guide-name">New Car vs Used Car: Which Is Smarter?</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -272,7 +294,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat">
+<div class="cat reveal" data-d="5">
   <div class="cat-title">👨‍👩‍👧 Family &amp; Estate Planning</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/couples-money.html"><div class="guide-item-left"><span class="guide-name">How Should Couples Manage Money?</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -282,7 +304,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat">
+<div class="cat reveal" data-d="6">
   <div class="cat-title">📊 Financial Health &amp; Psychology</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/emergency-fund.html"><div class="guide-item-left"><span class="guide-name">How to Build an Emergency Fund</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -332,6 +354,19 @@ a{text-decoration:none}
   document.addEventListener('click', function(){
     navItems.forEach(function(i){ i.classList.remove('open'); });
   });
+})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(function(el){ obs.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('in'); });
+  }
 })();
 </script>
 </body></html>
