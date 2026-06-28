@@ -467,68 +467,12 @@ function setScenario(s) {
   }
 }
 
-
-// ---- INPUT MEMORY (saves your entries on this device) ----
-var MEM_KEY = 'frf_compound_v1';
-var MEM_IDS = ['principal','monthly','rate','years'];
-function saveInputs(){
-  try {
-    var data = {};
-    for (var i=0;i<MEM_IDS.length;i++){
-      var el = document.getElementById(MEM_IDS[i]);
-      if (el) data[MEM_IDS[i]] = el.value;
-    }
-    localStorage.setItem(MEM_KEY, JSON.stringify(data));
-  } catch(e){}
-}
-function restoreInputs(){
-  try {
-    var raw = localStorage.getItem(MEM_KEY);
-    if (!raw) return false;
-    var data = JSON.parse(raw);
-    var restoredAny = false;
-    for (var i=0;i<MEM_IDS.length;i++){
-      var el = document.getElementById(MEM_IDS[i]);
-      if (el && data[MEM_IDS[i]] !== undefined && data[MEM_IDS[i]] !== '') {
-        el.value = data[MEM_IDS[i]];
-        restoredAny = true;
-      }
-    }
-    return restoredAny;
-  } catch(e){ return false; }
-}
-function clearInputs(){
-  try { localStorage.removeItem(MEM_KEY); } catch(e){}
-  for (var i=0;i<MEM_IDS.length;i++){
-    var el = document.getElementById(MEM_IDS[i]);
-    if (el){ if (el.type==='range'){ el.value = el.defaultValue || 30; } else { el.value=''; } }
-  }
-  var note = document.getElementById('memNote');
-  if (note) note.style.display='none';
-  calculate();
-}
-function showRestoredNote(){
-  var card = document.querySelector('.calc-card') || document.querySelector('.pfcard') || document.body;
-  var note = document.createElement('div');
-  note.id = 'memNote';
-  note.style.cssText = 'background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.3);border-radius:8px;padding:.6rem .9rem;margin-bottom:1rem;font-size:.82rem;color:#0C7D79;display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap';
-  note.innerHTML = '<span>\u21A9\uFE0F We restored your last entries on this device.</span><button onclick="clearInputs()" style="background:#0EA5A0;color:#fff;border:none;border-radius:6px;padding:.35rem .75rem;font-size:.76rem;font-weight:700;cursor:pointer;white-space:nowrap">Start fresh</button>';
-  card.insertBefore(note, card.firstChild);
-}
-
 function initializeCalculator() {
   getElementById('principal').addEventListener('input', calculate);
   getElementById('monthly').addEventListener('input', calculate);
   getElementById('rate').addEventListener('input', calculate);
   getElementById('years').addEventListener('input', calculate);
   window.addEventListener('resize', calculate);
-  // input memory: save on every change
-  for (var mi=0; mi<MEM_IDS.length; mi++){
-    var mel = document.getElementById(MEM_IDS[mi]);
-    if (mel) mel.addEventListener('input', saveInputs);
-  }
-  // restore previous entries (if any) and show a note
-  if (restoreInputs()) { showRestoredNote(); }
   calculate();
 }
 
@@ -576,6 +520,44 @@ if (document.readyState === 'loading') {
   document.addEventListener('click', function(){
     navItems.forEach(function(i){ i.classList.remove('open'); });
   });
+})();
+</script>
+<script>
+// ---- PROFILE CONNECTION (pre-fill from the user's saved profile) ----
+(function(){
+  var MAP = [['principal','invested','your savings']];
+  var profileRaw;
+  try { profileRaw = localStorage.getItem('frf_profile_v1'); } catch(e){ return; }
+  if(!profileRaw) return;
+  var profile;
+  try { profile = JSON.parse(profileRaw); } catch(e){ return; }
+  // Find which fields we can fill
+  var fillable = [];
+  for(var i=0;i<MAP.length;i++){
+    var cf=MAP[i][0], pf=MAP[i][1], lbl=MAP[i][2];
+    var el=document.getElementById(cf);
+    if(el && profile[pf] && profile[pf]!=='' && (el.value===''||el.value==null||el.value==='0')){
+      fillable.push({el:el, val:profile[pf], lbl:lbl});
+    }
+  }
+  if(fillable.length===0) return;
+  function applyProfile(){
+    for(var i=0;i<fillable.length;i++){ fillable[i].el.value = fillable[i].val; }
+    if(typeof calculate==='function'){ try{ calculate(); }catch(e){} }
+    if(typeof saveInputs==='function'){ try{ saveInputs(); }catch(e){} }
+    var banner=document.getElementById('profileConnect'); if(banner) banner.style.display='none';
+  }
+  function showBanner(){
+    var host = document.querySelector('.calc-card') || document.querySelector('.pfcard') || document.querySelector('main') || document.body;
+    if(document.getElementById('profileConnect')) return;
+    var labels = fillable.map(function(f){ return f.lbl; }).join(' and ');
+    var b=document.createElement('div'); b.id='profileConnect';
+    b.style.cssText='background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.35);border-radius:8px;padding:.7rem .95rem;margin:0 0 1rem;font-size:.83rem;color:#92400e;display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap';
+    b.innerHTML='<span>\u2728 Use '+labels+' from your profile?</span><button id="useProfileBtn" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:.4rem .85rem;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap">Use my profile</button>';
+    host.insertBefore(b, host.firstChild);
+    document.getElementById('useProfileBtn').addEventListener('click', applyProfile);
+  }
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', showBanner); } else { showBanner(); }
 })();
 </script>
 </body>
