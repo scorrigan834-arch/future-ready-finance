@@ -400,5 +400,36 @@ if (document.readyState === 'loading') {
   });
 })();
 </script>
+<script>
+// ---- INPUT MEMORY (saves entries on this device) ----
+var MEM_KEY = 'frf_debtpayoff_v1';
+var MEM_IDS = ['balance','apr','payment','extra'];
+function saveInputs(){
+  try { var d={}; for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el) d[MEM_IDS[i]]=el.value; } localStorage.setItem(MEM_KEY, JSON.stringify(d)); } catch(e){}
+}
+function restoreInputs(){
+  try { var raw=localStorage.getItem(MEM_KEY); if(!raw) return false; var d=JSON.parse(raw); var any=false;
+    for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el && d[MEM_IDS[i]]!==undefined && d[MEM_IDS[i]]!==''){ el.value=d[MEM_IDS[i]]; any=true; } }
+    return any; } catch(e){ return false; }
+}
+function clearInputs(){
+  try{ localStorage.removeItem(MEM_KEY); }catch(e){}
+  var note=document.getElementById('memNote'); if(note) note.style.display='none';
+  location.reload();
+}
+function showRestoredNote(){
+  var host = document.querySelector('.calc-card') || document.querySelector('.pfcard') || document.querySelector('.calc-wrap') || document.querySelector('main') || document.body;
+  if(document.getElementById('memNote')) return;
+  var note=document.createElement('div'); note.id='memNote';
+  note.style.cssText='background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.3);border-radius:8px;padding:.6rem .9rem;margin:0 0 1rem;font-size:.82rem;color:#0C7D79;display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap';
+  note.innerHTML='<span>\u21A9\uFE0F We restored your last entries on this device.</span><button onclick="clearInputs()" style="background:#0EA5A0;color:#fff;border:none;border-radius:6px;padding:.35rem .75rem;font-size:.76rem;font-weight:700;cursor:pointer;white-space:nowrap">Start fresh</button>';
+  host.insertBefore(note, host.firstChild);
+}
+function initMemory(){
+  for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el){ el.addEventListener('input', saveInputs); el.addEventListener('change', saveInputs); } }
+  if(restoreInputs()){ showRestoredNote(); if(typeof calculate==='function'){ try{ calculate(); }catch(e){} } }
+}
+if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMemory); } else { initMemory(); }
+</script>
 </body>
 </html>
