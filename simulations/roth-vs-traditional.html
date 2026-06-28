@@ -730,5 +730,43 @@ function initMemory(){
 }
 if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMemory); } else { initMemory(); }
 </script>
+<script>
+// ---- PROFILE CONNECTION (pre-fill from the user's saved profile) ----
+(function(){
+  var MAP = [['income','income','your income']];
+  var profileRaw;
+  try { profileRaw = localStorage.getItem('frf_profile_v1'); } catch(e){ return; }
+  if(!profileRaw) return;
+  var profile;
+  try { profile = JSON.parse(profileRaw); } catch(e){ return; }
+  // Find which fields we can fill
+  var fillable = [];
+  for(var i=0;i<MAP.length;i++){
+    var cf=MAP[i][0], pf=MAP[i][1], lbl=MAP[i][2];
+    var el=document.getElementById(cf);
+    if(el && profile[pf] && profile[pf]!=='' && (el.value===''||el.value==null||el.value==='0')){
+      fillable.push({el:el, val:profile[pf], lbl:lbl});
+    }
+  }
+  if(fillable.length===0) return;
+  function applyProfile(){
+    for(var i=0;i<fillable.length;i++){ fillable[i].el.value = fillable[i].val; }
+    if(typeof calculate==='function'){ try{ calculate(); }catch(e){} }
+    if(typeof saveInputs==='function'){ try{ saveInputs(); }catch(e){} }
+    var banner=document.getElementById('profileConnect'); if(banner) banner.style.display='none';
+  }
+  function showBanner(){
+    var host = document.querySelector('.calc-card') || document.querySelector('.pfcard') || document.querySelector('main') || document.body;
+    if(document.getElementById('profileConnect')) return;
+    var labels = fillable.map(function(f){ return f.lbl; }).join(' and ');
+    var b=document.createElement('div'); b.id='profileConnect';
+    b.style.cssText='background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.35);border-radius:8px;padding:.7rem .95rem;margin:0 0 1rem;font-size:.83rem;color:#92400e;display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap';
+    b.innerHTML='<span>\u2728 Use '+labels+' from your profile?</span><button id="useProfileBtn" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:.4rem .85rem;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap">Use my profile</button>';
+    host.insertBefore(b, host.firstChild);
+    document.getElementById('useProfileBtn').addEventListener('click', applyProfile);
+  }
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', showBanner); } else { showBanner(); }
+})();
+</script>
 </body>
 </html>
