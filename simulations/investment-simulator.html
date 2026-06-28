@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investment Simulator — Future Ready Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
+a{text-decoration:none}
+.nav{position:sticky;top:0;z-index:200;background:rgba(11,25,41,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px;border-bottom:1px solid rgba(255,255,255,.07)}
+.nav-brand{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none;z-index:2}.nav-brand span{color:#0EA5A0}
+.nav-links{display:flex;gap:.1rem;align-items:center}
+.nav-item{position:relative}
+.nav-link{display:inline-flex;align-items:center;gap:.3rem;color:rgba(255,255,255,.66);padding:.45rem .8rem;border-radius:7px;font-size:.8rem;font-weight:500;transition:color .18s,background .18s;cursor:pointer;background:none;border:none;font-family:"DM Sans",sans-serif;text-decoration:none}
+.nav-link:hover,.nav-item:hover .nav-link,.nav-item.open .nav-link,.nav-link.active{color:#0EA5A0;background:rgba(14,165,160,.08)}
+.nav-caret{width:.55rem;height:.55rem;fill:none;stroke:currentColor;stroke-width:2.5;transition:transform .25s ease;opacity:.7}
+.nav-item:hover .nav-caret,.nav-item.open .nav-caret{transform:rotate(180deg)}
+.nav-dd{position:absolute;top:calc(100% + 10px);left:0;min-width:250px;background:rgba(15,30,48,.97);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:.55rem;box-shadow:0 24px 60px rgba(0,0,0,.45);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .22s ease,transform .22s ease,visibility .22s;z-index:210}
+.nav-dd::before{content:"";position:absolute;top:-14px;left:0;right:0;height:14px}
+.nav-item:hover .nav-dd,.nav-item.open .nav-dd{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-dd-wide{min-width:430px;display:grid;grid-template-columns:1fr 1fr;gap:.15rem}
+.nav-dd a{display:flex;flex-direction:column;gap:.1rem;padding:.55rem .7rem;border-radius:9px;color:rgba(255,255,255,.85);transition:background .15s,color .15s;text-decoration:none}
+.nav-dd a:hover{background:rgba(14,165,160,.12)}
+.nav-dd a .dd-t{font-size:.83rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:.45rem}
+.nav-dd a:hover .dd-t{color:#0EA5A0}
+.nav-dd a .dd-d{font-size:.71rem;color:rgba(255,255,255,.45);line-height:1.4}
+.nav-dd-head{grid-column:1/-1;font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0EA5A0;padding:.5rem .7rem .3rem}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:9px;cursor:pointer;padding:0;z-index:2}
+.nav-burger span{display:block;width:19px;height:2px;background:#fff;border-radius:2px;margin:0 auto;transition:transform .28s ease,opacity .28s ease}
+.nav-burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.active span:nth-child(2){opacity:0}
+.nav-burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{position:fixed;top:58px;left:0;right:0;bottom:0;background:rgba(11,25,41,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:190;padding:1.25rem 1.5rem 2.5rem;overflow-y:auto;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);visibility:hidden}
+.mobile-menu.open{transform:translateX(0);visibility:visible}
+.mm-group{border-bottom:1px solid rgba(255,255,255,.08)}
+.mm-top{width:100%;display:flex;align-items:center;justify-content:space-between;background:none;border:none;color:#fff;font-family:"DM Sans",sans-serif;font-size:1rem;font-weight:600;padding:1.05rem .25rem;cursor:pointer;text-align:left}
+.mm-top a{color:#fff;text-decoration:none}
+.mm-caret{width:.8rem;height:.8rem;fill:none;stroke:#0EA5A0;stroke-width:2.5;transition:transform .25s ease;flex-shrink:0}
+.mm-group.open .mm-caret{transform:rotate(180deg)}
+.mm-sub{max-height:0;overflow:hidden;transition:max-height .3s ease;padding-bottom:0}
+.mm-group.open .mm-sub{max-height:600px;padding-bottom:.6rem}
+.mm-sub a{display:block;color:rgba(255,255,255,.7);font-size:.9rem;padding:.6rem .25rem .6rem 1rem;text-decoration:none;border-left:2px solid rgba(14,165,160,.3);margin-left:.25rem}
+.mm-sub a:hover{color:#0EA5A0}
+.page-hero{background:#0B1929;padding:3.5rem 2rem 2.75rem;text-align:center}.page-hero-inner{max-width:760px;margin:0 auto}
+.eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#0EA5A0;display:block;margin-bottom:.7rem}
+.page-hero h1{font-family:"Playfair Display",serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
+.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:560px;margin:0 auto;line-height:1.75}
+.wrap{max-width:760px;margin:0 auto;padding:3rem 2rem}
+.step{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.85rem;margin-bottom:1.5rem;display:flex;gap:1.4rem;align-items:flex-start;transition:border-color .2s,box-shadow .2s,transform .2s}
+.step:hover{border-color:rgba(14,165,160,.4);box-shadow:0 14px 40px rgba(11,25,41,.09);transform:translateY(-3px)}
+.step-num{flex-shrink:0;width:48px;height:48px;border-radius:50%;background:rgba(14,165,160,.1);border:1.5px solid rgba(14,165,160,.3);display:flex;align-items:center;justify-content:center;font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:900;color:#0EA5A0}
+.step-body{flex:1}
+.step-body h3{font-family:"Playfair Display",serif;font-size:1.2rem;font-weight:700;margin-bottom:.45rem;color:#0B1929}
+.step-body p{color:#64748B;font-size:.9rem;line-height:1.7;margin-bottom:.9rem}
+.step-link{color:#0EA5A0;font-weight:700;font-size:.85rem;display:inline-flex;align-items:center;gap:.3rem;transition:gap .2s}
+.step:hover .step-link{gap:.6rem}
+.remember{background:linear-gradient(135deg,rgba(14,165,160,.1),rgba(14,165,160,.03));border:1px solid rgba(14,165,160,.25);border-left:4px solid #0EA5A0;border-radius:12px;padding:1.5rem 1.75rem;margin-top:2rem}
+.remember p{color:#0B1929;font-size:.95rem;line-height:1.75;margin:0}
+.remember strong{color:#0C7D79}
+.footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center;margin-top:1rem}
+.footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
+@media(max-width:640px){.nav-links{display:none}.nav-burger{display:flex}.wrap{padding:2rem 1.25rem}.step{padding:1.4rem;gap:1rem}}
+
+/* PREMIUM: animated mesh hero */
+.page-hero{position:relative;overflow:hidden}
+.mesh{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.mesh span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
+.mesh .m1{width:480px;height:480px;background:radial-gradient(circle,rgba(14,165,160,.45),transparent 65%);top:-160px;left:-100px;animation:drift1 20s ease-in-out infinite}
+.mesh .m2{width:420px;height:420px;background:radial-gradient(circle,rgba(63,208,201,.28),transparent 65%);bottom:-180px;right:-90px;animation:drift2 24s ease-in-out infinite}
+.mesh .m3{width:340px;height:340px;background:radial-gradient(circle,rgba(14,165,160,.24),transparent 65%);top:30%;left:55%;animation:drift3 28s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,50px) scale(1.1)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-60px,-45px) scale(1.12)}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,35px) scale(1.08)}}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 85%);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 85%);pointer-events:none}
+.page-hero-inner{position:relative;z-index:1}
+.eyebrow{box-shadow:0 0 24px rgba(14,165,160,.15)}
+/* PREMIUM: scroll reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.07s}.reveal[data-d="2"]{transition-delay:.14s}.reveal[data-d="3"]{transition-delay:.21s}.reveal[data-d="4"]{transition-delay:.28s}.reveal[data-d="5"]{transition-delay:.35s}.reveal[data-d="6"]{transition-delay:.42s}
+/* PREMIUM: card depth */
+.lcard,.dcard,.diff,.step,.guide-item:not(.dim),.pop-card,.sim-card,.path-card,.stage-card{transition:border-color .25s,box-shadow .25s,transform .25s !important}
+.lcard:hover,.dcard:hover,.diff:hover,.guide-item:not(.dim):hover,.pop-card:hover,.path-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(11,25,41,.1)}
+</style>
+<style>
+.sim-hero{background:linear-gradient(135deg,#0B1929,#0f1e30);padding:2.25rem 1.5rem 1.75rem;text-align:center;position:relative;overflow:hidden}
+.sim-hero::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.22),transparent 70%);top:-130px;right:-90px}
+.sim-hero .eyebrow{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#0EA5A0;display:block;margin-bottom:.55rem;position:relative;z-index:1}
+.sim-hero h1{font-family:"Playfair Display",serif;font-size:1.85rem;color:#fff;margin-bottom:.5rem;position:relative;z-index:1}
+.sim-hero p{color:rgba(255,255,255,.6);font-size:.92rem;max-width:540px;margin:0 auto;position:relative;z-index:1}
+.sim-wrap{max-width:860px;margin:0 auto;padding:1.5rem 1.1rem 3rem}
+.sim-disclaimer{background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.3);border-radius:10px;padding:.8rem 1.1rem;font-size:.8rem;color:#b45309;margin-bottom:1.25rem;line-height:1.55;display:flex;gap:.55rem;align-items:flex-start}
+.sim-disclaimer b{color:#92400e}
+.portfolio-bar{background:#0B1929;border-radius:14px;padding:1.4rem 1.5rem;margin-bottom:1.25rem;display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;justify-content:space-between}
+.pb-main .pb-label{color:rgba(255,255,255,.5);font-size:.74rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.25rem}
+.pb-main .pb-value{color:#fff;font-size:2rem;font-weight:800;font-family:"Playfair Display",serif;line-height:1}
+.pb-stats{display:flex;gap:1.5rem;flex-wrap:wrap}
+.pb-stat .s-label{color:rgba(255,255,255,.5);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.2rem}
+.pb-stat .s-value{color:#3fd0c9;font-size:1.1rem;font-weight:700}
+.pb-stat .s-value.up{color:#6ee7b7}.pb-stat .s-value.down{color:#fda4a4}
+.sim-controls{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.sim-ctrl-btn{flex:1;min-width:130px;padding:.75rem;border:none;border-radius:10px;font-size:.88rem;font-weight:700;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .2s}
+.btn-advance{background:#0EA5A0;color:#fff}.btn-advance:hover{background:#0C7D79}
+.btn-reset{background:#ECF1F0;color:#475569}.btn-reset:hover{background:#E2E8F0}
+.sim-section-title{font-family:"Playfair Display",serif;font-size:1.2rem;color:#0B1929;margin:1.5rem 0 .85rem;display:flex;align-items:center;gap:.5rem}
+.day-badge{display:inline-block;background:rgba(14,165,160,.12);color:#0C7D79;font-size:.78rem;font-weight:700;padding:.25rem .7rem;border-radius:999px;margin-left:.5rem}
+.stock-grid{display:grid;gap:.7rem}
+.stock-card{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:1rem 1.15rem;box-shadow:0 1px 3px rgba(11,25,41,.04)}
+.stock-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.6rem}
+.stock-id{display:flex;align-items:center;gap:.7rem}
+.stock-logo{width:42px;height:42px;border-radius:10px;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.22);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#0C7D79;flex-shrink:0}
+.stock-name{font-size:.92rem;font-weight:700;color:#0B1929;line-height:1.2}
+.stock-ticker{font-size:.76rem;color:#94a3b8;font-weight:600}
+.stock-price-wrap{text-align:right}
+.stock-price{font-size:1.05rem;font-weight:800;color:#0B1929}
+.stock-change{font-size:.78rem;font-weight:700}
+.stock-change.up{color:#059669}.stock-change.down{color:#dc2626}
+.stock-actions{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.shares-owned{font-size:.78rem;color:#64748B;margin-right:auto}
+.shares-owned b{color:#0B1929}
+.trade-btn{padding:.5rem 1rem;border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .15s}
+.buy-btn{background:#059669;color:#fff}.buy-btn:hover{background:#047857}
+.sell-btn{background:#fff;border:1.5px solid #E2E8F0;color:#dc2626}.sell-btn:hover{border-color:#dc2626}
+.sell-btn:disabled{opacity:.4;cursor:not-allowed;border-color:#E2E8F0;color:#94a3b8}
+.holdings-empty{background:#F1F5F4;border-radius:12px;padding:1.5rem;text-align:center;color:#64748B;font-size:.86rem}
+.holding-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:.8rem 1rem;margin-bottom:.6rem}
+.holding-left{display:flex;align-items:center;gap:.7rem}
+.holding-info .h-name{font-size:.88rem;font-weight:700;color:#0B1929}
+.holding-info .h-detail{font-size:.76rem;color:#64748B}
+.holding-value{text-align:right}
+.holding-value .hv-total{font-size:.95rem;font-weight:800;color:#0B1929}
+.holding-value .hv-gain{font-size:.77rem;font-weight:700}
+.holding-value .hv-gain.up{color:#059669}.holding-value .hv-gain.down{color:#dc2626}
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(120%);background:#0B1929;color:#fff;padding:.85rem 1.4rem;border-radius:10px;font-size:.88rem;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.3);transition:transform .3s;z-index:100;max-width:90%}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.error{background:#dc2626}
+.sim-tip{background:rgba(14,165,160,.07);border-left:3px solid #0EA5A0;border-radius:0 8px 8px 0;padding:.75rem 1rem;font-size:.82rem;color:#0C7D79;margin-top:1.5rem;line-height:1.6}
+</style>
+</head><body>
+<nav class="nav">
+  <a href="index.html" class="nav-brand">Future Ready <span>Finance</span></a>
+  <div class="nav-links">
+    <a href="start-here.html" class="nav-link active">Start Here</a>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Life Stages <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd">
+        <a href="paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
+        <a href="paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
+        <a href="paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
+        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Guides <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd nav-dd-wide">
+        <div class="nav-dd-head">Browse by Topic</div>
+        <a href="guides.html"><span class="dd-t">🏛️ Banking & Cash</span></a>
+        <a href="guides.html"><span class="dd-t">💳 Credit & Debt</span></a>
+        <a href="guides.html"><span class="dd-t">🧾 Taxes</span></a>
+        <a href="guides.html"><span class="dd-t">🎓 Education</span></a>
+        <a href="guides.html"><span class="dd-t">💼 Career</span></a>
+        <a href="guides.html"><span class="dd-t">🏠 Housing</span></a>
+        <a href="guides.html"><span class="dd-t">📈 Investing</span></a>
+        <a href="guides.html"><span class="dd-t">🛡️ Insurance</span></a>
+        <a href="guides.html"><span class="dd-t">👨‍👩‍👧 Family</span></a>
+        <a href="guides.html"><span class="dd-t">📚 View All Guides →</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Calculators <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd">
+        <a href="simulations/compound-interest.html"><span class="dd-t">📈 Compound Interest</span><span class="dd-d">What your money becomes</span></a>
+        <a href="simulations/take-home-pay.html"><span class="dd-t">💼 Take-Home Pay</span><span class="dd-d">Paycheck after taxes</span></a>
+        <a href="simulations/roth-vs-traditional.html"><span class="dd-t">🏦 Roth vs Pre-Tax 401(k)</span><span class="dd-d">Which 401(k) wins</span></a>
+        <a href="simulations/debt-payoff.html"><span class="dd-t">💳 Debt Payoff</span><span class="dd-d">Fastest way out</span></a>
+        <a href="simulations/net-worth.html"><span class="dd-t">💰 Net Worth</span><span class="dd-d">Own vs. owe</span></a>
+        <a href="simulations.html"><span class="dd-t">🔢 All Calculators →</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Big Decisions <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd">
+        <a href="big-decisions.html"><span class="dd-t">🎓 Education Decisions</span><span class="dd-d">College, debt, grad school</span></a>
+        <a href="big-decisions.html"><span class="dd-t">💼 Career Decisions</span><span class="dd-d">Offers, raises, job changes</span></a>
+        <a href="big-decisions.html"><span class="dd-t">🏠 Housing Decisions</span><span class="dd-d">Rent vs buy, affordability</span></a>
+        <a href="big-decisions.html"><span class="dd-t">📈 Investing Decisions</span><span class="dd-d">When, how much, which account</span></a>
+        <a href="big-decisions.html"><span class="dd-t">🚗 Cars, Debt & Family</span><span class="dd-d">Major life purchases</span></a>
+        <a href="big-decisions.html"><span class="dd-t">🧭 Decision Framework →</span></a>
+      </div>
+    </div>
+    <a href="resources.html" class="nav-link">Resources</a>
+    <a href="about.html" class="nav-link">About</a>
+  </div>
+  <button class="nav-burger" id="navBurger" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-group"><button class="mm-top"><a href="start-here.html">Start Here</a></button></div>
+<div class="sim-hero">
+  <span class="eyebrow">Practice Investing · Risk-Free</span>
+  <h1>Investment Simulator</h1>
+  <p>Buy and sell stocks with $10,000 in practice money. Watch prices move, build a portfolio, and learn how investing works — without risking a cent.</p>
+</div>
+
+<div class="sim-wrap">
+
+  <div class="sim-disclaimer">
+    <span>📚</span>
+    <span><b>This is a learning tool with simulated prices.</b> Prices move realistically but are <b>not</b> real market data — this teaches how trading works without real money or real risk. It's not investment advice. Your progress saves privately on your device.</span>
+  </div>
+
+  <div class="portfolio-bar">
+    <div class="pb-main">
+      <div class="pb-label">Total Portfolio Value</div>
+      <div class="pb-value" id="totalValue">$10,000.00</div>
+    </div>
+    <div class="pb-stats">
+      <div class="pb-stat">
+        <div class="s-label">Cash</div>
+        <div class="s-value" id="cashValue">$10,000.00</div>
+      </div>
+      <div class="pb-stat">
+        <div class="s-label">Invested</div>
+        <div class="s-value" id="investedValue">$0.00</div>
+      </div>
+      <div class="pb-stat">
+        <div class="s-label">Total Gain/Loss</div>
+        <div class="s-value" id="totalGain">$0.00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sim-controls">
+    <button class="sim-ctrl-btn btn-advance" onclick="advanceDay()">⏭️ Advance One Day (prices move)</button>
+    <button class="sim-ctrl-btn btn-reset" onclick="resetSim()">↺ Reset to $10,000</button>
+  </div>
+
+  <div class="sim-section-title">📊 Your Holdings <span class="day-badge" id="dayBadge">Day 1</span></div>
+  <div id="holdingsList"></div>
+
+  <div class="sim-section-title">🏛️ The Market</div>
+  <div class="stock-grid" id="stockGrid"></div>
+
+  <div class="sim-tip">💡 <b>How to use it:</b> Tap <b>Buy</b> to purchase a share with your cash. Tap <b>Advance One Day</b> to let prices move — watch your portfolio value change. Sell when you want to lock in gains (or cut losses). Try to grow your $10,000 over time. This is exactly how real investing works, just risk-free.</div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+<footer class="footer"><a href="index.html">Home</a><a href="life-stages.html">Life Stages</a><a href="guides.html">Guides</a><a href="simulations.html">Calculators</a><br><br>Educational content only. Not financial, legal, tax, or investment advice.</footer>
+<script>
+(function(){
+  var burger = document.getElementById('navBurger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (burger && mobileMenu){
+    burger.addEventListener('click', function(){
+      burger.classList.toggle('active');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('.mm-top').forEach(function(btn){
+      var group = btn.parentElement;
+      var sub = group.querySelector('.mm-sub');
+      if (sub){ btn.addEventListener('click', function(){ group.classList.toggle('open'); }); }
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        burger.classList.remove('active');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+  var navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(function(item){
+    var btn = item.querySelector('.nav-link');
+    if (btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var wasOpen = item.classList.contains('open');
+        navItems.forEach(function(i){ i.classList.remove('open'); });
+        if (!wasOpen) item.classList.add('open');
+      });
+    }
+  });
+  document.addEventListener('click', function(){
+    navItems.forEach(function(i){ i.classList.remove('open'); });
+  });
+})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(function(el){ obs.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+</script>
+<script>
+// ===== INVESTMENT SIMULATOR ENGINE =====
+var STOCKS = [
+  {t:'APL', n:'Apollo Tech', logo:'A', base:182.50, vol:0.018},
+  {t:'MCS', n:'Macrosoft', logo:'M', base:415.20, vol:0.015},
+  {t:'NVDA', n:'Noventa', logo:'N', base:128.40, vol:0.030},
+  {t:'RVR', n:'Riverstone', logo:'R', base:64.75, vol:0.012},
+  {t:'EVG', n:'Evergrow Energy', logo:'E', base:47.30, vol:0.022},
+  {t:'ORB', n:'Orbit Motors', logo:'O', base:241.80, vol:0.028},
+  {t:'BRW', n:'Brightwave', logo:'B', base:89.15, vol:0.020},
+  {t:'SLR', n:'Solaris Foods', logo:'S', base:33.60, vol:0.010}
+];
+var KEY = 'frf_sim_v1';
+var state = null;
+
+function defaultState(){
+  var prices = {}, prev = {};
+  for(var i=0;i<STOCKS.length;i++){ prices[STOCKS[i].t] = STOCKS[i].base; prev[STOCKS[i].t] = STOCKS[i].base; }
+  return { cash:10000, day:1, prices:prices, prevPrices:prev, holdings:{}, costBasis:{} };
+}
+function load(){
+  try{ var raw = localStorage.getItem(KEY); if(raw){ state = JSON.parse(raw); return; } }catch(e){}
+  state = defaultState();
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+
+function money(n){ return '$' + Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+function investedValue(){
+  var total = 0;
+  for(var t in state.holdings){ if(state.holdings[t]>0){ total += state.holdings[t] * state.prices[t]; } }
+  return total;
+}
+function totalCostBasis(){
+  var total = 0;
+  for(var t in state.costBasis){ total += state.costBasis[t]; }
+  return total;
+}
+
+function render(){
+  var invested = investedValue();
+  var total = state.cash + invested;
+  document.getElementById('totalValue').textContent = money(total);
+  document.getElementById('cashValue').textContent = money(state.cash);
+  document.getElementById('investedValue').textContent = money(invested);
+  var gain = total - 10000;
+  var gEl = document.getElementById('totalGain');
+  gEl.textContent = (gain>=0?'+':'') + money(gain);
+  gEl.className = 's-value ' + (gain>0?'up':(gain<0?'down':''));
+  document.getElementById('dayBadge').textContent = 'Day ' + state.day;
+
+  // Holdings
+  var hList = document.getElementById('holdingsList');
+  var hHtml = '';
+  var hasHoldings = false;
+  for(var i=0;i<STOCKS.length;i++){
+    var s = STOCKS[i];
+    var sh = state.holdings[s.t] || 0;
+    if(sh>0){
+      hasHoldings = true;
+      var val = sh * state.prices[s.t];
+      var cost = state.costBasis[s.t] || 0;
+      var g = val - cost;
+      var gClass = g>0?'up':(g<0?'down':'');
+      var gPct = cost>0 ? (g/cost*100) : 0;
+      hHtml += '<div class="holding-row"><div class="holding-left"><div class="stock-logo">'+s.logo+'</div><div class="holding-info"><div class="h-name">'+s.n+'</div><div class="h-detail">'+sh+' share'+(sh>1?'s':'')+' @ '+money(state.prices[s.t])+'</div></div></div><div class="holding-value"><div class="hv-total">'+money(val)+'</div><div class="hv-gain '+gClass+'">'+(g>=0?'+':'')+money(g)+' ('+(gPct>=0?'+':'')+gPct.toFixed(1)+'%)</div></div></div>';
+    }
+  }
+  hList.innerHTML = hasHoldings ? hHtml : '<div class="holdings-empty">You don\'t own any stocks yet. Buy some from the market below to start your portfolio!</div>';
+
+  // Market
+  var grid = document.getElementById('stockGrid');
+  var mHtml = '';
+  for(var j=0;j<STOCKS.length;j++){
+    var st = STOCKS[j];
+    var price = state.prices[st.t];
+    var prev = state.prevPrices[st.t];
+    var chg = price - prev;
+    var chgPct = prev>0 ? (chg/prev*100) : 0;
+    var chgClass = chg>0?'up':(chg<0?'down':'');
+    var arrow = chg>0?'▲':(chg<0?'▼':'–');
+    var owned = state.holdings[st.t] || 0;
+    var canSell = owned>0;
+    var canBuy = state.cash >= price;
+    mHtml += '<div class="stock-card"><div class="stock-top"><div class="stock-id"><div class="stock-logo">'+st.logo+'</div><div><div class="stock-name">'+st.n+'</div><div class="stock-ticker">'+st.t+'</div></div></div><div class="stock-price-wrap"><div class="stock-price">'+money(price)+'</div><div class="stock-change '+chgClass+'">'+arrow+' '+(chgPct>=0?'+':'')+chgPct.toFixed(2)+'%</div></div></div><div class="stock-actions"><span class="shares-owned">You own: <b>'+owned+'</b></span><button class="trade-btn sell-btn" onclick="sell(\''+st.t+'\')" '+(canSell?'':'disabled')+'>Sell</button><button class="trade-btn buy-btn" onclick="buy(\''+st.t+'\')" '+(canBuy?'':'disabled style="opacity:.4;cursor:not-allowed"')+'>Buy</button></div></div>';
+  }
+  grid.innerHTML = mHtml;
+}
+
+function showToast(msg, isError){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError?' error':'');
+  setTimeout(function(){ t.className = 'toast' + (isError?' error':''); }, 2200);
+}
+
+function buy(ticker){
+  var price = state.prices[ticker];
+  if(state.cash < price){ showToast('Not enough cash to buy this share', true); return; }
+  state.cash -= price;
+  state.holdings[ticker] = (state.holdings[ticker]||0) + 1;
+  state.costBasis[ticker] = (state.costBasis[ticker]||0) + price;
+  save(); render();
+  var s = getStock(ticker);
+  showToast('Bought 1 share of ' + s.n + ' for ' + money(price));
+}
+function sell(ticker){
+  var owned = state.holdings[ticker] || 0;
+  if(owned <= 0){ showToast('You don\'t own any shares of this', true); return; }
+  var price = state.prices[ticker];
+  state.cash += price;
+  // Reduce cost basis proportionally (average cost)
+  var avgCost = state.costBasis[ticker] / owned;
+  state.costBasis[ticker] -= avgCost;
+  state.holdings[ticker] = owned - 1;
+  if(state.holdings[ticker] === 0){ state.costBasis[ticker] = 0; }
+  save(); render();
+  var s = getStock(ticker);
+  showToast('Sold 1 share of ' + s.n + ' for ' + money(price));
+}
+function getStock(ticker){
+  for(var i=0;i<STOCKS.length;i++){ if(STOCKS[i].t===ticker) return STOCKS[i]; }
+  return null;
+}
+
+function advanceDay(){
+  state.day += 1;
+  for(var i=0;i<STOCKS.length;i++){
+    var s = STOCKS[i];
+    state.prevPrices[s.t] = state.prices[s.t];
+    // Realistic movement: small upward drift + random volatility
+    var drift = 0.0003; // slight long-term upward bias
+    var randomShock = (Math.random() - 0.5) * 2 * s.vol;
+    var changePct = drift + randomShock;
+    var newPrice = state.prices[s.t] * (1 + changePct);
+    if(newPrice < 1) newPrice = 1; // floor
+    state.prices[s.t] = Math.round(newPrice * 100) / 100;
+  }
+  save(); render();
+  showToast('Day ' + state.day + ' — prices updated');
+}
+
+function resetSim(){
+  if(confirm('Reset your portfolio back to $10,000 and start over?')){
+    state = defaultState();
+    save(); render();
+    showToast('Portfolio reset to $10,000');
+  }
+}
+
+// Init
+load();
+render();
+</script>
+
+</body>
+</html>
