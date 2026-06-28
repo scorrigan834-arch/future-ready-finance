@@ -65,6 +65,15 @@
 .trust-text span{color:#64748B;font-size:.82rem;line-height:1.5}
 .trust-sources{font-size:.81rem;color:#64748B;line-height:1.6;padding-top:.85rem;border-top:1px solid #E2E8F0}
 .trust-sources strong{color:#0C7D79}
+.fb-widget{background:#F1F5F4;border:1px solid #E2E8F0;border-radius:12px;padding:1.25rem 1.4rem;margin:2rem 0 1rem;text-align:center}
+.fb-widget h4{font-size:.95rem;color:#0B1929;margin-bottom:.8rem;font-weight:700}
+.fb-btns{display:flex;gap:.6rem;justify-content:center}
+.fb-btn{background:#fff;border:1.5px solid #E2E8F0;border-radius:9px;padding:.6rem 1.4rem;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .15s;color:#475569;font-family:"DM Sans",sans-serif}
+.fb-btn:hover{border-color:#0EA5A0;color:#0C7D79}
+.fb-btn.picked{background:#0EA5A0;border-color:#0EA5A0;color:#fff}
+.fb-thanks{font-size:.86rem;color:#047857;font-weight:600;display:none;margin-top:.3rem}
+.fb-thanks.show{display:block}
+.fb-btns.hide{display:none}
 </style>
 </head>
 <body>
@@ -223,6 +232,14 @@
     </div>
   <div class="legal reveal">Educational content only. Not financial, legal, tax, or investment advice. Figures and tax rules are illustrative and current as of 2024; verify specifics for your situation.</div>
 </div>
+<div class="fb-widget" id="fbWidget">
+  <h4>Was this guide helpful?</h4>
+  <div class="fb-btns" id="fbBtns">
+    <button class="fb-btn" onclick="fbVote('yes')">👍 Yes</button>
+    <button class="fb-btn" onclick="fbVote('no')">👎 Not really</button>
+  </div>
+  <div class="fb-thanks" id="fbThanks">Thanks for your feedback! 🙌</div>
+</div>
 <div class="trust-block">
   <div class="trust-row">
     <span class="trust-ic">✓</span>
@@ -287,6 +304,19 @@
   } else {
     els.forEach(function(el){ el.classList.add('in'); });
   }
+})();
+</script>
+<script>
+function fbVote(v){
+  try{ localStorage.setItem('frf_fb_'+location.pathname, v); }catch(e){}
+  document.getElementById('fbBtns').classList.add('hide');
+  document.getElementById('fbThanks').classList.add('show');
+}
+(function(){
+  try{
+    var prev=localStorage.getItem('frf_fb_'+location.pathname);
+    if(prev){ var b=document.getElementById('fbBtns'); var t=document.getElementById('fbThanks'); if(b&&t){ b.classList.add('hide'); t.classList.add('show'); } }
+  }catch(e){}
 })();
 </script>
 </body></html>
