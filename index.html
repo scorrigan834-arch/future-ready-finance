@@ -18,6 +18,8 @@ a{text-decoration:none}
 .nav-item{position:relative}
 .nav-link{display:inline-flex;align-items:center;gap:.3rem;color:rgba(255,255,255,.66);padding:.5rem .85rem;border-radius:7px;font-size:.8rem;font-weight:500;transition:color .18s,background .18s;cursor:pointer;background:none;border:none;font-family:"DM Sans",sans-serif}
 .nav-link:hover,.nav-item:hover .nav-link,.nav-item.open .nav-link{color:#0EA5A0;background:rgba(14,165,160,.08)}
+.nav-link-dash{color:#0EA5A0;font-weight:700}
+.nav-link-dash:hover{background:rgba(14,165,160,.14)}
 .nav-caret{width:.55rem;height:.55rem;fill:none;stroke:currentColor;stroke-width:2.5;transition:transform .25s ease;opacity:.7}
 .nav-item:hover .nav-caret,.nav-item.open .nav-caret{transform:rotate(180deg)}
 /* DROPDOWN PANEL */
@@ -246,6 +248,7 @@ a{text-decoration:none}
   <a href="index.html" class="nav-brand">Future Ready <span>Finance</span></a>
   <div class="nav-links">
     <a href="start-here.html" class="nav-link">Start Here</a>
+    <a href="my-dashboard.html" class="nav-link nav-link-dash">🎯 My Dashboard</a>
     <div class="nav-item">
       <button class="nav-link" type="button">Life Stages <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
       <div class="nav-dd">
@@ -301,7 +304,7 @@ a{text-decoration:none}
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <div class="mm-group"><button class="mm-top"><a href="start-here.html">Start Here</a></button></div>
+  <div class="mm-group"><button class="mm-top"><a href="start-here.html">Start Here</a></button><button class="mm-top"><a href="my-dashboard.html">🎯 My Dashboard</a></button><button class="mm-top"><a href="my-profile.html">📝 My Profile</a></button></div>
   <div class="mm-group">
     <button class="mm-top" type="button">Life Stages <svg class="mm-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
     <div class="mm-sub">
