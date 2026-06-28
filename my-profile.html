@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile — Future Ready Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
+a{text-decoration:none}
+.nav{position:sticky;top:0;z-index:200;background:rgba(11,25,41,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px;border-bottom:1px solid rgba(255,255,255,.07)}
+.nav-brand{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none;z-index:2}.nav-brand span{color:#0EA5A0}
+.nav-links{display:flex;gap:.1rem;align-items:center}
+.nav-item{position:relative}
+.nav-link{display:inline-flex;align-items:center;gap:.3rem;color:rgba(255,255,255,.66);padding:.45rem .8rem;border-radius:7px;font-size:.8rem;font-weight:500;transition:color .18s,background .18s;cursor:pointer;background:none;border:none;font-family:"DM Sans",sans-serif;text-decoration:none}
+.nav-link:hover,.nav-item:hover .nav-link,.nav-item.open .nav-link,.nav-link.active{color:#0EA5A0;background:rgba(14,165,160,.08)}
+.nav-caret{width:.55rem;height:.55rem;fill:none;stroke:currentColor;stroke-width:2.5;transition:transform .25s ease;opacity:.7}
+.nav-item:hover .nav-caret,.nav-item.open .nav-caret{transform:rotate(180deg)}
+.nav-dd{position:absolute;top:calc(100% + 10px);left:0;min-width:250px;background:rgba(15,30,48,.97);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:.55rem;box-shadow:0 24px 60px rgba(0,0,0,.45);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .22s ease,transform .22s ease,visibility .22s;z-index:210}
+.nav-dd::before{content:"";position:absolute;top:-14px;left:0;right:0;height:14px}
+.nav-item:hover .nav-dd,.nav-item.open .nav-dd{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-dd-wide{min-width:430px;display:grid;grid-template-columns:1fr 1fr;gap:.15rem}
+.nav-dd a{display:flex;flex-direction:column;gap:.1rem;padding:.55rem .7rem;border-radius:9px;color:rgba(255,255,255,.85);transition:background .15s,color .15s;text-decoration:none}
+.nav-dd a:hover{background:rgba(14,165,160,.12)}
+.nav-dd a .dd-t{font-size:.83rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:.45rem}
+.nav-dd a:hover .dd-t{color:#0EA5A0}
+.nav-dd a .dd-d{font-size:.71rem;color:rgba(255,255,255,.45);line-height:1.4}
+.nav-dd-head{grid-column:1/-1;font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0EA5A0;padding:.5rem .7rem .3rem}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:9px;cursor:pointer;padding:0;z-index:2}
+.nav-burger span{display:block;width:19px;height:2px;background:#fff;border-radius:2px;margin:0 auto;transition:transform .28s ease,opacity .28s ease}
+.nav-burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.active span:nth-child(2){opacity:0}
+.nav-burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{position:fixed;top:58px;left:0;right:0;bottom:0;background:rgba(11,25,41,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:190;padding:1.25rem 1.5rem 2.5rem;overflow-y:auto;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);visibility:hidden}
+.mobile-menu.open{transform:translateX(0);visibility:visible}
+.mm-group{border-bottom:1px solid rgba(255,255,255,.08)}
+.mm-top{width:100%;display:flex;align-items:center;justify-content:space-between;background:none;border:none;color:#fff;font-family:"DM Sans",sans-serif;font-size:1rem;font-weight:600;padding:1.05rem .25rem;cursor:pointer;text-align:left}
+.mm-top a{color:#fff;text-decoration:none}
+.mm-caret{width:.8rem;height:.8rem;fill:none;stroke:#0EA5A0;stroke-width:2.5;transition:transform .25s ease;flex-shrink:0}
+.mm-group.open .mm-caret{transform:rotate(180deg)}
+.mm-sub{max-height:0;overflow:hidden;transition:max-height .3s ease;padding-bottom:0}
+.mm-group.open .mm-sub{max-height:600px;padding-bottom:.6rem}
+.mm-sub a{display:block;color:rgba(255,255,255,.7);font-size:.9rem;padding:.6rem .25rem .6rem 1rem;text-decoration:none;border-left:2px solid rgba(14,165,160,.3);margin-left:.25rem}
+.mm-sub a:hover{color:#0EA5A0}
+.page-hero{background:#0B1929;padding:3.5rem 2rem 2.75rem;text-align:center}.page-hero-inner{max-width:760px;margin:0 auto}
+.eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#0EA5A0;display:block;margin-bottom:.7rem}
+.page-hero h1{font-family:"Playfair Display",serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
+.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:560px;margin:0 auto;line-height:1.75}
+.wrap{max-width:760px;margin:0 auto;padding:3rem 2rem}
+.step{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.85rem;margin-bottom:1.5rem;display:flex;gap:1.4rem;align-items:flex-start;transition:border-color .2s,box-shadow .2s,transform .2s}
+.step:hover{border-color:rgba(14,165,160,.4);box-shadow:0 14px 40px rgba(11,25,41,.09);transform:translateY(-3px)}
+.step-num{flex-shrink:0;width:48px;height:48px;border-radius:50%;background:rgba(14,165,160,.1);border:1.5px solid rgba(14,165,160,.3);display:flex;align-items:center;justify-content:center;font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:900;color:#0EA5A0}
+.step-body{flex:1}
+.step-body h3{font-family:"Playfair Display",serif;font-size:1.2rem;font-weight:700;margin-bottom:.45rem;color:#0B1929}
+.step-body p{color:#64748B;font-size:.9rem;line-height:1.7;margin-bottom:.9rem}
+.step-link{color:#0EA5A0;font-weight:700;font-size:.85rem;display:inline-flex;align-items:center;gap:.3rem;transition:gap .2s}
+.step:hover .step-link{gap:.6rem}
+.remember{background:linear-gradient(135deg,rgba(14,165,160,.1),rgba(14,165,160,.03));border:1px solid rgba(14,165,160,.25);border-left:4px solid #0EA5A0;border-radius:12px;padding:1.5rem 1.75rem;margin-top:2rem}
+.remember p{color:#0B1929;font-size:.95rem;line-height:1.75;margin:0}
+.remember strong{color:#0C7D79}
+.footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center;margin-top:1rem}
+.footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
+@media(max-width:640px){.nav-links{display:none}.nav-burger{display:flex}.wrap{padding:2rem 1.25rem}.step{padding:1.4rem;gap:1rem}}
+
+/* PREMIUM: animated mesh hero */
+.page-hero{position:relative;overflow:hidden}
+.mesh{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.mesh span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
+.mesh .m1{width:480px;height:480px;background:radial-gradient(circle,rgba(14,165,160,.45),transparent 65%);top:-160px;left:-100px;animation:drift1 20s ease-in-out infinite}
+.mesh .m2{width:420px;height:420px;background:radial-gradient(circle,rgba(63,208,201,.28),transparent 65%);bottom:-180px;right:-90px;animation:drift2 24s ease-in-out infinite}
+.mesh .m3{width:340px;height:340px;background:radial-gradient(circle,rgba(14,165,160,.24),transparent 65%);top:30%;left:55%;animation:drift3 28s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,50px) scale(1.1)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-60px,-45px) scale(1.12)}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,35px) scale(1.08)}}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 85%);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 85%);pointer-events:none}
+.page-hero-inner{position:relative;z-index:1}
+.eyebrow{box-shadow:0 0 24px rgba(14,165,160,.15)}
+/* PREMIUM: scroll reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.07s}.reveal[data-d="2"]{transition-delay:.14s}.reveal[data-d="3"]{transition-delay:.21s}.reveal[data-d="4"]{transition-delay:.28s}.reveal[data-d="5"]{transition-delay:.35s}.reveal[data-d="6"]{transition-delay:.42s}
+/* PREMIUM: card depth */
+.lcard,.dcard,.diff,.step,.guide-item:not(.dim),.pop-card,.sim-card,.path-card,.stage-card{transition:border-color .25s,box-shadow .25s,transform .25s !important}
+.lcard:hover,.dcard:hover,.diff:hover,.guide-item:not(.dim):hover,.pop-card:hover,.path-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(11,25,41,.1)}
+</style>
+<style>
+.pf-hero{background:linear-gradient(135deg,#0B1929,#0f1e30);padding:2.5rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.pf-hero::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.22),transparent 70%);top:-130px;right:-90px}
+.pf-hero .eyebrow{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#0EA5A0;display:block;margin-bottom:.55rem;position:relative;z-index:1}
+.pf-hero h1{font-family:"Playfair Display",serif;font-size:1.9rem;color:#fff;margin-bottom:.5rem;position:relative;z-index:1}
+.pf-hero p{color:rgba(255,255,255,.6);font-size:.95rem;max-width:540px;margin:0 auto;position:relative;z-index:1}
+.pf-wrap{max-width:760px;margin:0 auto;padding:1.75rem 1.25rem 3rem}
+.pf-private{background:rgba(14,165,160,.08);border:1px solid rgba(14,165,160,.25);border-radius:10px;padding:.85rem 1.1rem;font-size:.83rem;color:#0C7D79;margin-bottom:1.75rem;line-height:1.6;display:flex;gap:.6rem;align-items:flex-start}
+.pf-private b{color:#0C7D79}
+.pf-section{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.5rem 1.6rem;margin-bottom:1.25rem;box-shadow:0 1px 3px rgba(11,25,41,.04)}
+.pf-section h2{font-family:"Playfair Display",serif;font-size:1.2rem;color:#0B1929;margin-bottom:.35rem}
+.pf-section .sub{font-size:.85rem;color:#64748B;margin-bottom:1.1rem}
+.chip-grid{display:flex;flex-wrap:wrap;gap:.55rem}
+.chip{display:inline-flex;align-items:center;gap:.35rem;padding:.5rem .9rem;border-radius:999px;border:1.5px solid #E2E8F0;background:#F5F7F6;color:#475569;font-size:.84rem;font-weight:600;cursor:pointer;transition:all .15s;user-select:none}
+.chip:hover{border-color:#0EA5A0;color:#0C7D79}
+.chip.on{background:#0EA5A0;border-color:#0EA5A0;color:#fff}
+.chip.on.help{background:#d97706;border-color:#d97706}
+.chip.on.good{background:#059669;border-color:#059669}
+.field-row{display:flex;flex-wrap:wrap;gap:1rem;margin-top:.4rem}
+.field{flex:1;min-width:150px}
+.field label{display:block;font-size:.8rem;font-weight:600;color:#0B1929;margin-bottom:.35rem}
+.field input,.field select{width:100%;padding:.7rem .85rem;border:1.5px solid #E2E8F0;border-radius:9px;font-size:.95rem;font-family:"DM Sans",sans-serif;color:#0B1929;background:#fff}
+.field input:focus,.field select:focus{outline:none;border-color:#0EA5A0}
+.field .hint{font-size:.74rem;color:#94a3b8;margin-top:.3rem}
+.pf-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem}
+.pf-btn{flex:1;min-width:140px;padding:.9rem;border:none;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:"DM Sans",sans-serif;transition:background .2s}
+.pf-btn-primary{background:#0EA5A0;color:#fff}
+.pf-btn-primary:hover{background:#0C7D79}
+.pf-btn-ghost{background:#ECF1F0;color:#475569}
+.pf-btn-ghost:hover{background:#E2E8F0}
+.pf-result{background:linear-gradient(135deg,#0B1929,#0f1e30);border-radius:16px;padding:1.75rem 1.6rem;margin-top:1.5rem;display:none}
+.pf-result.show{display:block}
+.pf-result h2{font-family:"Playfair Display",serif;color:#0EA5A0;font-size:1.35rem;margin-bottom:.4rem}
+.pf-result .greeting{color:rgba(255,255,255,.6);font-size:.9rem;margin-bottom:1.4rem}
+.pf-result h3{color:#fff;font-size:.95rem;font-weight:700;margin:1.3rem 0 .7rem;display:flex;align-items:center;gap:.5rem}
+.rec-card{display:flex;align-items:center;gap:.85rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.8rem .95rem;margin-bottom:.6rem;text-decoration:none;transition:background .15s}
+.rec-card:hover{background:rgba(14,165,160,.14)}
+.rec-icon{width:38px;height:38px;border-radius:9px;background:rgba(14,165,160,.16);border:1px solid rgba(14,165,160,.25);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+.rec-text{flex:1;min-width:0}
+.rec-title{color:#fff;font-size:.9rem;font-weight:600;line-height:1.3}
+.rec-desc{color:rgba(255,255,255,.5);font-size:.78rem;line-height:1.35}
+.rec-arrow{color:#0EA5A0;font-size:1.1rem;flex-shrink:0}
+.snapshot{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:.5rem}
+.snap{flex:1;min-width:130px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.85rem 1rem}
+.snap .lbl{color:rgba(255,255,255,.5);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.25rem}
+.snap .val{color:#3fd0c9;font-size:1.15rem;font-weight:700}
+.pf-saved-note{background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.3);border-radius:8px;padding:.6rem .9rem;font-size:.82rem;color:#047857;margin-bottom:1.25rem;display:none;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
+.pf-saved-note.show{display:flex}
+</style>
+</head><body>
+<nav class="nav">
+  <a href="index.html" class="nav-brand">Future Ready <span>Finance</span></a>
+  <div class="nav-links">
+    <a href="start-here.html" class="nav-link active">Start Here</a>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Life Stages <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd">
+        <a href="paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
+        <a href="paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
+        <a href="paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
+        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Guides <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd nav-dd-wide">
+        <div class="nav-dd-head">Browse by Topic</div>
+        <a href="guides.html"><span class="dd-t">🏛️ Banking & Cash</span></a>
+        <a href="guides.html"><span class="dd-t">💳 Credit & Debt</span></a>
+        <a href="guides.html"><span class="dd-t">🧾 Taxes</span></a>
+        <a href="guides.html"><span class="dd-t">🎓 Education</span></a>
+        <a href="guides.html"><span class="dd-t">💼 Career</span></a>
+        <a href="guides.html"><span class="dd-t">🏠 Housing</span></a>
+        <a href="guides.html"><span class="dd-t">📈 Investing</span></a>
+        <a href="guides.html"><span class="dd-t">🛡️ Insurance</span></a>
+        <a href="guides.html"><span class="dd-t">👨‍👩‍👧 Family</span></a>
+        <a href="guides.html"><span class="dd-t">📚 View All Guides →</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Calculators <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd">
+        <a href="simulations/compound-interest.html"><span class="dd-t">📈 Compound Interest</span><span class="dd-d">What your money becomes</span></a>
+        <a href="simulations/take-home-pay.html"><span class="dd-t">💼 Take-Home Pay</span><span class="dd-d">Paycheck after taxes</span></a>
+        <a href="simulations/roth-vs-traditional.html"><span class="dd-t">🏦 Roth vs Pre-Tax 401(k)</span><span class="dd-d">Which 401(k) wins</span></a>
+        <a href="simulations/debt-payoff.html"><span class="dd-t">💳 Debt Payoff</span><span class="dd-d">Fastest way out</span></a>
+        <a href="simulations/net-worth.html"><span class="dd-t">💰 Net Worth</span><span class="dd-d">Own vs. owe</span></a>
+        <a href="simulations.html"><span class="dd-t">🔢 All Calculators →</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Big Decisions <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd">
+        <a href="big-decisions.html"><span class="dd-t">🎓 Education Decisions</span><span class="dd-d">College, debt, grad school</span></a>
+        <a href="big-decisions.html"><span class="dd-t">💼 Career Decisions</span><span class="dd-d">Offers, raises, job changes</span></a>
+        <a href="big-decisions.html"><span class="dd-t">🏠 Housing Decisions</span><span class="dd-d">Rent vs buy, affordability</span></a>
+        <a href="big-decisions.html"><span class="dd-t">📈 Investing Decisions</span><span class="dd-d">When, how much, which account</span></a>
+        <a href="big-decisions.html"><span class="dd-t">🚗 Cars, Debt & Family</span><span class="dd-d">Major life purchases</span></a>
+        <a href="big-decisions.html"><span class="dd-t">🧭 Decision Framework →</span></a>
+      </div>
+    </div>
+    <a href="resources.html" class="nav-link">Resources</a>
+    <a href="about.html" class="nav-link">About</a>
+  </div>
+  <button class="nav-burger" id="navBurger" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-group"><button class="mm-top"><a href="start-here.html">Start Here</a></button></div>
+<div class="pf-hero">
+  <span class="eyebrow">Your Personal Finance Profile</span>
+  <h1>Make This Yours</h1>
+  <p>Tell us a little about your situation and goals. We'll point you to the guides and tools that fit you best — and remember it for next time.</p>
+</div>
+
+<div class="pf-wrap">
+
+  <div class="pf-private">
+    <span>🔒</span>
+    <span><b>This stays on your device.</b> Everything you enter is saved privately in your own browser — it's never sent anywhere or seen by anyone. Clearing your browser clears it.</span>
+  </div>
+
+  <div class="pf-saved-note" id="savedNote">
+    <span>↩️ We restored your saved profile.</span>
+    <button class="pf-btn-ghost" style="flex:0;min-width:auto;padding:.4rem .8rem;font-size:.78rem" onclick="clearProfile()">Clear it</button>
+  </div>
+
+  <!-- INTERESTS -->
+  <div class="pf-section">
+    <h2>What are you interested in?</h2>
+    <p class="sub">Pick any topics you'd like to learn more about.</p>
+    <div class="chip-grid" id="interests">
+      <span class="chip" data-v="banking">🏛️ Banking & Cash</span>
+      <span class="chip" data-v="credit">💳 Credit & Debt</span>
+      <span class="chip" data-v="taxes">🧾 Taxes</span>
+      <span class="chip" data-v="education">🎓 Education</span>
+      <span class="chip" data-v="career">💼 Career</span>
+      <span class="chip" data-v="housing">🏠 Housing</span>
+      <span class="chip" data-v="investing">📈 Investing</span>
+      <span class="chip" data-v="insurance">🛡️ Insurance</span>
+      <span class="chip" data-v="retirement">🏦 Retirement</span>
+      <span class="chip" data-v="family">👨‍👩‍👧 Family</span>
+    </div>
+  </div>
+
+  <!-- CONFIDENT -->
+  <div class="pf-section">
+    <h2>What do you feel good about?</h2>
+    <p class="sub">Areas you already have a handle on — we'll go lighter here.</p>
+    <div class="chip-grid" id="confident">
+      <span class="chip good" data-v="budgeting">Budgeting</span>
+      <span class="chip good" data-v="saving">Saving</span>
+      <span class="chip good" data-v="credit">Credit cards</span>
+      <span class="chip good" data-v="investing">Investing</span>
+      <span class="chip good" data-v="taxes">Taxes</span>
+      <span class="chip good" data-v="debt">Managing debt</span>
+    </div>
+  </div>
+
+  <!-- NEEDS HELP -->
+  <div class="pf-section">
+    <h2>What do you need help with?</h2>
+    <p class="sub">Where you'd like the most guidance — we'll prioritize these for you.</p>
+    <div class="chip-grid" id="needhelp">
+      <span class="chip help" data-v="budgeting">Budgeting</span>
+      <span class="chip help" data-v="saving">Building savings</span>
+      <span class="chip help" data-v="debt">Paying off debt</span>
+      <span class="chip help" data-v="investing">Starting to invest</span>
+      <span class="chip help" data-v="retirement">Retirement planning</span>
+      <span class="chip help" data-v="housing">Buying/renting a home</span>
+      <span class="chip help" data-v="taxes">Understanding taxes</span>
+      <span class="chip help" data-v="credit">Building credit</span>
+    </div>
+  </div>
+
+  <!-- FINANCIAL INFO -->
+  <div class="pf-section">
+    <h2>Your numbers (optional)</h2>
+    <p class="sub">Add any you're comfortable with — it helps tailor the guidance. All optional, all private.</p>
+    <div class="field-row">
+      <div class="field">
+        <label for="income">Annual income</label>
+        <input type="number" id="income" placeholder="e.g. 45000" min="0" step="1000">
+        <div class="hint">Before taxes</div>
+      </div>
+      <div class="field">
+        <label for="debt">Total debt</label>
+        <input type="number" id="debt" placeholder="e.g. 15000" min="0" step="500">
+        <div class="hint">Loans, cards, etc.</div>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="invested">Amount invested / saved</label>
+        <input type="number" id="invested" placeholder="e.g. 8000" min="0" step="500">
+        <div class="hint">Retirement, savings, brokerage</div>
+      </div>
+      <div class="field">
+        <label for="stage">Life stage</label>
+        <select id="stage">
+          <option value="">Choose...</option>
+          <option value="high-school">High school (14–18)</option>
+          <option value="college">College (17–23)</option>
+          <option value="early-career">Early career (21–28)</option>
+          <option value="establishing">Establishing (26–35)</option>
+        </select>
+        <div class="hint">Helps match content</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pf-actions">
+    <button class="pf-btn pf-btn-primary" onclick="buildProfile()">✨ Build My Profile</button>
+    <button class="pf-btn pf-btn-ghost" onclick="clearProfile()">Clear</button>
+  </div>
+
+  <!-- RESULT -->
+  <div class="pf-result" id="result">
+    <h2 id="resultTitle">Your Personalized Plan</h2>
+    <p class="greeting" id="greeting"></p>
+    <div id="snapshotWrap" style="display:none">
+      <div class="snapshot" id="snapshot"></div>
+    </div>
+    <div id="recommendations"></div>
+  </div>
+
+</div>
+<footer class="footer"><a href="index.html">Home</a><a href="life-stages.html">Life Stages</a><a href="guides.html">Guides</a><a href="simulations.html">Calculators</a><br><br>Educational content only. Not financial, legal, tax, or investment advice.</footer>
+<script>
+(function(){
+  var burger = document.getElementById('navBurger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (burger && mobileMenu){
+    burger.addEventListener('click', function(){
+      burger.classList.toggle('active');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('.mm-top').forEach(function(btn){
+      var group = btn.parentElement;
+      var sub = group.querySelector('.mm-sub');
+      if (sub){ btn.addEventListener('click', function(){ group.classList.toggle('open'); }); }
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        burger.classList.remove('active');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+  var navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(function(item){
+    var btn = item.querySelector('.nav-link');
+    if (btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var wasOpen = item.classList.contains('open');
+        navItems.forEach(function(i){ i.classList.remove('open'); });
+        if (!wasOpen) item.classList.add('open');
+      });
+    }
+  });
+  document.addEventListener('click', function(){
+    navItems.forEach(function(i){ i.classList.remove('open'); });
+  });
+})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(function(el){ obs.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+</script>
+<script>
+// ---- DATA: maps interests/needs to real guides & calculators on the site ----
+var GUIDE_MAP = {
+  banking: [['banking-basics','🏛️','Banking Basics','Checking, savings & high-yield accounts']],
+  credit: [['credit-basics','💳','How Credit Scores Work','Build the number that shapes your finances'],['credit-card-without-debt','💳','Using a Credit Card Without Debt','The one rule that keeps you safe']],
+  taxes: [['taxes-101','🧾','Taxes 101','How brackets and deductions really work']],
+  education: [['college','🎓','Should I Go To College?','Weigh the cost against the payoff'],['student-debt','🎓','How Much Student Debt Is Too Much?','A simple rule for safe borrowing']],
+  career: [['salary-negotiation','💼','Should I Negotiate My Salary?','Worth tens of thousands over a career'],['first-paycheck','💵','Understanding Your First Paycheck','Why take-home is smaller than salary']],
+  housing: [['rent-vs-buy','🏠','Should I Rent or Buy?','When buying makes sense, and when renting wins'],['apartment','🏠','Can I Afford This Apartment?','The full cost of living on your own']],
+  investing: [['investing','📈','Should I Start Investing Now?','Why time is your biggest advantage'],['index-funds-vs-stocks','📈','Index Funds vs Individual Stocks','Which builds wealth more reliably']],
+  insurance: [['insurance','🛡️','Insurance Basics','What you actually need']],
+  retirement: [['retirement-accounts','🏦','Retirement Accounts Explained','401(k), IRA, Roth & more']],
+  family: [['couples-money','👨‍👩‍👧','Managing Money as a Couple','Combining finances and goals']],
+  debt: [['debt-payoff','💳','How to Pay Off Debt','Avalanche vs snowball'],['student-debt','🎓','How Much Student Debt Is Too Much?','A simple rule for safe borrowing']],
+  saving: [['emergency-fund','🛟','How to Build an Emergency Fund','The foundation everything stands on']],
+  budgeting: [['first-paycheck','💵','Understanding Your First Paycheck','Where your money actually goes']]
+};
+var CALC_MAP = {
+  investing: ['compound-interest','📈','Compound Interest Calculator','See what your money becomes'],
+  retirement: ['roth-vs-traditional','🏦','Roth vs Pre-Tax 401(k)','Which retirement account wins'],
+  debt: ['debt-payoff','💳','Debt Payoff Calculator','The fastest way out'],
+  saving: ['net-worth','💰','Net Worth Calculator','What you own vs owe'],
+  taxes: ['take-home-pay','💼','Take-Home Pay Calculator','Your real paycheck after taxes'],
+  housing: ['take-home-pay','💼','Take-Home Pay Calculator','What you actually bring home']
+};
+
+var KEY = 'frf_profile_v1';
+function getChips(id){
+  var out = [];
+  var chips = document.getElementById(id).querySelectorAll('.chip.on');
+  for(var i=0;i<chips.length;i++){ out.push(chips[i].getAttribute('data-v')); }
+  return out;
+}
+function setChips(id, vals){
+  if(!vals) return;
+  var chips = document.getElementById(id).querySelectorAll('.chip');
+  for(var i=0;i<chips.length;i++){
+    if(vals.indexOf(chips[i].getAttribute('data-v')) > -1) chips[i].classList.add('on');
+  }
+}
+// chip toggle
+document.addEventListener('click', function(e){
+  if(e.target.classList && e.target.classList.contains('chip')){
+    e.target.classList.toggle('on');
+  }
+});
+
+function collectData(){
+  return {
+    interests: getChips('interests'),
+    confident: getChips('confident'),
+    needhelp: getChips('needhelp'),
+    income: document.getElementById('income').value,
+    debt: document.getElementById('debt').value,
+    invested: document.getElementById('invested').value,
+    stage: document.getElementById('stage').value
+  };
+}
+function saveProfile(){
+  try{ localStorage.setItem(KEY, JSON.stringify(collectData())); }catch(e){}
+}
+function loadProfile(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(!raw) return false;
+    var d = JSON.parse(raw);
+    setChips('interests', d.interests);
+    setChips('confident', d.confident);
+    setChips('needhelp', d.needhelp);
+    if(d.income) document.getElementById('income').value = d.income;
+    if(d.debt) document.getElementById('debt').value = d.debt;
+    if(d.invested) document.getElementById('invested').value = d.invested;
+    if(d.stage) document.getElementById('stage').value = d.stage;
+    return true;
+  }catch(e){ return false; }
+}
+function clearProfile(){
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  var chips = document.querySelectorAll('.chip.on');
+  for(var i=0;i<chips.length;i++) chips[i].classList.remove('on');
+  document.getElementById('income').value='';
+  document.getElementById('debt').value='';
+  document.getElementById('invested').value='';
+  document.getElementById('stage').value='';
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('savedNote').classList.remove('show');
+}
+
+function fmt(n){ return '$' + Number(n).toLocaleString(); }
+
+function buildProfile(){
+  var d = collectData();
+  saveProfile();
+
+  // Build recommendation set: prioritize needhelp, then interests; de-dupe; skip confident areas
+  var seen = {};
+  var guideRecs = [];
+  var priority = d.needhelp.concat(d.interests);
+  for(var i=0;i<priority.length;i++){
+    var topic = priority[i];
+    if(d.confident.indexOf(topic) > -1 && d.needhelp.indexOf(topic) === -1) continue; // skip if confident & not flagged for help
+    var gs = GUIDE_MAP[topic] || [];
+    for(var j=0;j<gs.length;j++){
+      var g = gs[j];
+      if(!seen['g'+g[0]]){ seen['g'+g[0]] = true; guideRecs.push(g); }
+    }
+  }
+  // Calculators from needhelp + interests
+  var calcRecs = [];
+  for(var k=0;k<priority.length;k++){
+    var c = CALC_MAP[priority[k]];
+    if(c && !seen['c'+c[0]]){ seen['c'+c[0]] = true; calcRecs.push(c); }
+  }
+
+  // Fallback if nothing selected
+  if(guideRecs.length === 0 && calcRecs.length === 0){
+    guideRecs = [['investing','📈','Should I Start Investing Now?','Why time is your biggest advantage'],['emergency-fund','🛟','How to Build an Emergency Fund','The foundation everything stands on'],['banking-basics','🏛️','Banking Basics','The right account setup earns you more']];
+  }
+
+  // Greeting
+  var helpCount = d.needhelp.length;
+  var greet = 'Here\'s a plan tailored to what you told us.';
+  if(helpCount > 0){ greet = 'We focused on the ' + helpCount + ' area' + (helpCount>1?'s':'') + ' you want help with most.'; }
+  document.getElementById('greeting').textContent = greet;
+
+  // Snapshot (only if numbers entered)
+  var snapHtml = '';
+  if(d.income){ snapHtml += '<div class="snap"><div class="lbl">Income</div><div class="val">'+fmt(d.income)+'</div></div>'; }
+  if(d.debt){ snapHtml += '<div class="snap"><div class="lbl">Debt</div><div class="val">'+fmt(d.debt)+'</div></div>'; }
+  if(d.invested){ snapHtml += '<div class="snap"><div class="lbl">Invested/Saved</div><div class="val">'+fmt(d.invested)+'</div></div>'; }
+  if(d.income && d.debt){
+    var ratio = (Number(d.debt)/Number(d.income)*100);
+    snapHtml += '<div class="snap"><div class="lbl">Debt-to-Income</div><div class="val">'+ratio.toFixed(0)+'%</div></div>';
+  }
+  if(snapHtml){
+    document.getElementById('snapshot').innerHTML = snapHtml;
+    document.getElementById('snapshotWrap').style.display = 'block';
+  } else {
+    document.getElementById('snapshotWrap').style.display = 'none';
+  }
+
+  // Build recommendations HTML
+  var html = '';
+  if(guideRecs.length){
+    html += '<h3>📚 Guides picked for you</h3>';
+    for(var a=0;a<Math.min(guideRecs.length,6);a++){
+      var g = guideRecs[a];
+      html += '<a class="rec-card" href="decisions/'+g[0]+'.html"><span class="rec-icon">'+g[1]+'</span><span class="rec-text"><span class="rec-title">'+g[2]+'</span><span class="rec-desc">'+g[3]+'</span></span><span class="rec-arrow">→</span></a>';
+    }
+  }
+  if(calcRecs.length){
+    html += '<h3>🔢 Calculators for your situation</h3>';
+    for(var b=0;b<calcRecs.length;b++){
+      var c = calcRecs[b];
+      html += '<a class="rec-card" href="simulations/'+c[0]+'.html"><span class="rec-icon">'+c[1]+'</span><span class="rec-text"><span class="rec-title">'+c[2]+'</span><span class="rec-desc">'+c[3]+'</span></span><span class="rec-arrow">→</span></a>';
+    }
+  }
+  document.getElementById('recommendations').innerHTML = html;
+
+  var res = document.getElementById('result');
+  res.classList.add('show');
+  res.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// On load: restore saved profile
+(function(){
+  if(loadProfile()){
+    document.getElementById('savedNote').classList.add('show');
+  }
+})();
+</script>
+</body>
+</html>
