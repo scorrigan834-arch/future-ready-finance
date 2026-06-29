@@ -163,6 +163,22 @@ a{text-decoration:none}
 .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(120%);background:#0B1929;color:#fff;padding:.85rem 1.4rem;border-radius:10px;font-size:.88rem;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.3);transition:transform .3s;z-index:100;max-width:90%}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .bg-disclaimer-foot{font-size:.78rem;color:#94a3b8;margin-top:1.25rem;line-height:1.55;text-align:center}
+.save-variance{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.3rem 1.4rem;margin-top:1.25rem;box-shadow:0 1px 3px rgba(11,25,41,.04)}
+.sv2-title{font-family:"Playfair Display",serif;font-size:1.1rem;color:#0B1929;margin-bottom:.3rem}
+.sv2-sub{font-size:.82rem;color:#64748B;margin-bottom:1.1rem}
+.sv2-sub b{color:#0C7D79}
+.sv2-grid{display:flex;gap:.7rem}
+.sv2-card{flex:1;border-radius:11px;padding:.95rem .65rem;text-align:center;border:1.5px solid #E2E8F0}
+.sv2-card.sv2-less{background:rgba(220,38,38,.05);border-color:rgba(220,38,38,.2)}
+.sv2-card.sv2-now{background:rgba(14,165,160,.08);border-color:rgba(14,165,160,.35)}
+.sv2-card.sv2-more{background:rgba(5,150,105,.07);border-color:rgba(5,150,105,.25)}
+.sv2-cardlabel{font-size:.64rem;color:#64748B;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-bottom:.4rem;line-height:1.2}
+.sv2-less .sv2-cardlabel{color:#dc2626}.sv2-now .sv2-cardlabel{color:#0C7D79}.sv2-more .sv2-cardlabel{color:#059669}
+.sv2-monthly{font-size:1.05rem;font-weight:800;color:#0B1929;line-height:1.1}
+.sv2-yearly{font-size:.72rem;color:#64748B;margin-top:.3rem;font-weight:600}
+.sv2-note{font-size:.8rem;color:#0C7D79;background:rgba(14,165,160,.07);border-left:3px solid #0EA5A0;border-radius:0 6px 6px 0;padding:.65rem .85rem;margin-top:1rem;line-height:1.55}
+.sv2-note b{color:#059669}
+@media(max-width:520px){.sv2-grid{gap:.4rem}.sv2-card{padding:.75rem .4rem}.sv2-monthly{font-size:.92rem}}
 </style>
 
 </head><body>
@@ -328,6 +344,28 @@ a{text-decoration:none}
     </div>
 
     <div class="insight-list" id="insightList"></div>
+    <div class="save-variance" id="saveVariance" style="display:none">
+      <div class="sv2-title">💡 The power of saving just 2% more</div>
+      <div class="sv2-sub">Small changes to your savings rate add up fast. Based on your income of <b id="sv2-income">$0</b>/mo:</div>
+      <div class="sv2-grid">
+        <div class="sv2-card sv2-less">
+          <div class="sv2-cardlabel">Save 2% less</div>
+          <div class="sv2-monthly" id="sv2-less-mo">$0/mo</div>
+          <div class="sv2-yearly" id="sv2-less-yr">$0/yr</div>
+        </div>
+        <div class="sv2-card sv2-now">
+          <div class="sv2-cardlabel">Saving now</div>
+          <div class="sv2-monthly" id="sv2-now-mo">$0/mo</div>
+          <div class="sv2-yearly" id="sv2-now-yr">$0/yr</div>
+        </div>
+        <div class="sv2-card sv2-more">
+          <div class="sv2-cardlabel">Save 2% more</div>
+          <div class="sv2-monthly" id="sv2-more-mo">$0/mo</div>
+          <div class="sv2-yearly" id="sv2-more-yr">$0/yr</div>
+        </div>
+      </div>
+      <div class="sv2-note" id="sv2Note"></div>
+    </div>
   </div>
 
   <!-- SAVINGS GOAL -->
@@ -561,6 +599,28 @@ function renderAnalysis(m, inc, exp){
 
   // Insights
   renderInsights(inc, exp, needs, wants, savings, needsPct, wantsPct, savingsPct, catTotals);
+
+  // ---- Variance: save 2% of income more vs less → yearly difference ----
+  (function(){
+    var sv = document.getElementById('saveVariance');
+    if(inc <= 0){ sv.style.display = 'none'; return; }
+    var twoPct = inc * 0.02;
+    var nowMonthly = savings > 0 ? savings : 0;
+    var lessMonthly = Math.max(0, nowMonthly - twoPct);
+    var moreMonthly = nowMonthly + twoPct;
+
+    document.getElementById('sv2-income').textContent = money(inc);
+    document.getElementById('sv2-less-mo').textContent = money(lessMonthly) + '/mo';
+    document.getElementById('sv2-now-mo').textContent = money(nowMonthly) + '/mo';
+    document.getElementById('sv2-more-mo').textContent = money(moreMonthly) + '/mo';
+    document.getElementById('sv2-less-yr').textContent = money(lessMonthly*12) + '/yr';
+    document.getElementById('sv2-now-yr').textContent = money(nowMonthly*12) + '/yr';
+    document.getElementById('sv2-more-yr').textContent = money(moreMonthly*12) + '/yr';
+
+    var yearlyDiff = twoPct * 12;
+    document.getElementById('sv2Note').innerHTML = 'Saving just 2% more of your income means <b>' + money(yearlyDiff) + ' more per year</b> going toward your future. Invested at 7%, that single year\u2019s difference could grow to over <b>' + money(yearlyDiff * Math.pow(1.07, 10)) + '</b> in a decade. Small, consistent changes compound.';
+    sv.style.display = 'block';
+  })();
 }
 
 function setFill(id, pct){
