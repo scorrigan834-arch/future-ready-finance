@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>College Path — Future Ready Finance</title>
+<title>College — Future Ready Finance</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
 a{text-decoration:none}
 .nav{position:sticky;top:0;z-index:100;background:#0B1929;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px}
@@ -14,7 +15,7 @@ a{text-decoration:none}
 .page-hero{background:#0B1929;padding:3.5rem 2rem 2.75rem}.page-hero-inner{max-width:1100px;margin:0 auto}
 .eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#0EA5A0;display:block;margin-bottom:.7rem}
 .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
-.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:540px;line-height:1.75}
+.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:560px;line-height:1.75}
 .rail{display:flex;overflow-x:auto;background:#fff;border-bottom:1px solid #E2E8F0;padding:0 2rem}
 .rail-step{display:flex;align-items:center;gap:.55rem;padding:.85rem 1.15rem;white-space:nowrap;border-bottom:2.5px solid transparent;color:#64748B;font-size:.8rem;font-weight:500}
 .rail-step.active{color:#0EA5A0;border-bottom-color:#0EA5A0;font-weight:700}
@@ -33,22 +34,31 @@ a{text-decoration:none}
 .btn-outline{background:transparent;color:#0B1929;border:1.5px solid #E2E8F0}
 .btn-outline:hover{border-color:#0EA5A0;color:#0EA5A0}
 .divider{border:none;border-top:1px solid #E2E8F0;margin:2.5rem 0}
+/* Playbook section — ADDED (was unstyled in template) */
+.budget-section{background:#0B1929;border-radius:16px;padding:2.5rem 2rem;margin:2.5rem 0;color:#fff}
+.budget-section h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.budget-section .sub{color:rgba(255,255,255,.6);font-size:.9rem;margin-bottom:1.75rem;max-width:600px}
+.budget-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.75rem}
+.budget-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.35rem 1.45rem}
+.budget-card h4{color:#3fd0c9;font-size:.92rem;font-weight:700;margin-bottom:.5rem}
+.budget-card p{color:rgba(255,255,255,.72);font-size:.85rem;line-height:1.65}
+.budget-rule{background:linear-gradient(135deg,rgba(14,165,160,.18),rgba(14,165,160,.05));border:1px solid rgba(14,165,160,.35);border-radius:12px;padding:1.4rem 1.6rem}
+.budget-rule h4{color:#6ee7b7;font-size:1rem;font-weight:700;margin-bottom:.5rem;font-family:'Playfair Display',serif}
+.budget-rule p{color:rgba(255,255,255,.8);font-size:.88rem;line-height:1.7}
+/* Related guides — ADDED (was unstyled in template) */
+.related-guides{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.6rem 1.75rem;margin:2.5rem 0}
+.related-guides-header h4{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#0B1929;margin-bottom:1rem}
+.related-guide-item{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;border:1px solid #E2E8F0;border-radius:9px;margin-bottom:.6rem;color:#0B1929;font-size:.9rem;font-weight:500;transition:border-color .15s,background .15s}
+.related-guide-item:hover{border-color:#0EA5A0;background:rgba(14,165,160,.04);color:#0B1929}
+.related-arrow{color:#0EA5A0;font-weight:800}
 .q-item{display:flex;gap:.75rem;align-items:flex-start;border:1px solid #E2E8F0;border-radius:9px;padding:.8rem 1rem;background:#fff;margin-bottom:.5rem;font-size:.9rem}
 .q-mark{color:#0EA5A0;font-weight:800;flex-shrink:0}
 .btn-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem}
-.budget-section{background:#F5F7F6;border-radius:14px;padding:2rem;margin-top:2.5rem}
-.budget-section h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:.5rem;color:#0B1929}
-.budget-section .sub{color:#64748B;font-size:.9rem;margin-bottom:1.5rem}
-.budget-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem}
-.budget-card{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:1.25rem}
-.budget-card h4{font-weight:700;font-size:.9rem;margin-bottom:.4rem;color:#0B1929}
-.budget-card p{font-size:.83rem;color:#64748B;line-height:1.6}
-.budget-rule{background:#0B1929;border-radius:10px;padding:1.25rem 1.5rem;margin-top:1rem}
-.budget-rule h4{font-family:'Playfair Display',serif;color:#0EA5A0;margin-bottom:.4rem;font-size:.95rem}
-.budget-rule p{color:rgba(255,255,255,.75);font-size:.875rem;line-height:1.65}
 .footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
-@media(max-width:640px){.nav-links{display:none}.budget-grid{grid-template-columns:1fr}}</style>
+@media(max-width:760px){.budget-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.nav-links{display:none}}
+</style>
 </head>
 <body>
 <nav class="nav">
@@ -64,76 +74,70 @@ a{text-decoration:none}
   </div>
 </nav>
 <div class="page-hero"><div class="page-hero-inner">
-  <span class="eyebrow">Life Stage · Ages 17–23</span>
-  <h1>📚 College Path</h1>
-  <p>Navigate financial independence for the first time. Learn to manage student loans, credit cards, apartment costs, internship income, and building credit from scratch.</p>
+  <span class="eyebrow">Life Stage · Ages 17–23 · Navigating Independence</span>
+  <h1>📚 College</h1>
+  <p>College is where you manage real money for the first time — often while taking on debt. Student loans, credit cards, your first apartment, and internships all hit at once. Get these years right and you graduate with options instead of just obligations.</p>
 </div></div>
 <div class="rail">
-  <div class="rail-step active"><span class="rail-dot">1</span>Student Loans</div>
-  <div class="rail-step"><span class="rail-dot">2</span>Credit Basics</div>
-  <div class="rail-step"><span class="rail-dot">3</span>Apartment</div>
-  <div class="rail-step"><span class="rail-dot">4</span>Budgeting</div>
+  <div class="rail-step active"><span class="rail-dot">1</span>Manage Loans</div>
+  <div class="rail-step"><span class="rail-dot">2</span>Build Credit</div>
+  <div class="rail-step"><span class="rail-dot">3</span>Live Lean</div>
+  <div class="rail-step"><span class="rail-dot">4</span>Earn & Intern</div>
 </div>
 <div class="section"><div class="section-inner">
-  <div class="goal"><div class="goal-label">Your Goal</div><p>Manage your own money confidently and avoid the most expensive early-adulthood mistakes.</p></div>
+  <div class="goal"><div class="goal-label">Your Goal</div><p>Get through college with the least debt possible, the start of a credit history, and real-world money skills — so your degree opens doors instead of just bills.</p></div>
 
   <div class="step-card"><div class="step-num">1</div><div class="step-content">
-    <h3>Student Loans 101</h3>
-    <p>Understand federal vs private loans, interest, repayment timelines, and how debt affects your future income and flexibility.</p>
-    <a href="../decisions/student-debt.html" class="btn">Read Guide</a>
+    <h3>Manage Student Loans Wisely</h3>
+    <p>Borrow only what you need, understand the difference between federal and private loans, and know your interest rates. Every dollar you don't borrow is a dollar (plus interest) you won't repay later. Track your total balance so it never becomes an abstract number.</p>
+    <a href="../decisions/student-debt.html" class="btn">Student Debt Guide</a>
   </div></div>
-
   <div class="step-card"><div class="step-num">2</div><div class="step-content">
-    <h3>Credit Basics</h3>
-    <p>Build credit responsibly with your first credit card. Learn utilization, on-time payments, and how to avoid debt traps.</p>
-    <a href="../big-decisions.html" class="btn">Explore Guide</a>
+    <h3>Build Credit Responsibly</h3>
+    <p>A student credit card, used carefully, builds the credit history you'll need for apartments, cars, and lower interest rates. The rule: only charge what you can pay in full each month. This is how you build credit without falling into debt.</p>
+    <a href="../decisions/credit-card-without-debt.html" class="btn">Credit Cards Without Debt</a>
   </div></div>
-
   <div class="step-card"><div class="step-num">3</div><div class="step-content">
-    <h3>Apartment Affordability</h3>
-    <p>Calculate the real cost of your first apartment — rent, utilities, deposits, renters insurance, parking, and commute.</p>
-    <a href="../decisions/apartment.html" class="btn">Read Guide</a>
+    <h3>Live Below Your Means</h3>
+    <p>Apartment living, food, and social life are where budgets break. Learn to budget the money you actually have, split costs with roommates, and resist lifestyle creep funded by loans. The habits you build broke in college serve you for life.</p>
+    <a href="../simulations/budget-builder.html" class="btn">Build Your Budget</a>
   </div></div>
-
   <div class="step-card"><div class="step-num">4</div><div class="step-content">
-    <h3>Budgeting on Variable Income</h3>
-    <p>Build a realistic monthly budget when income changes with internships, part-time jobs, and financial aid disbursements.</p>
-    <a href="../guides.html" class="btn">Explore Guides</a>
+    <h3>Earn and Intern</h3>
+    <p>Internships and part-time work do double duty: income now, and experience that leads to a higher salary later. A paid internship can be worth more than its paycheck if it lands you a better first job. Start building your earning power before you graduate.</p>
+    <a href="../decisions/total-compensation.html" class="btn">Understand Total Compensation</a>
   </div></div>
 
   <div class="budget-section">
-    <h2>💰 Budgeting in College</h2>
-    <p class="sub">College income is unpredictable. Your budget needs to handle that.</p>
+    <h2>📚 The College Money Playbook</h2>
+    <p class="sub">The goal isn't to be broke and miserable — it's to graduate with skills and minimal debt instead of maximum regret.</p>
     <div class="budget-grid">
-      <div class="budget-card">
-        <h4>Budget by Semester, Not Month</h4>
-        <p>Financial aid often arrives in lump sums. Divide the total by the months in the semester to find your real monthly amount — don't spend it all at once.</p>
-      </div>
-      <div class="budget-card">
-        <h4>Separate Fixed from Variable</h4>
-        <p>Rent, phone, subscriptions are fixed. Food, entertainment, and transportation are variable. Cut variable costs first when money is tight — never fixed ones.</p>
-      </div>
-      <div class="budget-card">
-        <h4>Track Your Dining Plan</h4>
-        <p>Meal plans are prepaid — but running out forces expensive alternatives. Track your usage weekly to avoid a $300 off-campus food month.</p>
-      </div>
-      <div class="budget-card">
-        <h4>Build a $500 Emergency Fund First</h4>
-        <p>Before investing or paying down loans aggressively, get $500 saved. This covers most college emergencies without going into credit card debt.</p>
-      </div>
+      <div class="budget-card"><h4>Borrow the Minimum</h4><p>Loans are easy to take and hard to repay. Live on less now so you owe less later. Refusing an extra few thousand in loans each year can mean graduating years ahead financially.</p></div>
+      <div class="budget-card"><h4>Pay Your Card in Full</h4><p>A credit card is a credit-building tool only if you pay the full balance monthly. Carry a balance and the interest erases any rewards and starts a debt spiral. Never charge what you can't pay off.</p></div>
+      <div class="budget-card"><h4>Budget the Money You Have</h4><p>Build a simple budget around real income — job, aid, family help — not borrowed money. Knowing where every dollar goes is the skill that separates the financially stable from the perpetually stressed.</p></div>
+      <div class="budget-card"><h4>Invest in Earning Power</h4><p>Internships, skills, and networking raise your starting salary — which compounds over an entire career. A higher first salary is worth far more than its first-year value.</p></div>
     </div>
     <div class="budget-rule">
-      <h4>The College Budget Rule: Income Sources First</h4>
-      <p>List every income source for the semester: aid disbursements, part-time job, family support, scholarships. Add them up, divide by months. That number — not what's in your account today — is your real monthly budget.</p>
+      <h4>The College Rule: Graduate With Options</h4>
+      <p>Every financial choice in college either adds to your future freedom or subtracts from it. Minimize debt, build credit, live lean, and grow your earning power. Do this and your degree becomes a launchpad — not a 20-year bill.</p>
     </div>
+  </div>
+
+  <div class="related-guides">
+    <div class="related-guides-header"><h4>Guides for This Stage</h4></div>
+    <a class="related-guide-item" href="../decisions/student-debt.html"><span>Student Debt: Borrowing Smart & Repayment Basics</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/credit-card-without-debt.html"><span>Credit Cards Without the Debt Trap</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/apartment.html"><span>Renting Your First Apartment</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/total-compensation.html"><span>Total Compensation: Reading a Job Offer</span><span class="related-arrow">→</span></a>
   </div>
 
   <div class="divider"></div>
   <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:1.25rem">Key Questions</h2>
-  <div class="q-item"><span class="q-mark">?</span><span>How much can I realistically borrow without regretting it?</span></div>
-  <div class="q-item"><span class="q-mark">?</span><span>When should I get my first credit card?</span></div>
-  <div class="q-item"><span class="q-mark">?</span><span>Can I afford to live off campus?</span></div>
-  <div class="q-item"><span class="q-mark">?</span><span>How do I build financial habits now that actually stick?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>How much should I borrow in student loans?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>What's the difference between federal and private loans?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>How do I build credit safely in college?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>How do I budget when my income is irregular?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>Are paid internships worth more than a higher-paying side job?</span></div>
   <div class="btn-row">
     <a href="../big-decisions.html" class="btn">Explore Decisions</a>
     <a href="../simulations.html" class="btn btn-outline">Run a Simulation</a>
