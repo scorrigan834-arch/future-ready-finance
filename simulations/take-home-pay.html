@@ -122,7 +122,7 @@ canvas{display:block;margin:0 auto}
         <a href="../paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
         <a href="../paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
         <a href="../paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="../paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="../paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
         <a href="../paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
       </div>
     </div>
@@ -233,7 +233,7 @@ canvas{display:block;margin:0 auto}
       <div class="section-label">Income &amp; Location</div>
       <div class="field">
         <label>Annual Salary</label>
-        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="salary" class="pfinput" min="0" step="1000"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="salary" class="pfinput frf-comma" min="0" step="1000"></div>
       </div>
       <div class="two-col">
         <div class="field">
@@ -270,26 +270,26 @@ canvas{display:block;margin:0 auto}
       </div>
       <div class="field">
         <label>Health Insurance Premium <span class="sub-hint">per paycheck</span></label>
-        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="health" class="pfinput" min="0" step="10"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="health" class="pfinput frf-comma" min="0" step="10"></div>
       </div>
       <div class="two-col">
         <div class="field">
           <label>Dental <span class="sub-hint">/check</span></label>
-          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="dental" class="pfinput" min="0" step="5"></div>
+          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="dental" class="pfinput frf-comma" min="0" step="5"></div>
         </div>
         <div class="field">
           <label>Vision <span class="sub-hint">/check</span></label>
-          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="vision" class="pfinput" min="0" step="2"></div>
+          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="vision" class="pfinput frf-comma" min="0" step="2"></div>
         </div>
       </div>
       <div class="two-col">
         <div class="field">
           <label>HSA / FSA <span class="sub-hint">/yr</span></label>
-          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="hsa" class="pfinput" min="0" step="100"></div>
+          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="hsa" class="pfinput frf-comma" min="0" step="100"></div>
         </div>
         <div class="field">
           <label>Commuter <span class="sub-hint">/check</span></label>
-          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="commuter" class="pfinput" min="0" step="10"></div>
+          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="commuter" class="pfinput frf-comma" min="0" step="10"></div>
         </div>
       </div>
 
@@ -297,11 +297,11 @@ canvas{display:block;margin:0 auto}
       <div class="two-col">
         <div class="field">
           <label>Roth 401(k) <span class="sub-hint">/check</span></label>
-          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="roth" class="pfinput" min="0" step="10"></div>
+          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="roth" class="pfinput frf-comma" min="0" step="10"></div>
         </div>
         <div class="field">
           <label>Other <span class="sub-hint">/check</span></label>
-          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="other-post" class="pfinput" min="0" step="10"></div>
+          <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="other-post" class="pfinput frf-comma" min="0" step="10"></div>
         </div>
       </div>
     </div>
@@ -401,7 +401,34 @@ function getEl(id) {
 }
 
 function getVal(id) {
-  return parseFloat(getEl(id).value) || 0;
+  return parseFloat((getEl(id).value || '').toString().replace(/,/g, '')) || 0;
+}
+
+// ---- comma formatting helpers ----
+function formatWithCommas(val){
+  var raw = (val == null ? '' : val.toString()).replace(/,/g, '');
+  if(raw === '' || raw === '-') return raw;
+  var neg = raw.charAt(0) === '-';
+  if(neg) raw = raw.slice(1);
+  var parts = raw.split('.');
+  var intPart = parts[0].replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  var out = (neg ? '-' : '') + intPart;
+  if(parts.length > 1) out += '.' + parts[1].replace(/\D/g, '');
+  return out;
+}
+function initCommaInputs(){
+  var inputs = document.querySelectorAll('.frf-comma');
+  for(var i=0;i<inputs.length;i++){
+    (function(inp){
+      inp.addEventListener('input', function(){
+        var start = inp.selectionStart, before = inp.value;
+        inp.value = formatWithCommas(inp.value);
+        var diff = inp.value.length - before.length;
+        try{ inp.setSelectionRange(start+diff, start+diff); }catch(e){}
+        if (typeof calculate === 'function') calculate();
+      });
+    })(inputs[i]);
+  }
 }
 
 var k401Type = 'pct';
@@ -612,6 +639,7 @@ function calculate() {
 
 function initialize() {
   populateStates();
+  initCommaInputs();
   var inputs = ['salary','state','filing','frequency','k401','health','dental','vision','hsa','commuter','roth','other-post'];
   for (var i = 0; i < inputs.length; i++) {
     var el = getEl(inputs[i]);
@@ -676,8 +704,9 @@ function saveInputs(){
   try { var d={}; for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el) d[MEM_IDS[i]]=el.value; } localStorage.setItem(MEM_KEY, JSON.stringify(d)); } catch(e){}
 }
 function restoreInputs(){
+  var dollarFields = {salary:1,health:1,dental:1,vision:1,hsa:1,commuter:1,roth:1,'other-post':1};
   try { var raw=localStorage.getItem(MEM_KEY); if(!raw) return false; var d=JSON.parse(raw); var any=false;
-    for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el && d[MEM_IDS[i]]!==undefined && d[MEM_IDS[i]]!==''){ el.value=d[MEM_IDS[i]]; any=true; } }
+    for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el && d[MEM_IDS[i]]!==undefined && d[MEM_IDS[i]]!==''){ var v=d[MEM_IDS[i]]; if(dollarFields[MEM_IDS[i]]){ v=formatWithCommas(v); } el.value=v; any=true; } }
     return any; } catch(e){ return false; }
 }
 function clearInputs(){
@@ -719,7 +748,7 @@ if (document.readyState === 'loading') { document.addEventListener('DOMContentLo
   }
   if(fillable.length===0) return;
   function applyProfile(){
-    for(var i=0;i<fillable.length;i++){ fillable[i].el.value = fillable[i].val; }
+    for(var i=0;i<fillable.length;i++){ fillable[i].el.value = (fillable[i].el.classList.contains('frf-comma')) ? formatWithCommas(String(fillable[i].val)) : fillable[i].val; }
     if(typeof calculate==='function'){ try{ calculate(); }catch(e){} }
     if(typeof saveInputs==='function'){ try{ saveInputs(); }catch(e){} }
     var banner=document.getElementById('profileConnect'); if(banner) banner.style.display='none';
