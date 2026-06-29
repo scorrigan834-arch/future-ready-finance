@@ -98,6 +98,9 @@ a{text-decoration:none}
 .field label{display:block;font-size:.85rem;font-weight:600;color:#0B1929;margin-bottom:.4rem}
 .field input{width:100%;padding:.8rem .9rem;border:1.5px solid #E2E8F0;border-radius:10px;font-size:1rem;font-family:"DM Sans",sans-serif;color:#0B1929}
 .field input:focus{outline:none;border-color:#0EA5A0}
+.input-sym{display:flex;align-items:stretch}
+.input-sym .isym{display:flex;align-items:center;justify-content:center;min-width:2.4rem;padding:0 .7rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-right:none;border-radius:10px 0 0 10px;color:#64748B;font-size:.95rem;font-weight:700;flex-shrink:0}
+.input-sym input{border-radius:0 10px 10px 0 !important;border-left:none !important}
 .field .hint{font-size:.76rem;color:#94a3b8;margin-top:.3rem}
 .field-row{display:flex;gap:1rem;flex-wrap:wrap}.field-row .field{flex:1;min-width:140px}
 .if-result{background:linear-gradient(135deg,#0B1929,#0f1e30);border-radius:16px;padding:1.6rem;color:#fff;display:none}
@@ -129,7 +132,7 @@ a{text-decoration:none}
         <a href="paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
         <a href="paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
         <a href="paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
         <a href="paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
       </div>
     </div>
@@ -194,7 +197,7 @@ a{text-decoration:none}
 
     <div class="field">
       <label for="amount" id="amountLabel">Amount today</label>
-      <input type="number" id="amount" placeholder="100" value="100" min="0" step="10">
+      <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="amount" class="frf-comma" placeholder="100" value="100"></div>
       <div class="hint" id="amountHint">A price or amount in today's dollars</div>
     </div>
     <div class="field-row">
@@ -203,8 +206,8 @@ a{text-decoration:none}
         <input type="number" id="years" placeholder="20" value="20" min="1" max="80" step="1">
       </div>
       <div class="field">
-        <label for="rate">Inflation rate (%/yr)</label>
-        <input type="number" id="rate" placeholder="3" value="3" min="0" max="20" step="0.5">
+        <label for="rate">Inflation rate (per year)</label>
+        <div class="input-sym"><span class="isym">%</span><input type="number" id="rate" placeholder="3" value="3" min="0" max="20" step="0.5"></div>
         <div class="hint">Historically ~3% on average</div>
       </div>
     </div>
@@ -282,6 +285,32 @@ var IFKEY = 'frf_inflation_v1';
 var mode = 'future';
 function money(n){ return '$' + n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:2}); }
 function moneyR(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+function parseNum(id){ var el=document.getElementById(id); if(!el) return 0; return parseFloat((el.value||'').toString().replace(/,/g,''))||0; }
+function formatWithCommas(v){
+  var raw=(v==null?'':v.toString()).replace(/,/g,'');
+  if(raw===''||raw==='-') return raw;
+  var neg=raw.charAt(0)==='-'; if(neg) raw=raw.slice(1);
+  var parts=raw.split('.');
+  var intPart=parts[0].replace(/\D/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  var out=(neg?'-':'')+intPart;
+  if(parts.length>1) out+='.'+parts[1].replace(/\D/g,'');
+  return out;
+}
+function initCommaInputs(){
+  var inputs=document.querySelectorAll('.frf-comma');
+  for(var i=0;i<inputs.length;i++){
+    (function(inp){
+      inp.addEventListener('input',function(){
+        var start=inp.selectionStart, before=inp.value;
+        inp.value=formatWithCommas(inp.value);
+        var diff=inp.value.length-before.length;
+        try{ inp.setSelectionRange(start+diff,start+diff); }catch(e){}
+        if(typeof calculate==='function') calculate();
+      });
+    })(inputs[i]);
+  }
+}
+
 
 function setMode(m){
   mode = m;
@@ -298,7 +327,7 @@ function setMode(m){
 }
 
 function calculate(){
-  var amount = parseFloat(document.getElementById('amount').value)||0;
+  var amount = parseNum('amount');
   var years = parseFloat(document.getElementById('years').value)||0;
   var rate = parseFloat(document.getElementById('rate').value)||0;
   if(amount<=0 || years<=0){ return; }
@@ -349,13 +378,14 @@ function restoreInputs(){
   try{
     var raw=localStorage.getItem(IFKEY); if(!raw) return;
     var d=JSON.parse(raw);
-    if(d.amount) document.getElementById('amount').value=d.amount;
+    if(d.amount) document.getElementById('amount').value=formatWithCommas(d.amount);
     if(d.years) document.getElementById('years').value=d.years;
     if(d.rate) document.getElementById('rate').value=d.rate;
     if(d.mode) mode=d.mode;
   }catch(e){}
 }
 restoreInputs();
+initCommaInputs();
 setMode(mode);
 </script>
 
