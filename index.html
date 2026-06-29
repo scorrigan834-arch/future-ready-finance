@@ -274,6 +274,17 @@ a{text-decoration:none}
 .roadmap-band-text p{color:rgba(255,255,255,.62);font-size:.88rem;line-height:1.5;margin:0}
 .roadmap-band-arrow{color:#0EA5A0;font-size:1.5rem;font-weight:700;flex-shrink:0;position:relative;z-index:1}
 @media(max-width:560px){.roadmap-band{flex-direction:column;text-align:center;gap:.7rem}.hub-promo-text h3{font-size:1.25rem}}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:1rem}
+.topic-card{position:relative;display:flex;align-items:flex-start;gap:.9rem;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.25rem 1.35rem;color:inherit;overflow:hidden;transition:border-color .25s,box-shadow .25s,transform .25s}
+.topic-card::before{content:"";position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(180deg,#0EA5A0,#3fd0c9);transform:scaleY(0);transform-origin:top;transition:transform .3s ease}
+.topic-card:hover{border-color:rgba(14,165,160,.4);box-shadow:0 14px 38px rgba(11,25,41,.1);transform:translateY(-4px)}
+.topic-card:hover::before{transform:scaleY(1)}
+.topic-emoji{font-size:1.6rem;line-height:1;flex-shrink:0;margin-top:.1rem}
+.topic-text{flex:1;min-width:0}
+.topic-card h3{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:#0B1929;margin-bottom:.2rem}
+.topic-card p{color:#64748B;font-size:.82rem;line-height:1.5}
+.topic-count{flex-shrink:0;font-size:.72rem;font-weight:700;color:#0EA5A0;background:rgba(14,165,160,.1);padding:.25rem .55rem;border-radius:999px;white-space:nowrap;align-self:center}
+@media(max-width:600px){.topic-card{padding:1.1rem 1.2rem}.topic-count{display:none}}
 </style>
 </head>
 <body>
@@ -501,6 +512,30 @@ a{text-decoration:none}
   </div>
 </div>
 
+
+<div class="section section-light" id="browse-topics">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <span class="section-label">All 37 Guides</span>
+      <div class="section-title">Browse by Topic</div>
+      <p class="section-sub">Jump straight to the guides that matter for you right now.</p>
+    </div>
+    <div class="topic-grid">
+        <a href="guides.html#banking" class="topic-card reveal" data-d="2"><span class="topic-emoji">🏛️</span><div class="topic-text"><h3>Banking & Cash</h3><p>Accounts, fees, and managing your money</p></div><span class="topic-count">2 guides</span></a>
+        <a href="guides.html#credit" class="topic-card reveal" data-d="3"><span class="topic-emoji">💳</span><div class="topic-text"><h3>Credit & Debt</h3><p>Building credit and getting out of debt</p></div><span class="topic-count">3 guides</span></a>
+        <a href="guides.html#taxes" class="topic-card reveal" data-d="4"><span class="topic-emoji">🧾</span><div class="topic-text"><h3>Taxes</h3><p>Paychecks, returns, and what you owe</p></div><span class="topic-count">4 guides</span></a>
+        <a href="guides.html#education" class="topic-card reveal" data-d="5"><span class="topic-emoji">🎓</span><div class="topic-text"><h3>Education</h3><p>College, loans, and grad school</p></div><span class="topic-count">3 guides</span></a>
+        <a href="guides.html#career" class="topic-card reveal" data-d="6"><span class="topic-emoji">💼</span><div class="topic-text"><h3>Career</h3><p>Offers, raises, and job changes</p></div><span class="topic-count">3 guides</span></a>
+        <a href="guides.html#housing" class="topic-card reveal" data-d="1"><span class="topic-emoji">🏠</span><div class="topic-text"><h3>Housing</h3><p>Renting, buying, and affordability</p></div><span class="topic-count">3 guides</span></a>
+        <a href="guides.html#investing" class="topic-card reveal" data-d="2"><span class="topic-emoji">📈</span><div class="topic-text"><h3>Investing</h3><p>Accounts, index funds, and strategy</p></div><span class="topic-count">5 guides</span></a>
+        <a href="guides.html#insurance" class="topic-card reveal" data-d="3"><span class="topic-emoji">🛡️</span><div class="topic-text"><h3>Insurance</h3><p>Protecting yourself and your family</p></div><span class="topic-count">3 guides</span></a>
+        <a href="guides.html#side-income" class="topic-card reveal" data-d="4"><span class="topic-emoji">⚡</span><div class="topic-text"><h3>Side Income</h3><p>Freelancing and self-employment</p></div><span class="topic-count">3 guides</span></a>
+        <a href="guides.html#transportation" class="topic-card reveal" data-d="5"><span class="topic-emoji">🚗</span><div class="topic-text"><h3>Transportation</h3><p>Cars, leases, and big purchases</p></div><span class="topic-count">2 guides</span></a>
+        <a href="guides.html#family" class="topic-card reveal" data-d="6"><span class="topic-emoji">👨‍👩‍👧</span><div class="topic-text"><h3>Family & Estate</h3><p>Couples, kids, and planning ahead</p></div><span class="topic-count">4 guides</span></a>
+        <a href="guides.html#health" class="topic-card reveal" data-d="1"><span class="topic-emoji">📊</span><div class="topic-text"><h3>Money & Mindset</h3><p>Financial health and psychology</p></div><span class="topic-count">4 guides</span></a>
+    </div>
+  </div>
+</div>
 
 <div class="section section-roadmap">
   <div class="section-inner">
