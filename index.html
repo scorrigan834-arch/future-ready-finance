@@ -248,6 +248,32 @@ a{text-decoration:none}
 .sr-empty{padding:1.5rem;text-align:center;color:rgba(255,255,255,.5);font-size:.88rem}
 .sr-head{padding:.5rem .85rem .3rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.35)}
 @media(max-width:640px){.search-kbd{display:none}.search-wrap{max-width:100%}}
+
+/* Money Hub promo strip */
+.hub-promo-section{background:#F5F7F6;padding:2rem 1.5rem}
+.hub-promo-inner{max-width:1080px;margin:0 auto}
+.hub-promo{display:block;background:linear-gradient(135deg,#0EA5A0,#0C7D79);border-radius:18px;padding:1.75rem 1.9rem;text-decoration:none;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s}
+.hub-promo:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(14,165,160,.28)}
+.hub-promo::after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.14),transparent 70%);top:-110px;right:-60px}
+.hub-promo-label{display:inline-block;color:rgba(255,255,255,.9);font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;position:relative;z-index:1}
+.hub-promo-text h3{color:#fff;font-family:"Playfair Display",serif;font-size:1.45rem;margin-bottom:.4rem;position:relative;z-index:1}
+.hub-promo-text p{color:rgba(255,255,255,.85);font-size:.92rem;line-height:1.55;margin-bottom:.85rem;max-width:620px;position:relative;z-index:1}
+.hub-promo-cta{display:inline-block;color:#fff;font-weight:700;font-size:.92rem;position:relative;z-index:1}
+/* See all calculators button */
+.calc-seeall-wrap{text-align:center;margin-top:2rem}
+.calc-seeall{display:inline-block;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);color:#fff;padding:.9rem 2rem;border-radius:11px;font-weight:700;font-size:.95rem;text-decoration:none;transition:all .2s}
+.calc-seeall:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.4)}
+/* Roadmap band */
+.section-roadmap{background:#fff;padding:1rem 1.5rem 0}
+.roadmap-band{display:flex;align-items:center;gap:1.2rem;max-width:1080px;margin:0 auto;background:linear-gradient(135deg,#0B1929,#0f1e30);border-radius:16px;padding:1.5rem 1.75rem;text-decoration:none;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s}
+.roadmap-band:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(11,25,41,.25)}
+.roadmap-band::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.16),transparent 70%);top:-90px;right:-40px}
+.roadmap-band-ic{font-size:2.2rem;flex-shrink:0;position:relative;z-index:1}
+.roadmap-band-text{flex:1;position:relative;z-index:1}
+.roadmap-band-text h3{color:#0EA5A0;font-family:"Playfair Display",serif;font-size:1.3rem;margin-bottom:.3rem}
+.roadmap-band-text p{color:rgba(255,255,255,.62);font-size:.88rem;line-height:1.5;margin:0}
+.roadmap-band-arrow{color:#0EA5A0;font-size:1.5rem;font-weight:700;flex-shrink:0;position:relative;z-index:1}
+@media(max-width:560px){.roadmap-band{flex-direction:column;text-align:center;gap:.7rem}.hub-promo-text h3{font-size:1.25rem}}
 </style>
 </head>
 <body>
@@ -379,10 +405,8 @@ a{text-decoration:none}
         <div class="search-results" id="searchResults"></div>
       </div>
       <div class="hero-ctas">
-        <a href="my-profile.html" class="btn btn-primary">🎯 Build My Profile</a>
-        <a href="#calculators" class="btn btn-ghost">Try a Calculator</a>
-        <a href="start-here.html" class="btn btn-ghost">Get Started</a>
-        <a href="life-stages.html" class="btn btn-ghost">Choose Your Stage</a>
+        <a href="my-profile.html" class="btn btn-primary">🎯 Build My Profile → Get My Plan</a>
+        <a href="#calculators" class="btn btn-ghost">Explore the Calculators</a>
       </div>
     </div>
     <div class="hero-card">
@@ -398,10 +422,24 @@ a{text-decoration:none}
 
 <div class="stat-strip">
   <div class="stat-inner">
-    <div class="stat-item reveal" data-d="1"><div class="stat-num" data-count="20" data-suffix="+">0</div><span class="stat-lbl">In-Depth Guides</span></div>
-    <div class="stat-item reveal" data-d="2"><div class="stat-num" data-count="4">0</div><span class="stat-lbl">Live Calculators</span></div>
+    <div class="stat-item reveal" data-d="1"><div class="stat-num" data-count="35" data-suffix="+">0</div><span class="stat-lbl">In-Depth Guides</span></div>
+    <div class="stat-item reveal" data-d="2"><div class="stat-num" data-count="15">0</div><span class="stat-lbl">Live Calculators</span></div>
     <div class="stat-item reveal" data-d="3"><div class="stat-num" data-count="5">0</div><span class="stat-lbl">Life Stages</span></div>
     <div class="stat-item reveal" data-d="4"><div class="stat-num" data-count="100" data-suffix="%">0</div><span class="stat-lbl">Free Forever</span></div>
+  </div>
+</div>
+
+
+<div class="hub-promo-section">
+  <div class="hub-promo-inner">
+    <a href="my-dashboard.html" class="hub-promo">
+      <div class="hub-promo-text">
+        <span class="hub-promo-label">🎯 Your Money Hub</span>
+        <h3>Your whole financial picture, in one place</h3>
+        <p>Track your budget, investments, savings goals, and net worth — with a personalized health score. Pick up right where you left off.</p>
+        <span class="hub-promo-cta">Open My Money Hub →</span>
+      </div>
+    </a>
   </div>
 </div>
 
@@ -414,42 +452,66 @@ a{text-decoration:none}
       <p class="section-sub section-sub-center" style="color:rgba(255,255,255,.6)">Enter your own numbers and see how today's decisions play out over time. No signup required.</p>
     </div>
     <div class="calc-grid">
-      <a href="simulations/compound-interest.html" class="calc-card reveal" data-d="1">
-        <div class="calc-icon">📈</div>
-        <h3>Compound Interest</h3>
-        <p>See what your money becomes over time — and what waiting really costs.</p>
-        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="mini-area" d="M0,38 L0,34 C20,30 35,24 55,16 C72,9 85,5 100,2 L100,40 Z"/><path class="mini-line" d="M0,34 C20,30 35,24 55,16 C72,9 85,5 100,2"/></svg>
+      <a href="simulations/budget-builder.html" class="calc-card reveal" data-d="1">
+        <div class="calc-icon">💰</div>
+        <h3>Smart Budget Builder</h3>
+        <p>50/30/20 budgeting with monthly carryover, category insights, and savings goals.</p>
+        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="10" y="10" width="22" height="30"/><rect class="mini-bar b2" x="39" y="6" width="22" height="34"/><rect class="mini-bar b3" x="68" y="18" width="22" height="22"/></svg>
         <div class="calc-cta">Open Calculator →</div>
       </a>
-      <a href="simulations/take-home-pay.html" class="calc-card reveal" data-d="2">
-        <div class="calc-icon">💼</div>
-        <h3>Take-Home Pay</h3>
-        <p>Your real paycheck after taxes, 401(k), and deductions — in any state.</p>
-        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="10" y="6" width="22" height="34"/><rect class="mini-bar b2" x="39" y="18" width="22" height="22"/><rect class="mini-bar b3" x="68" y="26" width="22" height="14"/></svg>
-        <div class="calc-cta">Open Calculator →</div>
-      </a>
-      <a href="simulations/roth-vs-traditional.html" class="calc-card reveal" data-d="3">
+      <a href="simulations/roth-vs-traditional.html" class="calc-card reveal" data-d="2">
         <div class="calc-icon">🏦</div>
         <h3>Roth vs Pre-Tax 401(k)</h3>
         <p>Compare Roth and Traditional — including the taxes you'll owe at retirement.</p>
         <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="14" y="8" width="30" height="32"/><rect class="mini-bar b2" x="56" y="4" width="30" height="36"/></svg>
         <div class="calc-cta">Open Calculator →</div>
       </a>
-      <a href="simulations/debt-payoff.html" class="calc-card reveal" data-d="4">
-        <div class="calc-icon">💳</div>
-        <h3>Debt Payoff</h3>
-        <p>Find the fastest way out of debt and see how much interest you'll save.</p>
-        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="6" y="3" width="14" height="37"/><rect class="mini-bar b2" x="29" y="11" width="14" height="29"/><rect class="mini-bar b3" x="52" y="20" width="14" height="20"/><rect class="mini-bar b4" x="75" y="30" width="14" height="10"/></svg>
+      <a href="simulations/college-roi.html" class="calc-card reveal" data-d="3">
+        <div class="calc-icon">🎓</div>
+        <h3>College ROI</h3>
+        <p>Is the degree worth the cost? See the real payback period and verdict.</p>
+        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="mini-area" d="M0,38 L0,32 C25,30 40,22 60,16 C75,11 88,7 100,4 L100,40 Z"/><path class="mini-line" d="M0,32 C25,30 40,22 60,16 C75,11 88,7 100,4"/></svg>
         <div class="calc-cta">Open Calculator →</div>
       </a>
-      <a href="simulations/net-worth.html" class="calc-card reveal" data-d="5">
-        <div class="calc-icon">💰</div>
-        <h3>Net Worth</h3>
-        <p>Track everything you own versus everything you owe in one clear number.</p>
-        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="6" y="20" width="14" height="20"/><rect class="mini-bar b2" x="29" y="14" width="14" height="26"/><rect class="mini-bar b3" x="52" y="8" width="14" height="32"/><rect class="mini-bar b4" x="75" y="3" width="14" height="37"/></svg>
+      <a href="simulations/mortgage-payoff.html" class="calc-card reveal" data-d="4">
+        <div class="calc-icon">🏡</div>
+        <h3>Mortgage Payoff</h3>
+        <p>The true cost of a home loan — and how much extra payments save you.</p>
+        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="6" y="4" width="14" height="36"/><rect class="mini-bar b2" x="29" y="13" width="14" height="27"/><rect class="mini-bar b3" x="52" y="22" width="14" height="18"/><rect class="mini-bar b4" x="75" y="31" width="14" height="9"/></svg>
+        <div class="calc-cta">Open Calculator →</div>
+      </a>
+      <a href="simulations/investment-simulator.html" class="calc-card reveal" data-d="5">
+        <div class="calc-icon">📈</div>
+        <h3>Investment Simulator</h3>
+        <p>Practice trading with $10,000 in fake money — build a portfolio, risk-free.</p>
+        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="mini-area" d="M0,38 L0,28 C15,30 25,18 40,20 C55,22 65,8 80,10 C90,11 95,6 100,5 L100,40 Z"/><path class="mini-line" d="M0,28 C15,30 25,18 40,20 C55,22 65,8 80,10 C90,11 95,6 100,5"/></svg>
+        <div class="calc-cta">Open Calculator →</div>
+      </a>
+      <a href="simulations/compound-interest.html" class="calc-card reveal" data-d="6">
+        <div class="calc-icon">🪙</div>
+        <h3>Compound Interest</h3>
+        <p>See what your money becomes over time — and what waiting really costs.</p>
+        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="mini-area" d="M0,38 L0,34 C20,30 35,24 55,16 C72,9 85,5 100,2 L100,40 Z"/><path class="mini-line" d="M0,34 C20,30 35,24 55,16 C72,9 85,5 100,2"/></svg>
         <div class="calc-cta">Open Calculator →</div>
       </a>
     </div>
+    <div class="calc-seeall-wrap">
+      <a href="simulations.html" class="calc-seeall">See all 15 calculators →</a>
+    </div>
+  </div>
+</div>
+
+
+<div class="section section-roadmap">
+  <div class="section-inner">
+    <a href="resources/money-roadmap.html" class="roadmap-band reveal">
+      <div class="roadmap-band-ic">🗺️</div>
+      <div class="roadmap-band-text">
+        <h3>Not sure where to start?</h3>
+        <p>Follow The Money Roadmap — 8 steps in the right order, from your first paycheck to investing for the future.</p>
+      </div>
+      <span class="roadmap-band-arrow">→</span>
+    </a>
   </div>
 </div>
 
