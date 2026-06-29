@@ -95,6 +95,21 @@ canvas{display:block;width:100%;height:180px}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
 @media(max-width:720px){.layout{grid-template-columns:1fr}.stat-row{grid-template-columns:1fr 1fr}.scenarios{grid-template-columns:1fr 1fr 1fr}.nav-links{display:none}
   .nav-burger{display:flex}.wrap{padding:1.5rem 1.1rem}}
+.variance-box{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.3rem 1.4rem;margin-top:1.25rem;box-shadow:0 1px 3px rgba(11,25,41,.04)}
+.variance-title{font-family:"Playfair Display",serif;font-size:1.1rem;color:#0B1929;margin-bottom:.3rem}
+.variance-sub{font-size:.82rem;color:#64748B;line-height:1.5;margin-bottom:1.1rem}
+.variance-grid{display:flex;gap:.7rem}
+.variance-card{flex:1;border-radius:11px;padding:1rem .75rem;text-align:center;border:1.5px solid #E2E8F0}
+.variance-card.var-low{background:rgba(220,38,38,.05);border-color:rgba(220,38,38,.2)}
+.variance-card.var-mid{background:rgba(14,165,160,.08);border-color:rgba(14,165,160,.35)}
+.variance-card.var-high{background:rgba(5,150,105,.06);border-color:rgba(5,150,105,.25)}
+.vc-rate{font-size:1.2rem;font-weight:800;font-family:"Playfair Display",serif;margin-bottom:.15rem}
+.var-low .vc-rate{color:#dc2626}.var-mid .vc-rate{color:#0C7D79}.var-high .vc-rate{color:#059669}
+.vc-label{font-size:.66rem;color:#64748B;font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin-bottom:.5rem;line-height:1.3}
+.vc-amount{font-size:1.05rem;font-weight:800;color:#0B1929;line-height:1.1}
+.variance-note{font-size:.8rem;color:#0C7D79;background:rgba(14,165,160,.07);border-left:3px solid #0EA5A0;border-radius:0 6px 6px 0;padding:.65rem .85rem;margin-top:1rem;line-height:1.55}
+.variance-note b{color:#059669}
+@media(max-width:520px){.variance-grid{gap:.45rem}.variance-card{padding:.8rem .4rem}.vc-amount{font-size:.92rem}.vc-rate{font-size:1.05rem}}
 </style>
 </head>
 <body>
@@ -261,6 +276,28 @@ canvas{display:block;width:100%;height:180px}
         <div class="stat"><span class="stat-label">You Put In</span><div class="stat-val" id="contributed">$0</div></div>
         <div class="stat"><span class="stat-label">Market Earned You</span><div class="stat-val green" id="interest">$0</div></div>
       </div>
+      <div class="variance-box" id="varianceBox">
+        <div class="variance-title">What if the market does better or worse?</div>
+        <div class="variance-sub">Returns aren't guaranteed. Here's how your <span id="var-base-rate">7</span>% estimate compares to 2% higher or lower:</div>
+        <div class="variance-grid">
+          <div class="variance-card var-low">
+            <div class="vc-rate" id="var-low-rate">5%</div>
+            <div class="vc-label">If markets lag</div>
+            <div class="vc-amount" id="var-low-amt">$0</div>
+          </div>
+          <div class="variance-card var-mid">
+            <div class="vc-rate" id="var-mid-rate">7%</div>
+            <div class="vc-label">Your estimate</div>
+            <div class="vc-amount" id="var-mid-amt">$0</div>
+          </div>
+          <div class="variance-card var-high">
+            <div class="vc-rate" id="var-high-rate">9%</div>
+            <div class="vc-label">If markets outperform</div>
+            <div class="vc-amount" id="var-high-amt">$0</div>
+          </div>
+        </div>
+        <div class="variance-note" id="varianceNote"></div>
+      </div>
       <div class="chart-box">
         <h3>Growth Over Time</h3>
         <div class="chart-legend">
@@ -339,6 +376,32 @@ function calculate() {
     msg = 'The market earned you ' + formatMoney(earned) + ' on top of the ' + formatMoney(contrib) + ' you contributed — that is ' + Math.round(mult * 100) + '% growth generated purely by time and compounding. This is why starting early is the single most powerful financial move.';
   }
   getElementById('insight').textContent = msg;
+
+  // ---- Variance: show outcome at rate-2%, rate, rate+2% ----
+  (function(){
+    var basePct = (parseFloat(getElementById('rate').value) || 0);
+    var lowPct = Math.max(0, basePct - 2);
+    var highPct = basePct + 2;
+    function fvAt(annualPct){
+      var rr = (annualPct/100)/12;
+      var fp = P * Math.pow(1 + rr, n);
+      var fm;
+      if (rr > 0) { fm = m * (Math.pow(1 + rr, n) - 1) / rr; } else { fm = m * n; }
+      return fp + fm;
+    }
+    var lowVal = fvAt(lowPct);
+    var midVal = fvAt(basePct);
+    var highVal = fvAt(highPct);
+    getElementById('var-base-rate').textContent = Math.round(basePct);
+    getElementById('var-low-rate').textContent = Math.round(lowPct) + '%';
+    getElementById('var-mid-rate').textContent = Math.round(basePct) + '%';
+    getElementById('var-high-rate').textContent = Math.round(highPct) + '%';
+    getElementById('var-low-amt').textContent = formatMoney(lowVal);
+    getElementById('var-mid-amt').textContent = formatMoney(midVal);
+    getElementById('var-high-amt').textContent = formatMoney(highVal);
+    var diff = highVal - lowVal;
+    getElementById('varianceNote').innerHTML = 'Just a 2%-higher return would grow your money to <b>' + formatMoney(highVal) + '</b> instead of ' + formatMoney(lowVal) + ' \u2014 a <b>' + formatMoney(diff) + '</b> swing over ' + Math.round(yrs) + ' years. Small differences in return compound into huge gaps over time.';
+  })();
 
   drawChart(P, m, r, yrs);
 }
