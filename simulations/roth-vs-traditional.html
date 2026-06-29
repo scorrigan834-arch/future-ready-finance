@@ -127,7 +127,7 @@ canvas{display:block;margin:0 auto}
         <a href="../paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
         <a href="../paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
         <a href="../paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="../paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="../paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
         <a href="../paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
       </div>
     </div>
@@ -238,7 +238,7 @@ canvas{display:block;margin:0 auto}
       <div class="section-label">Income &amp; Contributions</div>
       <div class="field">
         <label>Annual Income</label>
-        <div class="pw"><span class="pfx">$</span><input type="number" id="income" class="pfinput" placeholder="0" min="0" step="1000"></div>
+        <div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" id="income" class="pfinput frf-comma" placeholder="0" min="0" step="1000"></div>
       </div>
       <div class="field">
         <label>Contribution Rate <span class="hint">% of income per year</span></label>
@@ -432,7 +432,34 @@ var filing = 'single';
 var edited = { fedNow:false, stateNow:false, fedRet:false, stateRet:false };
 
 function getEl(id){ return document.getElementById(id); }
-function val(id){ return parseFloat(getEl(id).value) || 0; }
+function val(id){ return parseFloat((getEl(id).value || '').toString().replace(/,/g, '')) || 0; }
+
+// ---- comma formatting helpers ----
+function formatWithCommas(v){
+  var raw = (v == null ? '' : v.toString()).replace(/,/g, '');
+  if(raw === '' || raw === '-') return raw;
+  var neg = raw.charAt(0) === '-';
+  if(neg) raw = raw.slice(1);
+  var parts = raw.split('.');
+  var intPart = parts[0].replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  var out = (neg ? '-' : '') + intPart;
+  if(parts.length > 1) out += '.' + parts[1].replace(/\D/g, '');
+  return out;
+}
+function initCommaInputs(){
+  var inputs = document.querySelectorAll('.frf-comma');
+  for(var i=0;i<inputs.length;i++){
+    (function(inp){
+      inp.addEventListener('input', function(){
+        var start = inp.selectionStart, before = inp.value;
+        inp.value = formatWithCommas(inp.value);
+        var diff = inp.value.length - before.length;
+        try{ inp.setSelectionRange(start+diff, start+diff); }catch(e){}
+        if(typeof calculate === 'function') calculate();
+      });
+    })(inputs[i]);
+  }
+}
 
 function money(n){
   var neg = n < 0;
@@ -626,6 +653,7 @@ function markEdited(id){
 }
 
 function initialize(){
+  initCommaInputs();
   // Auto-fill on situation changes
   var situational = ['income','state'];
   for (var i=0;i<situational.length;i++){
@@ -708,7 +736,7 @@ function saveInputs(){
 }
 function restoreInputs(){
   try { var raw=localStorage.getItem(MEM_KEY); if(!raw) return false; var d=JSON.parse(raw); var any=false;
-    for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el && d[MEM_IDS[i]]!==undefined && d[MEM_IDS[i]]!==''){ el.value=d[MEM_IDS[i]]; any=true; } }
+    for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el && d[MEM_IDS[i]]!==undefined && d[MEM_IDS[i]]!==''){ var v=d[MEM_IDS[i]]; if(MEM_IDS[i]==='income'){ v=formatWithCommas(v); } el.value=v; any=true; } }
     return any; } catch(e){ return false; }
 }
 function clearInputs(){
@@ -750,7 +778,7 @@ if (document.readyState === 'loading') { document.addEventListener('DOMContentLo
   }
   if(fillable.length===0) return;
   function applyProfile(){
-    for(var i=0;i<fillable.length;i++){ fillable[i].el.value = fillable[i].val; }
+    for(var i=0;i<fillable.length;i++){ fillable[i].el.value = (fillable[i].el.classList.contains('frf-comma')) ? formatWithCommas(String(fillable[i].val)) : fillable[i].val; }
     if(typeof calculate==='function'){ try{ calculate(); }catch(e){} }
     if(typeof saveInputs==='function'){ try{ saveInputs(); }catch(e){} }
     var banner=document.getElementById('profileConnect'); if(banner) banner.style.display='none';
