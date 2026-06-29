@@ -97,6 +97,17 @@ a{text-decoration:none}
 .field input:focus{outline:none;border-color:#0EA5A0}
 .field .hint{font-size:.76rem;color:#94a3b8;margin-top:.3rem}
 .field-row{display:flex;gap:1rem;flex-wrap:wrap}.field-row .field{flex:1;min-width:140px}
+.input-sym{display:flex;align-items:stretch}
+.input-sym .isym{display:flex;align-items:center;justify-content:center;min-width:2.4rem;padding:0 .7rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-right:none;border-radius:10px 0 0 10px;color:#64748B;font-size:.95rem;font-weight:700;flex-shrink:0}
+.input-sym input{border-radius:0 10px 10px 0 !important;border-left:none !important}
+.slider-with-input{display:flex;align-items:center;gap:.85rem}
+.slider-with-input input[type=range]{flex:1;accent-color:#0EA5A0;cursor:pointer}
+.slider-num-wrap{display:flex;align-items:stretch;flex-shrink:0}
+.slider-num{width:3.4rem;padding:.45rem .5rem;border:1.5px solid #E2E8F0;border-radius:8px 0 0 8px;border-right:none;font-size:.9rem;font-weight:700;color:#0B1929;text-align:center;font-family:"DM Sans",sans-serif}
+.slider-num:focus{outline:none;border-color:#0EA5A0}
+.slider-num-unit{display:flex;align-items:center;padding:0 .55rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-left:none;border-radius:0 8px 8px 0;color:#64748B;font-size:.78rem;font-weight:700}
+.field-divider{border:none;border-top:1px solid #ECF1F0;margin:1.3rem 0 1.1rem}
+.field-group-label{font-size:.74rem;font-weight:700;color:#0C7D79;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.85rem}
 .mc-result{background:linear-gradient(135deg,#0B1929,#0f1e30);border-radius:16px;padding:1.6rem;color:#fff;display:none}
 .mc-result.show{display:block}
 .result-main{text-align:center;padding-bottom:1.3rem;margin-bottom:1.3rem;border-bottom:1px solid rgba(255,255,255,.1)}
@@ -109,6 +120,14 @@ a{text-decoration:none}
 .result-stat .rs-value.accent{color:#3fd0c9}
 .compare-box{background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.25);border-radius:10px;padding:1rem 1.1rem;margin-top:1.2rem;font-size:.85rem;color:#a7f3d0;line-height:1.6}
 .compare-box b{color:#6ee7b7}
+.progress-box{background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.25);border-radius:10px;padding:1rem 1.1rem;margin-bottom:1.2rem;font-size:.85rem;color:#a7f3d0;line-height:1.6}
+.progress-box b{color:#6ee7b7}
+.mtg-chart-box{margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.1)}
+.mtg-chart-title{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.6rem}
+.mtg-chart-legend{display:flex;gap:1.1rem;flex-wrap:wrap;margin-bottom:.7rem}
+.mcl-item{display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:rgba(255,255,255,.65)}
+.mcl-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+#mtgChart{display:block;width:100%;height:170px}
 .mtg-variance{margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.1)}
 .mv-title{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.25rem}
 .mv-sub{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:.9rem}
@@ -142,7 +161,7 @@ a{text-decoration:none}
         <a href="paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
         <a href="paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
         <a href="paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
         <a href="paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
       </div>
     </div>
@@ -200,27 +219,45 @@ a{text-decoration:none}
 
 <div class="mc-wrap">
   <div class="calc-card">
+    <div class="field-group-label">Your Original Loan</div>
     <div class="field">
-      <label for="loanAmount">Loan amount</label>
-      <input type="number" id="loanAmount" placeholder="300000" value="300000" min="0" step="1000">
-      <div class="hint">The amount you're borrowing</div>
+      <label for="origLoan">Original loan amount</label>
+      <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="origLoan" class="frf-comma" placeholder="300,000" value="300,000"></div>
+      <div class="hint">What you first borrowed</div>
     </div>
-    <div class="field-row">
-      <div class="field">
-        <label for="interestRate">Interest rate (%)</label>
-        <input type="number" id="interestRate" placeholder="6.5" value="6.5" min="0" max="30" step="0.1">
-        <div class="hint">Annual APR</div>
+    <div class="field">
+      <label>Original loan term</label>
+      <div class="slider-with-input">
+        <input type="range" id="origTerm" min="1" max="50" value="30">
+        <div class="slider-num-wrap"><input type="number" id="origTermNum" min="1" max="50" value="30" class="slider-num"><span class="slider-num-unit">yrs</span></div>
       </div>
-      <div class="field">
-        <label for="loanTerm">Loan term (years)</label>
-        <input type="number" id="loanTerm" placeholder="30" value="30" min="1" max="50" step="1">
-        <div class="hint">Usually 15 or 30</div>
+      <div class="hint">The full length of your loan (usually 15 or 30)</div>
+    </div>
+
+    <hr class="field-divider">
+    <div class="field-group-label">Where You Are Now</div>
+    <div class="field">
+      <label for="loanAmount">Current loan balance</label>
+      <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="loanAmount" class="frf-comma" placeholder="280,000" value="280,000"></div>
+      <div class="hint">What you still owe today</div>
+    </div>
+    <div class="field">
+      <label>Years left on your loan</label>
+      <div class="slider-with-input">
+        <input type="range" id="loanTerm" min="1" max="50" value="28">
+        <div class="slider-num-wrap"><input type="number" id="loanTermNum" min="1" max="50" value="28" class="slider-num"><span class="slider-num-unit">yrs</span></div>
       </div>
+      <div class="hint">Roughly how many years remain</div>
+    </div>
+    <div class="field">
+      <label for="interestRate">Interest rate</label>
+      <div class="input-sym"><span class="isym">%</span><input type="number" id="interestRate" placeholder="6.5" value="6.5" min="0" max="30" step="0.1"></div>
+      <div class="hint">Your annual APR</div>
     </div>
     <div class="field">
       <label for="extraPayment">Extra monthly payment (optional)</label>
-      <input type="number" id="extraPayment" placeholder="0" value="0" min="0" step="50">
-      <div class="hint">Added to each monthly payment — see how much it saves</div>
+      <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="extraPayment" class="frf-comma" placeholder="0" value="0"></div>
+      <div class="hint">Added to each payment — see how much it saves</div>
     </div>
     <button class="mc-btn" onclick="calculate()">Calculate My Payoff</button>
   </div>
@@ -230,6 +267,7 @@ a{text-decoration:none}
       <div class="rm-label">Monthly Payment</div>
       <div class="rm-value" id="monthlyPayment">$0</div>
     </div>
+    <div class="progress-box" id="progressBox" style="display:none"></div>
     <div class="result-grid">
       <div class="result-stat">
         <div class="rs-label">Total Paid</div>
@@ -269,6 +307,15 @@ a{text-decoration:none}
         </div>
       </div>
       <div class="mv-note" id="mvNote"></div>
+    </div>
+    <div class="mtg-chart-box" id="mtgChartBox" style="display:none">
+      <div class="mtg-chart-title">Balance over time</div>
+      <div class="mtg-chart-legend">
+        <div class="mcl-item"><span class="mcl-dot" style="background:#94a3b8"></span>Half extra</div>
+        <div class="mcl-item"><span class="mcl-dot" style="background:#0EA5A0"></span>Your plan</div>
+        <div class="mcl-item"><span class="mcl-dot" style="background:#059669"></span>Double extra</div>
+      </div>
+      <canvas id="mtgChart"></canvas>
     </div>
   </div>
 
@@ -332,6 +379,40 @@ a{text-decoration:none}
 var MKEY = 'frf_mortgage_v1';
 function money(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
 
+// Strip commas and parse a number from an input value
+function parseNum(id){
+  var el = document.getElementById(id);
+  if(!el) return 0;
+  return parseFloat((el.value || '').toString().replace(/,/g, '')) || 0;
+}
+// Format with thousands commas (integer + optional decimals)
+function formatWithCommas(val){
+  var raw = (val == null ? '' : val.toString()).replace(/,/g, '');
+  if(raw === '' || raw === '-') return raw;
+  var neg = raw.charAt(0) === '-';
+  if(neg) raw = raw.slice(1);
+  var parts = raw.split('.');
+  var intPart = parts[0].replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  var out = (neg ? '-' : '') + intPart;
+  if(parts.length > 1) out += '.' + parts[1].replace(/\D/g, '');
+  return out;
+}
+function initCommaInputs(){
+  var inputs = document.querySelectorAll('.frf-comma');
+  for(var i=0;i<inputs.length;i++){
+    (function(inp){
+      inp.addEventListener('input', function(){
+        var start = inp.selectionStart;
+        var before = inp.value;
+        inp.value = formatWithCommas(inp.value);
+        var diff = inp.value.length - before.length;
+        try{ inp.setSelectionRange(start+diff, start+diff); }catch(e){}
+        calculate();
+      });
+    })(inputs[i]);
+  }
+}
+
 function calcPayment(principal, monthlyRate, numPayments){
   if(monthlyRate === 0) return principal / numPayments;
   return principal * (monthlyRate * Math.pow(1+monthlyRate, numPayments)) / (Math.pow(1+monthlyRate, numPayments) - 1);
@@ -355,11 +436,95 @@ function amortize(principal, monthlyRate, basePayment, extra){
   return { months: months, totalInterest: totalInterest, totalPaid: principal + totalInterest };
 }
 
+// Build a monthly balance series for a given extra payment
+function balanceSeries(principal, monthlyRate, basePayment, extra){
+  var balance = principal;
+  var payment = basePayment + extra;
+  var series = [balance];
+  var months = 0;
+  while(balance > 0.01 && months < 1200){
+    var interest = balance * monthlyRate;
+    var principalPaid = payment - interest;
+    if(principalPaid <= 0) break;
+    balance -= principalPaid;
+    if(balance < 0) balance = 0;
+    series.push(balance);
+    months++;
+  }
+  return series;
+}
+
+function drawMtgChart(P, monthlyRate, basePayment, halfE, yourE, dblE){
+  var box = document.getElementById('mtgChartBox');
+  var canvas = document.getElementById('mtgChart');
+  if(!canvas){ return; }
+  var sHalf = balanceSeries(P, monthlyRate, basePayment, halfE);
+  var sYour = balanceSeries(P, monthlyRate, basePayment, yourE);
+  var sDbl = balanceSeries(P, monthlyRate, basePayment, dblE);
+  // If payments don't amortize (edge), hide chart
+  if(sHalf.length < 2 && sYour.length < 2){ box.style.display = 'none'; return; }
+  box.style.display = 'block';
+
+  var dpr = window.devicePixelRatio || 1;
+  var W = canvas.offsetWidth || 320;
+  var H = 170;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  var ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+
+  var maxMonths = Math.max(sHalf.length, sYour.length, sDbl.length) - 1;
+  if(maxMonths < 1) maxMonths = 1;
+  var maxBal = P;
+  if(maxBal < 1) maxBal = 1;
+  var pad = {t: 8, r: 10, b: 22, l: 52};
+  var cW = W - pad.l - pad.r;
+  var cH = H - pad.t - pad.b;
+  function tx(m){ return pad.l + (m / maxMonths) * cW; }
+  function ty(b){ return pad.t + cH - (b / maxBal) * cH; }
+
+  function drawLine(series, color, width){
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    for(var i=0;i<series.length;i++){
+      var x = tx(i), y = ty(series[i]);
+      if(i===0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  // y-axis labels
+  ctx.fillStyle = 'rgba(255,255,255,0.4)';
+  ctx.font = '10px DM Sans';
+  ctx.textAlign = 'right';
+  var steps = [0, 0.5, 1];
+  for(var i=0;i<steps.length;i++){
+    var v = maxBal * steps[i];
+    var y = ty(v);
+    var lbl = v >= 1000000 ? '$'+(v/1000000).toFixed(1)+'M' : (v >= 1000 ? '$'+Math.round(v/1000)+'K' : '$'+Math.round(v));
+    ctx.fillText(lbl, pad.l - 6, y + 3);
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
+  }
+  // x-axis label (years)
+  ctx.textAlign = 'center';
+  ctx.fillText('0', tx(0), H - 8);
+  ctx.fillText(Math.round(maxMonths/12) + ' yrs', tx(maxMonths), H - 8);
+
+  drawLine(sHalf, '#94a3b8', 1.5);
+  drawLine(sDbl, '#059669', 1.5);
+  drawLine(sYour, '#0EA5A0', 2.5);
+}
+
 function calculate(){
-  var P = parseFloat(document.getElementById('loanAmount').value) || 0;
+  var P = parseNum('loanAmount');           // current balance
   var rate = parseFloat(document.getElementById('interestRate').value) || 0;
-  var years = parseFloat(document.getElementById('loanTerm').value) || 30;
-  var extra = parseFloat(document.getElementById('extraPayment').value) || 0;
+  var years = parseFloat(document.getElementById('loanTerm').value) || 30;  // years left
+  var extra = parseNum('extraPayment');
+  var origLoan = parseNum('origLoan');       // original amount (context)
+  var origTerm = parseFloat(document.getElementById('origTerm').value) || years;
 
   if(P <= 0){ return; }
 
@@ -383,6 +548,22 @@ function calculate(){
   var timeStr = payoffYears + ' yr' + (payoffYears!==1?'s':'');
   if(payoffMonths > 0) timeStr += ' ' + payoffMonths + ' mo';
   document.getElementById('payoffTime').textContent = timeStr;
+
+  // ---- Progress so far (uses original loan vs current balance) ----
+  (function(){
+    var pb = document.getElementById('progressBox');
+    if(!pb) return;
+    if(origLoan > P && origLoan > 0){
+      var paidOff = origLoan - P;
+      var pctPaid = Math.round(paidOff / origLoan * 100);
+      var yearsIn = (origTerm > years) ? (origTerm - years) : 0;
+      var inStr = yearsIn > 0 ? (' over about ' + yearsIn + ' year' + (yearsIn!==1?'s':'')) : '';
+      pb.innerHTML = '🏠 You\'ve paid down <b>' + money(paidOff) + '</b> of your original <b>' + money(origLoan) + '</b> loan' + inStr + ' — that\'s <b>' + pctPaid + '%</b> of the principal already behind you. The numbers below are based on the <b>' + money(P) + '</b> you have left.';
+      pb.style.display = 'block';
+    } else {
+      pb.style.display = 'none';
+    }
+  })();
 
   // Comparison if extra payment
   var cBox = document.getElementById('compareBox');
@@ -440,6 +621,7 @@ function calculate(){
       document.getElementById('mvNote').innerHTML = 'Every extra dollar toward principal cuts both your payoff time and total interest.';
     }
     mv.style.display = 'block';
+    drawMtgChart(P, monthlyRate, basePayment, halfE, extra, dblE);
   })();
 
   document.getElementById('result').classList.add('show');
@@ -450,6 +632,8 @@ function calculate(){
 function saveInputs(){
   try{
     var d = {
+      origLoan: document.getElementById('origLoan').value,
+      origTerm: document.getElementById('origTerm').value,
       loanAmount: document.getElementById('loanAmount').value,
       interestRate: document.getElementById('interestRate').value,
       loanTerm: document.getElementById('loanTerm').value,
@@ -463,13 +647,31 @@ function restoreInputs(){
     var raw = localStorage.getItem(MKEY);
     if(!raw) return;
     var d = JSON.parse(raw);
+    if(d.origLoan) document.getElementById('origLoan').value = d.origLoan;
+    if(d.origTerm){ document.getElementById('origTerm').value = d.origTerm; document.getElementById('origTermNum').value = d.origTerm; }
     if(d.loanAmount) document.getElementById('loanAmount').value = d.loanAmount;
     if(d.interestRate) document.getElementById('interestRate').value = d.interestRate;
-    if(d.loanTerm) document.getElementById('loanTerm').value = d.loanTerm;
+    if(d.loanTerm){ document.getElementById('loanTerm').value = d.loanTerm; document.getElementById('loanTermNum').value = d.loanTerm; }
     if(d.extraPayment) document.getElementById('extraPayment').value = d.extraPayment;
   }catch(e){}
 }
+
+// ---- Slider <-> number box sync ----
+function linkSlider(sliderId, numId){
+  var slider = document.getElementById(sliderId);
+  var num = document.getElementById(numId);
+  if(!slider || !num) return;
+  function clamp(v){ v = parseInt(v,10); if(isNaN(v)) v = 1; var mn = parseInt(slider.min,10)||1, mx = parseInt(slider.max,10)||50; if(v<mn) v=mn; if(v>mx) v=mx; return v; }
+  slider.addEventListener('input', function(){ num.value = slider.value; calculate(); });
+  num.addEventListener('input', function(){ var v = clamp(num.value); slider.value = v; calculate(); });
+  num.addEventListener('blur', function(){ num.value = clamp(num.value); slider.value = num.value; calculate(); });
+}
+
 restoreInputs();
+initCommaInputs();
+linkSlider('origTerm','origTermNum');
+linkSlider('loanTerm','loanTermNum');
+document.getElementById('interestRate').addEventListener('input', calculate);
 calculate();
 </script>
 
