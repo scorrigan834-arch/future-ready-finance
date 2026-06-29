@@ -192,7 +192,7 @@ a{text-decoration:none}
         <a href="paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
         <a href="paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
         <a href="paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
         <a href="paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
       </div>
     </div>
@@ -287,7 +287,7 @@ a{text-decoration:none}
     <div id="incomeList"></div>
     <div class="add-row">
       <input type="text" class="ar-name" id="incomeName" placeholder="e.g. Paycheck">
-      <input type="number" class="ar-amount" id="incomeAmount" placeholder="$" min="0" step="50">
+      <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" class="ar-amount frf-comma" id="incomeAmount" placeholder="$" min="0" step="50"></div>
       <button class="ar-add" onclick="addIncome()">Add</button>
     </div>
   </div>
@@ -299,7 +299,7 @@ a{text-decoration:none}
     <div id="expenseList"></div>
     <div class="add-row">
       <input type="text" class="ar-name" id="expenseName" placeholder="e.g. Rent">
-      <input type="number" class="ar-amount" id="expenseAmount" placeholder="$" min="0" step="10">
+      <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" class="ar-amount frf-comma" id="expenseAmount" placeholder="$" min="0" step="10"></div>
       <select class="ar-cat" id="expenseCat">
         <option value="Housing">🏠 Housing</option>
         <option value="Food">🍎 Food</option>
@@ -379,11 +379,11 @@ a{text-decoration:none}
       </div>
       <div class="field">
         <label for="goalAmount">Target amount</label>
-        <input type="number" id="goalAmount" placeholder="5000" min="0" step="100">
+        <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="goalAmount" placeholder="5000" min="0" step="100" class="frf-comma"></div>
       </div>
       <div class="field">
         <label for="goalSaved">Already saved</label>
-        <input type="number" id="goalSaved" placeholder="0" min="0" step="100">
+        <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="goalSaved" placeholder="0" min="0" step="100" class="frf-comma"></div>
       </div>
     </div>
     <button class="bg-btn bg-btn-ghost" onclick="calcGoal()" style="max-width:200px">Calculate Timeline</button>
@@ -503,6 +503,33 @@ function getMonth(key){
 }
 
 function money(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+
+function parseNum(id){ var el=document.getElementById(id); if(!el) return 0; return parseFloat((el.value||'').toString().replace(/,/g,''))||0; }
+function formatWithCommas(v){
+  var raw=(v==null?'':v.toString()).replace(/,/g,'');
+  if(raw===''||raw==='-') return raw;
+  var neg=raw.charAt(0)==='-'; if(neg) raw=raw.slice(1);
+  var parts=raw.split('.');
+  var intPart=parts[0].replace(/\D/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  var out=(neg?'-':'')+intPart;
+  if(parts.length>1) out+='.'+parts[1].replace(/\D/g,'');
+  return out;
+}
+function initCommaInputs(){
+  var inputs=document.querySelectorAll('.frf-comma');
+  for(var i=0;i<inputs.length;i++){
+    (function(inp){
+      inp.addEventListener('input',function(){
+        var start=inp.selectionStart, before=inp.value;
+        inp.value=formatWithCommas(inp.value);
+        var diff=inp.value.length-before.length;
+        try{ inp.setSelectionRange(start+diff,start+diff); }catch(e){}
+        if(typeof calculate==='function') calculate();
+      });
+    })(inputs[i]);
+  }
+}
+
 function money2(n){ return '$' + Number(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
 
 function totalIncome(m){ var t=0; for(var i=0;i<m.income.length;i++){ t+=Number(m.income[i].amount)||0; } return t; }
@@ -683,7 +710,7 @@ function insightHtml(type, ic, text){
 // ===== Actions =====
 function addIncome(){
   var name = document.getElementById('incomeName').value.trim();
-  var amount = parseFloat(document.getElementById('incomeAmount').value)||0;
+  var amount = parseNum('incomeAmount');
   if(!name || amount<=0){ showToast('Enter a name and amount'); return; }
   getMonth(currentMonth).income.push({ name:name, amount:amount });
   document.getElementById('incomeName').value='';
@@ -692,7 +719,7 @@ function addIncome(){
 }
 function addExpense(){
   var name = document.getElementById('expenseName').value.trim();
-  var amount = parseFloat(document.getElementById('expenseAmount').value)||0;
+  var amount = parseNum('expenseAmount');
   var cat = document.getElementById('expenseCat').value;
   var fixed = document.getElementById('expenseFixed').checked;
   if(!name || amount<=0){ showToast('Enter a name and amount'); return; }
@@ -750,8 +777,8 @@ function pullProfileIncome(){
 // Savings goal
 function calcGoal(){
   var name = document.getElementById('goalName').value.trim() || 'your goal';
-  var target = parseFloat(document.getElementById('goalAmount').value)||0;
-  var saved = parseFloat(document.getElementById('goalSaved').value)||0;
+  var target = parseNum('goalAmount');
+  var saved = parseNum('goalSaved');
   var result = document.getElementById('goalResult');
   if(target<=0){ showToast('Enter a target amount'); return; }
 
@@ -814,6 +841,7 @@ function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt
 loadData();
 currentMonth = monthKey(new Date());
 render();
+initCommaInputs();
 </script>
 
 </body>
