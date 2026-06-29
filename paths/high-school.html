@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>High School Path — Future Ready Finance</title>
+<title>High School — Future Ready Finance</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
 a{text-decoration:none}
 .nav{position:sticky;top:0;z-index:100;background:#0B1929;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px}
@@ -14,7 +15,7 @@ a{text-decoration:none}
 .page-hero{background:#0B1929;padding:3.5rem 2rem 2.75rem}.page-hero-inner{max-width:1100px;margin:0 auto}
 .eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#0EA5A0;display:block;margin-bottom:.7rem}
 .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
-.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:540px;line-height:1.75}
+.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:560px;line-height:1.75}
 .rail{display:flex;overflow-x:auto;background:#fff;border-bottom:1px solid #E2E8F0;padding:0 2rem}
 .rail-step{display:flex;align-items:center;gap:.55rem;padding:.85rem 1.15rem;white-space:nowrap;border-bottom:2.5px solid transparent;color:#64748B;font-size:.8rem;font-weight:500}
 .rail-step.active{color:#0EA5A0;border-bottom-color:#0EA5A0;font-weight:700}
@@ -33,22 +34,31 @@ a{text-decoration:none}
 .btn-outline{background:transparent;color:#0B1929;border:1.5px solid #E2E8F0}
 .btn-outline:hover{border-color:#0EA5A0;color:#0EA5A0}
 .divider{border:none;border-top:1px solid #E2E8F0;margin:2.5rem 0}
+/* Playbook section — ADDED (was unstyled in template) */
+.budget-section{background:#0B1929;border-radius:16px;padding:2.5rem 2rem;margin:2.5rem 0;color:#fff}
+.budget-section h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.budget-section .sub{color:rgba(255,255,255,.6);font-size:.9rem;margin-bottom:1.75rem;max-width:600px}
+.budget-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.75rem}
+.budget-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.35rem 1.45rem}
+.budget-card h4{color:#3fd0c9;font-size:.92rem;font-weight:700;margin-bottom:.5rem}
+.budget-card p{color:rgba(255,255,255,.72);font-size:.85rem;line-height:1.65}
+.budget-rule{background:linear-gradient(135deg,rgba(14,165,160,.18),rgba(14,165,160,.05));border:1px solid rgba(14,165,160,.35);border-radius:12px;padding:1.4rem 1.6rem}
+.budget-rule h4{color:#6ee7b7;font-size:1rem;font-weight:700;margin-bottom:.5rem;font-family:'Playfair Display',serif}
+.budget-rule p{color:rgba(255,255,255,.8);font-size:.88rem;line-height:1.7}
+/* Related guides — ADDED (was unstyled in template) */
+.related-guides{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.6rem 1.75rem;margin:2.5rem 0}
+.related-guides-header h4{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#0B1929;margin-bottom:1rem}
+.related-guide-item{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;border:1px solid #E2E8F0;border-radius:9px;margin-bottom:.6rem;color:#0B1929;font-size:.9rem;font-weight:500;transition:border-color .15s,background .15s}
+.related-guide-item:hover{border-color:#0EA5A0;background:rgba(14,165,160,.04);color:#0B1929}
+.related-arrow{color:#0EA5A0;font-weight:800}
 .q-item{display:flex;gap:.75rem;align-items:flex-start;border:1px solid #E2E8F0;border-radius:9px;padding:.8rem 1rem;background:#fff;margin-bottom:.5rem;font-size:.9rem}
 .q-mark{color:#0EA5A0;font-weight:800;flex-shrink:0}
 .btn-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem}
-.budget-section{background:#F5F7F6;border-radius:14px;padding:2rem;margin-top:2.5rem}
-.budget-section h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:.5rem;color:#0B1929}
-.budget-section .sub{color:#64748B;font-size:.9rem;margin-bottom:1.5rem}
-.budget-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem}
-.budget-card{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:1.25rem}
-.budget-card h4{font-weight:700;font-size:.9rem;margin-bottom:.4rem;color:#0B1929}
-.budget-card p{font-size:.83rem;color:#64748B;line-height:1.6}
-.budget-rule{background:#0B1929;border-radius:10px;padding:1.25rem 1.5rem;margin-top:1rem}
-.budget-rule h4{font-family:'Playfair Display',serif;color:#0EA5A0;margin-bottom:.4rem;font-size:.95rem}
-.budget-rule p{color:rgba(255,255,255,.75);font-size:.875rem;line-height:1.65}
 .footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
-@media(max-width:640px){.nav-links{display:none}.budget-grid{grid-template-columns:1fr}}</style>
+@media(max-width:760px){.budget-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.nav-links{display:none}}
+</style>
 </head>
 <body>
 <nav class="nav">
@@ -64,76 +74,70 @@ a{text-decoration:none}
   </div>
 </nav>
 <div class="page-hero"><div class="page-hero-inner">
-  <span class="eyebrow">Life Stage · Ages 14–18</span>
-  <h1>🎓 High School Path</h1>
-  <p>Build money confidence before graduation. Designed for students preparing for first jobs, college decisions, trade school, and financial independence.</p>
+  <span class="eyebrow">Life Stage · Ages 14–18 · Preparing for Adulthood</span>
+  <h1>🎓 High School</h1>
+  <p>The financial habits you build now compound for decades. High school is the perfect time to learn how money works — before the stakes get high. First jobs, college decisions, and your first taste of financial independence all start here.</p>
 </div></div>
 <div class="rail">
-  <div class="rail-step active"><span class="rail-dot">1</span>Money Mindset</div>
-  <div class="rail-step"><span class="rail-dot">2</span>Budgeting</div>
-  <div class="rail-step"><span class="rail-dot">3</span>College ROI</div>
-  <div class="rail-step"><span class="rail-dot">4</span>Design Future</div>
+  <div class="rail-step active"><span class="rail-dot">1</span>Earn First</div>
+  <div class="rail-step"><span class="rail-dot">2</span>Bank Smart</div>
+  <div class="rail-step"><span class="rail-dot">3</span>Plan College</div>
+  <div class="rail-step"><span class="rail-dot">4</span>Build Habits</div>
 </div>
 <div class="section"><div class="section-inner">
-  <div class="goal"><div class="goal-label">Your Goal</div><p>Explain the financial consequences of your first major adult decisions — before you make them.</p></div>
+  <div class="goal"><div class="goal-label">Your Goal</div><p>Build a foundation of good money habits and basic knowledge — so you enter adulthood ahead instead of learning the hard way.</p></div>
 
   <div class="step-card"><div class="step-num">1</div><div class="step-content">
-    <h3>Money Mindset</h3>
-    <p>Learn how money works, how habits shape outcomes, and why long-term thinking matters more than any single decision.</p>
-    <a href="../big-decisions.html" class="btn">Start Module</a>
+    <h3>Earn Your First Money</h3>
+    <p>A first job — whether it's babysitting, a summer gig, or part-time retail — teaches you the value of money in a way no class can. Track what you earn, understand your first paycheck (including why taxes come out), and start seeing money as something you can control.</p>
+    <a href="../decisions/first-paycheck.html" class="btn">Understand Your First Paycheck</a>
   </div></div>
-
   <div class="step-card"><div class="step-num">2</div><div class="step-content">
-    <h3>Budgeting Basics</h3>
-    <p>Understand income, expenses, needs, wants, and emergency savings — the foundation of every sound financial decision.</p>
-    <a href="../guides.html" class="btn">Start Module</a>
+    <h3>Open a Bank Account</h3>
+    <p>A checking and savings account is your first real financial tool. Learn the difference between them, why a savings account matters, and how to avoid fees. Many banks have free student accounts. This is also where you start practicing the habit of saving a portion of everything you earn.</p>
+    <a href="../decisions/banking-basics.html" class="btn">Banking Basics</a>
   </div></div>
-
   <div class="step-card"><div class="step-num">3</div><div class="step-content">
-    <h3>College ROI</h3>
-    <p>Compare college costs, student loans, future income, and long-term debt impact before signing anything.</p>
-    <a href="../decisions/student-debt.html" class="btn">Read Guide</a>
+    <h3>Make Smart College Decisions</h3>
+    <p>College is one of the biggest financial decisions of your life — and it happens before you even start earning. Understand what student loans really cost, how to compare schools by value (not just prestige), and why scholarships and in-state options can save you years of debt.</p>
+    <a href="../simulations/college-roi.html" class="btn">Calculate College ROI</a>
   </div></div>
-
   <div class="step-card"><div class="step-num">4</div><div class="step-content">
-    <h3>Design Your Future</h3>
-    <p>Model your future based on education, career, debt, housing, saving, and investing choices — see how they connect.</p>
-    <a href="../simulations.html" class="btn">Start Capstone</a>
+    <h3>Build Habits That Last</h3>
+    <p>The teen who saves a little and understands compound interest beats the adult who earns more but spends it all. Learn how money grows over time, why starting early is your single biggest advantage, and how small habits now become wealth later.</p>
+    <a href="../simulations/compound-interest.html" class="btn">See How Money Grows</a>
   </div></div>
 
   <div class="budget-section">
-    <h2>💰 Budgeting for High Schoolers</h2>
-    <p class="sub">Your first budget doesn't need to be complicated. It needs to be honest.</p>
+    <h2>🎓 The High School Money Playbook</h2>
+    <p class="sub">You don't need much money to start building wealth — you need time, and you have more of it than anyone.</p>
     <div class="budget-grid">
-      <div class="budget-card">
-        <h4>Track Every Dollar In</h4>
-        <p>Job income, allowance, gifts, side hustles. Write down every dollar you receive each month — most people underestimate their income.</p>
-      </div>
-      <div class="budget-card">
-        <h4>Know Your Fixed Costs</h4>
-        <p>Phone bill, subscriptions, transportation costs. These come out whether you plan for them or not — list them first.</p>
-      </div>
-      <div class="budget-card">
-        <h4>Save Before You Spend</h4>
-        <p>Move money to savings the day you get paid, not whatever's left over. Even $20/month builds a habit that compounds for life.</p>
-      </div>
-      <div class="budget-card">
-        <h4>Name Every Dollar</h4>
-        <p>Give each dollar a job — savings, needs, wants. Unplanned spending is where budgets fall apart at every age.</p>
-      </div>
+      <div class="budget-card"><h4>Save a Slice of Everything</h4><p>Make it automatic: every time you earn money, set aside a portion before you spend any. Even 20% of a small paycheck builds the habit that matters far more than the amount right now.</p></div>
+      <div class="budget-card"><h4>Learn Before You Borrow</h4><p>Student loans feel abstract until you're paying them for 10+ years. Understand exactly what college will cost and what it'll return before signing anything. The best debt is the debt you avoid.</p></div>
+      <div class="budget-card"><h4>Understand Compound Interest</h4><p>Money invested at 16 has decades to grow. Understanding this one concept — and acting on it early — is the closest thing to a financial superpower you'll ever have.</p></div>
+      <div class="budget-card"><h4>Avoid the Credit Trap Early</h4><p>You'll be flooded with credit card offers soon. Learn how credit works now so you use it as a tool, not a trap. Used right, it builds your future. Used wrong, it costs you for years.</p></div>
     </div>
     <div class="budget-rule">
-      <h4>The High School Budget Rule: 50 / 30 / 20</h4>
-      <p>50% of income → needs and fixed costs &nbsp;|&nbsp; 30% → wants and entertainment &nbsp;|&nbsp; 20% → savings. Start here and adjust as your income grows. The habit of saving 20% now will be worth far more than the amount itself.</p>
+      <h4>The High School Rule: Time Beats Money</h4>
+      <p>You may not have much to invest yet, but you have something no wealthy 40-year-old can buy back: time. Start small, stay consistent, and let compounding do the heavy lifting. The habits you build at 16 matter more than the salary you'll earn at 26.</p>
     </div>
+  </div>
+
+  <div class="related-guides">
+    <div class="related-guides-header"><h4>Guides for This Stage</h4></div>
+    <a class="related-guide-item" href="../decisions/first-paycheck.html"><span>Your First Paycheck: Understanding Taxes & Deductions</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/banking-basics.html"><span>Banking Basics: Checking, Savings & Avoiding Fees</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/credit-basics.html"><span>Credit Basics: How Credit Works & Why It Matters</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/student-debt.html"><span>Student Debt: What to Know Before You Borrow</span><span class="related-arrow">→</span></a>
   </div>
 
   <div class="divider"></div>
   <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:1.25rem">Key Questions</h2>
-  <div class="q-item"><span class="q-mark">?</span><span>Should I go to college, trade school, or start working?</span></div>
-  <div class="q-item"><span class="q-mark">?</span><span>How much debt is too much?</span></div>
-  <div class="q-item"><span class="q-mark">?</span><span>How do I build good money habits early?</span></div>
-  <div class="q-item"><span class="q-mark">?</span><span>What does financial independence actually require?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>How do I get my first job with no experience?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>Why does money come out of my paycheck for taxes?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>Should I get a credit card in high school?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>Is college worth the cost — and how do I compare schools?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>How much can my money grow if I start investing now?</span></div>
   <div class="btn-row">
     <a href="../big-decisions.html" class="btn">Explore Decisions</a>
     <a href="../simulations.html" class="btn btn-outline">Run a Simulation</a>
