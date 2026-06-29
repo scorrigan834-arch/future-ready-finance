@@ -62,6 +62,12 @@ input[type=number]:focus{border-color:#0EA5A0}
 input[type=range]{width:100%;accent-color:#0EA5A0;margin-top:.4rem;cursor:pointer}
 .range-labels{display:flex;justify-content:space-between;font-size:.73rem;color:#94a3b8;margin-top:.2rem}
 .range-labels strong{color:#0B1929;font-size:.82rem}
+.slider-with-input{display:flex;align-items:center;gap:.85rem}
+.slider-with-input input[type=range]{flex:1;margin-top:0}
+.slider-num-wrap{display:flex;align-items:stretch;flex-shrink:0}
+.slider-num{width:3.4rem;padding:.45rem .5rem;border:1.5px solid #E2E8F0;border-radius:8px 0 0 8px;border-right:none;font-size:.9rem;font-weight:700;color:#0B1929;text-align:center;font-family:"DM Sans",sans-serif}
+.slider-num:focus{outline:none;border-color:#0EA5A0}
+.slider-num-unit{display:flex;align-items:center;padding:0 .55rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-left:none;border-radius:0 8px 8px 0;color:#64748B;font-size:.78rem;font-weight:700}
 .scenarios{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin-top:1.4rem}
 .sc{border:1.5px solid #E2E8F0;border-radius:9px;padding:.75rem .6rem;text-align:center;cursor:pointer;background:#fff;font-family:"DM Sans",sans-serif;transition:border-color .15s,background .15s}
 .sc:hover{border-color:#0EA5A0;background:rgba(14,165,160,.04)}
@@ -124,7 +130,7 @@ canvas{display:block;width:100%;height:180px}
         <a href="../paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
         <a href="../paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
         <a href="../paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="../paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="../paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
         <a href="../paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
       </div>
     </div>
@@ -238,13 +244,13 @@ canvas{display:block;width:100%;height:180px}
       <div class="field">
         <label>Starting Amount</label>
         <span class="hint">What you're investing today — can be $0</span>
-        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="principal" class="pfinput" min="0" step="100"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="principal" class="pfinput frf-comma" min="0" step="100"></div>
       </div>
 
       <div class="field">
         <label>Monthly Contribution</label>
         <span class="hint">How much you'll add every month going forward</span>
-        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="monthly" class="pfinput" min="0" step="25"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="monthly" class="pfinput frf-comma" min="0" step="25"></div>
       </div>
 
       <div class="field">
@@ -255,7 +261,10 @@ canvas{display:block;width:100%;height:180px}
 
       <div class="field">
         <label>Years to Grow</label>
-        <input type="range" id="years" min="1" max="50" value="30">
+        <div class="slider-with-input">
+          <input type="range" id="years" min="1" max="50" value="30">
+          <div class="slider-num-wrap"><input type="number" id="yearsNum" min="1" max="50" value="30" class="slider-num"><span class="slider-num-unit">yrs</span></div>
+        </div>
         <div class="range-labels"><span>1 yr</span><strong id="yr-lbl">30 years</strong><span>50 yrs</span></div>
       </div>
 
@@ -301,7 +310,9 @@ canvas{display:block;width:100%;height:180px}
       <div class="chart-box">
         <h3>Growth Over Time</h3>
         <div class="chart-legend">
-          <div class="cl-item"><div class="cl-dot" style="background:#0EA5A0"></div>Total Value</div>
+          <div class="cl-item"><div class="cl-dot" style="background:#0EA5A0"></div>Total Value (your rate)</div>
+          <div class="cl-item"><div class="cl-dot" style="background:#059669"></div>+2% return</div>
+          <div class="cl-item"><div class="cl-dot" style="background:#dc2626"></div>−2% return</div>
           <div class="cl-item"><div class="cl-dot" style="background:#E2E8F0"></div>Amount Contributed</div>
         </div>
         <canvas id="chart"></canvas>
@@ -340,9 +351,49 @@ function getElementById(id) {
   return document.getElementById(id);
 }
 
+// Strip commas and parse a number from an input value
+function parseNum(id) {
+  var el = document.getElementById(id);
+  if (!el) return 0;
+  var raw = (el.value || '').toString().replace(/,/g, '');
+  return parseFloat(raw) || 0;
+}
+
+// Format a number string with thousands commas (integer part only)
+function formatWithCommas(val) {
+  var raw = val.replace(/,/g, '');
+  if (raw === '' || raw === '-') return raw;
+  var neg = raw.charAt(0) === '-';
+  if (neg) raw = raw.slice(1);
+  var parts = raw.split('.');
+  var intPart = parts[0].replace(/\D/g, '');
+  intPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  var out = (neg ? '-' : '') + intPart;
+  if (parts.length > 1) out += '.' + parts[1].replace(/\D/g, '');
+  return out;
+}
+
+// Wire comma formatting onto all .frf-comma inputs
+function initCommaInputs() {
+  var inputs = document.querySelectorAll('.frf-comma');
+  for (var i = 0; i < inputs.length; i++) {
+    (function(inp){
+      inp.addEventListener('input', function(){
+        var start = inp.selectionStart;
+        var before = inp.value;
+        inp.value = formatWithCommas(inp.value);
+        // best-effort caret keep
+        var diff = inp.value.length - before.length;
+        try { inp.setSelectionRange(start + diff, start + diff); } catch(e){}
+        if (typeof calculate === 'function') calculate();
+      });
+    })(inputs[i]);
+  }
+}
+
 function calculate() {
-  var P = parseFloat(getElementById('principal').value) || 0;
-  var m = parseFloat(getElementById('monthly').value) || 0;
+  var P = parseNum('principal');
+  var m = parseNum('monthly');
   var r = (parseFloat(getElementById('rate').value) || 0) / 100;
   var yrs = parseFloat(getElementById('years').value) || 1;
   var mr = r / 12;
@@ -420,19 +471,25 @@ function drawChart(P, m, r, yrs) {
   var mr = r / 12;
   var vals = [];
   var contribs = [];
+  var lowVals = [];
+  var highVals = [];
+  var basePct = r * 100;
+  var lowMr = (Math.max(0, basePct - 2) / 100) / 12;
+  var highMr = ((basePct + 2) / 100) / 12;
+  function fvAtMonth(rate, n){
+    var f = P * Math.pow(1 + rate, n);
+    if (rate > 0) { f = f + m * (Math.pow(1 + rate, n) - 1) / rate; } else { f = f + m * n; }
+    return f;
+  }
   for (var y = 0; y <= yrs; y++) {
     var n = y * 12;
-    var fv = P * Math.pow(1 + mr, n);
-    if (mr > 0) {
-      fv = fv + m * (Math.pow(1 + mr, n) - 1) / mr;
-    } else {
-      fv = fv + m * n;
-    }
-    vals.push(fv);
+    vals.push(fvAtMonth(mr, n));
+    lowVals.push(fvAtMonth(lowMr, n));
+    highVals.push(fvAtMonth(highMr, n));
     contribs.push(P + m * n);
   }
 
-  var maxV = Math.max.apply(null, vals);
+  var maxV = Math.max.apply(null, highVals); // high line is the tallest
   if (maxV < 1) maxV = 1;
   var pad = {t: 8, r: 8, b: 28, l: 56};
   var cW = W - pad.l - pad.r;
@@ -473,6 +530,28 @@ function drawChart(P, m, r, yrs) {
   ctx.moveTo(tx(0), ty(contribs[0]));
   for (var i = 0; i < contribs.length; i++) {
     ctx.lineTo(tx(i), ty(contribs[i]));
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // High return line (rate+2%) — light green dashed
+  ctx.beginPath();
+  ctx.strokeStyle = 'rgba(5,150,105,0.55)';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([5, 3]);
+  ctx.moveTo(tx(0), ty(highVals[0]));
+  for (var i = 0; i < highVals.length; i++) {
+    ctx.lineTo(tx(i), ty(highVals[i]));
+  }
+  ctx.stroke();
+
+  // Low return line (rate-2%) — light red dashed
+  ctx.beginPath();
+  ctx.strokeStyle = 'rgba(220,38,38,0.45)';
+  ctx.lineWidth = 1.5;
+  ctx.moveTo(tx(0), ty(lowVals[0]));
+  for (var i = 0; i < lowVals.length; i++) {
+    ctx.lineTo(tx(i), ty(lowVals[i]));
   }
   ctx.stroke();
   ctx.setLineDash([]);
@@ -522,19 +601,36 @@ function setScenario(s) {
   };
   var scenario = scenarios[s];
   if (scenario) {
-    getElementById('principal').value = scenario[0];
-    getElementById('monthly').value = scenario[1];
+    getElementById('principal').value = formatWithCommas(String(scenario[0]));
+    getElementById('monthly').value = formatWithCommas(String(scenario[1]));
     getElementById('rate').value = scenario[2];
     getElementById('years').value = scenario[3];
+    getElementById('yearsNum').value = scenario[3];
     calculate();
   }
 }
 
 function initializeCalculator() {
-  getElementById('principal').addEventListener('input', calculate);
-  getElementById('monthly').addEventListener('input', calculate);
+  initCommaInputs();
   getElementById('rate').addEventListener('input', calculate);
-  getElementById('years').addEventListener('input', calculate);
+  // Sync the years slider <-> number box both directions
+  var yearsSlider = getElementById('years');
+  var yearsNum = getElementById('yearsNum');
+  function clampYears(v){ v = parseInt(v,10); if(isNaN(v)) v = 1; if(v<1) v=1; if(v>50) v=50; return v; }
+  yearsSlider.addEventListener('input', function(){
+    yearsNum.value = yearsSlider.value;
+    calculate();
+  });
+  yearsNum.addEventListener('input', function(){
+    var v = clampYears(yearsNum.value);
+    yearsSlider.value = v;
+    calculate();
+  });
+  yearsNum.addEventListener('blur', function(){
+    yearsNum.value = clampYears(yearsNum.value);
+    yearsSlider.value = yearsNum.value;
+    calculate();
+  });
   window.addEventListener('resize', calculate);
   calculate();
 }
