@@ -10,8 +10,9 @@
      on the page, inviting them to create a free account.
    - Submitting the form posts to Formspree (real email capture) and
      marks them as joined on-device so they're never nagged again.
-   - The modal is dismissible (hard-ish, not a hard lock — a true lock
-     needs a server).
+   - HARD LOCK: the modal cannot be dismissed. Visitors must create an
+     account to use the calculators. (Note: because this is browser-side,
+     it's a strong gate for normal users but not server-enforced.)
 
    SETUP (do this once, tonight on your computer):
    - Create a free form at https://formspree.io and copy its endpoint,
@@ -57,8 +58,6 @@
     '.frfg-overlay.frfg-show{opacity:1}' +
     '.frfg-modal{background:#fff;border-radius:18px;max-width:440px;width:100%;padding:2rem 1.75rem 1.75rem;box-shadow:0 24px 70px rgba(0,0,0,.4);transform:translateY(12px) scale(.98);transition:transform .25s;font-family:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;position:relative;max-height:92vh;overflow-y:auto}' +
     '.frfg-overlay.frfg-show .frfg-modal{transform:translateY(0) scale(1)}' +
-    '.frfg-close{position:absolute;top:.85rem;right:1rem;background:none;border:none;font-size:1.5rem;line-height:1;color:#94a3b8;cursor:pointer;padding:.2rem;transition:color .15s}' +
-    '.frfg-close:hover{color:#0B1929}' +
     '.frfg-badge{display:inline-block;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.25);color:#0C7D79;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.3rem .75rem;border-radius:999px;margin-bottom:1rem}' +
     '.frfg-modal h2{font-family:"Playfair Display",Georgia,serif;font-size:1.5rem;color:#0B1929;margin:0 0 .5rem;line-height:1.2}' +
     '.frfg-modal p.frfg-sub{font-size:.92rem;color:#64748B;line-height:1.6;margin:0 0 1.3rem}' +
@@ -73,8 +72,6 @@
     '.frfg-submit:disabled{opacity:.6;cursor:default}' +
     '.frfg-err{color:#dc2626;font-size:.82rem;margin:.5rem 0 0;display:none}' +
     '.frfg-err.frfg-show{display:block}' +
-    '.frfg-dismiss{display:block;width:100%;text-align:center;background:none;border:none;color:#94a3b8;font-size:.82rem;cursor:pointer;margin-top:.9rem;font-family:inherit;text-decoration:underline}' +
-    '.frfg-dismiss:hover{color:#64748B}' +
     '.frfg-foot{font-size:.72rem;color:#94a3b8;text-align:center;margin-top:1rem;line-height:1.5}' +
     '.frfg-success{text-align:center;padding:1rem 0}' +
     '.frfg-success .frfg-check{font-size:2.5rem;margin-bottom:.5rem}' +
@@ -90,10 +87,9 @@
   overlay.setAttribute("aria-modal", "true");
   overlay.innerHTML =
     '<div class="frfg-modal">' +
-    '<button class="frfg-close" aria-label="Close" type="button">&times;</button>' +
     '<span class="frfg-badge">Free Account</span>' +
-    '<h2>Unlock this calculator</h2>' +
-    '<p class="frfg-sub">Create a free Future Ready Finance account to use our calculators and save your progress across visits.</p>' +
+    '<h2>Create your free account to continue</h2>' +
+    '<p class="frfg-sub">A free Future Ready Finance account unlocks all our calculators and saves your progress. It takes 10 seconds — just your name and email.</p>' +
     '<ul class="frfg-perks">' +
     "<li>Free access to all 15 financial calculators</li>" +
     "<li>Your numbers saved privately on your device</li>" +
@@ -105,7 +101,6 @@
     '<button type="submit" class="frfg-submit">Create my free account</button>' +
     '<p class="frfg-err">Please enter a valid email address.</p>' +
     "</form>" +
-    '<button class="frfg-dismiss" type="button">Maybe later</button>' +
     '<p class="frfg-foot">No spam, ever. We\'ll only email about your account and new tools.</p>' +
     "</div>";
 
@@ -122,7 +117,12 @@
     document.body.style.overflow = "hidden";
   }
 
-  function close() {
+  // Hard lock: 'close' is intentionally disabled so the gate cannot be
+  // dismissed by clicking away, the backdrop, etc.
+  function close() { /* no-op: gate cannot be dismissed */ }
+
+  // The ONLY legitimate exit: called after a successful account creation.
+  function finishAndRemove() {
     overlay.classList.remove("frfg-show");
     document.body.style.overflow = "";
     setTimeout(function () {
@@ -146,7 +146,7 @@
       '<p class="frfg-sub">Your free account is set up. Enjoy the calculators \u2014 your progress will be saved on this device.</p>' +
       '<button type="button" class="frfg-submit frfg-continue">Start using the calculator</button>' +
       "</div>";
-    modal.querySelector(".frfg-continue").addEventListener("click", close);
+    modal.querySelector(".frfg-continue").addEventListener("click", finishAndRemove);
   }
 
   function escapeHtml(s) {
@@ -159,13 +159,8 @@
 
   // ---- events ----
   function wire() {
-    overlay.querySelector(".frfg-close").addEventListener("click", close);
-    overlay.querySelector(".frfg-dismiss").addEventListener("click", close);
-
-    // Click on backdrop (outside modal) dismisses
-    overlay.addEventListener("click", function (e) {
-      if (e.target === overlay) close();
-    });
+    // HARD LOCK: no close button, no dismiss link, no backdrop-dismiss.
+    // The only way past the gate is to create an account.
 
     var form = overlay.querySelector(".frfg-form");
     var errEl = overlay.querySelector(".frfg-err");
