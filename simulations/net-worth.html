@@ -76,6 +76,22 @@ input[type=number]:focus{border-color:#0EA5A0}
 .bar-fill.debts{background:#dc2626}
 .insight-box{background:rgba(14,165,160,.07);border:1px solid rgba(14,165,160,.22);border-left:4px solid #0EA5A0;border-radius:8px;padding:1rem 1.15rem;font-size:.88rem;line-height:1.7;color:#0B1929}
 .insight-box strong{color:#0EA5A0}
+.nw-projection{background:linear-gradient(135deg,#0B1929,#0f1e30);border-radius:14px;padding:1.3rem 1.4rem;margin-top:1.25rem;color:#fff}
+.nwp-title{font-family:"Playfair Display",serif;font-size:1.1rem;color:#0EA5A0;margin-bottom:.3rem}
+.nwp-sub{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:1rem}
+.nwp-sub b{color:#3fd0c9}
+.nwp-grid{display:flex;gap:.6rem}
+.nwp-card{flex:1;border-radius:10px;padding:.85rem .6rem;text-align:center;border:1px solid rgba(255,255,255,.12)}
+.nwp-card.nwp-low{background:rgba(220,38,38,.12)}
+.nwp-card.nwp-mid{background:rgba(14,165,160,.16)}
+.nwp-card.nwp-high{background:rgba(5,150,105,.14)}
+.nwp-rate{font-size:1.05rem;font-weight:800;margin-bottom:.15rem}
+.nwp-low .nwp-rate{color:#fda4a4}.nwp-mid .nwp-rate{color:#3fd0c9}.nwp-high .nwp-rate{color:#6ee7b7}
+.nwp-cap{font-size:.64rem;color:rgba(255,255,255,.55);font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin-bottom:.45rem;line-height:1.3}
+.nwp-amt{font-size:1rem;font-weight:800;color:#fff;line-height:1.1}
+.nwp-note{font-size:.79rem;color:#a7f3d0;background:rgba(14,165,160,.1);border-left:3px solid #0EA5A0;border-radius:0 6px 6px 0;padding:.6rem .8rem;margin-top:.9rem;line-height:1.5}
+.nwp-note b{color:#6ee7b7}
+@media(max-width:520px){.nwp-grid{gap:.4rem}.nwp-card{padding:.7rem .4rem}.nwp-amt{font-size:.88rem}}
 .next-links{background:#F5F7F6;border-radius:12px;padding:1.5rem;margin-top:2rem}
 .next-links h4{font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;margin-bottom:1rem;color:#0B1929}
 .nli{display:flex;align-items:center;justify-content:space-between;border:1px solid #E2E8F0;border-radius:8px;padding:.75rem 1rem;background:#fff;text-decoration:none;color:#0B1929;margin-bottom:.5rem;transition:border-color .15s}
@@ -241,6 +257,28 @@ input[type=number]:focus{border-color:#0EA5A0}
       <div class="bar-track"><div class="bar-fill debts" id="bar-debts" style="width:0%"></div></div>
     </div>
     <div class="insight-box" id="insight"></div>
+    <div class="nw-projection" id="nwProjection" style="display:none">
+      <div class="nwp-title">📈 Where could you be in 10 years?</div>
+      <div class="nwp-sub">If your <b id="nwp-invest">$0</b> in investments grows over 10 years (other assets &amp; debts held flat), your net worth could be:</div>
+      <div class="nwp-grid">
+        <div class="nwp-card nwp-low">
+          <div class="nwp-rate" id="nwp-low-rate">5%</div>
+          <div class="nwp-cap">If markets lag</div>
+          <div class="nwp-amt" id="nwp-low-amt">$0</div>
+        </div>
+        <div class="nwp-card nwp-mid">
+          <div class="nwp-rate" id="nwp-mid-rate">7%</div>
+          <div class="nwp-cap">Average growth</div>
+          <div class="nwp-amt" id="nwp-mid-amt">$0</div>
+        </div>
+        <div class="nwp-card nwp-high">
+          <div class="nwp-rate" id="nwp-high-rate">9%</div>
+          <div class="nwp-cap">If markets outperform</div>
+          <div class="nwp-amt" id="nwp-high-amt">$0</div>
+        </div>
+      </div>
+      <div class="nwp-note" id="nwpNote"></div>
+    </div>
   </div>
 
   <div class="next-links">
@@ -312,6 +350,31 @@ function calculate() {
     getEl('nw-sub').textContent = 'Assets of ' + formatMoney(assets) + ' minus debts of ' + formatMoney(debts);
   }
   getEl('insight').textContent = msg;
+
+  // ---- 10-year projection: investments grow at 5/7/9%, other assets & debts flat ----
+  (function(){
+    var investments = getValue('investments');
+    var otherAssets = assets - investments; // everything except investments, held flat
+    var YEARS = 10;
+    function projNW(annualPct){
+      var grownInvest = investments * Math.pow(1 + annualPct/100, YEARS);
+      return (otherAssets + grownInvest) - debts;
+    }
+    var proj = document.getElementById('nwProjection');
+    if(investments <= 0){
+      // No investments to grow — projection isn't meaningful
+      proj.style.display = 'none';
+      return;
+    }
+    var low = projNW(5), mid = projNW(7), high = projNW(9);
+    getEl('nwp-invest').textContent = formatMoney(investments);
+    getEl('nwp-low-amt').textContent = formatMoney(low);
+    getEl('nwp-mid-amt').textContent = formatMoney(mid);
+    getEl('nwp-high-amt').textContent = formatMoney(high);
+    var gain = mid - netWorth;
+    getEl('nwpNote').innerHTML = 'Just by keeping your investments in the market at an average 7% return, your net worth could grow by about <b>' + formatMoney(gain>0?gain:0) + '</b> over 10 years \u2014 without adding a single dollar. That\'s compound growth doing the work.';
+    proj.style.display = 'block';
+  })();
 }
 
 function initialize() {
