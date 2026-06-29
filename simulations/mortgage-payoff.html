@@ -109,6 +109,23 @@ a{text-decoration:none}
 .result-stat .rs-value.accent{color:#3fd0c9}
 .compare-box{background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.25);border-radius:10px;padding:1rem 1.1rem;margin-top:1.2rem;font-size:.85rem;color:#a7f3d0;line-height:1.6}
 .compare-box b{color:#6ee7b7}
+.mtg-variance{margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.1)}
+.mv-title{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.25rem}
+.mv-sub{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:.9rem}
+.mv-grid{display:flex;gap:.6rem}
+.mv-card{flex:1;border-radius:10px;padding:.85rem .6rem;text-align:center;border:1px solid rgba(255,255,255,.12)}
+.mv-card.mv-half{background:rgba(100,116,139,.15)}
+.mv-card.mv-your{background:rgba(14,165,160,.16)}
+.mv-card.mv-double{background:rgba(5,150,105,.14)}
+.mv-tag{font-size:.62rem;color:rgba(255,255,255,.55);font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-bottom:.3rem;line-height:1.2}
+.mv-your .mv-tag{color:#3fd0c9}.mv-double .mv-tag{color:#6ee7b7}
+.mv-amt{font-size:.78rem;font-weight:700;color:rgba(255,255,255,.8);margin-bottom:.45rem}
+.mv-time{font-size:1rem;font-weight:800;color:#fff;line-height:1.1}
+.mv-int{font-size:.66rem;color:rgba(255,255,255,.5);margin-top:.25rem;line-height:1.3}
+.mv-note{font-size:.79rem;color:#a7f3d0;background:rgba(14,165,160,.1);border-left:3px solid #0EA5A0;border-radius:0 6px 6px 0;padding:.6rem .8rem;margin-top:.9rem;line-height:1.5}
+.mv-note b{color:#6ee7b7}
+@media(max-width:520px){.mv-grid{gap:.4rem}.mv-card{padding:.7rem .4rem}.mv-time{font-size:.88rem}}
+</style>
 .mc-btn{width:100%;padding:.95rem;background:#0EA5A0;color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;font-family:"DM Sans",sans-serif;transition:background .2s;margin-top:.3rem}
 .mc-btn:hover{background:#0C7D79}
 .mc-disclaimer{font-size:.78rem;color:#94a3b8;margin-top:1.25rem;line-height:1.55;text-align:center}
@@ -228,6 +245,31 @@ a{text-decoration:none}
       </div>
     </div>
     <div class="compare-box" id="compareBox" style="display:none"></div>
+    <div class="mtg-variance" id="mtgVariance" style="display:none">
+      <div class="mv-title">What if you paid more toward principal?</div>
+      <div class="mv-sub">See how different extra payments change your payoff:</div>
+      <div class="mv-grid">
+        <div class="mv-card mv-half">
+          <div class="mv-tag">Half extra</div>
+          <div class="mv-amt" id="mv-half-extra">+$0/mo</div>
+          <div class="mv-time" id="mv-half-time">—</div>
+          <div class="mv-int" id="mv-half-int"></div>
+        </div>
+        <div class="mv-card mv-your">
+          <div class="mv-tag">Your plan</div>
+          <div class="mv-amt" id="mv-your-extra">+$0/mo</div>
+          <div class="mv-time" id="mv-your-time">—</div>
+          <div class="mv-int" id="mv-your-int"></div>
+        </div>
+        <div class="mv-card mv-double">
+          <div class="mv-tag">Double extra</div>
+          <div class="mv-amt" id="mv-double-extra">+$0/mo</div>
+          <div class="mv-time" id="mv-double-time">—</div>
+          <div class="mv-int" id="mv-double-int"></div>
+        </div>
+      </div>
+      <div class="mv-note" id="mvNote"></div>
+    </div>
   </div>
 
   <p class="mc-disclaimer">This is an educational estimate using standard amortization. It doesn't include property taxes, insurance, PMI, or HOA fees. Not financial advice — consult a lender for exact figures.</p>
@@ -357,6 +399,48 @@ function calculate(){
   } else {
     cBox.style.display = 'none';
   }
+
+  // ---- Variance: half / your / double the extra payment ----
+  (function(){
+    var mv = document.getElementById('mtgVariance');
+    if(extra <= 0){ mv.style.display = 'none'; return; }
+
+    function fmtTime(mo){
+      var y = Math.floor(mo/12), m = mo%12, s = y + 'y';
+      if(m>0) s += ' ' + m + 'm';
+      return s;
+    }
+    var halfE = extra/2, dblE = extra*2;
+    var rHalf = amortize(P, monthlyRate, basePayment, halfE);
+    var rYour = amortize(P, monthlyRate, basePayment, extra);
+    var rDbl = amortize(P, monthlyRate, basePayment, dblE);
+
+    document.getElementById('mv-half-extra').textContent = '+' + money(halfE) + '/mo';
+    document.getElementById('mv-your-extra').textContent = '+' + money(extra) + '/mo';
+    document.getElementById('mv-double-extra').textContent = '+' + money(dblE) + '/mo';
+
+    document.getElementById('mv-half-time').textContent = rHalf ? fmtTime(rHalf.months) : 'Never';
+    document.getElementById('mv-your-time').textContent = rYour ? fmtTime(rYour.months) : 'Never';
+    document.getElementById('mv-double-time').textContent = rDbl ? fmtTime(rDbl.months) : 'Never';
+
+    document.getElementById('mv-half-int').textContent = rHalf ? money(rHalf.totalInterest) + ' interest' : '';
+    document.getElementById('mv-your-int').textContent = rYour ? money(rYour.totalInterest) + ' interest' : '';
+    document.getElementById('mv-double-int').textContent = rDbl ? money(rDbl.totalInterest) + ' interest' : '';
+
+    if(rYour && rDbl){
+      var monthsFaster = rYour.months - rDbl.months;
+      var yF = Math.floor(monthsFaster/12), mF = monthsFaster%12;
+      var fasterStr = '';
+      if(yF>0) fasterStr += yF + ' year' + (yF!==1?'s':'');
+      if(mF>0) fasterStr += (fasterStr?' ':'') + mF + ' month' + (mF!==1?'s':'');
+      if(!fasterStr) fasterStr = 'even sooner';
+      var intSaved = rYour.totalInterest - rDbl.totalInterest;
+      document.getElementById('mvNote').innerHTML = 'Doubling your extra to ' + money(dblE) + '/mo would pay off your home <b>' + fasterStr + ' sooner</b> and save another <b>' + money(intSaved) + '</b> in interest. Extra payments go straight to principal, skipping years of interest.';
+    } else {
+      document.getElementById('mvNote').innerHTML = 'Every extra dollar toward principal cuts both your payoff time and total interest.';
+    }
+    mv.style.display = 'block';
+  })();
 
   document.getElementById('result').classList.add('show');
   saveInputs();
