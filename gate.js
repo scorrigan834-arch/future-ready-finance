@@ -24,7 +24,7 @@
   "use strict";
 
   // ---- CONFIG ----
-  var FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID"; // <-- replace tonight
+  var FORMSPREE_ENDPOINT = "https://formspree.io/f/xykqpnyq"; // <-- replace tonight
   var MEMBER_KEY = "frf_member_v1";
   var GATE_ENABLED = true; // master switch — set false to disable the gate everywhere
 
