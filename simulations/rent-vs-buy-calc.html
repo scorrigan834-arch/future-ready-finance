@@ -96,6 +96,9 @@ a{text-decoration:none}
 .field label{display:block;font-size:.85rem;font-weight:600;color:#0B1929;margin-bottom:.4rem}
 .field input{width:100%;padding:.8rem .9rem;border:1.5px solid #E2E8F0;border-radius:10px;font-size:1rem;font-family:"DM Sans",sans-serif;color:#0B1929}
 .field input:focus{outline:none;border-color:#0EA5A0}
+.input-sym{display:flex;align-items:stretch}
+.input-sym .isym{display:flex;align-items:center;justify-content:center;min-width:2.4rem;padding:0 .7rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-right:none;border-radius:10px 0 0 10px;color:#64748B;font-size:.95rem;font-weight:700;flex-shrink:0}
+.input-sym input{border-radius:0 10px 10px 0 !important;border-left:none !important}
 .field .hint{font-size:.76rem;color:#94a3b8;margin-top:.3rem}
 .field-row{display:flex;gap:1rem;flex-wrap:wrap}.field-row .field{flex:1;min-width:140px}
 .rb-result{background:linear-gradient(135deg,#0B1929,#0f1e30);border-radius:16px;padding:1.6rem;color:#fff;display:none}
@@ -131,7 +134,7 @@ a{text-decoration:none}
         <a href="paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
         <a href="paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
         <a href="paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
         <a href="paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
       </div>
     </div>
@@ -192,27 +195,27 @@ a{text-decoration:none}
     <div class="card-section-label">🏡 If You Buy</div>
     <div class="field">
       <label for="homePrice">Home price</label>
-      <input type="number" id="homePrice" placeholder="350000" value="350000" min="0" step="5000">
+      <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="homePrice" placeholder="350000" value="350000" min="0" step="5000" class="frf-comma"></div>
     </div>
     <div class="field-row">
       <div class="field">
         <label for="downPct">Down payment (%)</label>
-        <input type="number" id="downPct" placeholder="20" value="20" min="0" max="100" step="1">
+        <div class="input-sym"><span class="isym">%</span><input type="number" id="downPct" placeholder="20" value="20" min="0" max="100" step="1"></div>
       </div>
       <div class="field">
         <label for="mortRate">Mortgage rate (%)</label>
-        <input type="number" id="mortRate" placeholder="6.5" value="6.5" min="0" max="15" step="0.1">
+        <div class="input-sym"><span class="isym">%</span><input type="number" id="mortRate" placeholder="6.5" value="6.5" min="0" max="15" step="0.1"></div>
       </div>
     </div>
     <div class="field-row">
       <div class="field">
         <label for="propTax">Property tax (%/yr)</label>
-        <input type="number" id="propTax" placeholder="1.1" value="1.1" min="0" max="5" step="0.1">
+        <div class="input-sym"><span class="isym">%</span><input type="number" id="propTax" placeholder="1.1" value="1.1" min="0" max="5" step="0.1"></div>
         <div class="hint">Of home value</div>
       </div>
       <div class="field">
         <label for="appreciation">Home appreciation (%/yr)</label>
-        <input type="number" id="appreciation" placeholder="3" value="3" min="-5" max="15" step="0.5">
+        <div class="input-sym"><span class="isym">%</span><input type="number" id="appreciation" placeholder="3" value="3" min="-5" max="15" step="0.5"></div>
       </div>
     </div>
 
@@ -220,11 +223,11 @@ a{text-decoration:none}
     <div class="field-row">
       <div class="field">
         <label for="monthlyRent">Monthly rent</label>
-        <input type="number" id="monthlyRent" placeholder="1800" value="1800" min="0" step="50">
+        <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="monthlyRent" placeholder="1800" value="1800" min="0" step="50" class="frf-comma"></div>
       </div>
       <div class="field">
         <label for="rentIncrease">Rent increase (%/yr)</label>
-        <input type="number" id="rentIncrease" placeholder="3" value="3" min="0" max="15" step="0.5">
+        <div class="input-sym"><span class="isym">%</span><input type="number" id="rentIncrease" placeholder="3" value="3" min="0" max="15" step="0.5"></div>
       </div>
     </div>
 
@@ -320,13 +323,40 @@ a{text-decoration:none}
 var RVBKEY = 'frf_rentbuy_v1';
 function money(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
 
+function parseNum(id){ var el=document.getElementById(id); if(!el) return 0; return parseFloat((el.value||'').toString().replace(/,/g,''))||0; }
+function formatWithCommas(v){
+  var raw=(v==null?'':v.toString()).replace(/,/g,'');
+  if(raw===''||raw==='-') return raw;
+  var neg=raw.charAt(0)==='-'; if(neg) raw=raw.slice(1);
+  var parts=raw.split('.');
+  var intPart=parts[0].replace(/\D/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  var out=(neg?'-':'')+intPart;
+  if(parts.length>1) out+='.'+parts[1].replace(/\D/g,'');
+  return out;
+}
+function initCommaInputs(){
+  var inputs=document.querySelectorAll('.frf-comma');
+  for(var i=0;i<inputs.length;i++){
+    (function(inp){
+      inp.addEventListener('input',function(){
+        var start=inp.selectionStart, before=inp.value;
+        inp.value=formatWithCommas(inp.value);
+        var diff=inp.value.length-before.length;
+        try{ inp.setSelectionRange(start+diff,start+diff); }catch(e){}
+        if(typeof calculate==='function') calculate();
+      });
+    })(inputs[i]);
+  }
+}
+
+
 function calculate(){
-  var price = parseFloat(document.getElementById('homePrice').value)||0;
+  var price = parseNum('homePrice');
   var downPct = parseFloat(document.getElementById('downPct').value)||0;
   var mortRate = parseFloat(document.getElementById('mortRate').value)||0;
   var propTax = parseFloat(document.getElementById('propTax').value)||0;
   var appreciation = parseFloat(document.getElementById('appreciation').value)||0;
-  var rent = parseFloat(document.getElementById('monthlyRent').value)||0;
+  var rent = parseNum('monthlyRent');
   var rentIncrease = parseFloat(document.getElementById('rentIncrease').value)||0;
   var years = parseFloat(document.getElementById('yearsStay').value)||7;
   if(price<=0 || years<=0){ return; }
@@ -423,10 +453,12 @@ function restoreInputs(){
   try{
     var raw=localStorage.getItem(RVBKEY); if(!raw) return;
     var d=JSON.parse(raw);
-    for(var k in d){ var el=document.getElementById(k); if(el&&d[k]) el.value=d[k]; }
+    var _df={homePrice:1,monthlyRent:1};
+    for(var k in d){ var el=document.getElementById(k); if(el&&d[k]){ el.value=_df[k]?formatWithCommas(d[k]):d[k]; } }
   }catch(e){}
 }
 restoreInputs();
+initCommaInputs();
 calculate();
 </script>
 
