@@ -96,6 +96,9 @@ a{text-decoration:none}
 .field label{display:block;font-size:.85rem;font-weight:600;color:#0B1929;margin-bottom:.4rem}
 .field input{width:100%;padding:.8rem .9rem;border:1.5px solid #E2E8F0;border-radius:10px;font-size:1rem;font-family:"DM Sans",sans-serif;color:#0B1929}
 .field input:focus{outline:none;border-color:#0EA5A0}
+.input-sym{display:flex;align-items:stretch}
+.input-sym .isym{display:flex;align-items:center;justify-content:center;min-width:2.4rem;padding:0 .7rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-right:none;border-radius:10px 0 0 10px;color:#64748B;font-size:.95rem;font-weight:700;flex-shrink:0}
+.input-sym input{border-radius:0 10px 10px 0 !important;border-left:none !important}
 .field .hint{font-size:.76rem;color:#94a3b8;margin-top:.3rem}
 .field-row{display:flex;gap:1rem;flex-wrap:wrap}.field-row .field{flex:1;min-width:140px}
 .rn-result{background:linear-gradient(135deg,#0B1929,#0f1e30);border-radius:16px;padding:1.6rem;color:#fff;display:none}
@@ -128,7 +131,7 @@ a{text-decoration:none}
         <a href="paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
         <a href="paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
         <a href="paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
         <a href="paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
       </div>
     </div>
@@ -189,12 +192,12 @@ a{text-decoration:none}
     <div class="card-section-label">🎯 Your Goal</div>
     <div class="field">
       <label for="annualSpending">Annual spending you'd want in retirement</label>
-      <input type="number" id="annualSpending" placeholder="40000" value="40000" min="0" step="1000">
+      <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="annualSpending" placeholder="40000" value="40000" min="0" step="1000" class="frf-comma"></div>
       <div class="hint">In today's dollars — what your lifestyle costs per year</div>
     </div>
     <div class="field">
       <label for="withdrawalRate">Safe withdrawal rate (%)</label>
-      <input type="number" id="withdrawalRate" placeholder="4" value="4" min="2" max="8" step="0.5">
+      <div class="input-sym"><span class="isym">%</span><input type="number" id="withdrawalRate" placeholder="4" value="4" min="2" max="8" step="0.5"></div>
       <div class="hint">4% is the classic rule of thumb — leave it unless you know otherwise</div>
     </div>
 
@@ -206,17 +209,17 @@ a{text-decoration:none}
       </div>
       <div class="field">
         <label for="currentSaved">Already invested</label>
-        <input type="number" id="currentSaved" placeholder="10000" value="10000" min="0" step="1000">
+        <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="currentSaved" placeholder="10000" value="10000" min="0" step="1000" class="frf-comma"></div>
       </div>
     </div>
     <div class="field-row">
       <div class="field">
         <label for="monthlyInvest">Investing per month</label>
-        <input type="number" id="monthlyInvest" placeholder="500" value="500" min="0" step="50">
+        <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="monthlyInvest" placeholder="500" value="500" min="0" step="50" class="frf-comma"></div>
       </div>
       <div class="field">
         <label for="returnRate">Expected return (%/yr)</label>
-        <input type="number" id="returnRate" placeholder="7" value="7" min="0" max="15" step="0.5">
+        <div class="input-sym"><span class="isym">%</span><input type="number" id="returnRate" placeholder="7" value="7" min="0" max="15" step="0.5"></div>
         <div class="hint">~7% is a common long-term stock estimate</div>
       </div>
     </div>
@@ -305,6 +308,33 @@ a{text-decoration:none}
 <script>
 var RNKEY = 'frf_retirement_v1';
 function money(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+
+function parseNum(id){ var el=document.getElementById(id); if(!el) return 0; return parseFloat((el.value||'').toString().replace(/,/g,''))||0; }
+function formatWithCommas(v){
+  var raw=(v==null?'':v.toString()).replace(/,/g,'');
+  if(raw===''||raw==='-') return raw;
+  var neg=raw.charAt(0)==='-'; if(neg) raw=raw.slice(1);
+  var parts=raw.split('.');
+  var intPart=parts[0].replace(/\D/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  var out=(neg?'-':'')+intPart;
+  if(parts.length>1) out+='.'+parts[1].replace(/\D/g,'');
+  return out;
+}
+function initCommaInputs(){
+  var inputs=document.querySelectorAll('.frf-comma');
+  for(var i=0;i<inputs.length;i++){
+    (function(inp){
+      inp.addEventListener('input',function(){
+        var start=inp.selectionStart, before=inp.value;
+        inp.value=formatWithCommas(inp.value);
+        var diff=inp.value.length-before.length;
+        try{ inp.setSelectionRange(start+diff,start+diff); }catch(e){}
+        if(typeof calculate==='function') calculate();
+      });
+    })(inputs[i]);
+  }
+}
+
 function moneyShort(n){
   if(n>=1000000) return '$' + (n/1000000).toFixed(n>=10000000?0:2).replace(/\.00$/,'') + 'M';
   if(n>=1000) return '$' + Math.round(n/1000) + 'k';
@@ -312,11 +342,11 @@ function moneyShort(n){
 }
 
 function calculate(){
-  var annualSpending = parseFloat(document.getElementById('annualSpending').value)||0;
+  var annualSpending = parseNum('annualSpending');
   var withdrawalRate = parseFloat(document.getElementById('withdrawalRate').value)||4;
   var currentAge = parseFloat(document.getElementById('currentAge').value)||25;
-  var currentSaved = parseFloat(document.getElementById('currentSaved').value)||0;
-  var monthlyInvest = parseFloat(document.getElementById('monthlyInvest').value)||0;
+  var currentSaved = parseNum('currentSaved');
+  var monthlyInvest = parseNum('monthlyInvest');
   var returnRate = parseFloat(document.getElementById('returnRate').value)||7;
   if(annualSpending<=0 || withdrawalRate<=0){ return; }
 
@@ -377,7 +407,8 @@ function restoreInputs(){
   try{
     var raw=localStorage.getItem(RNKEY); if(!raw) return;
     var d=JSON.parse(raw);
-    for(var k in d){ var el=document.getElementById(k); if(el&&d[k]) el.value=d[k]; }
+    var _df={annualSpending:1,currentSaved:1,monthlyInvest:1};
+    for(var k in d){ var el=document.getElementById(k); if(el&&d[k]){ el.value=_df[k]?formatWithCommas(d[k]):d[k]; } }
   }catch(e){}
 }
 // Profile connection: pull "invested" as starting amount if available
@@ -390,6 +421,7 @@ function restoreInputs(){
   }catch(e){}
 })();
 restoreInputs();
+initCommaInputs();
 calculate();
 </script>
 
