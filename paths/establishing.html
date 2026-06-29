@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Establishing Path — Future Ready Finance</title>
+<title>Establishing — Future Ready Finance</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
 a{text-decoration:none}
 .nav{position:sticky;top:0;z-index:100;background:#0B1929;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px}
@@ -14,43 +15,13 @@ a{text-decoration:none}
 .page-hero{background:#0B1929;padding:3.5rem 2rem 2.75rem}.page-hero-inner{max-width:1100px;margin:0 auto}
 .eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#0EA5A0;display:block;margin-bottom:.7rem}
 .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
-.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:600px;line-height:1.75}
-.section{padding:4rem 2rem}.section-inner{max-width:1100px;margin:0 auto}
-.content{max-width:760px;margin:0 auto;padding:3rem 2rem}
-.breadcrumb{font-size:.82rem;color:#888;margin-bottom:1.5rem}.breadcrumb a{color:#0EA5A0}
-h2{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;margin:2rem 0 .75rem;color:#0B1929}
-h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin:1.5rem 0 .6rem;color:#0B1929}
-p{color:#64748B;font-size:.95rem;line-height:1.8;margin-bottom:1rem}
-ul,ol{padding-left:1.4rem;color:#64748B;font-size:.95rem;line-height:1.8;margin-bottom:1rem}
-li{margin-bottom:.4rem}
-strong{color:#0B1929}
-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.875rem}
-th{background:#0B1929;color:#fff;padding:.65rem 1rem;text-align:left;font-weight:600}
-td{padding:.6rem 1rem;border-bottom:1px solid #E2E8F0;color:#64748B}
-tr:nth-child(even) td{background:#F5F7F6}
-.callout{background:rgba(14,165,160,.07);border:1px solid rgba(14,165,160,.22);border-left:4px solid #0EA5A0;border-radius:8px;padding:1.1rem 1.25rem;margin:1.5rem 0;font-size:.925rem;line-height:1.7;color:#0B1929}
-.callout strong{color:#0EA5A0}
-.rulebox{background:#0B1929;border-radius:10px;padding:1.35rem 1.5rem;margin:1.5rem 0}
-.rulebox h4{font-family:'Playfair Display',serif;font-size:1rem;color:#0EA5A0;margin-bottom:.5rem}
-.rulebox p{color:rgba(255,255,255,.75);font-size:.9rem;line-height:1.7;margin:0}
-.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.25rem 0}
-.compare-card{background:#fff;border:1.5px solid #E2E8F0;border-radius:10px;padding:1.25rem}
-.compare-card h4{color:#0EA5A0;font-size:.95rem;margin-bottom:.5rem;font-family:'Playfair Display',serif;font-weight:700}
-.compare-card ul{padding-left:1.2rem;font-size:.85rem;color:#64748B;line-height:1.65}
-.btn-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:2.5rem}
-.btn{display:inline-block;background:#0EA5A0;color:#fff;padding:.6rem 1.4rem;border-radius:7px;font-weight:700;font-size:.875rem;text-decoration:none}
-.btn:hover{background:#0C7D79;color:#fff}
-.btn-outline{background:transparent;color:#0B1929;border:1.5px solid #E2E8F0}
-.btn-outline:hover{border-color:#0EA5A0;color:#0EA5A0}
-.legal{font-size:.75rem;color:#999;margin-top:2.5rem;border-top:1px solid #E2E8F0;padding-top:1.25rem;line-height:1.7}
-.footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
-.footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
-@media(max-width:640px){.nav-links{display:none}.compare-grid{grid-template-columns:1fr}.content{padding:2rem 1.25rem}}
+.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:560px;line-height:1.75}
 .rail{display:flex;overflow-x:auto;background:#fff;border-bottom:1px solid #E2E8F0;padding:0 2rem}
 .rail-step{display:flex;align-items:center;gap:.55rem;padding:.85rem 1.15rem;white-space:nowrap;border-bottom:2.5px solid transparent;color:#64748B;font-size:.8rem;font-weight:500}
 .rail-step.active{color:#0EA5A0;border-bottom-color:#0EA5A0;font-weight:700}
 .rail-dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;background:#E2E8F0;color:#64748B}
 .rail-step.active .rail-dot{background:#0EA5A0;color:#fff}
+.section{padding:4rem 2rem}.section-inner{max-width:1100px;margin:0 auto}
 .goal{background:rgba(14,165,160,.07);border:1px solid rgba(14,165,160,.22);border-radius:10px;padding:1.1rem 1.4rem;margin-bottom:2.5rem}
 .goal-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#0EA5A0;margin-bottom:.3rem}
 .goal p{font-weight:600;font-size:.95rem;line-height:1.6;color:#0B1929}
@@ -63,30 +34,30 @@ tr:nth-child(even) td{background:#F5F7F6}
 .btn-outline{background:transparent;color:#0B1929;border:1.5px solid #E2E8F0}
 .btn-outline:hover{border-color:#0EA5A0;color:#0EA5A0}
 .divider{border:none;border-top:1px solid #E2E8F0;margin:2.5rem 0}
+/* Playbook section — ADDED (was unstyled in template) */
+.budget-section{background:#0B1929;border-radius:16px;padding:2.5rem 2rem;margin:2.5rem 0;color:#fff}
+.budget-section h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.budget-section .sub{color:rgba(255,255,255,.6);font-size:.9rem;margin-bottom:1.75rem;max-width:600px}
+.budget-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.75rem}
+.budget-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.35rem 1.45rem}
+.budget-card h4{color:#3fd0c9;font-size:.92rem;font-weight:700;margin-bottom:.5rem}
+.budget-card p{color:rgba(255,255,255,.72);font-size:.85rem;line-height:1.65}
+.budget-rule{background:linear-gradient(135deg,rgba(14,165,160,.18),rgba(14,165,160,.05));border:1px solid rgba(14,165,160,.35);border-radius:12px;padding:1.4rem 1.6rem}
+.budget-rule h4{color:#6ee7b7;font-size:1rem;font-weight:700;margin-bottom:.5rem;font-family:'Playfair Display',serif}
+.budget-rule p{color:rgba(255,255,255,.8);font-size:.88rem;line-height:1.7}
+/* Related guides — ADDED (was unstyled in template) */
+.related-guides{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.6rem 1.75rem;margin:2.5rem 0}
+.related-guides-header h4{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#0B1929;margin-bottom:1rem}
+.related-guide-item{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;border:1px solid #E2E8F0;border-radius:9px;margin-bottom:.6rem;color:#0B1929;font-size:.9rem;font-weight:500;transition:border-color .15s,background .15s}
+.related-guide-item:hover{border-color:#0EA5A0;background:rgba(14,165,160,.04);color:#0B1929}
+.related-arrow{color:#0EA5A0;font-weight:800}
 .q-item{display:flex;gap:.75rem;align-items:flex-start;border:1px solid #E2E8F0;border-radius:9px;padding:.8rem 1rem;background:#fff;margin-bottom:.5rem;font-size:.9rem}
 .q-mark{color:#0EA5A0;font-weight:800;flex-shrink:0}
 .btn-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem}
-.budget-section{background:#F5F7F6;border-radius:14px;padding:2rem;margin-top:2.5rem}
-.budget-section h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:.5rem;color:#0B1929}
-.budget-section .sub{color:#64748B;font-size:.9rem;margin-bottom:1.5rem}
-.budget-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem}
-.budget-card{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:1.25rem}
-.budget-card h4{font-weight:700;font-size:.9rem;margin-bottom:.4rem;color:#0B1929}
-.budget-card p{font-size:.83rem;color:#64748B;line-height:1.6}
-.budget-rule{background:#0B1929;border-radius:10px;padding:1.25rem 1.5rem;margin-top:1rem}
-.budget-rule h4{font-family:'Playfair Display',serif;color:#0EA5A0;margin-bottom:.4rem;font-size:.95rem}
-.budget-rule p{color:rgba(255,255,255,.75);font-size:.875rem;line-height:1.65}
-.related-guides{margin-top:2.5rem;border:1px solid #E2E8F0;border-radius:12px;overflow:hidden}
-.related-guides-header{background:#0B1929;padding:.85rem 1.25rem}
-.related-guides-header h4{font-family:'Playfair Display',serif;color:#fff;font-size:1rem;font-weight:700}
-.related-guide-item{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.25rem;border-bottom:1px solid #E2E8F0;text-decoration:none;color:#0B1929;transition:background .15s}
-.related-guide-item:last-child{border-bottom:none}
-.related-guide-item:hover{background:#F5F7F6}
-.related-guide-item span{font-size:.875rem;font-weight:500}
-.related-arrow{color:#0EA5A0;font-weight:700;font-size:.85rem}
 .footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
-@media(max-width:640px){.nav-links{display:none}.budget-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.budget-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.nav-links{display:none}}
 </style>
 </head>
 <body>
@@ -103,74 +74,70 @@ tr:nth-child(even) td{background:#F5F7F6}
   </div>
 </nav>
 <div class="page-hero"><div class="page-hero-inner">
-  <span class="eyebrow">Life Stage · Ages 26+</span>
-  <h1>🏡 Establishing Path</h1>
-  <p>Build life, family, and long-term wealth. For people earning more, recovering from financial mistakes, and thinking seriously about what comes next.</p>
+  <span class="eyebrow">Life Stage · Ages 26+ · Building Life &amp; Wealth</span>
+  <h1>🏡 Establishing</h1>
+  <p>You're earning more and life is getting more complex — maybe a home, a partner, a family. This stage is about earning more, correcting earlier mistakes, and making bigger decisions with confidence. The foundation you built earlier now supports real wealth-building.</p>
 </div></div>
 <div class="rail">
-  <div class="rail-step active"><span class="rail-dot">1</span>Homeownership</div>
-  <div class="rail-step"><span class="rail-dot">2</span>Past Mistakes</div>
-  <div class="rail-step"><span class="rail-dot">3</span>Family Finances</div>
-  <div class="rail-step"><span class="rail-dot">4</span>Wealth Plan</div>
+  <div class="rail-step active"><span class="rail-dot">1</span>Earn More</div>
+  <div class="rail-step"><span class="rail-dot">2</span>Buy Smart</div>
+  <div class="rail-step"><span class="rail-dot">3</span>Protect Family</div>
+  <div class="rail-step"><span class="rail-dot">4</span>Plan Ahead</div>
 </div>
 <div class="section"><div class="section-inner">
-  <div class="goal"><div class="goal-label">Your Goal</div><p>Establish the habits, plans, and systems that build long-term wealth.</p></div>
+  <div class="goal"><div class="goal-label">Your Goal</div><p>Build real wealth and security as your income and responsibilities grow — buying a home wisely, protecting your family, and planning for a future that's getting closer.</p></div>
 
   <div class="step-card"><div class="step-num">1</div><div class="step-content">
-    <h3>Homeownership Reality Check</h3>
-    <p>Think through affordability, mortgage pressure, down payment requirements, and the long-term financial tradeoffs of buying vs renting.</p>
-    <a href="../big-decisions.html" class="btn">Explore Guide</a>
+    <h3>Maximize Your Earnings</h3>
+    <p>Your peak earning years are arriving. Strategic job moves, advancing your skills, and possibly side income can substantially raise your income. Pair higher earnings with controlled spending and the gap becomes wealth — instead of just a bigger lifestyle.</p>
+    <a href="../decisions/changing-jobs.html" class="btn">Changing Jobs Strategically</a>
   </div></div>
-
   <div class="step-card"><div class="step-num">2</div><div class="step-content">
-    <h3>Fix Past Mistakes</h3>
-    <p>Review debt, spending patterns, and lifestyle inflation. Chart a clear path to financial recovery without judgment, with a plan.</p>
-    <a href="../guides.html" class="btn">Check Progress</a>
+    <h3>Buy a Home the Smart Way</h3>
+    <p>A home is likely the biggest purchase of your life. Understanding how much house you can truly afford, the real costs beyond the mortgage, and whether buying even beats renting in your situation protects you from becoming house-poor.</p>
+    <a href="../simulations/rent-vs-buy-calc.html" class="btn">Rent vs Buy Calculator</a>
   </div></div>
-
   <div class="step-card"><div class="step-num">3</div><div class="step-content">
-    <h3>Family Finances &amp; Protection</h3>
-    <p>Navigate shared money decisions, insurance gaps, estate planning documents, and future planning with a partner. Protect what you've built.</p>
-    <a href="../decisions/insurance.html" class="btn">Insurance Guide</a>
+    <h3>Protect Your Family</h3>
+    <p>As people depend on you, protection becomes essential. Life insurance, disability insurance, and an estate plan ensure that the people you love are secure even if something happens to you. These aren't pleasant to think about — which is exactly why most people dangerously delay them.</p>
+    <a href="../decisions/life-insurance.html" class="btn">Life Insurance Guide</a>
   </div></div>
-
   <div class="step-card"><div class="step-num">4</div><div class="step-content">
-    <h3>Long-Term Wealth Planning</h3>
-    <p>Maximize retirement contributions, build net worth, and establish your estate plan — wills, trusts, health care proxies, and beneficiary designations.</p>
-    <a href="../decisions/estate-planning.html" class="btn">Estate Planning Guide</a>
+    <h3>Plan for the Long Term</h3>
+    <p>Retirement stops being abstract here. Are you saving enough? On track for the future you want? Running the numbers now — while you still have decades to adjust — is far better than discovering a shortfall when it's too late to fix.</p>
+    <a href="../simulations/retirement-number.html" class="btn">Find Your Retirement Number</a>
   </div></div>
 
   <div class="budget-section">
-    <h2>💰 Budgeting When Life Gets More Expensive</h2>
-    <p class="sub">Mortgages, kids, aging parents, career changes — your budget needs to grow up with you.</p>
+    <h2>🏡 The Establishing Money Playbook</h2>
+    <p class="sub">More income and more responsibility meet here. The goal is to build lasting wealth without letting lifestyle swallow your gains.</p>
     <div class="budget-grid">
-      <div class="budget-card"><h4>Budget as a Household, Not an Individual</h4><p>If you share finances with a partner, budget together monthly. Misaligned spending is the #1 financial conflict in relationships — a shared budget removes the guesswork.</p></div>
-      <div class="budget-card"><h4>Add a "Future Fund" Line</h4><p>Beyond emergency savings, budget monthly for upcoming large expenses: home repairs, new car, kids' activities, medical costs. 00/month now prevents a ,400 emergency later.</p></div>
-      <div class="budget-card"><h4>Review After Every Life Change</h4><p>New job, new home, new baby, new debt — each one changes your numbers. Rewrite your budget within 30 days of any major life event.</p></div>
-      <div class="budget-card"><h4>Track Net Worth, Not Just Cash Flow</h4><p>At this stage, budgeting is about building wealth. Track your net worth monthly so you can see whether your budget is actually working.</p></div>
+      <div class="budget-card"><h4>Beat Lifestyle Inflation</h4><p>As you earn more, it's tempting to spend more. The wealthy keep their spending growing slower than their income. That widening gap — invested consistently — is what actually builds wealth over time.</p></div>
+      <div class="budget-card"><h4>Buy Only What You Can Afford</h4><p>Lenders will approve you for more house than you should buy. Know your real number, factor in maintenance, taxes, and insurance, and leave room to keep investing. A home shouldn't end your wealth-building — it should fit inside it.</p></div>
+      <div class="budget-card"><h4>Insure Against Catastrophe</h4><p>Once others depend on your income, life and disability insurance protect them from disaster. Term life insurance is inexpensive when you're young and healthy. An estate plan ensures your wishes are followed and your family is spared chaos.</p></div>
+      <div class="budget-card"><h4>Stay on the Retirement Track</h4><p>Check whether your savings rate actually supports the retirement you want. Small adjustments now — a slightly higher contribution, a better account mix — have decades to compound. Course-correct early while it's still easy.</p></div>
     </div>
     <div class="budget-rule">
-      <h4>The Establishing Budget Rule: Percentage of Income</h4>
-      <p>Housing ≤ 28% of gross income &nbsp;|&nbsp; All debt payments ≤ 36% of gross income &nbsp;|&nbsp; Retirement savings ≥ 15% of gross income &nbsp;|&nbsp; If any of these are off, that's where to start fixing your budget.</p>
+      <h4>The Establishing Rule: Grow Wealth, Not Just Lifestyle</h4>
+      <p>This is when serious wealth gets built — or quietly slips away into bigger houses and nicer cars. Keep your spending growing slower than your income, protect what you're building, and stay invested for the long term. Discipline now buys freedom later.</p>
     </div>
   </div>
 
   <div class="related-guides">
     <div class="related-guides-header"><h4>Guides for This Stage</h4></div>
-    <a class="related-guide-item" href="../decisions/retirement-accounts.html"><span>Roth vs Traditional vs HSA: Which Account?</span><span class="related-arrow">→</span></a>
-    <a class="related-guide-item" href="../decisions/insurance.html"><span>What Insurance Do I Need? (Life, DI, LTC, Liability)</span><span class="related-arrow">→</span></a>
-    <a class="related-guide-item" href="../decisions/estate-planning.html"><span>Estate Planning: Wills, Trusts &amp; Protecting Your Family</span><span class="related-arrow">→</span></a>
-    <a class="related-guide-item" href="../decisions/apartment.html"><span>Can I Afford This Apartment / Home?</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/how-much-house.html"><span>How Much House Can You Really Afford?</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/life-insurance.html"><span>Life Insurance: How Much & What Kind</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/estate-planning.html"><span>Estate Planning: Wills, Trusts & Protecting Your Family</span><span class="related-arrow">→</span></a>
+    <a class="related-guide-item" href="../decisions/retirement-accounts.html"><span>Retirement Accounts: Optimizing Your Mix</span><span class="related-arrow">→</span></a>
   </div>
 
   <div class="divider"></div>
   <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:1.25rem">Key Questions</h2>
-  <div class="q-item"><span class="q-mark">?</span><span>How much house can I actually afford right now?</span></div>
-  <div class="q-item"><span class="q-mark">?</span><span>Am I on track financially for my age?</span></div>
-  <div class="q-item"><span class="q-mark">?</span><span>Do I have enough life and disability insurance?</span></div>
-  <div class="q-item"><span class="q-mark">?</span><span>What estate planning documents do I need right now?</span></div>
-  <div class="q-item"><span class="q-mark">?</span><span>How should my partner and I handle money together?</span></div>
-  <div class="q-item"><span class="q-mark">?</span><span>What does building real wealth look like from here?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>How much house can I actually afford?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>Should I keep renting or is it time to buy?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>How much life insurance do I really need?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>Am I saving enough for retirement?</span></div>
+  <div class="q-item"><span class="q-mark">?</span><span>How do I avoid lifestyle inflation as I earn more?</span></div>
   <div class="btn-row">
     <a href="../big-decisions.html" class="btn">Explore Decisions</a>
     <a href="../simulations.html" class="btn btn-outline">Run a Simulation</a>
