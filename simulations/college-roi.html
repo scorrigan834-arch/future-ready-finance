@@ -96,6 +96,9 @@ a{text-decoration:none}
 .field label{display:block;font-size:.85rem;font-weight:600;color:#0B1929;margin-bottom:.4rem}
 .field input{width:100%;padding:.8rem .9rem;border:1.5px solid #E2E8F0;border-radius:10px;font-size:1rem;font-family:"DM Sans",sans-serif;color:#0B1929}
 .field input:focus{outline:none;border-color:#0EA5A0}
+.input-sym{display:flex;align-items:stretch}
+.input-sym .isym{display:flex;align-items:center;justify-content:center;min-width:2.4rem;padding:0 .7rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-right:none;border-radius:10px 0 0 10px;color:#64748B;font-size:.95rem;font-weight:700;flex-shrink:0}
+.input-sym input{border-radius:0 10px 10px 0 !important;border-left:none !important}
 .field .hint{font-size:.76rem;color:#94a3b8;margin-top:.3rem}
 .field-row{display:flex;gap:1rem;flex-wrap:wrap}.field-row .field{flex:1;min-width:140px}
 .cc-result{background:linear-gradient(135deg,#0B1929,#0f1e30);border-radius:16px;padding:1.6rem;color:#fff;display:none}
@@ -128,7 +131,7 @@ a{text-decoration:none}
         <a href="paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
         <a href="paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
         <a href="paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
         <a href="paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
       </div>
     </div>
@@ -189,7 +192,7 @@ a{text-decoration:none}
     <div class="card-section-label">💰 The Cost</div>
     <div class="field">
       <label for="annualCost">Cost per year (tuition + living)</label>
-      <input type="number" id="annualCost" placeholder="25000" value="25000" min="0" step="1000">
+      <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="annualCost" class="frf-comma" placeholder="25,000" value="25,000"></div>
       <div class="hint">After scholarships/grants — what you actually pay</div>
     </div>
     <div class="field-row">
@@ -198,8 +201,8 @@ a{text-decoration:none}
         <input type="number" id="yearsToComplete" placeholder="4" value="4" min="1" max="8" step="1">
       </div>
       <div class="field">
-        <label for="loanInterest">Loan interest (%)</label>
-        <input type="number" id="loanInterest" placeholder="6" value="6" min="0" max="15" step="0.5">
+        <label for="loanInterest">Loan interest</label>
+        <div class="input-sym"><span class="isym">%</span><input type="number" id="loanInterest" placeholder="6" value="6" min="0" max="15" step="0.5"></div>
         <div class="hint">0 if paying cash</div>
       </div>
     </div>
@@ -208,12 +211,12 @@ a{text-decoration:none}
     <div class="field-row">
       <div class="field">
         <label for="degreeSalary">Salary WITH degree</label>
-        <input type="number" id="degreeSalary" placeholder="60000" value="60000" min="0" step="1000">
+        <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="degreeSalary" class="frf-comma" placeholder="60,000" value="60,000"></div>
         <div class="hint">Expected starting salary</div>
       </div>
       <div class="field">
         <label for="noDegreeSalary">Salary WITHOUT degree</label>
-        <input type="number" id="noDegreeSalary" placeholder="38000" value="38000" min="0" step="1000">
+        <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="noDegreeSalary" class="frf-comma" placeholder="38,000" value="38,000"></div>
         <div class="hint">What you'd earn otherwise</div>
       </div>
     </div>
@@ -302,13 +305,38 @@ a{text-decoration:none}
 <script>
 var CKEY = 'frf_college_v1';
 function money(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+function parseNum(id){ var el=document.getElementById(id); if(!el) return 0; return parseFloat((el.value||'').toString().replace(/,/g,''))||0; }
+function formatWithCommas(v){
+  var raw=(v==null?'':v.toString()).replace(/,/g,'');
+  if(raw===''||raw==='-') return raw;
+  var neg=raw.charAt(0)==='-'; if(neg) raw=raw.slice(1);
+  var parts=raw.split('.');
+  var intPart=parts[0].replace(/\D/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  var out=(neg?'-':'')+intPart;
+  if(parts.length>1) out+='.'+parts[1].replace(/\D/g,'');
+  return out;
+}
+function initCommaInputs(){
+  var inputs=document.querySelectorAll('.frf-comma');
+  for(var i=0;i<inputs.length;i++){
+    (function(inp){
+      inp.addEventListener('input',function(){
+        var start=inp.selectionStart, before=inp.value;
+        inp.value=formatWithCommas(inp.value);
+        var diff=inp.value.length-before.length;
+        try{ inp.setSelectionRange(start+diff,start+diff); }catch(e){}
+        calculate();
+      });
+    })(inputs[i]);
+  }
+}
 
 function calculate(){
-  var annualCost = parseFloat(document.getElementById('annualCost').value) || 0;
+  var annualCost = parseNum('annualCost');
   var years = parseFloat(document.getElementById('yearsToComplete').value) || 4;
   var loanRate = parseFloat(document.getElementById('loanInterest').value) || 0;
-  var degreeSalary = parseFloat(document.getElementById('degreeSalary').value) || 0;
-  var noDegreeSalary = parseFloat(document.getElementById('noDegreeSalary').value) || 0;
+  var degreeSalary = parseNum('degreeSalary');
+  var noDegreeSalary = parseNum('noDegreeSalary');
 
   // Total direct cost
   var directCost = annualCost * years;
@@ -383,10 +411,12 @@ function restoreInputs(){
     var raw = localStorage.getItem(CKEY);
     if(!raw) return;
     var d = JSON.parse(raw);
-    for(var k in d){ var el = document.getElementById(k); if(el && d[k]) el.value = d[k]; }
+    var dollarFields = {annualCost:1,degreeSalary:1,noDegreeSalary:1};
+    for(var k in d){ var el = document.getElementById(k); if(el && d[k]){ el.value = dollarFields[k] ? formatWithCommas(d[k]) : d[k]; } }
   }catch(e){}
 }
 restoreInputs();
+initCommaInputs();
 calculate();
 </script>
 
