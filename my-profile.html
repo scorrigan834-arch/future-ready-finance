@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Profile â Future Ready Finance</title>
+<title>My Profile — Future Ready Finance</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -108,6 +108,11 @@ a{text-decoration:none}
 .field input,.field select{width:100%;padding:.7rem .85rem;border:1.5px solid #E2E8F0;border-radius:9px;font-size:.95rem;font-family:"DM Sans",sans-serif;color:#0B1929;background:#fff}
 .field input:focus,.field select:focus{outline:none;border-color:#0EA5A0}
 .field .hint{font-size:.74rem;color:#94a3b8;margin-top:.3rem}
+.pw{display:flex;align-items:stretch;width:100%}
+.pf-section .pw .pfx{display:flex;align-items:center;justify-content:center;min-width:2.3rem;padding:0 .7rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-right:none;border-radius:9px 0 0 9px;color:#64748B;font-size:.95rem;font-weight:700;flex-shrink:0;transition:border-color .18s ease}
+.pf-section .pw input.frf-comma{border-radius:0 9px 9px 0!important;width:100%}
+.pf-section .pw:focus-within .pfx{border-color:#0EA5A0}
+
 .pf-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem}
 .pf-btn{flex:1;min-width:140px;padding:.9rem;border:none;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:"DM Sans",sans-serif;transition:background .2s}
 .pf-btn-primary{background:#0EA5A0;color:#fff}
@@ -315,19 +320,19 @@ a{text-decoration:none}
     <div class="field-row">
       <div class="field">
         <label for="income">Annual income</label>
-        <input type="number" id="income" placeholder="e.g. 45000" min="0" step="1000">
+        <div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" id="income" class="frf-comma" placeholder="45,000" min="0" step="1000"></div>
         <div class="hint">Before taxes</div>
       </div>
       <div class="field">
         <label for="debt">Total debt</label>
-        <input type="number" id="debt" placeholder="e.g. 15000" min="0" step="500">
+        <div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" id="debt" class="frf-comma" placeholder="15,000" min="0" step="500"></div>
         <div class="hint">Loans, cards, etc.</div>
       </div>
     </div>
     <div class="field-row">
       <div class="field">
         <label for="invested">Amount invested / saved</label>
-        <input type="number" id="invested" placeholder="e.g. 8000" min="0" step="500">
+        <div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" id="invested" class="frf-comma" placeholder="8,000" min="0" step="500"></div>
         <div class="hint">Retirement, savings, brokerage</div>
       </div>
       <div class="field">
@@ -466,9 +471,9 @@ function collectData(){
     interests: getChips('interests'),
     confident: getChips('confident'),
     needhelp: getChips('needhelp'),
-    income: document.getElementById('income').value,
-    debt: document.getElementById('debt').value,
-    invested: document.getElementById('invested').value,
+    income: document.getElementById('income').value.replace(/,/g,''),
+    debt: document.getElementById('debt').value.replace(/,/g,''),
+    invested: document.getElementById('invested').value.replace(/,/g,''),
     stage: document.getElementById('stage').value
   };
 }
@@ -483,9 +488,9 @@ function loadProfile(){
     setChips('interests', d.interests);
     setChips('confident', d.confident);
     setChips('needhelp', d.needhelp);
-    if(d.income) document.getElementById('income').value = d.income;
-    if(d.debt) document.getElementById('debt').value = d.debt;
-    if(d.invested) document.getElementById('invested').value = d.invested;
+    if(d.income) document.getElementById('income').value = formatWithCommas(d.income);
+    if(d.debt) document.getElementById('debt').value = formatWithCommas(d.debt);
+    if(d.invested) document.getElementById('invested').value = formatWithCommas(d.invested);
     if(d.stage) document.getElementById('stage').value = d.stage;
     return true;
   }catch(e){ return false; }
@@ -584,6 +589,31 @@ function buildProfile(){
     document.getElementById('savedNote').classList.add('show');
   }
 })();
+
+// ---- comma formatting for dollar fields ----
+function formatWithCommas(v){
+  var raw=(v==null?'':v.toString()).replace(/,/g,'');
+  if(raw===''||raw==='-') return raw;
+  var neg=raw.charAt(0)==='-'; if(neg) raw=raw.slice(1);
+  var parts=raw.split('.');
+  parts[0]=parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  return (neg?'-':'')+parts.join('.');
+}
+function initCommaInputs(){
+  var inputs=document.querySelectorAll('.frf-comma');
+  for(var i=0;i<inputs.length;i++){
+    (function(inp){
+      inp.addEventListener('input',function(){
+        var start=inp.selectionStart, before=inp.value;
+        inp.value=formatWithCommas(inp.value);
+        var diff=inp.value.length-before.length;
+        try{ inp.setSelectionRange(start+diff, start+diff); }catch(e){}
+      });
+    })(inputs[i]);
+  }
+}
+
+if(document.readyState!=="loading"){initCommaInputs();}else{document.addEventListener("DOMContentLoaded",initCommaInputs);}
 </script>
 </body>
 </html>
