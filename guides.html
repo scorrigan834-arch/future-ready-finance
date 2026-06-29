@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guides â Future Ready Finance</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+<title>Guides — Future Ready Finance</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -48,7 +47,7 @@ a{text-decoration:none}
 .page-hero h1{font-family:"Playfair Display",serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
 .page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:600px;line-height:1.75}
 .section{padding:4rem 2rem}.section-inner{max-width:1100px;margin:0 auto}
-.cat{margin-bottom:2.75rem}
+.cat{scroll-margin-top:80px;margin-bottom:2.75rem}
 .cat-title{font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:700;margin:0 0 .9rem;padding-bottom:.6rem;border-bottom:1.5px solid #E2E8F0;color:#0B1929}
 .guide-list{display:flex;flex-direction:column;gap:.45rem}
 .guide-item{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #E2E8F0;border-radius:9px;padding:.85rem 1.1rem;text-decoration:none;color:#0B1929;transition:border-color .15s,background .15s}
@@ -204,7 +203,7 @@ a{text-decoration:none}
 </div></div>
 <div class="section"><div class="section-inner">
 
-<div class="cat reveal" data-d="1">
+<div class="cat reveal" data-d="1" id="banking">
   <div class="cat-title">🏛️ Banking &amp; Cash Management</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/banking-basics.html"><div class="guide-item-left"><span class="guide-name">Banking Basics: Checking, Savings, and High-Yield Accounts</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -212,7 +211,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat reveal" data-d="2">
+<div class="cat reveal" data-d="2" id="credit">
   <div class="cat-title">💳 Credit &amp; Debt</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/credit-basics.html"><div class="guide-item-left"><span class="guide-name">How Credit Scores Work and How to Build One</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -221,7 +220,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat reveal" data-d="3">
+<div class="cat reveal" data-d="3" id="taxes">
   <div class="cat-title">🧾 Taxes</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/taxes-101.html"><div class="guide-item-left"><span class="guide-name">Taxes 101: How Brackets, Withholding, and Filing Work</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -231,7 +230,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat reveal" data-d="4">
+<div class="cat reveal" data-d="4" id="education">
   <div class="cat-title">🎓 Education</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/student-debt.html"><div class="guide-item-left"><span class="guide-name">How Much Student Debt Is Too Much?</span></div><span class="guide-arrow">→</span></a>
@@ -240,7 +239,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat reveal" data-d="5">
+<div class="cat reveal" data-d="5" id="career">
   <div class="cat-title">💼 Career</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/total-compensation.html"><div class="guide-item-left"><span class="guide-name">How Do I Evaluate a Job Offer?</span></div><span class="guide-arrow">→</span></a>
@@ -249,7 +248,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat reveal" data-d="6">
+<div class="cat reveal" data-d="6" id="housing">
   <div class="cat-title">🏠 Housing</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/apartment.html"><div class="guide-item-left"><span class="guide-name">Can I Afford This Apartment?</span></div><span class="guide-arrow">→</span></a>
@@ -258,7 +257,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat reveal" data-d="1">
+<div class="cat reveal" data-d="1" id="investing">
   <div class="cat-title">📈 Investing</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/investing.html"><div class="guide-item-left"><span class="guide-name">Should I Start Investing Now?</span></div><span class="guide-arrow">→</span></a>
@@ -269,7 +268,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat reveal" data-d="2">
+<div class="cat reveal" data-d="2" id="insurance">
   <div class="cat-title">🛡️ Protection &amp; Insurance</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/insurance.html"><div class="guide-item-left"><span class="guide-name">What Insurance Do I Need and When? (Life, DI, LTC, Liability)</span></div><span class="guide-arrow">→</span></a>
@@ -278,7 +277,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat reveal" data-d="3">
+<div class="cat reveal" data-d="3" id="side-income">
   <div class="cat-title">⚡ Side Income &amp; Self-Employment</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/side-income-taxes.html"><div class="guide-item-left"><span class="guide-name">Side Hustle Taxes: Self-Employment and Quarterly Payments</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -287,7 +286,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat reveal" data-d="4">
+<div class="cat reveal" data-d="4" id="transportation">
   <div class="cat-title">🚗 Transportation</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/new-vs-used-car.html"><div class="guide-item-left"><span class="guide-name">New Car vs Used Car: Which Is Smarter?</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -295,7 +294,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat reveal" data-d="5">
+<div class="cat reveal" data-d="5" id="family">
   <div class="cat-title">👨‍👩‍👧 Family &amp; Estate Planning</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/couples-money.html"><div class="guide-item-left"><span class="guide-name">How Should Couples Manage Money?</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
@@ -305,7 +304,7 @@ a{text-decoration:none}
   </div>
 </div>
 
-<div class="cat reveal" data-d="6">
+<div class="cat reveal" data-d="6" id="health">
   <div class="cat-title">📊 Financial Health &amp; Psychology</div>
   <div class="guide-list">
     <a class="guide-item" href="decisions/emergency-fund.html"><div class="guide-item-left"><span class="guide-name">How to Build an Emergency Fund</span><span class="pill pill-new">New</span></div><span class="guide-arrow">→</span></a>
