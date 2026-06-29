@@ -85,6 +85,22 @@ input[type=number]:focus{border-color:#0EA5A0}
 .footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
 @media(max-width:720px){.layout{grid-template-columns:1fr}.nav-links{display:none}
   .nav-burger{display:flex}.wrap{padding:1.5rem 1.1rem}}
+.extra-variance{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.3rem 1.4rem;margin-top:1.25rem;box-shadow:0 1px 3px rgba(11,25,41,.04)}
+.ev-title{font-family:"Playfair Display",serif;font-size:1.1rem;color:#0B1929;margin-bottom:.3rem}
+.ev-sub{font-size:.82rem;color:#64748B;margin-bottom:1.1rem}
+.ev-grid{display:flex;gap:.7rem}
+.ev-card{flex:1;border-radius:11px;padding:.95rem .65rem;text-align:center;border:1.5px solid #E2E8F0}
+.ev-card.ev-half{background:rgba(100,116,139,.06)}
+.ev-card.ev-your{background:rgba(14,165,160,.08);border-color:rgba(14,165,160,.35)}
+.ev-card.ev-double{background:rgba(5,150,105,.07);border-color:rgba(5,150,105,.25)}
+.ev-tag{font-size:.64rem;color:#64748B;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-bottom:.35rem;line-height:1.2}
+.ev-your .ev-tag{color:#0C7D79}.ev-double .ev-tag{color:#059669}
+.ev-amt{font-size:.82rem;font-weight:700;color:#475569;margin-bottom:.5rem}
+.ev-time{font-size:1.05rem;font-weight:800;color:#0B1929;line-height:1.1}
+.ev-int{font-size:.68rem;color:#64748B;margin-top:.3rem;line-height:1.3}
+.ev-note{font-size:.8rem;color:#0C7D79;background:rgba(14,165,160,.07);border-left:3px solid #0EA5A0;border-radius:0 6px 6px 0;padding:.65rem .85rem;margin-top:1rem;line-height:1.55}
+.ev-note b{color:#059669}
+@media(max-width:520px){.ev-grid{gap:.4rem}.ev-card{padding:.75rem .4rem}.ev-time{font-size:.92rem}}
 </style>
 </head>
 <body>
@@ -237,6 +253,31 @@ input[type=number]:focus{border-color:#0EA5A0}
         <div class="stat"><span class="stat-label">Total Paid</span><div class="stat-val" id="total-paid">$0</div></div>
       </div>
       <div class="insight-box" id="insight"></div>
+      <div class="extra-variance" id="extraVariance" style="display:none">
+        <div class="ev-title">What if you paid more toward the principal?</div>
+        <div class="ev-sub">See how different extra payments change your payoff:</div>
+        <div class="ev-grid">
+          <div class="ev-card ev-half">
+            <div class="ev-tag" id="ev-half-tag">Half extra</div>
+            <div class="ev-amt" id="ev-half-extra">+$0/mo</div>
+            <div class="ev-time" id="ev-half-time">—</div>
+            <div class="ev-int" id="ev-half-int"></div>
+          </div>
+          <div class="ev-card ev-your">
+            <div class="ev-tag">Your plan</div>
+            <div class="ev-amt" id="ev-your-extra">+$0/mo</div>
+            <div class="ev-time" id="ev-your-time">—</div>
+            <div class="ev-int" id="ev-your-int"></div>
+          </div>
+          <div class="ev-card ev-double">
+            <div class="ev-tag">Double extra</div>
+            <div class="ev-amt" id="ev-double-extra">+$0/mo</div>
+            <div class="ev-time" id="ev-double-time">—</div>
+            <div class="ev-int" id="ev-double-int"></div>
+          </div>
+        </div>
+        <div class="ev-note" id="evNote"></div>
+      </div>
     </div>
   </div>
   <div class="next-links">
@@ -344,6 +385,64 @@ function calculate() {
     msg = 'You will pay ' + formatMoney(totalInterest) + ' in interest over ' + formatTime(months) + '. Try adding an extra payment above to see how much time and money you could save.';
   }
   getEl('insight').textContent = msg;
+
+  // ---- Variance: half / your / double the extra payment ----
+  (function(){
+    var basePayment = getValue('payment');
+    var yourExtra = getValue('extra');
+    var ev = document.getElementById('extraVariance');
+    // Only show if there's an extra payment to vary and balance exists
+    if(yourExtra <= 0 || balance <= 0){ ev.style.display = 'none'; return; }
+
+    function amortize(extra){
+      var pay = basePayment + extra;
+      var first = balance * monthlyRate;
+      if(pay <= first){ return null; } // doesn't cover interest
+      var rem = balance, mo = 0, intTotal = 0;
+      while(rem > 0 && mo < 1200){
+        var it = rem * monthlyRate;
+        intTotal += it;
+        rem = rem + it - pay;
+        mo++;
+        if(rem < 0) rem = 0;
+      }
+      if(rem > 0){ return null; } // hit cap without payoff — effectively never
+      return { months: mo, interest: intTotal };
+    }
+    function timeStr(mo){
+      var y = Math.floor(mo/12), m = mo%12, s='';
+      if(y>0) s += y+'y';
+      if(m>0) s += (s?' ':'')+m+'m';
+      return s || '<1m';
+    }
+
+    var halfExtra = yourExtra/2;
+    var dblExtra = yourExtra*2;
+    var rHalf = amortize(halfExtra);
+    var rYour = amortize(yourExtra);
+    var rDbl = amortize(dblExtra);
+
+    getEl('ev-half-extra').textContent = '+' + formatMoney(halfExtra) + '/mo';
+    getEl('ev-your-extra').textContent = '+' + formatMoney(yourExtra) + '/mo';
+    getEl('ev-double-extra').textContent = '+' + formatMoney(dblExtra) + '/mo';
+
+    getEl('ev-half-time').textContent = rHalf ? timeStr(rHalf.months) : 'Never';
+    getEl('ev-your-time').textContent = rYour ? timeStr(rYour.months) : 'Never';
+    getEl('ev-double-time').textContent = rDbl ? timeStr(rDbl.months) : 'Never';
+
+    getEl('ev-half-int').textContent = rHalf ? formatMoney(rHalf.interest) + ' interest' : '';
+    getEl('ev-your-int').textContent = rYour ? formatMoney(rYour.interest) + ' interest' : '';
+    getEl('ev-double-int').textContent = rDbl ? formatMoney(rDbl.interest) + ' interest' : '';
+
+    if(rYour && rDbl){
+      var monthsFaster = rYour.months - rDbl.months;
+      var intSaved = rYour.interest - rDbl.interest;
+      getEl('evNote').innerHTML = 'Doubling your extra payment to ' + formatMoney(dblExtra) + '/mo would get you debt-free <b>' + monthsFaster + ' months sooner</b> and save another <b>' + formatMoney(intSaved) + '</b> in interest. Every extra dollar goes straight at the principal.';
+    } else {
+      getEl('evNote').innerHTML = 'Paying more toward the principal each month shrinks both your payoff time and the total interest you pay.';
+    }
+    ev.style.display = 'block';
+  })();
 }
 
 function initialize() {
