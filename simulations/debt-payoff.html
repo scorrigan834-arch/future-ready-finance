@@ -114,7 +114,7 @@ input[type=number]:focus{border-color:#0EA5A0}
         <a href="../paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
         <a href="../paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
         <a href="../paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="../paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="../paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
         <a href="../paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
       </div>
     </div>
@@ -224,7 +224,7 @@ input[type=number]:focus{border-color:#0EA5A0}
       <div class="field">
         <label>Total Balance</label>
         <span class="hint">What you currently owe</span>
-        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="balance" class="pfinput" min="0" step="100"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="balance" class="pfinput frf-comma" min="0" step="100"></div>
       </div>
       <div class="field">
         <label>Interest Rate (APR)</label>
@@ -234,12 +234,12 @@ input[type=number]:focus{border-color:#0EA5A0}
       <div class="field">
         <label>Monthly Payment</label>
         <span class="hint">What you pay each month</span>
-        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="payment" class="pfinput" min="0" step="25"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="payment" class="pfinput frf-comma" min="0" step="25"></div>
       </div>
       <div class="field">
         <label>Extra Monthly Payment</label>
         <span class="hint">Anything additional you could add</span>
-        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="extra" class="pfinput" min="0" step="25"></div>
+        <div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="extra" class="pfinput frf-comma" min="0" step="25"></div>
       </div>
     </div>
     <div class="results">
@@ -291,6 +291,33 @@ input[type=number]:focus{border-color:#0EA5A0}
 
 <script>
 function formatMoney(n) {
+
+function parseNum(id){ var el=document.getElementById(id); if(!el) return 0; return parseFloat((el.value||'').toString().replace(/,/g,''))||0; }
+function formatWithCommas(v){
+  var raw=(v==null?'':v.toString()).replace(/,/g,'');
+  if(raw===''||raw==='-') return raw;
+  var neg=raw.charAt(0)==='-'; if(neg) raw=raw.slice(1);
+  var parts=raw.split('.');
+  var intPart=parts[0].replace(/\D/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  var out=(neg?'-':'')+intPart;
+  if(parts.length>1) out+='.'+parts[1].replace(/\D/g,'');
+  return out;
+}
+function initCommaInputs(){
+  var inputs=document.querySelectorAll('.frf-comma');
+  for(var i=0;i<inputs.length;i++){
+    (function(inp){
+      inp.addEventListener('input',function(){
+        var start=inp.selectionStart, before=inp.value;
+        inp.value=formatWithCommas(inp.value);
+        var diff=inp.value.length-before.length;
+        try{ inp.setSelectionRange(start+diff,start+diff); }catch(e){}
+        if(typeof calculate==='function') calculate();
+      });
+    })(inputs[i]);
+  }
+}
+
   var rounded = Math.round(n);
   var str = rounded.toString();
   var result = '';
@@ -308,7 +335,7 @@ function getEl(id) {
 }
 
 function getValue(id) {
-  return parseFloat(getEl(id).value) || 0;
+  return parseFloat((getEl(id).value||'').toString().replace(/,/g,'')) || 0;
 }
 
 function formatTime(months) {
@@ -508,7 +535,8 @@ function saveInputs(){
 }
 function restoreInputs(){
   try { var raw=localStorage.getItem(MEM_KEY); if(!raw) return false; var d=JSON.parse(raw); var any=false;
-    for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el && d[MEM_IDS[i]]!==undefined && d[MEM_IDS[i]]!==''){ el.value=d[MEM_IDS[i]]; any=true; } }
+    var _df={'balance':1,'payment':1,'extra':1};
+    for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el && d[MEM_IDS[i]]!==undefined && d[MEM_IDS[i]]!==''){ el.value=_df[MEM_IDS[i]]?formatWithCommas(d[MEM_IDS[i]]):d[MEM_IDS[i]]; any=true; } }
     return any; } catch(e){ return false; }
 }
 function clearInputs(){
@@ -525,6 +553,7 @@ function showRestoredNote(){
   host.insertBefore(note, host.firstChild);
 }
 function initMemory(){
+  initCommaInputs();
   for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el){ el.addEventListener('input', saveInputs); el.addEventListener('change', saveInputs); } }
   if(restoreInputs()){ showRestoredNote(); if(typeof calculate==='function'){ try{ calculate(); }catch(e){} } }
 }
