@@ -95,6 +95,9 @@ a{text-decoration:none}
 .field label{display:block;font-size:.85rem;font-weight:600;color:#0B1929;margin-bottom:.4rem}
 .field input{width:100%;padding:.8rem .9rem;border:1.5px solid #E2E8F0;border-radius:10px;font-size:1rem;font-family:"DM Sans",sans-serif;color:#0B1929}
 .field input:focus{outline:none;border-color:#0EA5A0}
+.input-sym{display:flex;align-items:stretch}
+.input-sym .isym{display:flex;align-items:center;justify-content:center;min-width:2.4rem;padding:0 .7rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-right:none;border-radius:10px 0 0 10px;color:#64748B;font-size:.95rem;font-weight:700;flex-shrink:0}
+.input-sym input{border-radius:0 10px 10px 0 !important;border-left:none !important}
 .field .hint{font-size:.76rem;color:#94a3b8;margin-top:.3rem}
 .field-row{display:flex;gap:1rem;flex-wrap:wrap}.field-row .field{flex:1;min-width:140px}
 .months-pick{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.3rem}
@@ -135,7 +138,7 @@ a{text-decoration:none}
         <a href="paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
         <a href="paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
         <a href="paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
         <a href="paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
       </div>
     </div>
@@ -199,12 +202,12 @@ a{text-decoration:none}
     </div>
     <div class="field">
       <label for="monthlyExpenses">Your essential monthly expenses</label>
-      <input type="number" id="monthlyExpenses" placeholder="3000" value="3000" min="0" step="100">
+      <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="monthlyExpenses" class="frf-comma" placeholder="3,000" value="3,000"></div>
       <div class="hint">Rent, food, utilities, transport, minimums — the must-pays</div>
     </div>
     <div class="field">
       <label for="currentSavings">Current emergency savings</label>
-      <input type="number" id="currentSavings" placeholder="6000" value="6000" min="0" step="100">
+      <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="currentSavings" class="frf-comma" placeholder="6,000" value="6,000"></div>
       <div class="hint">What you have set aside right now</div>
     </div>
     <div class="field">
@@ -219,7 +222,7 @@ a{text-decoration:none}
     </div>
     <div class="field">
       <label for="monthlyContribution">Monthly amount you can save (optional)</label>
-      <input type="number" id="monthlyContribution" placeholder="500" value="500" min="0" step="50">
+      <div class="input-sym"><span class="isym">$</span><input type="text" inputmode="numeric" id="monthlyContribution" class="frf-comma" placeholder="500" value="500"></div>
       <div class="hint">To see how long until you hit your target</div>
     </div>
     <button class="ef-btn" onclick="calculate()">Calculate My Safety Net</button>
@@ -310,6 +313,31 @@ a{text-decoration:none}
 var EFKEY = 'frf_emergency_v1';
 var targetMonths = 6;
 function money(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+function parseNum(id){ var el=document.getElementById(id); if(!el) return 0; return parseFloat((el.value||'').toString().replace(/,/g,''))||0; }
+function formatWithCommas(v){
+  var raw=(v==null?'':v.toString()).replace(/,/g,'');
+  if(raw===''||raw==='-') return raw;
+  var neg=raw.charAt(0)==='-'; if(neg) raw=raw.slice(1);
+  var parts=raw.split('.');
+  var intPart=parts[0].replace(/\D/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  var out=(neg?'-':'')+intPart;
+  if(parts.length>1) out+='.'+parts[1].replace(/\D/g,'');
+  return out;
+}
+function initCommaInputs(){
+  var inputs=document.querySelectorAll('.frf-comma');
+  for(var i=0;i<inputs.length;i++){
+    (function(inp){
+      inp.addEventListener('input',function(){
+        var start=inp.selectionStart, before=inp.value;
+        inp.value=formatWithCommas(inp.value);
+        var diff=inp.value.length-before.length;
+        try{ inp.setSelectionRange(start+diff,start+diff); }catch(e){}
+        if(typeof calculate==='function') calculate();
+      });
+    })(inputs[i]);
+  }
+}
 
 function setMonths(m){
   targetMonths = m;
@@ -319,9 +347,9 @@ function setMonths(m){
 }
 
 function calculate(){
-  var expenses = parseFloat(document.getElementById('monthlyExpenses').value)||0;
-  var savings = parseFloat(document.getElementById('currentSavings').value)||0;
-  var contribution = parseFloat(document.getElementById('monthlyContribution').value)||0;
+  var expenses = parseNum('monthlyExpenses');
+  var savings = parseNum('currentSavings');
+  var contribution = parseNum('monthlyContribution');
   if(expenses<=0){ return; }
 
   var runway = savings/expenses; // months currently covered
@@ -424,9 +452,9 @@ function restoreInputs(){
   try{
     var raw = localStorage.getItem(EFKEY); if(!raw) return;
     var d = JSON.parse(raw);
-    if(d.monthlyExpenses) document.getElementById('monthlyExpenses').value = d.monthlyExpenses;
-    if(d.currentSavings) document.getElementById('currentSavings').value = d.currentSavings;
-    if(d.monthlyContribution) document.getElementById('monthlyContribution').value = d.monthlyContribution;
+    if(d.monthlyExpenses) document.getElementById('monthlyExpenses').value = formatWithCommas(d.monthlyExpenses);
+    if(d.currentSavings) document.getElementById('currentSavings').value = formatWithCommas(d.currentSavings);
+    if(d.monthlyContribution) document.getElementById('monthlyContribution').value = formatWithCommas(d.monthlyContribution);
     if(d.targetMonths) targetMonths = d.targetMonths;
   }catch(e){}
 }
@@ -439,6 +467,7 @@ function restoreInputs(){
   }catch(e){}
 })();
 restoreInputs();
+initCommaInputs();
 setMonths(targetMonths);
 </script>
 
