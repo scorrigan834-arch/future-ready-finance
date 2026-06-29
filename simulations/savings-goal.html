@@ -117,6 +117,18 @@ a{text-decoration:none}
 .pv-labels{display:flex;justify-content:space-between;font-size:.78rem;color:rgba(255,255,255,.6)}
 .insight-box{background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.25);border-radius:10px;padding:1rem 1.1rem;margin-top:1.2rem;font-size:.85rem;color:#a7f3d0;line-height:1.6}
 .insight-box b{color:#6ee7b7}
+.sv-variance{margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.1)}
+.svv-title{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.25rem}
+.svv-sub{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:.9rem}
+.svv-grid{display:flex;gap:.6rem}
+.svv-card{flex:1;border-radius:10px;padding:.85rem .6rem;text-align:center;border:1px solid rgba(255,255,255,.12)}
+.svv-card.svv-low{background:rgba(220,38,38,.12)}
+.svv-card.svv-mid{background:rgba(14,165,160,.16)}
+.svv-card.svv-high{background:rgba(5,150,105,.14)}
+.svv-rate{font-size:1.05rem;font-weight:800;margin-bottom:.3rem}
+.svv-low .svv-rate{color:#fda4a4}.svv-mid .svv-rate{color:#3fd0c9}.svv-high .svv-rate{color:#6ee7b7}
+.svv-cap{font-size:.92rem;font-weight:700;color:#fff;line-height:1.15}
+.svv-cap2{font-size:.68rem;color:rgba(255,255,255,.55);margin-top:.2rem;line-height:1.3}
 .sv-btn{width:100%;padding:.95rem;background:#0EA5A0;color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;font-family:"DM Sans",sans-serif;transition:background .2s;margin-top:.3rem}
 .sv-btn:hover{background:#0C7D79}
 .sv-disclaimer{font-size:.78rem;color:#94a3b8;margin-top:1.25rem;line-height:1.55;text-align:center}
@@ -249,6 +261,27 @@ a{text-decoration:none}
       </div>
     </div>
     <div class="insight-box" id="insightBox"></div>
+    <div class="sv-variance" id="svVariance" style="display:none">
+      <div class="svv-title">What if your return is higher or lower?</div>
+      <div class="svv-sub">Your <span id="svv-base">4</span>% rate vs 2% higher or lower:</div>
+      <div class="svv-grid">
+        <div class="svv-card svv-low">
+          <div class="svv-rate" id="svv-low-rate">2%</div>
+          <div class="svv-cap" id="svv-low-val">—</div>
+          <div class="svv-cap2" id="svv-low-sub"></div>
+        </div>
+        <div class="svv-card svv-mid">
+          <div class="svv-rate" id="svv-mid-rate">4%</div>
+          <div class="svv-cap" id="svv-mid-val">—</div>
+          <div class="svv-cap2" id="svv-mid-sub"></div>
+        </div>
+        <div class="svv-card svv-high">
+          <div class="svv-rate" id="svv-high-rate">6%</div>
+          <div class="svv-cap" id="svv-high-val">—</div>
+          <div class="svv-cap2" id="svv-high-sub"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <p class="sv-disclaimer">Estimates assume steady monthly contributions and, if entered, interest compounded monthly. Real returns vary. This is educational, not financial advice.</p>
@@ -357,6 +390,36 @@ function calculate(){
     document.getElementById('resultLabel').textContent = 'Time to reach your goal';
     showResult(timeStr, 'Saving '+money(monthly)+'/month', money(contributed), money(interest>0?interest:0), money(balance),
       buildTimeInsight(months, monthly, interest, rate));
+
+    // ---- Variance: timeline at rate-2 / rate / rate+2 ----
+    (function(){
+      var lowPct = Math.max(0, rate - 2);
+      var highPct = rate + 2;
+      function monthsToReach(annualPct){
+        var mr = (annualPct/100)/12;
+        var bal = start, mo = 0;
+        while(bal < target && mo < 1200){ bal = bal*(1+mr) + monthly; mo++; }
+        return mo;
+      }
+      function fmtMonths(mo){
+        var y = Math.floor(mo/12), mm = mo%12, s='';
+        if(y>0) s += y+'y';
+        if(mm>0) s += (s?' ':'')+mm+'m';
+        return s || '<1m';
+      }
+      var loMo = monthsToReach(lowPct), midMo = monthsToReach(rate), hiMo = monthsToReach(highPct);
+      document.getElementById('svv-base').textContent = Math.round(rate);
+      document.getElementById('svv-low-rate').textContent = Math.round(lowPct)+'%';
+      document.getElementById('svv-mid-rate').textContent = Math.round(rate)+'%';
+      document.getElementById('svv-high-rate').textContent = Math.round(highPct)+'%';
+      document.getElementById('svv-low-val').textContent = fmtMonths(loMo);
+      document.getElementById('svv-mid-val').textContent = fmtMonths(midMo);
+      document.getElementById('svv-high-val').textContent = fmtMonths(hiMo);
+      document.getElementById('svv-low-sub').textContent = 'to reach goal';
+      document.getElementById('svv-mid-sub').textContent = 'your estimate';
+      document.getElementById('svv-high-sub').textContent = 'to reach goal';
+      document.getElementById('svVariance').style.display = (rate>0) ? 'block' : 'none';
+    })();
   } else {
     // amount mode: how much per month to hit target in N months
     var numMonths = parseFloat(document.getElementById('goalMonths').value)||1;
@@ -383,6 +446,7 @@ function calculate(){
     if(mos>0) deadlineStr += (deadlineStr?' ':'')+mos+' mo';
     showResult(money(needed), 'To reach '+money(target)+' in '+deadlineStr, money(totalContrib), money(interestE>0?interestE:0), money(finalBal),
       buildAmountInsight(needed, numMonths, target));
+    var svv = document.getElementById('svVariance'); if(svv) svv.style.display = 'none';
   }
   saveInputs();
 }
