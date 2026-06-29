@@ -115,7 +115,7 @@ input[type=number]:focus{border-color:#0EA5A0}
         <a href="../paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
         <a href="../paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
         <a href="../paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="../paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26–35</span></a>
+        <a href="../paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
         <a href="../paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
       </div>
     </div>
@@ -223,22 +223,22 @@ input[type=number]:focus{border-color:#0EA5A0}
     <div class="panel">
       <h2>What You Own</h2>
       <p class="ph">Assets — cash, investments, property, and valuables</p>
-      <div class="row"><label>Cash &amp; checking</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="cash" min="0" step="100"></div></div>
-      <div class="row"><label>Savings</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="savings" min="0" step="100"></div></div>
-      <div class="row"><label>Investments &amp; retirement</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="investments" min="0" step="100"></div></div>
-      <div class="row"><label>Home / real estate</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="property" min="0" step="1000"></div></div>
-      <div class="row"><label>Vehicles</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="vehicles" min="0" step="500"></div></div>
-      <div class="row"><label>Other valuables</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="other-assets" min="0" step="100"></div></div>
+      <div class="row"><label>Cash &amp; checking</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="cash" class="frf-comma" min="0" step="100"></div></div>
+      <div class="row"><label>Savings</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="savings" class="frf-comma" min="0" step="100"></div></div>
+      <div class="row"><label>Investments &amp; retirement</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="investments" class="frf-comma" min="0" step="100"></div></div>
+      <div class="row"><label>Home / real estate</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="property" class="frf-comma" min="0" step="1000"></div></div>
+      <div class="row"><label>Vehicles</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="vehicles" class="frf-comma" min="0" step="500"></div></div>
+      <div class="row"><label>Other valuables</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="other-assets" class="frf-comma" min="0" step="100"></div></div>
       <div class="subtotal assets"><span>Total Assets</span><span id="total-assets">$0</span></div>
     </div>
     <div class="panel">
       <h2>What You Owe</h2>
       <p class="ph">Debts — loans, balances, and money owed</p>
-      <div class="row"><label>Credit card debt</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="credit-cards" min="0" step="100"></div></div>
-      <div class="row"><label>Student loans</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="student-loans" min="0" step="500"></div></div>
-      <div class="row"><label>Car loans</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="car-loans" min="0" step="500"></div></div>
-      <div class="row"><label>Mortgage</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="mortgage" min="0" step="1000"></div></div>
-      <div class="row"><label>Other debt</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="number" id="other-debt" min="0" step="100"></div></div>
+      <div class="row"><label>Credit card debt</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="credit-cards" class="frf-comma" min="0" step="100"></div></div>
+      <div class="row"><label>Student loans</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="student-loans" class="frf-comma" min="0" step="500"></div></div>
+      <div class="row"><label>Car loans</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="car-loans" class="frf-comma" min="0" step="500"></div></div>
+      <div class="row"><label>Mortgage</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="mortgage" class="frf-comma" min="0" step="1000"></div></div>
+      <div class="row"><label>Other debt</label><div class="pw"><span class="pfx">$</span><input placeholder="0" type="text" inputmode="numeric" id="other-debt" class="frf-comma" min="0" step="100"></div></div>
       <div class="subtotal debts"><span>Total Debts</span><span id="total-debts">$0</span></div>
     </div>
   </div>
@@ -292,6 +292,33 @@ input[type=number]:focus{border-color:#0EA5A0}
 
 <script>
 function formatMoney(n) {
+
+function parseNum(id){ var el=document.getElementById(id); if(!el) return 0; return parseFloat((el.value||'').toString().replace(/,/g,''))||0; }
+function formatWithCommas(v){
+  var raw=(v==null?'':v.toString()).replace(/,/g,'');
+  if(raw===''||raw==='-') return raw;
+  var neg=raw.charAt(0)==='-'; if(neg) raw=raw.slice(1);
+  var parts=raw.split('.');
+  var intPart=parts[0].replace(/\D/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  var out=(neg?'-':'')+intPart;
+  if(parts.length>1) out+='.'+parts[1].replace(/\D/g,'');
+  return out;
+}
+function initCommaInputs(){
+  var inputs=document.querySelectorAll('.frf-comma');
+  for(var i=0;i<inputs.length;i++){
+    (function(inp){
+      inp.addEventListener('input',function(){
+        var start=inp.selectionStart, before=inp.value;
+        inp.value=formatWithCommas(inp.value);
+        var diff=inp.value.length-before.length;
+        try{ inp.setSelectionRange(start+diff,start+diff); }catch(e){}
+        if(typeof calculate==='function') calculate();
+      });
+    })(inputs[i]);
+  }
+}
+
   var negative = n < 0;
   var rounded = Math.round(Math.abs(n));
   var str = rounded.toString();
@@ -312,7 +339,7 @@ function getEl(id) {
 }
 
 function getValue(id) {
-  return parseFloat(getEl(id).value) || 0;
+  return parseFloat((getEl(id).value||'').toString().replace(/,/g,'')) || 0;
 }
 
 function calculate() {
@@ -440,7 +467,8 @@ function saveInputs(){
 }
 function restoreInputs(){
   try { var raw=localStorage.getItem(MEM_KEY); if(!raw) return false; var d=JSON.parse(raw); var any=false;
-    for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el && d[MEM_IDS[i]]!==undefined && d[MEM_IDS[i]]!==''){ el.value=d[MEM_IDS[i]]; any=true; } }
+    var _df={'cash':1,'savings':1,'investments':1,'property':1,'vehicles':1,'other-assets':1,'credit-cards':1,'student-loans':1,'car-loans':1,'mortgage':1,'other-debt':1};
+    for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el && d[MEM_IDS[i]]!==undefined && d[MEM_IDS[i]]!==''){ el.value=_df[MEM_IDS[i]]?formatWithCommas(d[MEM_IDS[i]]):d[MEM_IDS[i]]; any=true; } }
     return any; } catch(e){ return false; }
 }
 function clearInputs(){
@@ -457,6 +485,7 @@ function showRestoredNote(){
   host.insertBefore(note, host.firstChild);
 }
 function initMemory(){
+  initCommaInputs();
   for(var i=0;i<MEM_IDS.length;i++){ var el=document.getElementById(MEM_IDS[i]); if(el){ el.addEventListener('input', saveInputs); el.addEventListener('change', saveInputs); } }
   if(restoreInputs()){ showRestoredNote(); if(typeof calculate==='function'){ try{ calculate(); }catch(e){} } }
 }
