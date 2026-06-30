@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debt Freedom Planner — Future Ready Finance</title>
+<meta name="description" content="Enter all your debts and see which to pay off first. Compare avalanche vs snowball and watch how extra payments speed up your debt-free date.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",sans-serif;background:linear-gradient(180deg,#F5F7F6 0%,#ECF1F0 100%);background-attachment:fixed;color:#0B1929;line-height:1.6}
+a{text-decoration:none}
+.nav{position:sticky;top:0;z-index:200;background:rgba(11,25,41,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px;border-bottom:1px solid rgba(255,255,255,.07)}
+.nav-brand{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none;z-index:2}.nav-brand span{color:#0EA5A0}
+.nav-links{display:flex;gap:.1rem;align-items:center}
+.nav-item{position:relative}
+.nav-link{display:inline-flex;align-items:center;gap:.3rem;color:rgba(255,255,255,.66);padding:.45rem .8rem;border-radius:7px;font-size:.8rem;font-weight:500;transition:color .18s,background .18s;cursor:pointer;background:none;border:none;font-family:"DM Sans",sans-serif;text-decoration:none}
+.nav-link:hover,.nav-item:hover .nav-link,.nav-item.open .nav-link,.nav-link.active{color:#0EA5A0;background:rgba(14,165,160,.08)}
+.nav-caret{width:.55rem;height:.55rem;fill:none;stroke:currentColor;stroke-width:2.5;transition:transform .25s ease;opacity:.7}
+.nav-item:hover .nav-caret,.nav-item.open .nav-caret{transform:rotate(180deg)}
+.nav-dd{position:absolute;top:calc(100% + 10px);left:0;min-width:250px;background:rgba(15,30,48,.97);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:.55rem;box-shadow:0 24px 60px rgba(0,0,0,.45);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .22s ease,transform .22s ease,visibility .22s;z-index:210}
+.nav-dd::before{content:"";position:absolute;top:-14px;left:0;right:0;height:14px}
+.nav-item:hover .nav-dd,.nav-item.open .nav-dd{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-dd-wide{min-width:430px;display:grid;grid-template-columns:1fr 1fr;gap:.15rem}
+.nav-dd a{display:flex;flex-direction:column;gap:.1rem;padding:.55rem .7rem;border-radius:9px;color:rgba(255,255,255,.85);transition:background .15s,color .15s;text-decoration:none}
+.nav-dd a:hover{background:rgba(14,165,160,.12)}
+.nav-dd a .dd-t{font-size:.83rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:.45rem}
+.nav-dd a:hover .dd-t{color:#0EA5A0}
+.nav-dd a .dd-d{font-size:.71rem;color:rgba(255,255,255,.45);line-height:1.4}
+.nav-dd-head{grid-column:1/-1;font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0EA5A0;padding:.5rem .7rem .3rem}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:9px;cursor:pointer;padding:0;z-index:2}
+.nav-burger span{display:block;width:19px;height:2px;background:#fff;border-radius:2px;margin:0 auto;transition:transform .28s ease,opacity .28s ease}
+.nav-burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.active span:nth-child(2){opacity:0}
+.nav-burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{position:fixed;top:58px;left:0;right:0;bottom:0;background:rgba(11,25,41,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:190;padding:1.25rem 1.5rem 2.5rem;overflow-y:auto;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);visibility:hidden}
+.mobile-menu.open{transform:translateX(0);visibility:visible}
+.mm-group{border-bottom:1px solid rgba(255,255,255,.08)}
+.mm-top{width:100%;display:flex;align-items:center;justify-content:space-between;background:none;border:none;color:#fff;font-family:"DM Sans",sans-serif;font-size:1rem;font-weight:600;padding:1.05rem .25rem;cursor:pointer;text-align:left}
+.mm-top a{color:#fff;text-decoration:none}
+.mm-caret{width:.8rem;height:.8rem;fill:none;stroke:#0EA5A0;stroke-width:2.5;transition:transform .25s ease;flex-shrink:0}
+.mm-group.open .mm-caret{transform:rotate(180deg)}
+.mm-sub{max-height:0;overflow:hidden;transition:max-height .3s ease;padding-bottom:0}
+.mm-group.open .mm-sub{max-height:600px;padding-bottom:.6rem}
+.mm-sub a{display:block;color:rgba(255,255,255,.7);font-size:.9rem;padding:.6rem .25rem .6rem 1rem;text-decoration:none;border-left:2px solid rgba(14,165,160,.3);margin-left:.25rem}
+.mm-sub a:hover{color:#0EA5A0}
+.page-hero{background:#0B1929;padding:3.5rem 2rem 2.75rem}.page-hero-inner{max-width:1100px;margin:0 auto}
+.eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#0EA5A0;display:block;margin-bottom:.7rem}
+.page-hero h1{font-family:"Playfair Display",serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
+.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:600px;line-height:1.75}
+.wrap{max-width:960px;margin:0 auto;padding:2.5rem 2rem}
+.layout{display:grid;grid-template-columns:340px 1fr;gap:2rem;align-items:start}
+.panel{background:#fff;border:1px solid #EAEFEE;border-radius:22px;padding:2.1rem;box-shadow:0 2px 8px rgba(11,25,41,.04),0 24px 60px rgba(11,25,41,.10);transition:box-shadow .3s ease,transform .3s ease}
+.panel:hover{box-shadow:0 4px 12px rgba(11,25,41,.05),0 32px 72px rgba(11,25,41,.13)}
+.panel h2{font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:700;margin-bottom:1.25rem;color:#0B1929}
+.field{margin-bottom:1.2rem}
+.field label{display:block;font-size:.8rem;font-weight:700;color:#0B1929;margin-bottom:.3rem}
+.hint{font-size:.73rem;color:#94a3b8;display:block;margin-bottom:.35rem}
+.pw{display:flex;align-items:stretch}
+.pw .pfx{display:flex;align-items:center;justify-content:center;min-width:2.4rem;padding:0 .7rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-right:none;border-radius:8px 0 0 8px;color:#64748B;font-size:.95rem;font-weight:700;flex-shrink:0}
+input[type=number],input[type=text].frf-comma{width:100%;padding:.8rem .95rem;border:1.5px solid #E2E8F0;border-radius:12px;font-size:1rem;font-weight:600;font-family:"DM Sans",sans-serif;color:#0B1929;outline:none;transition:border-color .18s ease,box-shadow .18s ease}
+input[type=number]:focus,input[type=text].frf-comma:focus{border-color:#0EA5A0;box-shadow:0 0 0 4px rgba(14,165,160,.16)}
+.pfinput{border-radius:0 8px 8px 0;border-left:none}
+.toggle{display:flex;gap:.5rem;margin-top:1.4rem}
+.toggle button{flex:1;border:1.5px solid #E2E8F0;border-radius:9px;padding:.7rem .5rem;text-align:center;cursor:pointer;background:#fff;font-family:"DM Sans",sans-serif;transition:all .15s}
+.toggle button.active{border-color:#0EA5A0;background:rgba(14,165,160,.07)}
+.toggle .tt{display:block;font-size:.82rem;font-weight:700;color:#0B1929;margin-bottom:.15rem}
+.toggle .ts{display:block;font-size:.68rem;color:#94a3b8;line-height:1.3}
+.results{display:flex;flex-direction:column;gap:1rem}
+.result-hero{background:linear-gradient(150deg,#0B1929,#0f2236);border-radius:22px;padding:2.5rem 1.85rem;text-align:center;box-shadow:0 24px 70px rgba(11,25,41,.32);position:relative;overflow:hidden}
+.result-hero::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#0EA5A0,#3fd0c9,#0EA5A0)}
+.rh-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);display:block;margin-bottom:.4rem}
+.rh-amount{font-family:"Playfair Display",serif;font-size:2.4rem;font-weight:900;color:#0EA5A0;line-height:1.05}
+.rh-sub{font-size:.78rem;color:rgba(255,255,255,.45);margin-top:.5rem;line-height:1.5}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.stat{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:1.1rem;text-align:center}
+.stat-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;display:block;margin-bottom:.3rem}
+.stat-val{font-family:"Playfair Display",serif;font-size:1.35rem;font-weight:700;color:#0B1929}
+.stat-val.red{color:#dc2626}
+.insight-box{background:rgba(14,165,160,.07);border:1px solid rgba(14,165,160,.22);border-left:4px solid #0EA5A0;border-radius:8px;padding:1rem 1.15rem;font-size:.88rem;line-height:1.7;color:#0B1929}
+.insight-box strong{color:#0EA5A0}
+.next-links{background:#F5F7F6;border-radius:12px;padding:1.5rem;margin-top:2rem}
+.next-links h4{font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;margin-bottom:1rem;color:#0B1929}
+.nli{display:flex;align-items:center;justify-content:space-between;border:1px solid #E2E8F0;border-radius:8px;padding:.75rem 1rem;background:#fff;text-decoration:none;color:#0B1929;margin-bottom:.5rem;transition:border-color .15s}
+.nli:hover{border-color:#0EA5A0}
+.nli span{font-size:.875rem;font-weight:500}
+.na{color:#0EA5A0;font-weight:700}
+.footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center}
+.footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
+@media(max-width:720px){.layout{grid-template-columns:1fr}.nav-links{display:none}
+  .nav-burger{display:flex}.wrap{padding:1.5rem 1.1rem}}
+.extra-variance{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.3rem 1.4rem;margin-top:1.25rem;box-shadow:0 1px 3px rgba(11,25,41,.04)}
+.ev-title{font-family:"Playfair Display",serif;font-size:1.1rem;color:#0B1929;margin-bottom:.3rem}
+.ev-sub{font-size:.82rem;color:#64748B;margin-bottom:1.1rem}
+.ev-grid{display:flex;gap:.7rem}
+.ev-card{flex:1;border-radius:11px;padding:.95rem .65rem;text-align:center;border:1.5px solid #E2E8F0}
+.ev-card.ev-half{background:rgba(100,116,139,.06)}
+.ev-card.ev-your{background:rgba(14,165,160,.08);border-color:rgba(14,165,160,.35)}
+.ev-card.ev-double{background:rgba(5,150,105,.07);border-color:rgba(5,150,105,.25)}
+.ev-tag{font-size:.64rem;color:#64748B;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-bottom:.35rem;line-height:1.2}
+.ev-your .ev-tag{color:#0C7D79}.ev-double .ev-tag{color:#059669}
+.ev-amt{font-size:.82rem;font-weight:700;color:#475569;margin-bottom:.5rem}
+.ev-time{font-size:1.05rem;font-weight:800;color:#0B1929;line-height:1.1}
+.ev-int{font-size:.68rem;color:#64748B;margin-top:.3rem;line-height:1.3}
+.ev-note{font-size:.8rem;color:#0C7D79;background:rgba(14,165,160,.07);border-left:3px solid #0EA5A0;border-radius:0 6px 6px 0;padding:.65rem .85rem;margin-top:1rem;line-height:1.55}
+.ev-note b{color:#059669}
+@media(max-width:520px){.ev-grid{gap:.4rem}.ev-card{padding:.75rem .4rem}.ev-time{font-size:.92rem}}
+
+/* ---- multi-debt calculator additions ---- */
+.intro-card{background:#fff;border:1px solid #EAEFEE;border-radius:18px;padding:1.5rem 1.7rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(11,25,41,.04)}
+.intro-card p{font-size:.9rem;color:#475569;line-height:1.7}.intro-card strong{color:#0B1929}
+.debt-table{width:100%;margin-bottom:1rem}
+.debt-row{display:grid;grid-template-columns:1.2fr 1fr .95fr .7fr .9fr .9fr auto;gap:.5rem;align-items:end;margin-bottom:.7rem;padding:.85rem;background:#FAFBFB;border:1px solid #EAEFEE;border-radius:12px;transition:border-color .15s}
+.debt-row:hover{border-color:#cfe8e6}
+.debt-row .dl{display:block;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#94a3b8;margin-bottom:.25rem}
+.debt-row input{padding:.6rem .7rem;border:1.5px solid #E2E8F0;border-radius:9px;font-size:.92rem;font-weight:600;font-family:"DM Sans",sans-serif;color:#0B1929;outline:none;width:100%;transition:border-color .15s,box-shadow .15s}
+.debt-row input:focus{border-color:#0EA5A0;box-shadow:0 0 0 3px rgba(14,165,160,.14)}
+.debt-row select.dtype{width:100%;padding:.6rem .5rem;border:1.5px solid #E2E8F0;border-radius:9px;font-size:.85rem;font-weight:600;font-family:"DM Sans",sans-serif;color:#0B1929;outline:none;background:#fff;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.debt-row select.dtype:focus{border-color:#0EA5A0;box-shadow:0 0 0 3px rgba(14,165,160,.14)}
+.debt-row .pw .pfx{min-width:1.9rem;padding:0 .5rem;font-size:.85rem;border-radius:9px 0 0 9px}
+.debt-row .pw input{border-radius:0 9px 9px 0;border-left:none}
+.debt-row .sfx-wrap{display:flex;align-items:stretch}
+.debt-row .sfx-wrap input{border-radius:9px 0 0 9px;border-right:none}
+.debt-row .sfx{display:flex;align-items:center;justify-content:center;min-width:1.7rem;padding:0 .45rem;background:#F1F5F4;border:1.5px solid #E2E8F0;border-left:none;border-radius:0 9px 9px 0;color:#64748B;font-size:.82rem;font-weight:700}
+.del-btn{width:2rem;height:2rem;border:none;background:rgba(220,38,38,.08);color:#dc2626;border-radius:8px;font-size:1.1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
+.del-btn:hover{background:rgba(220,38,38,.16)}
+.add-btn{width:100%;padding:.8rem;border:1.5px dashed #0EA5A0;background:rgba(14,165,160,.05);color:#0C7D79;border-radius:11px;font-size:.88rem;font-weight:700;font-family:"DM Sans",sans-serif;cursor:pointer;transition:background .15s;margin-bottom:1.3rem}
+.add-btn:hover{background:rgba(14,165,160,.1)}
+
+
+
+
+
+
+
+.calc-btn{width:100%;padding:1rem;background:linear-gradient(135deg,#0EA5A0,#0C7D79);color:#fff;border:none;border-radius:13px;font-size:1rem;font-weight:700;font-family:"DM Sans",sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(14,165,160,.3);transition:transform .15s,box-shadow .15s;margin-bottom:.5rem}
+.calc-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(14,165,160,.4)}
+.calc-btn:active{transform:translateY(0)}
+.empty-hint{text-align:center;color:#94a3b8;font-size:.85rem;padding:1.5rem;line-height:1.6}
+/* results */
+.res-wrap{margin-top:2rem;display:none}
+.res-wrap.show{display:block}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.5rem}
+.strat-card{background:#fff;border:1.5px solid #E2E8F0;border-radius:18px;padding:1.6rem 1.5rem;position:relative;overflow:hidden;transition:border-color .2s,box-shadow .2s}
+.strat-card.winner{border-color:#0EA5A0;box-shadow:0 12px 40px rgba(14,165,160,.15)}
+.strat-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px}
+.strat-card.avalanche::before{background:linear-gradient(90deg,#0EA5A0,#3fd0c9)}
+.strat-card.snowball::before{background:linear-gradient(90deg,#d97706,#fbbf24)}
+.strat-badge{display:inline-block;font-size:.64rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:.2rem .6rem;border-radius:99px;margin-bottom:.7rem}
+.avalanche .strat-badge{background:rgba(14,165,160,.12);color:#0C7D79}
+.snowball .strat-badge{background:rgba(217,119,6,.12);color:#b45309}
+.strat-name{font-family:"Playfair Display",serif;font-size:1.15rem;font-weight:700;color:#0B1929;margin-bottom:.2rem}
+.strat-desc{font-size:.76rem;color:#64748B;line-height:1.5;margin-bottom:1.1rem;min-height:2.3em}
+.strat-stat{margin-bottom:.8rem}
+.strat-stat .ss-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#94a3b8;display:block;margin-bottom:.15rem}
+.strat-stat .ss-val{font-family:"Playfair Display",serif;font-size:1.5rem;font-weight:800;color:#0B1929;line-height:1}
+.strat-stat .ss-val.teal{color:#0EA5A0}
+.win-flag{position:absolute;top:1.2rem;right:1.2rem;font-size:.62rem;font-weight:800;color:#fff;background:#0EA5A0;padding:.2rem .55rem;border-radius:99px;text-transform:uppercase;letter-spacing:.04em}
+.attack-first{background:linear-gradient(135deg,#0EA5A0,#0C7D79);border-radius:16px;padding:1.5rem 1.7rem;margin-bottom:1.25rem;box-shadow:0 14px 40px rgba(14,165,160,.28);color:#fff}
+.attack-first .af-kicker{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.7);display:block;margin-bottom:.5rem}
+.attack-first .af-debt{font-family:"Playfair Display",serif;font-size:1.6rem;font-weight:900;margin-bottom:.4rem;line-height:1.1}
+.attack-first .af-why{font-size:.9rem;color:rgba(255,255,255,.9);line-height:1.6}
+.attack-first .af-why b{color:#fff}
+.order-box{background:#F5F7F6;border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:1.5rem}
+.order-box h3{font-family:"Playfair Display",serif;font-size:1.05rem;color:#0B1929;margin-bottom:.3rem}
+.order-box .ob-sub{font-size:.8rem;color:#64748B;margin-bottom:1rem}
+.order-item{display:flex;align-items:center;gap:.85rem;background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:.8rem 1rem;margin-bottom:.55rem}
+.order-num{flex-shrink:0;width:1.7rem;height:1.7rem;border-radius:50%;background:#0EA5A0;color:#fff;font-weight:800;font-size:.8rem;display:flex;align-items:center;justify-content:center}
+.order-info{flex:1;min-width:0}
+.order-name{font-weight:700;font-size:.9rem;color:#0B1929}
+.order-meta{font-size:.74rem;color:#94a3b8}
+.order-rate{font-weight:800;font-size:.92rem;color:#dc2626}
+.chart-box{background:#fff;border:1px solid #EAEFEE;border-radius:18px;padding:1.6rem 1.7rem 1.4rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(11,25,41,.04)}
+.chart-box h3{font-family:"Playfair Display",serif;font-size:1.1rem;color:#0B1929;margin-bottom:.3rem}
+.chart-box .cb-sub{font-size:.8rem;color:#64748B;margin-bottom:1.2rem}
+.chart-legend{display:flex;gap:1.4rem;justify-content:center;margin-top:1rem;flex-wrap:wrap}
+.cl-item{display:flex;align-items:center;gap:.45rem;font-size:.78rem;color:#475569;font-weight:600}
+.cl-dot{width:14px;height:4px;border-radius:99px}
+canvas{max-width:100%;height:auto;display:block}
+@media(max-width:720px){.compare-grid{grid-template-columns:1fr}
+ .debt-row{grid-template-columns:1fr 1fr;gap:.5rem}
+ .debt-row .dr-name{grid-column:1/-1}
+ .debt-row .dr-del{grid-column:1/-1;justify-self:end}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="../index.html" class="nav-brand">Future Ready <span>Finance</span></a>
+  <div class="nav-links">
+    <a href="../start-here.html" class="nav-link">Start Here</a>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Life Stages <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd">
+        <a href="../paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
+        <a href="../paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
+        <a href="../paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
+        <a href="../paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
+        <a href="../paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Guides <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd nav-dd-wide">
+        <div class="nav-dd-head">Browse by Topic</div>
+        <a href="../guides.html"><span class="dd-t">🏛️ Banking & Cash</span></a>
+        <a href="../guides.html"><span class="dd-t">💳 Credit & Debt</span></a>
+        <a href="../guides.html"><span class="dd-t">🧾 Taxes</span></a>
+        <a href="../guides.html"><span class="dd-t">🎓 Education</span></a>
+        <a href="../guides.html"><span class="dd-t">💼 Career</span></a>
+        <a href="../guides.html"><span class="dd-t">🏠 Housing</span></a>
+        <a href="../guides.html"><span class="dd-t">📈 Investing</span></a>
+        <a href="../guides.html"><span class="dd-t">🛡️ Insurance</span></a>
+        <a href="../guides.html"><span class="dd-t">👨‍👩‍👧 Family</span></a>
+        <a href="../guides.html"><span class="dd-t">📚 View All Guides →</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link active" type="button">Calculators <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd">
+        <a href="compound-interest.html"><span class="dd-t">📈 Compound Interest</span><span class="dd-d">What your money becomes</span></a>
+        <a href="take-home-pay.html"><span class="dd-t">💼 Take-Home Pay</span><span class="dd-d">Paycheck after taxes</span></a>
+        <a href="roth-vs-traditional.html"><span class="dd-t">🏦 Roth vs Pre-Tax 401(k)</span><span class="dd-d">Which 401(k) wins</span></a>
+        <a href="debt-payoff.html"><span class="dd-t">💳 Debt Payoff</span><span class="dd-d">Fastest way out</span></a>
+        <a href="net-worth.html"><span class="dd-t">💰 Net Worth</span><span class="dd-d">Own vs. owe</span></a>
+        <a href="../simulations.html"><span class="dd-t">🔢 All Calculators →</span></a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" type="button">Big Decisions <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+      <div class="nav-dd">
+        <a href="../big-decisions.html"><span class="dd-t">🎓 Education Decisions</span><span class="dd-d">College, debt, grad school</span></a>
+        <a href="../big-decisions.html"><span class="dd-t">💼 Career Decisions</span><span class="dd-d">Offers, raises, job changes</span></a>
+        <a href="../big-decisions.html"><span class="dd-t">🏠 Housing Decisions</span><span class="dd-d">Rent vs buy, affordability</span></a>
+        <a href="../big-decisions.html"><span class="dd-t">📈 Investing Decisions</span><span class="dd-d">When, how much, which account</span></a>
+        <a href="../big-decisions.html"><span class="dd-t">🚗 Cars, Debt & Family</span><span class="dd-d">Major life purchases</span></a>
+        <a href="../big-decisions.html"><span class="dd-t">🧭 Decision Framework →</span></a>
+      </div>
+    </div>
+    <a href="../resources.html" class="nav-link">Resources</a>
+    <a href="../about.html" class="nav-link">About</a>
+  </div>
+  <button class="nav-burger" id="navBurger" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-group"><button class="mm-top"><a href="../start-here.html">Start Here</a></button></div>
+  <div class="mm-group">
+    <button class="mm-top" type="button">Life Stages <svg class="mm-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+    <div class="mm-sub">
+      <a href="../paths/high-school.html">🎓 High School</a>
+      <a href="../paths/college.html">📚 College</a>
+      <a href="../paths/early-career.html">🚀 Early Career</a>
+      <a href="../paths/establishing.html">🏡 Establishing</a>
+      <a href="../paths/starting-from-ahead.html">💎 Starting From Ahead</a>
+    </div>
+  </div>
+  <div class="mm-group">
+    <button class="mm-top" type="button">Guides <svg class="mm-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+    <div class="mm-sub">
+      <a href="../guides.html">🏛️ Banking & Cash</a>
+      <a href="../guides.html">💳 Credit & Debt</a>
+      <a href="../guides.html">🧾 Taxes</a>
+      <a href="../guides.html">🎓 Education</a>
+      <a href="../guides.html">💼 Career</a>
+      <a href="../guides.html">🏠 Housing</a>
+      <a href="../guides.html">📈 Investing</a>
+      <a href="../guides.html">📚 View All Guides →</a>
+    </div>
+  </div>
+  <div class="mm-group">
+    <button class="mm-top" type="button">Calculators <svg class="mm-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+    <div class="mm-sub">
+      <a href="compound-interest.html">📈 Compound Interest</a>
+      <a href="take-home-pay.html">💼 Take-Home Pay</a>
+      <a href="roth-vs-traditional.html">🏦 Roth vs Pre-Tax 401(k)</a>
+      <a href="debt-payoff.html">💳 Debt Payoff</a>
+      <a href="net-worth.html">💰 Net Worth</a>
+      <a href="../simulations.html">🔢 All Calculators →</a>
+    </div>
+  </div>
+  <div class="mm-group">
+    <button class="mm-top" type="button">Big Decisions <svg class="mm-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
+    <div class="mm-sub">
+      <a href="../big-decisions.html">🎓 Education Decisions</a>
+      <a href="../big-decisions.html">💼 Career Decisions</a>
+      <a href="../big-decisions.html">🏠 Housing Decisions</a>
+      <a href="../big-decisions.html">📈 Investing Decisions</a>
+      <a href="../big-decisions.html">🚗 Cars, Debt & Family</a>
+      <a href="../big-decisions.html">🧭 Decision Framework →</a>
+    </div>
+  </div>
+  <div class="mm-group"><button class="mm-top"><a href="../resources.html">Resources</a></button></div>
+  <div class="mm-group"><button class="mm-top"><a href="../about.html">About</a></button></div>
+</div>
+<div class="page-hero"><div class="page-hero-inner">
+  <span class="eyebrow">Calculator · Debt Freedom</span>
+  <h1>Debt Freedom Planner</h1>
+  <p>Enter all your debts in one place — credit cards, student loans, car loans, anything. See which to attack first, compare two proven payoff strategies side by side, and watch how every extra dollar shrinks your timeline.</p>
+</div></div>
+
+<div class="wrap">
+
+<div class="intro-card">
+<p><strong>How this works:</strong> Add each debt you have below — its name, current balance, interest rate, and the minimum monthly payment. Add an optional extra payment to any debt. We'll show you which debt to attack first, compare two proven payoff strategies, and graph how fast you'll be free.</p>
+</div>
+
+<div class="panel" style="margin-bottom:1.5rem">
+<h2>Your debts</h2>
+<div class="debt-table" id="debtTable"></div>
+<button class="add-btn" id="addBtn" onclick="addDebt()">+ Add another debt</button>
+
+<button class="calc-btn" onclick="calculate()">Calculate my debt-free plan →</button>
+</div>
+
+<div class="res-wrap" id="results">
+
+<div class="result-hero" style="margin-bottom:1.5rem">
+<span class="rh-label">With your current plan, you'll be debt-free in</span>
+<div class="rh-amount" id="heroTime">—</div>
+<div class="rh-sub" id="heroSub">Add your debts and calculate to see your timeline</div>
+</div>
+
+<div class="attack-first" id="attackFirst"></div>
+
+<div class="order-box" id="orderBox">
+<h3>🎯 Your full payoff order</h3>
+<div class="ob-sub" id="orderSub">Highest interest rate first (the Avalanche method) — this saves you the most money.</div>
+<div id="orderList"></div>
+</div>
+
+<div class="chart-box">
+<h3>📉 Your payoff timeline</h3>
+<div class="cb-sub">See how much faster you reach zero with your extra payment versus minimums only.</div>
+<canvas id="payoffChart" width="800" height="360"></canvas>
+<div class="chart-legend">
+<div class="cl-item"><span class="cl-dot" style="background:#94a3b8"></span> Minimums only</div>
+<div class="cl-item"><span class="cl-dot" style="background:#0EA5A0"></span> With your extra payments</div>
+</div>
+</div>
+
+<h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#0B1929;margin:0 0 .9rem">Avalanche vs Snowball — your two best options</h3>
+<div class="compare-grid">
+<div class="strat-card avalanche" id="avaCard">
+<span class="strat-badge">Saves the most money</span>
+<div class="strat-name">❄️ Avalanche</div>
+<div class="strat-desc">Pay highest interest rate first. Mathematically the cheapest way out.</div>
+<div class="strat-stat"><span class="ss-label">Debt-free in</span><span class="ss-val teal" id="avaTime">—</span></div>
+<div class="strat-stat"><span class="ss-label">Total interest paid</span><span class="ss-val" id="avaInt">—</span></div>
+</div>
+<div class="strat-card snowball" id="snowCard">
+<span class="strat-badge">Quick wins for motivation</span>
+<div class="strat-name">⛄ Snowball</div>
+<div class="strat-desc">Pay smallest balance first. Builds momentum with fast early wins.</div>
+<div class="strat-stat"><span class="ss-label">Debt-free in</span><span class="ss-val" id="snowTime">—</span></div>
+<div class="strat-stat"><span class="ss-label">Total interest paid</span><span class="ss-val" id="snowInt">—</span></div>
+</div>
+</div>
+
+<div class="insight-box" id="insightBox" style="margin-bottom:1.5rem"></div>
+
+<div class="next-links">
+<h4>Keep going</h4>
+<a href="../simulations/net-worth.html" class="nli"><span>📊 Track your net worth as debt drops</span><span class="na">→</span></a>
+<a href="../decisions/debt-payoff.html" class="nli"><span>📖 Read: Avalanche vs Snowball explained</span><span class="na">→</span></a>
+<a href="../decisions/credit-card-without-debt.html" class="nli"><span>💳 Use credit cards without getting into debt</span><span class="na">→</span></a>
+</div>
+
+</div>
+</div>
+
+<footer class="footer"><a href="../index.html">Home</a><a href="../simulations.html">All Simulations</a><a href="../guides.html">Guides</a><br><br>Educational content only. Not financial or investment advice.</footer>
+
+<script>
+// ============ MOBILE MENU ============
+function toggleMenu(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(m){m.classList.toggle('open');if(b)b.classList.toggle('active');}}
+document.querySelectorAll('.mm-top').forEach(function(btn){
+  btn.addEventListener('click',function(e){
+    var grp=btn.closest('.mm-group');
+    if(grp&&grp.querySelector('.mm-sub')){e.preventDefault();grp.classList.toggle('open');}
+  });
+});
+
+// ============ COMMA FORMATTING ============
+function commafy(v){
+  var raw=(v==null?'':v.toString()).replace(/,/g,'');
+  if(raw===''||raw==='-')return raw;
+  var neg=raw.charAt(0)==='-';if(neg)raw=raw.slice(1);
+  var parts=raw.split('.');
+  parts[0]=parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  return (neg?'-':'')+parts.join('.');
+}
+function num(v){return parseFloat((v||'').toString().replace(/,/g,''))||0;}
+
+// ============ DEBT ROWS ============
+var debtId=0;
+var STARTER=[
+  {name:'Visa',type:'credit-card',bal:'5,000',rate:'22',min:'150',extra:'200'},
+  {name:'Car Loan',type:'car-loan',bal:'12,000',rate:'6.5',min:'320',extra:'0'},
+  {name:'Student Loan',type:'student-loan',bal:'18,000',rate:'5',min:'190',extra:'0'}
+];
+var DEBT_TYPES=[
+  {v:'credit-card',label:'Credit Card',icon:'\uD83D\uDCB3'},
+  {v:'student-loan',label:'Student Loan',icon:'\uD83C\uDF93'},
+  {v:'car-loan',label:'Car Loan',icon:'\uD83D\uDE97'},
+  {v:'personal-loan',label:'Personal Loan',icon:'\uD83D\uDCB5'},
+  {v:'medical',label:'Medical',icon:'\uD83C\uDFE5'},
+  {v:'mortgage',label:'Mortgage',icon:'\uD83C\uDFE0'},
+  {v:'other',label:'Other',icon:'\uD83D\uDCCB'}
+];
+function typeIcon(v){for(var i=0;i<DEBT_TYPES.length;i++){if(DEBT_TYPES[i].v===v)return DEBT_TYPES[i].icon;}return '\uD83D\uDCCB';}
+function typeOptions(sel){var o='';DEBT_TYPES.forEach(function(t){o+='<option value="'+t.v+'"'+(t.v===sel?' selected':'')+'>'+t.icon+' '+t.label+'</option>';});return o;}
+function debtRowHTML(id,d){
+  return '<div class="debt-row" id="row'+id+'">'+
+    '<div class="dr-name"><span class="dl">Debt name</span><input type="text" id="name'+id+'" value="'+(d?d.name:'')+'" placeholder="e.g. Visa"></div>'+
+    '<div class="dr-type"><span class="dl">Type</span><select id="type'+id+'" class="dtype">'+typeOptions(d?d.type:'credit-card')+'</select></div>'+
+    '<div><span class="dl">Balance</span><div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" class="frf-comma" id="bal'+id+'" value="'+(d?d.bal:'')+'" placeholder="5,000"></div></div>'+
+    '<div><span class="dl">Rate</span><div class="sfx-wrap"><input type="text" inputmode="decimal" id="rate'+id+'" value="'+(d?d.rate:'')+'" placeholder="20"><span class="sfx">%</span></div></div>'+
+    '<div><span class="dl">Min/mo</span><div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" class="frf-comma" id="min'+id+'" value="'+(d?d.min:'')+'" placeholder="150"></div></div>'+
+    '<div><span class="dl">Extra/mo</span><div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" class="frf-comma" id="extra'+id+'" value="'+(d&&d.extra?d.extra:'')+'" placeholder="0"></div></div>'+
+    '<div class="dr-del"><button class="del-btn" onclick="removeDebt('+id+')" title="Remove">×</button></div>'+
+  '</div>';
+}
+function attachComma(id){
+  ['bal'+id,'min'+id,'extra'+id].forEach(function(fid){
+    var inp=document.getElementById(fid);
+    if(inp)inp.addEventListener('input',function(){
+      var s=inp.selectionStart,b=inp.value;inp.value=commafy(inp.value);
+      var diff=inp.value.length-b.length;try{inp.setSelectionRange(s+diff,s+diff);}catch(e){}
+    });
+  });
+}
+function addDebt(d){
+  debtId++;
+  var tbl=document.getElementById('debtTable');
+  tbl.insertAdjacentHTML('beforeend',debtRowHTML(debtId,d));
+  attachComma(debtId);
+}
+function removeDebt(id){
+  var r=document.getElementById('row'+id);
+  if(r)r.remove();
+}
+// seed starter debts
+STARTER.forEach(function(d){addDebt(d);});
+
+// ============ COLLECT DEBTS ============
+function collectDebts(){
+  var rows=document.querySelectorAll('.debt-row');
+  var debts=[];
+  rows.forEach(function(r){
+    var id=r.id.replace('row','');
+    var name=(document.getElementById('name'+id).value||'Debt').trim();
+    var type=document.getElementById('type'+id).value;
+    var bal=num(document.getElementById('bal'+id).value);
+    var rate=num(document.getElementById('rate'+id).value);
+    var min=num(document.getElementById('min'+id).value);
+    var extra=num(document.getElementById('extra'+id).value);
+    if(bal>0)debts.push({name:name,type:type,bal:bal,rate:rate,min:min,extra:extra});
+  });
+  return debts;
+}
+
+// ============ PAYOFF SIMULATION ============
+// Simulate paying down debts month by month with a given strategy + extra.
+// strategy: 'avalanche' (high rate first) or 'snowball' (low balance first)
+// Returns {months, totalInterest, balanceSeries:[totalBalance per month]}
+// mode: 'manual' = each debt pays min + its own extra, freed money rolls to next by order
+//       'pooled' = sum all extra into one pool, apply by strategy order (for optimal compare)
+// strategy decides the ORDER freed/pooled money targets: 'avalanche' (rate) or 'snowball' (balance)
+function simulate(debts, strategy, mode){
+  var d=debts.map(function(x){return {name:x.name,bal:x.bal,rate:x.rate,min:x.min,extra:x.extra||0};});
+  var totalInterest=0;
+  var series=[];
+  var months=0;
+  series.push(d.reduce(function(s,x){return s+x.bal;},0));
+  var totalExtraPool=d.reduce(function(s,x){return s+(x.extra||0);},0);
+  var MAXM=1200;
+  while(months<MAXM){
+    var active=d.filter(function(x){return x.bal>0.01;});
+    if(active.length===0)break;
+    // accrue interest
+    active.forEach(function(x){var mi=x.bal*(x.rate/100/12);x.bal+=mi;totalInterest+=mi;});
+    // freed money that rolls onward
+    var pool;
+    if(mode==='pooled'){
+      pool=totalExtraPool;
+      // pay minimums only
+      active.forEach(function(x){var pay=Math.min(x.min,x.bal);x.bal-=pay;if(x.min>pay)pool+=(x.min-pay);});
+    } else {
+      // manual: each debt pays min + its OWN extra; collect freed amounts from paid-off debts
+      pool=0;
+      active.forEach(function(x){
+        var want=x.min+(x.extra||0);
+        var pay=Math.min(want,x.bal);
+        x.bal-=pay;
+        if(want>pay)pool+=(want-pay); // overpayment rolls onward
+      });
+    }
+    // apply rolled/pooled money to remaining debts by strategy order
+    var rem=d.filter(function(x){return x.bal>0.01;});
+    if(strategy==='avalanche'){rem.sort(function(a,b){return b.rate-a.rate;});}
+    else{rem.sort(function(a,b){return a.bal-b.bal;});}
+    for(var i=0;i<rem.length&&pool>0.01;i++){var pay=Math.min(pool,rem[i].bal);rem[i].bal-=pay;pool-=pay;}
+    months++;
+    var tot=d.reduce(function(s,x){return s+Math.max(0,x.bal);},0);
+    series.push(tot);
+    if(tot<0.01)break;
+  }
+  return {months:months,totalInterest:totalInterest,series:series};
+}
+
+function fmtMonths(m){
+  if(m<=0)return '0 months';
+  var y=Math.floor(m/12),mo=m%12;
+  if(y===0)return mo+(mo===1?' month':' months');
+  if(mo===0)return y+(y===1?' year':' years');
+  return y+'y '+mo+'m';
+}
+function fmtMoney(n){return '$'+Math.round(n).toLocaleString();}
+
+// ============ MAIN CALCULATE ============
+function calculate(){
+  var debts=collectDebts();
+  if(debts.length===0){
+    alert('Add at least one debt with a balance to see your plan.');
+    return;
+  }
+
+  // ----- Simulations -----
+  // Manual: each debt pays its min + its own extra (user's actual plan), rolled avalanche-style
+  var manual=simulate(debts,'avalanche','manual');
+  // Snowball variant of their manual extra (same total extra, but order by balance)
+  var manualSnow=simulate(debts,'snowball','manual');
+  // Minimums only (no extra anywhere) — the baseline
+  var noExtra=debts.map(function(x){return {name:x.name,type:x.type,bal:x.bal,rate:x.rate,min:x.min,extra:0};});
+  var minOnly=simulate(noExtra,'avalanche','manual');
+  // Optimal: take ALL their extra money and pool it onto highest-rate first
+  var optimal=simulate(debts,'avalanche','pooled');
+
+  var totalExtra=debts.reduce(function(s,x){return s+(x.extra||0);},0);
+
+  // ----- Hero: their actual (manual) plan -----
+  document.getElementById('heroTime').textContent=fmtMonths(manual.months);
+  var saved=minOnly.months-manual.months;
+  document.getElementById('heroSub').textContent=
+    totalExtra>0&&saved>0 ? ("That's "+fmtMonths(saved)+" faster than minimums only, with "+fmtMoney(totalExtra)+"/mo extra.")
+                          : 'Based on your minimum payments. Add extra to any debt to speed this up.';
+
+  // ----- Recommended order (avalanche) -----
+  var ordered=debts.slice().sort(function(a,b){return b.rate-a.rate;});
+  var topDebt=ordered[0];
+
+  // ----- "Attack this first" callout -----
+  var af=document.getElementById('attackFirst');
+  var afWhy='At <b>'+topDebt.rate+'% interest</b>, it\'s the most expensive debt you have — every month it grows faster than the others. Throw any extra money here first.';
+  // Is the user already putting their biggest extra on the right debt?
+  var userTopExtra=debts.slice().sort(function(a,b){return (b.extra||0)-(a.extra||0);})[0];
+  if(totalExtra>0 && userTopExtra && userTopExtra.name!==topDebt.name && (userTopExtra.extra||0)>0){
+    afWhy+=' <br><br>\u26A0\uFE0F Right now your biggest extra payment is going to <b>'+userTopExtra.name+'</b>. Shifting it to <b>'+topDebt.name+'</b> would save you more in interest.';
+  }
+  af.innerHTML='<span class="af-kicker">\uD83C\uDFAF Attack this first</span>'+
+    '<div class="af-debt">'+typeIcon(topDebt.type)+' '+topDebt.name+'</div>'+
+    '<div class="af-why">'+afWhy+'</div>';
+
+  // ----- Full order list -----
+  var ol=document.getElementById('orderList');ol.innerHTML='';
+  ordered.forEach(function(x,i){
+    var extraTag=(x.extra>0)?(' · <b style="color:#0C7D79">+'+fmtMoney(x.extra)+' extra</b>'):'';
+    ol.insertAdjacentHTML('beforeend',
+      '<div class="order-item"><div class="order-num">'+(i+1)+'</div>'+
+      '<div class="order-info"><div class="order-name">'+typeIcon(x.type)+' '+x.name+'</div>'+
+      '<div class="order-meta">'+fmtMoney(x.bal)+' balance · '+fmtMoney(x.min)+'/mo min'+extraTag+'</div></div>'+
+      '<div class="order-rate">'+x.rate+'%</div></div>');
+  });
+
+  // ----- Strategy comparison (their extra, avalanche vs snowball order) -----
+  document.getElementById('avaTime').textContent=fmtMonths(manual.months);
+  document.getElementById('avaInt').textContent=fmtMoney(manual.totalInterest);
+  document.getElementById('snowTime').textContent=fmtMonths(manualSnow.months);
+  document.getElementById('snowInt').textContent=fmtMoney(manualSnow.totalInterest);
+  var avaCard=document.getElementById('avaCard'),snowCard=document.getElementById('snowCard');
+  avaCard.classList.remove('winner');snowCard.classList.remove('winner');
+  var oldFlag=document.querySelector('.win-flag');if(oldFlag)oldFlag.remove();
+  var intDiff=manualSnow.totalInterest-manual.totalInterest;
+  if(intDiff>1){
+    avaCard.classList.add('winner');
+    avaCard.insertAdjacentHTML('beforeend','<span class="win-flag">Saves '+fmtMoney(intDiff)+'</span>');
+  }
+
+  // ----- Insight box -----
+  var insight=document.getElementById('insightBox');
+  var msg='';
+  if(totalExtra>0){
+    msg='Your plan puts <strong>'+fmtMoney(totalExtra)+'/month</strong> of extra toward debt — that gets you debt-free in <strong>'+fmtMonths(manual.months)+'</strong> and saves <strong>'+fmtMoney(minOnly.totalInterest-manual.totalInterest)+'</strong> in interest versus minimums only. ';
+    // optimal comparison
+    var optSave=manual.totalInterest-optimal.totalInterest;
+    if(optSave>50){
+      msg+='If you concentrated all that extra on <strong>'+topDebt.name+'</strong> first (instead of spreading it), you\'d save about <strong>'+fmtMoney(optSave)+'</strong> more and finish '+fmtMonths(Math.max(0,manual.months-optimal.months))+' sooner.';
+    } else {
+      msg+='You\'re allocating it efficiently — nicely done.';
+    }
+  } else {
+    msg='You haven\'t added any extra payments yet. Even <strong>'+fmtMoney(100)+'/month</strong> on '+topDebt.name+' would make a real dent. Try adding an amount in the "Extra/mo" box next to your highest-rate debt and recalculate.';
+  }
+  insight.innerHTML=msg;
+
+  // ----- Chart: minimums-only vs their actual plan -----
+  drawChart(minOnly.series, manual.series);
+
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ============ CANVAS CHART ============
+function drawChart(minSeries, extraSeries){
+  var cv=document.getElementById('payoffChart');
+  var ctx=cv.getContext('2d');
+  var W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  var padL=64,padR=20,padT=20,padB=42;
+  var plotW=W-padL-padR,plotH=H-padT-padB;
+  var maxMonths=Math.max(minSeries.length,extraSeries.length)-1;
+  var maxBal=Math.max(minSeries[0],extraSeries[0]);
+  // nice round max
+  var niceMax=Math.ceil(maxBal/1000)*1000;
+  function x(m){return padL+(m/maxMonths)*plotW;}
+  function y(b){return padT+plotH-(b/niceMax)*plotH;}
+  // grid + y labels
+  ctx.strokeStyle='#EAEFEE';ctx.lineWidth=1;ctx.fillStyle='#94a3b8';ctx.font='11px DM Sans, sans-serif';ctx.textAlign='right';
+  for(var i=0;i<=4;i++){
+    var val=niceMax*(1-i/4);var yy=padT+(plotH*i/4);
+    ctx.beginPath();ctx.moveTo(padL,yy);ctx.lineTo(W-padR,yy);ctx.stroke();
+    ctx.fillText('$'+Math.round(val/1000)+'k',padL-8,yy+4);
+  }
+  // x labels (years)
+  ctx.textAlign='center';
+  var totalYears=Math.ceil(maxMonths/12);
+  var step=totalYears<=6?1:(totalYears<=12?2:5);
+  for(var yr=0;yr<=totalYears;yr+=step){
+    var mm=yr*12;if(mm>maxMonths)break;
+    var xx=x(mm);
+    ctx.fillText(yr+'y',xx,H-padB+18);
+  }
+  // line drawer
+  function line(series,color,width){
+    ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();
+    for(var m=0;m<series.length;m++){
+      var px=x(m),py=y(Math.max(0,series[m]));
+      if(m===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+  }
+  // area under extra line (subtle)
+  ctx.fillStyle='rgba(14,165,160,.08)';ctx.beginPath();
+  for(var m=0;m<extraSeries.length;m++){var px=x(m),py=y(Math.max(0,extraSeries[m]));if(m===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);}
+  ctx.lineTo(x(extraSeries.length-1),y(0));ctx.lineTo(x(0),y(0));ctx.closePath();ctx.fill();
+  // draw lines
+  line(minSeries,'#94a3b8',2.5);
+  line(extraSeries,'#0EA5A0',3);
+}
+
+
+</script>
+<script src="../gate.js"></script>
+</body>
+</html>
