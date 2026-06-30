@@ -183,13 +183,36 @@ canvas{max-width:100%;height:auto;display:block}
 /* strategy tie explanation */
 .strategy-tie{background:rgba(14,165,160,.07);border:1px solid rgba(14,165,160,.2);border-radius:12px;padding:.9rem 1.1rem;font-size:.83rem;color:#0C7D79;line-height:1.55;margin-bottom:1.5rem;margin-top:-.5rem}
 .strategy-tie b{color:#0a6562}
+/* three-strategy comparison */
+.compare3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.1rem}
+.strat3-card{background:#fff;border:1.5px solid #E2E8F0;border-radius:14px;padding:1.2rem 1.1rem;position:relative;transition:border-color .2s,box-shadow .2s}
+.strat3-card.s3-winner{border-color:#0EA5A0;box-shadow:0 8px 24px rgba(14,165,160,.15)}
+.strat3-card.s3-winner::before{content:"✓ Cheapest";position:absolute;top:-.6rem;left:50%;transform:translateX(-50%);background:#0EA5A0;color:#fff;font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:.18rem .6rem;border-radius:99px;white-space:nowrap}
+.s3-name{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:#0B1929;margin-bottom:.3rem}
+.s3-desc{font-size:.74rem;color:#64748B;line-height:1.4;margin-bottom:.9rem;min-height:2.5em}
+.s3-desc b{color:#475569}
+.s3-row{display:flex;justify-content:space-between;align-items:baseline;padding:.35rem 0;border-top:1px solid #F1F5F4}
+.s3-lbl{font-size:.72rem;color:#94a3b8}
+.s3-val{font-size:.92rem;font-weight:800;color:#0B1929}
+.s3-invest{margin-top:.7rem;padding-top:.7rem;border-top:2px solid #ECF1F0;text-align:center}
+.s3-ilbl{display:block;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#0C7D79;margin-bottom:.2rem}
+.s3-ival{display:block;font-family:"Playfair Display",serif;font-size:1.3rem;font-weight:900;color:#0EA5A0;line-height:1}
+.invest-term-row{display:flex;align-items:center;justify-content:center;gap:.55rem;flex-wrap:wrap;background:#F5F7F6;border-radius:10px;padding:.8rem 1rem;margin-bottom:1rem}
+.itr-label{font-size:.85rem;font-weight:600;color:#0B1929}
+.itr-input-wrap{display:inline-flex;align-items:center;gap:.4rem;background:#fff;border:1.5px solid #0EA5A0;border-radius:8px;padding:.25rem .3rem .25rem .55rem}
+.itr-input-wrap input{width:2.8rem;border:none;background:transparent;font-size:1rem;font-weight:800;color:#0C7D79;text-align:right;outline:none;font-family:"DM Sans",sans-serif}
+.itr-suffix{font-size:.78rem;color:#475569;font-weight:600;padding-right:.4rem}
+.itr-note{font-size:.76rem;color:#94a3b8}
+.compare3-takeaway{background:rgba(14,165,160,.07);border:1px solid rgba(14,165,160,.2);border-radius:12px;padding:.95rem 1.15rem;font-size:.85rem;color:#0C7D79;line-height:1.6;margin-bottom:1.5rem;display:none}
+.compare3-takeaway b{color:#0a6562}
+@media(max-width:680px){.compare3-grid{grid-template-columns:1fr;gap:.8rem}.s3-desc{min-height:0}}
 /* pay X% more control */
 .more-box{margin-top:1.3rem;padding-top:1.2rem;border-top:1px solid #EAEFEE}
 .more-control{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:.8rem}
 .more-label{font-size:.9rem;font-weight:600;color:#0B1929}
 .more-input-wrap{display:inline-flex;align-items:center;background:#F5F7F6;border:1.5px solid #d97706;border-radius:9px;overflow:hidden}
-.more-input-wrap input{width:3.5rem;padding:.4rem .5rem;border:none;background:transparent;font-size:1rem;font-weight:800;color:#b45309;text-align:right;outline:none;font-family:"DM Sans",sans-serif}
-.more-input-wrap .more-pct{padding:0 .5rem 0 .1rem;font-size:.95rem;font-weight:800;color:#b45309}
+.more-input-wrap input{width:4.5rem;padding:.4rem .55rem .4rem .25rem;border:none;background:transparent;font-size:1rem;font-weight:800;color:#b45309;text-align:left;outline:none;font-family:"DM Sans",sans-serif}
+.more-input-wrap .more-dollar{padding:0 .1rem 0 .55rem;font-size:.95rem;font-weight:800;color:#b45309}
 .more-result{background:rgba(217,119,6,.07);border-radius:10px;padding:.85rem 1.1rem;font-size:.85rem;color:#92400e;line-height:1.6;text-align:center}
 .more-result b{color:#b45309}
 /* debt-free reward: invest the freed payment */
@@ -367,35 +390,49 @@ canvas{max-width:100%;height:auto;display:block}
 <div class="chart-legend">
 <div class="cl-item"><span class="cl-dot" style="background:#94a3b8"></span> Minimums only</div>
 <div class="cl-item"><span class="cl-dot" style="background:#0EA5A0"></span> With your extra payments</div>
-<div class="cl-item"><span class="cl-dot" style="background:#d97706"></span> Paying <span id="legendPct">25</span>% more</div>
+<div class="cl-item"><span class="cl-dot" style="background:#d97706"></span> Paying <span id="legendDollar">$100</span> more</div>
 </div>
 <div class="more-box">
 <div class="more-control">
-<span class="more-label">💪 What if you paid</span>
-<div class="more-input-wrap"><input type="number" id="morePctInput" value="25" min="1" max="500" onchange="recalcMore()" oninput="syncPctLabels()"><span class="more-pct">%</span></div>
-<span class="more-label">more each month?</span>
+<span class="more-label">💪 What if you paid an extra</span>
+<div class="more-input-wrap"><span class="more-dollar">$</span><input type="number" id="moreDollarInput" value="100" min="1" max="100000" step="25" onchange="recalcMore()" oninput="syncDollarLabels()"></div>
+<span class="more-label">each month?</span>
 </div>
 <div class="more-result" id="moreResult">Add extra payments above, then see how paying more speeds things up.</div>
 </div>
 </div>
 
-<h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#0B1929;margin:0 0 .9rem">Avalanche vs Snowball — your two best options</h3>
-<div class="compare-grid">
-<div class="strat-card avalanche" id="avaCard">
-<span class="strat-badge">Saves the most money</span>
-<div class="strat-name">❄️ Avalanche</div>
-<div class="strat-desc">Pay highest interest rate first. Mathematically the cheapest way out.</div>
-<div class="strat-stat"><span class="ss-label">Debt-free in</span><span class="ss-val teal" id="avaTime">—</span></div>
-<div class="strat-stat"><span class="ss-label">Total interest paid</span><span class="ss-val" id="avaInt">—</span></div>
+<h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#0B1929;margin:0 0 .4rem">Three ways to use your extra money</h3>
+<p style="font-size:.85rem;color:#64748B;margin:0 0 1.1rem;line-height:1.5">Same total extra each month, deployed three different ways. See how long each takes, what it costs in interest, and — since finishing sooner means investing sooner — what your freed-up payment could grow to.</p>
+<div class="compare3-grid">
+<div class="strat3-card" id="ava3Card">
+<div class="s3-name">❄️ Avalanche</div>
+<div class="s3-desc">All extra on your <b>highest interest rate</b> first</div>
+<div class="s3-row"><span class="s3-lbl">Debt-free in</span><span class="s3-val" id="ava3Time">—</span></div>
+<div class="s3-row"><span class="s3-lbl">Interest paid</span><span class="s3-val" id="ava3Int">—</span></div>
+<div class="s3-invest"><span class="s3-ilbl">Invested by then</span><span class="s3-ival" id="ava3Inv">—</span></div>
 </div>
-<div class="strat-card snowball" id="snowCard">
-<span class="strat-badge">Quick wins for motivation</span>
-<div class="strat-name">⛄ Snowball</div>
-<div class="strat-desc">Pay smallest balance first. Builds momentum with fast early wins.</div>
-<div class="strat-stat"><span class="ss-label">Debt-free in</span><span class="ss-val" id="snowTime">—</span></div>
-<div class="strat-stat"><span class="ss-label">Total interest paid</span><span class="ss-val" id="snowInt">—</span></div>
+<div class="strat3-card" id="snow3Card">
+<div class="s3-name">⛄ Snowball</div>
+<div class="s3-desc">All extra on your <b>smallest balance</b> first</div>
+<div class="s3-row"><span class="s3-lbl">Debt-free in</span><span class="s3-val" id="snow3Time">—</span></div>
+<div class="s3-row"><span class="s3-lbl">Interest paid</span><span class="s3-val" id="snow3Int">—</span></div>
+<div class="s3-invest"><span class="s3-ilbl">Invested by then</span><span class="s3-ival" id="snow3Inv">—</span></div>
+</div>
+<div class="strat3-card" id="spread3Card">
+<div class="s3-name">⚖️ Spread Evenly</div>
+<div class="s3-desc">Split the extra <b>equally</b> across all debts</div>
+<div class="s3-row"><span class="s3-lbl">Debt-free in</span><span class="s3-val" id="spread3Time">—</span></div>
+<div class="s3-row"><span class="s3-lbl">Interest paid</span><span class="s3-val" id="spread3Int">—</span></div>
+<div class="s3-invest"><span class="s3-ilbl">Invested by then</span><span class="s3-ival" id="spread3Inv">—</span></div>
 </div>
 </div>
+<div class="invest-term-row">
+<span class="itr-label">📈 Invested value shown</span>
+<div class="itr-input-wrap"><input type="number" id="investYears" value="20" min="1" max="50" onchange="recalcCompare()"><span class="itr-suffix">years from today</span></div>
+<span class="itr-note">at 7% average return</span>
+</div>
+<div class="compare3-takeaway" id="compare3Takeaway"></div>
 
 <div class="insight-box" id="insightBox" style="margin-bottom:1.5rem"></div>
 
@@ -535,50 +572,47 @@ function collectDebts(){
 // mode: 'manual' = each debt pays min + its own extra, freed money rolls to next by order
 //       'pooled' = sum all extra into one pool, apply by strategy order (for optimal compare)
 // strategy decides the ORDER freed/pooled money targets: 'avalanche' (rate) or 'snowball' (balance)
-function simulate(debts, strategy, mode, extraMult){
-  extraMult = extraMult || 1;  // 1 = as entered; 1.25 = pay 25% more
+function simulate(debts, strategy, mode, extraMult, extraDollars){
+  // mode is kept for backward-compat but the model is now unified & conservation-correct:
+  // the TOTAL monthly budget (all minimums + all extra) is fixed, and distributed each month
+  // by the chosen strategy. This guarantees every strategy spends the same money per month,
+  // so comparisons are fair. strategy: 'avalanche' | 'snowball' | 'spread'.
+  // extraDollars = a flat extra amount added to the monthly budget (for the "pay $X more" scenario).
+  extraMult = extraMult || 1;
+  extraDollars = extraDollars || 0;
   var d=debts.map(function(x){return {name:x.name,bal:x.bal,rate:x.rate,min:x.min,extra:(x.extra||0)*extraMult};});
-  var totalInterest=0;
-  var series=[];
-  var months=0;
-  var payoffMonths={};  // debt name -> month it hit zero
+  var budget=d.reduce(function(s,x){return s+x.min+x.extra;},0)+extraDollars; // fixed total monthly payment
+  var totalInterest=0, months=0, payoffMonths={};
   d.forEach(function(x){ payoffMonths[x.name]=null; });
-  series.push(d.reduce(function(s,x){return s+x.bal;},0));
-  var totalExtraPool=d.reduce(function(s,x){return s+(x.extra||0);},0);
+  var series=[d.reduce(function(s,x){return s+x.bal;},0)];
   var MAXM=1200;
   while(months<MAXM){
     var active=d.filter(function(x){return x.bal>0.01;});
     if(active.length===0)break;
-    // accrue interest
+    // accrue one month of interest
     active.forEach(function(x){var mi=x.bal*(x.rate/100/12);x.bal+=mi;totalInterest+=mi;});
-    // freed money that rolls onward
-    var pool;
-    if(mode==='pooled'){
-      pool=totalExtraPool;
-      active.forEach(function(x){var pay=Math.min(x.min,x.bal);x.bal-=pay;if(x.min>pay)pool+=(x.min-pay);});
-    } else {
-      // Manual mode: the TOTAL monthly budget (all mins + all extras) stays constant.
-      // Active debts pay their own min+extra; freed money from paid-off debts rolls onward.
-      // Compute the full budget once, subtract what active debts consume, roll the rest.
-      pool=0;
-      active.forEach(function(x){
-        var want=x.min+(x.extra||0);
-        var pay=Math.min(want,x.bal);
-        x.bal-=pay;
-        if(want>pay)pool+=(want-pay);
-      });
-      // Add the min+extra of debts that are ALREADY paid off (their budget is now free to roll)
-      d.forEach(function(x){
-        if(x.bal<=0.01){ pool+=(x.min+(x.extra||0)); }
-      });
-    }
-    // apply rolled/pooled money to remaining debts by strategy order
+    var avail=budget;
+    // 1) pay each active debt its minimum first (capped at balance and remaining budget)
+    active.forEach(function(x){var pay=Math.min(x.min,x.bal,avail);x.bal-=pay;avail-=pay;});
+    // 2) distribute the remaining budget by strategy
     var rem=d.filter(function(x){return x.bal>0.01;});
-    if(strategy==='avalanche'){rem.sort(function(a,b){return b.rate-a.rate;});}
-    else{rem.sort(function(a,b){return a.bal-b.bal;});}
-    for(var i=0;i<rem.length&&pool>0.01;i++){var pay=Math.min(pool,rem[i].bal);rem[i].bal-=pay;pool-=pay;}
+    if(strategy==='spread'){
+      // even split across remaining debts, mopping up any overflow, never exceeding avail
+      var guard=0;
+      while(rem.length>0 && avail>0.01 && guard<100){
+        var share=avail/rem.length;
+        var anyPaid=false;
+        for(var i=0;i<rem.length;i++){var pay=Math.min(share,rem[i].bal);if(pay>0.001){rem[i].bal-=pay;avail-=pay;anyPaid=true;}}
+        rem=d.filter(function(x){return x.bal>0.01;});
+        if(!anyPaid)break;
+        guard++;
+      }
+    } else {
+      if(strategy==='avalanche'){rem.sort(function(a,b){return b.rate-a.rate;});}
+      else{rem.sort(function(a,b){return a.bal-b.bal;});}
+      for(var k=0;k<rem.length&&avail>0.01;k++){var pay=Math.min(avail,rem[k].bal);rem[k].bal-=pay;avail-=pay;}
+    }
     months++;
-    // record any debts that just hit zero this month
     d.forEach(function(x){ if(payoffMonths[x.name]===null && x.bal<=0.01){ payoffMonths[x.name]=months; } });
     var tot=d.reduce(function(s,x){return s+Math.max(0,x.bal);},0);
     series.push(tot);
@@ -610,13 +644,13 @@ function calculate(){
   // Minimums only (no extra anywhere) — the baseline
   var noExtra=debts.map(function(x){return {name:x.name,type:x.type,bal:x.bal,rate:x.rate,min:x.min,extra:0};});
   var minOnly=simulate(noExtra,'avalanche','manual');
-  // Avalanche vs Snowball — POOLED mode so the STRATEGY actually matters (same total extra, applied strategically)
-  var avaPooled=simulate(debts,'avalanche','pooled');
-  var snowPooled=simulate(debts,'snowball','pooled');
+  // Three strategies, same total budget, deployed differently (unified conservation-correct model)
+  var avaPlan=simulate(debts,'avalanche','x');
+  var snowPlan=simulate(debts,'snowball','x');
+  var spreadPlan=simulate(debts,'spread','x');
   // "Pay X% more" scenario — uses the editable percentage, with rollover
-  var morePct=parseFloat(document.getElementById('morePctInput').value)||25;
-  var moreMult=1+(morePct/100);
-  var morePlan=simulate(debts,'avalanche','manual',moreMult);
+  var moreDollars=parseFloat(document.getElementById('moreDollarInput').value)||100;
+  var morePlan=simulate(debts,'avalanche','manual',1,moreDollars);
 
   var totalExtra=debts.reduce(function(s,x){return s+(x.extra||0);},0);
 
@@ -665,30 +699,12 @@ function calculate(){
       '<div class="order-rate">'+x.rate+'%</div></div>');
   });
 
-  // ----- Strategy comparison: Avalanche vs Snowball (POOLED — same extra, applied by strategy) -----
-  document.getElementById('avaTime').textContent=fmtMonths(avaPooled.months);
-  document.getElementById('avaInt').textContent=fmtMoney(avaPooled.totalInterest);
-  document.getElementById('snowTime').textContent=fmtMonths(snowPooled.months);
-  document.getElementById('snowInt').textContent=fmtMoney(snowPooled.totalInterest);
-  var avaCard=document.getElementById('avaCard'),snowCard=document.getElementById('snowCard');
-  avaCard.classList.remove('winner');snowCard.classList.remove('winner');
-  var oldFlag=document.querySelector('.win-flag');if(oldFlag)oldFlag.remove();
-  var oldTie=document.getElementById('strategyTie');if(oldTie)oldTie.remove();
-  var intDiff=snowPooled.totalInterest-avaPooled.totalInterest;
-  if(intDiff>1){
-    avaCard.classList.add('winner');
-    avaCard.insertAdjacentHTML('beforeend','<span class="win-flag">Saves '+fmtMoney(intDiff)+'</span>');
-  } else {
-    // Genuine tie — explain WHY (usually highest-rate debt is also smallest balance)
-    var byRate=debts.slice().sort(function(a,b){return b.rate-a.rate;});
-    var byBal=debts.slice().sort(function(a,b){return a.bal-b.bal;});
-    var sameOrder = byRate.every(function(d,i){return d.name===byBal[i].name;});
-    var tieMsg = sameOrder
-      ? 'For your debts these tie \u2014 your highest-interest debt (<b>'+byRate[0].name+'</b>) is also one of your smallest, so both methods pay it first anyway.'
-      : 'For your debts these come out about even on interest, so pick whichever keeps you motivated.';
-    var grid=document.querySelector('.compare-grid');
-    if(grid){grid.insertAdjacentHTML('afterend','<div id="strategyTie" class="strategy-tie">\uD83E\uDD1D <b>It\'s a tie!</b> '+tieMsg+'</div>');}
-  }
+  // ----- Three-strategy comparison (stored for the editable-term recompute) -----
+  window._cmp={
+    debts:debts, totalBudget:debts.reduce(function(s,x){return s+x.min+(x.extra||0);},0),
+    ava:avaPlan, snow:snowPlan, spread:spreadPlan
+  };
+  renderCompare3();
 
   // ----- Insight box -----
   var insight=document.getElementById('insightBox');
@@ -696,9 +712,9 @@ function calculate(){
   if(totalExtra>0){
     msg='Your plan puts <strong>'+fmtMoney(totalExtra)+'/month</strong> of extra toward debt — that gets you debt-free in <strong>'+fmtMonths(manual.months)+'</strong> and saves <strong>'+fmtMoney(minOnly.totalInterest-manual.totalInterest)+'</strong> in interest versus minimums only. ';
     // optimal comparison
-    var optSave=manual.totalInterest-avaPooled.totalInterest;
+    var optSave=manual.totalInterest-avaPlan.totalInterest;
     if(optSave>50){
-      msg+='If you concentrated all that extra on <strong>'+topDebt.name+'</strong> first (instead of spreading it), you\'d save about <strong>'+fmtMoney(optSave)+'</strong> more and finish '+fmtMonths(Math.max(0,manual.months-avaPooled.months))+' sooner.';
+      msg+='If you concentrated all that extra on <strong>'+topDebt.name+'</strong> first (instead of spreading it), you\'d save about <strong>'+fmtMoney(optSave)+'</strong> more and finish '+fmtMonths(Math.max(0,manual.months-avaPlan.months))+' sooner.';
     } else {
       msg+='You\'re allocating it efficiently — nicely done.';
     }
@@ -708,15 +724,15 @@ function calculate(){
   insight.innerHTML=msg;
 
   // ----- Chart: minimums-only vs their plan vs +X% more (3 lines) -----
-  drawChart(minOnly.series, manual.series, morePlan.series, morePct);
+  drawChart(minOnly.series, manual.series, morePlan.series, moreDollars);
   // update the +X% scenario summary text
   var moreSaved=manual.months-morePlan.months;
   var moreEl=document.getElementById('moreResult');
   if(moreEl){
     if(totalExtra>0){
-      moreEl.innerHTML='Paying <b>'+morePct+'% more</b> on your extra payments (about <b>'+fmtMoney(totalExtra*morePct/100)+'/mo</b> on top) gets you debt-free '+(moreSaved>0?('<b>'+fmtMonths(moreSaved)+' sooner</b>'):'at about the same time')+' and saves <b>'+fmtMoney(manual.totalInterest-morePlan.totalInterest)+'</b> more in interest.';
+      moreEl.innerHTML='Putting <b>'+fmtMoney(moreDollars)+'/mo more</b> toward your debt gets you debt-free '+(moreSaved>0?('<b>'+fmtMonths(moreSaved)+' sooner</b>'):'at about the same time')+' and saves <b>'+fmtMoney(manual.totalInterest-morePlan.totalInterest)+'</b> in interest.';
     } else {
-      moreEl.innerHTML='Add some extra payments above first, then this shows how paying <b>'+morePct+'% more</b> would speed things up.';
+      moreEl.innerHTML='Putting <b>'+fmtMoney(moreDollars)+'/mo more</b> toward your debt would get you debt-free <b>'+fmtMonths(moreSaved)+' sooner</b> and save <b>'+fmtMoney(manual.totalInterest-morePlan.totalInterest)+'</b> in interest.';
     }
   }
 
@@ -726,6 +742,55 @@ function calculate(){
 
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ============ Three-strategy comparison ============
+function renderCompare3(){
+  if(!window._cmp)return;
+  var c=window._cmp;
+  var years=parseFloat(document.getElementById('investYears').value)||20;
+  var endMonths=years*12;
+  var budget=c.totalBudget;
+  // For each strategy: invest the full budget from payoff month until the shared end date.
+  function investedBy(plan){
+    var investMonths=Math.max(0, endMonths - plan.months); // months spent investing after payoff
+    var r=0.07/12;
+    return budget*((Math.pow(1+r,investMonths)-1)/r);
+  }
+  function fill(prefix,plan){
+    document.getElementById(prefix+'Time').textContent=fmtMonths(plan.months);
+    document.getElementById(prefix+'Int').textContent=fmtMoney(plan.totalInterest);
+    document.getElementById(prefix+'Inv').textContent=fmtMoney(Math.round(investedBy(plan)));
+  }
+  fill('ava3',c.ava); fill('snow3',c.snow); fill('spread3',c.spread);
+
+  // Highlight the cheapest-interest strategy as the winner
+  ['ava3Card','snow3Card','spread3Card'].forEach(function(id){document.getElementById(id).classList.remove('s3-winner');});
+  var plans=[{id:'ava3Card',p:c.ava,name:'Avalanche'},{id:'snow3Card',p:c.snow,name:'Snowball'},{id:'spread3Card',p:c.spread,name:'Spreading evenly'}];
+  var cheapest=plans.slice().sort(function(a,b){return a.p.totalInterest-b.p.totalInterest;})[0];
+  document.getElementById(cheapest.id).classList.add('s3-winner');
+
+  // Takeaway: compare cheapest vs most expensive
+  var most=plans.slice().sort(function(a,b){return b.p.totalInterest-a.p.totalInterest;})[0];
+  var t=document.getElementById('compare3Takeaway');
+  var intGap=most.p.totalInterest-cheapest.p.totalInterest;
+  var invGap=investedBy(cheapest.p)-investedBy(most.p);
+  if(intGap>5 || invGap>5){
+    var parts='<b>'+cheapest.name+'</b> comes out ahead — ';
+    var bits=[];
+    if(intGap>5)bits.push('it saves <b>'+fmtMoney(intGap)+'</b> in interest vs '+most.name.toLowerCase());
+    if(invGap>50)bits.push('and because you finish sooner, you\'d have about <b>'+fmtMoney(invGap)+'</b> more invested by year '+years);
+    t.innerHTML='\uD83D\uDCA1 '+parts+bits.join(' ')+'.';
+    t.style.display='block';
+  } else {
+    t.innerHTML='\uD83E\uDD1D For your specific debts, all three come out about the same — so pick whichever keeps you most motivated to keep going.';
+    t.style.display='block';
+  }
+}
+function recalcCompare(){
+  var lp=document.getElementById('investYears');
+  if(lp){ var v=parseInt(lp.value)||20; if(v<1)lp.value=1; if(v>50)lp.value=50; }
+  renderCompare3();
 }
 
 // ============ Debt-free reward: invest the freed payment ============
@@ -748,13 +813,13 @@ function renderFreedomInvest(monthly, payoffMonths){
 }
 
 // ============ "Pay X% more" helpers ============
-function syncPctLabels(){
-  var v=document.getElementById('morePctInput').value||'25';
-  var lp=document.getElementById('legendPct');if(lp)lp.textContent=v;
+function syncDollarLabels(){
+  var v=document.getElementById('moreDollarInput').value||'100';
+  var lp=document.getElementById('legendDollar');if(lp)lp.textContent='$'+v;
 }
 function recalcMore(){
-  syncPctLabels();
-  // Re-run the full calculation so the chart + summary update with the new %
+  syncDollarLabels();
+  // Re-run the full calculation so the chart + summary update with the new amount
   if(document.getElementById('results').classList.contains('show')){ calculate(); }
 }
 
