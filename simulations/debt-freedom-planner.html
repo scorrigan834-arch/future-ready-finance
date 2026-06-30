@@ -176,6 +176,22 @@ input[type=number]:focus,input[type=text].frf-comma:focus{border-color:#0EA5A0;b
 .cl-item{display:flex;align-items:center;gap:.45rem;font-size:.78rem;color:#475569;font-weight:600}
 .cl-dot{width:14px;height:4px;border-radius:99px}
 canvas{max-width:100%;height:auto;display:block}
+/* months-remaining per debt */
+.order-payoff{margin-top:.4rem;display:flex;gap:.7rem;flex-wrap:wrap;align-items:center}
+.order-payoff .op-plan{font-size:.76rem;font-weight:700;color:#0C7D79;background:rgba(14,165,160,.1);padding:.12rem .5rem;border-radius:99px}
+.order-payoff .op-min{font-size:.72rem;color:#94a3b8}
+/* strategy tie explanation */
+.strategy-tie{background:rgba(14,165,160,.07);border:1px solid rgba(14,165,160,.2);border-radius:12px;padding:.9rem 1.1rem;font-size:.83rem;color:#0C7D79;line-height:1.55;margin-bottom:1.5rem;margin-top:-.5rem}
+.strategy-tie b{color:#0a6562}
+/* pay X% more control */
+.more-box{margin-top:1.3rem;padding-top:1.2rem;border-top:1px solid #EAEFEE}
+.more-control{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:.8rem}
+.more-label{font-size:.9rem;font-weight:600;color:#0B1929}
+.more-input-wrap{display:inline-flex;align-items:center;background:#F5F7F6;border:1.5px solid #d97706;border-radius:9px;overflow:hidden}
+.more-input-wrap input{width:3.5rem;padding:.4rem .5rem;border:none;background:transparent;font-size:1rem;font-weight:800;color:#b45309;text-align:right;outline:none;font-family:"DM Sans",sans-serif}
+.more-input-wrap .more-pct{padding:0 .5rem 0 .1rem;font-size:.95rem;font-weight:800;color:#b45309}
+.more-result{background:rgba(217,119,6,.07);border-radius:10px;padding:.85rem 1.1rem;font-size:.85rem;color:#92400e;line-height:1.6;text-align:center}
+.more-result b{color:#b45309}
 @media(max-width:720px){.compare-grid{grid-template-columns:1fr}
  .debt-row{grid-template-columns:1fr 1fr;gap:.5rem}
  .debt-row .dr-name{grid-column:1/-1}
@@ -329,11 +345,20 @@ canvas{max-width:100%;height:auto;display:block}
 
 <div class="chart-box">
 <h3>📉 Your payoff timeline</h3>
-<div class="cb-sub">See how much faster you reach zero with your extra payment versus minimums only.</div>
+<div class="cb-sub">See how fast you reach zero — at minimums, with your plan, and if you paid a little more.</div>
 <canvas id="payoffChart" width="800" height="360"></canvas>
 <div class="chart-legend">
 <div class="cl-item"><span class="cl-dot" style="background:#94a3b8"></span> Minimums only</div>
 <div class="cl-item"><span class="cl-dot" style="background:#0EA5A0"></span> With your extra payments</div>
+<div class="cl-item"><span class="cl-dot" style="background:#d97706"></span> Paying <span id="legendPct">25</span>% more</div>
+</div>
+<div class="more-box">
+<div class="more-control">
+<span class="more-label">💪 What if you paid</span>
+<div class="more-input-wrap"><input type="number" id="morePctInput" value="25" min="1" max="500" onchange="recalcMore()" oninput="syncPctLabels()"><span class="more-pct">%</span></div>
+<span class="more-label">more each month?</span>
+</div>
+<div class="more-result" id="moreResult">Add extra payments above, then see how paying more speeds things up.</div>
 </div>
 </div>
 
@@ -465,11 +490,14 @@ function collectDebts(){
 // mode: 'manual' = each debt pays min + its own extra, freed money rolls to next by order
 //       'pooled' = sum all extra into one pool, apply by strategy order (for optimal compare)
 // strategy decides the ORDER freed/pooled money targets: 'avalanche' (rate) or 'snowball' (balance)
-function simulate(debts, strategy, mode){
-  var d=debts.map(function(x){return {name:x.name,bal:x.bal,rate:x.rate,min:x.min,extra:x.extra||0};});
+function simulate(debts, strategy, mode, extraMult){
+  extraMult = extraMult || 1;  // 1 = as entered; 1.25 = pay 25% more
+  var d=debts.map(function(x){return {name:x.name,bal:x.bal,rate:x.rate,min:x.min,extra:(x.extra||0)*extraMult};});
   var totalInterest=0;
   var series=[];
   var months=0;
+  var payoffMonths={};  // debt name -> month it hit zero
+  d.forEach(function(x){ payoffMonths[x.name]=null; });
   series.push(d.reduce(function(s,x){return s+x.bal;},0));
   var totalExtraPool=d.reduce(function(s,x){return s+(x.extra||0);},0);
   var MAXM=1200;
@@ -482,16 +510,21 @@ function simulate(debts, strategy, mode){
     var pool;
     if(mode==='pooled'){
       pool=totalExtraPool;
-      // pay minimums only
       active.forEach(function(x){var pay=Math.min(x.min,x.bal);x.bal-=pay;if(x.min>pay)pool+=(x.min-pay);});
     } else {
-      // manual: each debt pays min + its OWN extra; collect freed amounts from paid-off debts
+      // Manual mode: the TOTAL monthly budget (all mins + all extras) stays constant.
+      // Active debts pay their own min+extra; freed money from paid-off debts rolls onward.
+      // Compute the full budget once, subtract what active debts consume, roll the rest.
       pool=0;
       active.forEach(function(x){
         var want=x.min+(x.extra||0);
         var pay=Math.min(want,x.bal);
         x.bal-=pay;
-        if(want>pay)pool+=(want-pay); // overpayment rolls onward
+        if(want>pay)pool+=(want-pay);
+      });
+      // Add the min+extra of debts that are ALREADY paid off (their budget is now free to roll)
+      d.forEach(function(x){
+        if(x.bal<=0.01){ pool+=(x.min+(x.extra||0)); }
       });
     }
     // apply rolled/pooled money to remaining debts by strategy order
@@ -500,11 +533,13 @@ function simulate(debts, strategy, mode){
     else{rem.sort(function(a,b){return a.bal-b.bal;});}
     for(var i=0;i<rem.length&&pool>0.01;i++){var pay=Math.min(pool,rem[i].bal);rem[i].bal-=pay;pool-=pay;}
     months++;
+    // record any debts that just hit zero this month
+    d.forEach(function(x){ if(payoffMonths[x.name]===null && x.bal<=0.01){ payoffMonths[x.name]=months; } });
     var tot=d.reduce(function(s,x){return s+Math.max(0,x.bal);},0);
     series.push(tot);
     if(tot<0.01)break;
   }
-  return {months:months,totalInterest:totalInterest,series:series};
+  return {months:months,totalInterest:totalInterest,series:series,payoffMonths:payoffMonths};
 }
 
 function fmtMonths(m){
@@ -527,13 +562,16 @@ function calculate(){
   // ----- Simulations -----
   // Manual: each debt pays its min + its own extra (user's actual plan), rolled avalanche-style
   var manual=simulate(debts,'avalanche','manual');
-  // Snowball variant of their manual extra (same total extra, but order by balance)
-  var manualSnow=simulate(debts,'snowball','manual');
   // Minimums only (no extra anywhere) — the baseline
   var noExtra=debts.map(function(x){return {name:x.name,type:x.type,bal:x.bal,rate:x.rate,min:x.min,extra:0};});
   var minOnly=simulate(noExtra,'avalanche','manual');
-  // Optimal: take ALL their extra money and pool it onto highest-rate first
-  var optimal=simulate(debts,'avalanche','pooled');
+  // Avalanche vs Snowball — POOLED mode so the STRATEGY actually matters (same total extra, applied strategically)
+  var avaPooled=simulate(debts,'avalanche','pooled');
+  var snowPooled=simulate(debts,'snowball','pooled');
+  // "Pay X% more" scenario — uses the editable percentage, with rollover
+  var morePct=parseFloat(document.getElementById('morePctInput').value)||25;
+  var moreMult=1+(morePct/100);
+  var morePlan=simulate(debts,'avalanche','manual',moreMult);
 
   var totalExtra=debts.reduce(function(s,x){return s+(x.extra||0);},0);
 
@@ -560,29 +598,51 @@ function calculate(){
     '<div class="af-debt">'+typeIcon(topDebt.type)+' '+topDebt.name+'</div>'+
     '<div class="af-why">'+afWhy+'</div>';
 
-  // ----- Full order list -----
+  // ----- Full order list (with months remaining per debt) -----
   var ol=document.getElementById('orderList');ol.innerHTML='';
   ordered.forEach(function(x,i){
     var extraTag=(x.extra>0)?(' · <b style="color:#0C7D79">+'+fmtMoney(x.extra)+' extra</b>'):'';
+    var moPlan=manual.payoffMonths[x.name];
+    var moMin=minOnly.payoffMonths[x.name];
+    var payoffLine='';
+    if(moPlan){
+      payoffLine='<div class="order-payoff"><span class="op-plan">\u2713 Paid off in '+fmtMonths(moPlan)+'</span>';
+      if(moMin && moMin>moPlan){
+        payoffLine+='<span class="op-min">vs '+fmtMonths(moMin)+' at minimum</span>';
+      }
+      payoffLine+='</div>';
+    }
     ol.insertAdjacentHTML('beforeend',
       '<div class="order-item"><div class="order-num">'+(i+1)+'</div>'+
       '<div class="order-info"><div class="order-name">'+typeIcon(x.type)+' '+x.name+'</div>'+
-      '<div class="order-meta">'+fmtMoney(x.bal)+' balance · '+fmtMoney(x.min)+'/mo min'+extraTag+'</div></div>'+
+      '<div class="order-meta">'+fmtMoney(x.bal)+' balance · '+fmtMoney(x.min)+'/mo min'+extraTag+'</div>'+
+      payoffLine+'</div>'+
       '<div class="order-rate">'+x.rate+'%</div></div>');
   });
 
-  // ----- Strategy comparison (their extra, avalanche vs snowball order) -----
-  document.getElementById('avaTime').textContent=fmtMonths(manual.months);
-  document.getElementById('avaInt').textContent=fmtMoney(manual.totalInterest);
-  document.getElementById('snowTime').textContent=fmtMonths(manualSnow.months);
-  document.getElementById('snowInt').textContent=fmtMoney(manualSnow.totalInterest);
+  // ----- Strategy comparison: Avalanche vs Snowball (POOLED — same extra, applied by strategy) -----
+  document.getElementById('avaTime').textContent=fmtMonths(avaPooled.months);
+  document.getElementById('avaInt').textContent=fmtMoney(avaPooled.totalInterest);
+  document.getElementById('snowTime').textContent=fmtMonths(snowPooled.months);
+  document.getElementById('snowInt').textContent=fmtMoney(snowPooled.totalInterest);
   var avaCard=document.getElementById('avaCard'),snowCard=document.getElementById('snowCard');
   avaCard.classList.remove('winner');snowCard.classList.remove('winner');
   var oldFlag=document.querySelector('.win-flag');if(oldFlag)oldFlag.remove();
-  var intDiff=manualSnow.totalInterest-manual.totalInterest;
+  var oldTie=document.getElementById('strategyTie');if(oldTie)oldTie.remove();
+  var intDiff=snowPooled.totalInterest-avaPooled.totalInterest;
   if(intDiff>1){
     avaCard.classList.add('winner');
     avaCard.insertAdjacentHTML('beforeend','<span class="win-flag">Saves '+fmtMoney(intDiff)+'</span>');
+  } else {
+    // Genuine tie — explain WHY (usually highest-rate debt is also smallest balance)
+    var byRate=debts.slice().sort(function(a,b){return b.rate-a.rate;});
+    var byBal=debts.slice().sort(function(a,b){return a.bal-b.bal;});
+    var sameOrder = byRate.every(function(d,i){return d.name===byBal[i].name;});
+    var tieMsg = sameOrder
+      ? 'For your debts these tie \u2014 your highest-interest debt (<b>'+byRate[0].name+'</b>) is also one of your smallest, so both methods pay it first anyway.'
+      : 'For your debts these come out about even on interest, so pick whichever keeps you motivated.';
+    var grid=document.querySelector('.compare-grid');
+    if(grid){grid.insertAdjacentHTML('afterend','<div id="strategyTie" class="strategy-tie">\uD83E\uDD1D <b>It\'s a tie!</b> '+tieMsg+'</div>');}
   }
 
   // ----- Insight box -----
@@ -591,9 +651,9 @@ function calculate(){
   if(totalExtra>0){
     msg='Your plan puts <strong>'+fmtMoney(totalExtra)+'/month</strong> of extra toward debt — that gets you debt-free in <strong>'+fmtMonths(manual.months)+'</strong> and saves <strong>'+fmtMoney(minOnly.totalInterest-manual.totalInterest)+'</strong> in interest versus minimums only. ';
     // optimal comparison
-    var optSave=manual.totalInterest-optimal.totalInterest;
+    var optSave=manual.totalInterest-avaPooled.totalInterest;
     if(optSave>50){
-      msg+='If you concentrated all that extra on <strong>'+topDebt.name+'</strong> first (instead of spreading it), you\'d save about <strong>'+fmtMoney(optSave)+'</strong> more and finish '+fmtMonths(Math.max(0,manual.months-optimal.months))+' sooner.';
+      msg+='If you concentrated all that extra on <strong>'+topDebt.name+'</strong> first (instead of spreading it), you\'d save about <strong>'+fmtMoney(optSave)+'</strong> more and finish '+fmtMonths(Math.max(0,manual.months-avaPooled.months))+' sooner.';
     } else {
       msg+='You\'re allocating it efficiently — nicely done.';
     }
@@ -602,25 +662,47 @@ function calculate(){
   }
   insight.innerHTML=msg;
 
-  // ----- Chart: minimums-only vs their actual plan -----
-  drawChart(minOnly.series, manual.series);
+  // ----- Chart: minimums-only vs their plan vs +X% more (3 lines) -----
+  drawChart(minOnly.series, manual.series, morePlan.series, morePct);
+  // update the +X% scenario summary text
+  var moreSaved=manual.months-morePlan.months;
+  var moreEl=document.getElementById('moreResult');
+  if(moreEl){
+    if(totalExtra>0){
+      moreEl.innerHTML='Paying <b>'+morePct+'% more</b> on your extra payments (about <b>'+fmtMoney(totalExtra*morePct/100)+'/mo</b> on top) gets you debt-free '+(moreSaved>0?('<b>'+fmtMonths(moreSaved)+' sooner</b>'):'at about the same time')+' and saves <b>'+fmtMoney(manual.totalInterest-morePlan.totalInterest)+'</b> more in interest.';
+    } else {
+      moreEl.innerHTML='Add some extra payments above first, then this shows how paying <b>'+morePct+'% more</b> would speed things up.';
+    }
+  }
 
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
+// ============ "Pay X% more" helpers ============
+function syncPctLabels(){
+  var v=document.getElementById('morePctInput').value||'25';
+  var lp=document.getElementById('legendPct');if(lp)lp.textContent=v;
+}
+function recalcMore(){
+  syncPctLabels();
+  // Re-run the full calculation so the chart + summary update with the new %
+  if(document.getElementById('results').classList.contains('show')){ calculate(); }
+}
+
 // ============ CANVAS CHART ============
-function drawChart(minSeries, extraSeries){
+function drawChart(minSeries, planSeries, moreSeries, morePct){
   var cv=document.getElementById('payoffChart');
   var ctx=cv.getContext('2d');
   var W=cv.width,H=cv.height;
   ctx.clearRect(0,0,W,H);
   var padL=64,padR=20,padT=20,padB=42;
   var plotW=W-padL-padR,plotH=H-padT-padB;
-  var maxMonths=Math.max(minSeries.length,extraSeries.length)-1;
-  var maxBal=Math.max(minSeries[0],extraSeries[0]);
-  // nice round max
+  var maxMonths=Math.max(minSeries.length,planSeries.length,moreSeries?moreSeries.length:0)-1;
+  if(maxMonths<1)maxMonths=1;
+  var maxBal=Math.max(minSeries[0],planSeries[0]);
   var niceMax=Math.ceil(maxBal/1000)*1000;
+  if(niceMax<=0)niceMax=1000;
   function x(m){return padL+(m/maxMonths)*plotW;}
   function y(b){return padT+plotH-(b/niceMax)*plotH;}
   // grid + y labels
@@ -636,25 +718,31 @@ function drawChart(minSeries, extraSeries){
   var step=totalYears<=6?1:(totalYears<=12?2:5);
   for(var yr=0;yr<=totalYears;yr+=step){
     var mm=yr*12;if(mm>maxMonths)break;
-    var xx=x(mm);
-    ctx.fillText(yr+'y',xx,H-padB+18);
+    ctx.fillText(yr+'y',x(mm),H-padB+18);
   }
   // line drawer
-  function line(series,color,width){
+  function line(series,color,width,dash){
+    if(!series)return;
+    ctx.save();
+    if(dash)ctx.setLineDash(dash);
     ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();
     for(var m=0;m<series.length;m++){
       var px=x(m),py=y(Math.max(0,series[m]));
       if(m===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
     }
     ctx.stroke();
+    ctx.restore();
   }
-  // area under extra line (subtle)
-  ctx.fillStyle='rgba(14,165,160,.08)';ctx.beginPath();
-  for(var m=0;m<extraSeries.length;m++){var px=x(m),py=y(Math.max(0,extraSeries[m]));if(m===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);}
-  ctx.lineTo(x(extraSeries.length-1),y(0));ctx.lineTo(x(0),y(0));ctx.closePath();ctx.fill();
-  // draw lines
+  // subtle area under the "more" (fastest) line
+  if(moreSeries){
+    ctx.fillStyle='rgba(251,191,36,.07)';ctx.beginPath();
+    for(var m=0;m<moreSeries.length;m++){var px=x(m),py=y(Math.max(0,moreSeries[m]));if(m===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);}
+    ctx.lineTo(x(moreSeries.length-1),y(0));ctx.lineTo(x(0),y(0));ctx.closePath();ctx.fill();
+  }
+  // draw 3 lines: minimums (gray), your plan (teal), +X% more (gold)
   line(minSeries,'#94a3b8',2.5);
-  line(extraSeries,'#0EA5A0',3);
+  line(planSeries,'#0EA5A0',3);
+  line(moreSeries,'#d97706',2.5,[6,4]);
 }
 
 
