@@ -457,6 +457,50 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
 .lb-sub{font-size:1rem;opacity:.95;line-height:1.5;margin-bottom:1rem}
 .lb-card-mini{background:rgba(255,255,255,.18);border-radius:14px;padding:1rem;margin-top:1rem}
 
+/* ===== Money Tree 3.0 — juice, goals, events ===== */
+/* Goal banner */
+.tree-goal-banner{background:linear-gradient(135deg,#0EA5A0,#3b82f6);border-radius:14px;padding:.7rem 1.1rem;max-width:400px;margin:0 auto 1rem;text-align:center;color:#fff;font-weight:700;font-size:.9rem;box-shadow:0 8px 20px rgba(14,165,160,.25)}
+.tree-goal-banner .tgb-target{font-size:1.15rem;font-weight:900;font-family:"Playfair Display",serif}
+.tree-goal-prog{background:rgba(255,255,255,.28);border-radius:99px;height:8px;margin-top:.4rem;overflow:hidden}
+.tree-goal-prog-fill{background:#fff;height:100%;border-radius:99px;width:0;transition:width .6s ease}
+/* Goal picker chips */
+.goal-target-row{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-top:.75rem}
+.goal-target-chip{background:#fff;border:2px solid #e2e8f0;border-radius:12px;padding:.55rem .9rem;cursor:pointer;font-weight:700;font-size:.85rem;color:#334155;transition:all .18s;font-family:inherit}
+.goal-target-chip:hover{border-color:#0EA5A0}
+.goal-target-chip.picked{border-color:#0EA5A0;background:linear-gradient(135deg,#ecfeff,#fff);color:#0C7D79}
+/* Tap-to-water: the watering can + tap zone */
+.water-tap-zone{text-align:center;margin:.3rem 0 .6rem}
+.water-can-btn{display:inline-flex;flex-direction:column;align-items:center;gap:.2rem;background:linear-gradient(135deg,#0EA5A0,#3b82f6);border:none;border-radius:20px;padding:1rem 1.5rem;cursor:pointer;box-shadow:0 8px 22px rgba(14,165,160,.32);transition:transform .1s;font-family:inherit;color:#fff;-webkit-tap-highlight-color:transparent;user-select:none}
+.water-can-btn:active{transform:scale(.92)}
+.water-can-emoji{font-size:2.2rem;line-height:1;pointer-events:none}
+.water-can-label{font-size:.78rem;font-weight:800;pointer-events:none}
+.water-tap-count{font-size:.72rem;color:#64748b;font-weight:700;margin-top:.35rem}
+.water-tap-count b{color:#0C7D79}
+.water-done-btn{display:block;margin:.6rem auto 0;background:#22c55e;color:#fff;border:none;border-radius:12px;padding:.6rem 1.6rem;font-weight:800;cursor:pointer;font-family:inherit;font-size:.88rem;box-shadow:0 6px 16px rgba(34,197,94,.3)}
+/* Droplet animation */
+@keyframes dropletFall{0%{transform:translateY(-10px);opacity:1}100%{transform:translateY(60px);opacity:0}}
+.droplet{position:absolute;font-size:1.1rem;pointer-events:none;animation:dropletFall .7s ease-in forwards;z-index:6}
+/* Sparkle animation */
+@keyframes sparklePop{0%{transform:scale(0) rotate(0deg);opacity:0}40%{transform:scale(1.2) rotate(90deg);opacity:1}100%{transform:scale(0) rotate(180deg);opacity:0}}
+.sparkle{position:absolute;font-size:1.2rem;pointer-events:none;animation:sparklePop 1s ease-out forwards;z-index:6}
+/* Tree swaying */
+@keyframes treeSway{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1deg)}}
+.tree-svg-wrap.sway svg{transform-origin:50% 90%;animation:treeSway 4s ease-in-out infinite}
+/* Surprise event card */
+.tree-event{border-radius:16px;padding:1.1rem 1.2rem;max-width:400px;margin:0 auto .7rem;text-align:center;display:none}
+.tree-event.show{display:block;animation:fadeUp .4s}
+.tree-event.good{background:linear-gradient(135deg,#dcfce7,#fff);border:2px solid #86efac}
+.tree-event.bad{background:linear-gradient(135deg,#fef3c7,#fff);border:2px solid #fcd34d}
+.te-emoji{font-size:2.5rem;line-height:1}
+.te-title{font-weight:800;font-size:1rem;margin:.3rem 0;color:#1e293b}
+.te-desc{font-size:.85rem;color:#475569;margin-bottom:.75rem;line-height:1.4}
+.te-btns{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}
+.te-btns button{border:none;border-radius:10px;padding:.55rem 1.1rem;font-weight:700;cursor:pointer;font-family:inherit;font-size:.85rem}
+.te-btn-primary{background:linear-gradient(135deg,#0EA5A0,#3b82f6);color:#fff}
+.te-btn-secondary{background:#e2e8f0;color:#334155}
+/* Win badge in finale */
+.tf-win-badge{display:inline-block;background:#fbbf24;color:#78350f;font-weight:900;font-size:.85rem;padding:.35rem 1rem;border-radius:99px;margin-bottom:.6rem}
+
 </style>
 </head>
 <body>
@@ -617,14 +661,24 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
           <button class="seed-opt" data-seed="10" onclick="pickSeed(10)"><span class="seed-em">🌱</span><span class="seed-amt">$10</span><span class="seed-lbl">Medium seed</span></button>
           <button class="seed-opt" data-seed="20" onclick="pickSeed(20)"><span class="seed-em">🌿</span><span class="seed-amt">$20</span><span class="seed-lbl">Big seed</span></button>
         </div>
-        <button class="tree-done-btn" id="plantBtn" onclick="plantTree()" style="max-width:320px;margin:1.25rem auto 0;opacity:.4;pointer-events:none">Pick a seed to plant! ⬆️</button>
+        <div class="tss-sub" style="margin-top:1.25rem;margin-bottom:.3rem"><b>🎯 Pick your goal:</b> how big can you grow your tree in 12 years?</div>
+        <div class="goal-target-row" id="goalTargetRow">
+          <button class="goal-target-chip" data-goal="100" onclick="pickTreeGoal(100)">🌳 $100</button>
+          <button class="goal-target-chip" data-goal="250" onclick="pickTreeGoal(250)">🌟 $250</button>
+          <button class="goal-target-chip" data-goal="500" onclick="pickTreeGoal(500)">🏆 $500</button>
+        </div>
+        <button class="tree-done-btn" id="plantBtn" onclick="plantTree()" style="max-width:320px;margin:1.25rem auto 0;opacity:.4;pointer-events:none">Pick a seed &amp; goal! ⬆️</button>
       </div>
 
       <!-- GAME (hidden until planted) -->
       <div id="treeGamePlay" style="display:none">
+        <div class="tree-goal-banner" id="treeGoalBanner">
+          <div>🎯 Goal: grow a <span class="tgb-target" id="tgbTarget">$100</span> tree!</div>
+          <div class="tree-goal-prog"><div class="tree-goal-prog-fill" id="tgbFill"></div></div>
+        </div>
         <div class="tree-stage" id="treeStage">
           <div class="tree-sky" id="treeSky">☀️</div>
-          <div class="tree-svg-wrap" id="treeSvgWrap">
+          <div class="tree-svg-wrap sway" id="treeSvgWrap">
             <svg class="tree-svg" viewBox="0 0 320 280" id="treeSvg" xmlns="http://www.w3.org/2000/svg">
               <!-- golden glow (max stage) -->
               <circle class="tr-glow" id="treeGlow" cx="160" cy="95" r="120" fill="url(#glowGrad)"/>
@@ -671,12 +725,20 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
           </div>
         </div>
 
+        <!-- surprise event (occasional) -->
+        <div class="tree-event" id="treeEvent">
+          <div class="te-emoji" id="teEmoji">🐛</div>
+          <div class="te-title" id="teTitle">Bugs!</div>
+          <div class="te-desc" id="teDesc">Some bugs want to nibble your tree!</div>
+          <div class="te-btns" id="teBtns"></div>
+        </div>
+
         <div id="treeControls">
-          <div style="text-align:center;font-size:.8rem;font-weight:700;color:#64748b;margin-bottom:.4rem">💧 How much to water this year?</div>
-          <div class="water-choices">
-            <button class="water-btn" onclick="treeWater(1)"><span class="wb-drops">💧</span><span class="wb-amt">$1</span><span class="wb-lbl">a little</span></button>
-            <button class="water-btn" onclick="treeWater(5)"><span class="wb-drops">💧💧</span><span class="wb-amt">$5</span><span class="wb-lbl">some</span></button>
-            <button class="water-btn" onclick="treeWater(10)"><span class="wb-drops">💧💧💧</span><span class="wb-amt">$10</span><span class="wb-lbl">a lot!</span></button>
+          <div style="text-align:center;font-size:.8rem;font-weight:700;color:#64748b;margin-bottom:.2rem">💧 Tap the watering can to water your tree!</div>
+          <div class="water-tap-zone">
+            <button class="water-can-btn" id="waterCanBtn" onclick="tapWater()"><span class="water-can-emoji">🪣</span><span class="water-can-label">Tap to water!</span></button>
+            <div class="water-tap-count">Water added this year: <b>$<span id="tapAmount">0</span></b></div>
+            <button class="water-done-btn" id="waterDoneBtn" onclick="finishWatering()" style="display:none">✅ Done watering — grow!</button>
           </div>
           <div class="tree-actions" style="margin-top:.3rem">
             <button class="tree-btn pick" onclick="treePick()">🍎 Pick Fruit<span class="tb-sub">Spend some now</span></button>
@@ -1121,6 +1183,68 @@ var treeState = { value: 10, year: 1, picked: 0, seed: 10, totalWatered: 0, mile
 var treeSeedPick = null;
 var TREE_MAX_YEARS = 12;
 
+// ===== Money Tree 3.0: goals, tap-water, events, juice =====
+var treeGoalPick = null;
+var tapThisYear = 0;
+
+function pickTreeGoal(amt){
+  treeGoalPick = amt;
+  document.querySelectorAll('#goalTargetRow .goal-target-chip').forEach(function(c){
+    c.classList.toggle('picked', +c.dataset.goal===amt);
+  });
+  checkPlantReady();
+}
+function checkPlantReady(){
+  var btn = document.getElementById('plantBtn');
+  if(treeSeedPick!==null && treeGoalPick!==null){
+    btn.style.opacity='1'; btn.style.pointerEvents='auto';
+    btn.textContent='Plant my $' + treeSeedPick + ' seed! 🌱';
+  }
+}
+
+// Tap-to-water: each tap adds $1 and a droplet
+function tapWater(){
+  tapThisYear += 1;
+  document.getElementById('tapAmount').textContent = tapThisYear;
+  document.getElementById('waterDoneBtn').style.display = 'block';
+  spawnDroplet();
+  // little bounce on the can
+  var can = document.getElementById('waterCanBtn');
+  can.style.transform='scale(.92)'; setTimeout(function(){ can.style.transform=''; }, 100);
+}
+function spawnDroplet(){
+  var wrap = document.getElementById('treeSvgWrap');
+  var d = document.createElement('div');
+  d.className='droplet'; d.textContent='💧';
+  d.style.left = (42 + Math.random()*16) + '%';
+  d.style.top = '18%';
+  wrap.appendChild(d);
+  setTimeout(function(){ if(d.parentNode) d.parentNode.removeChild(d); }, 700);
+}
+function spawnSparkles(n){
+  var wrap = document.getElementById('treeSvgWrap');
+  for(var i=0;i<n;i++){(function(k){setTimeout(function(){
+    var s=document.createElement('div'); s.className='sparkle'; s.textContent='✨';
+    s.style.left=(25+Math.random()*50)+'%'; s.style.top=(15+Math.random()*40)+'%';
+    wrap.appendChild(s); setTimeout(function(){ if(s.parentNode) s.parentNode.removeChild(s); },1000);
+  }, k*120);})(i);}
+}
+function finishWatering(){
+  var amount = tapThisYear;
+  if(amount<=0){ showTreeNote('💧 Tap the watering can a few times first!'); return; }
+  treeWaterApply(amount);
+  tapThisYear = 0;
+  document.getElementById('tapAmount').textContent = '0';
+  document.getElementById('waterDoneBtn').style.display = 'none';
+}
+
+function updateGoalBanner(){
+  if(!treeState.goal) return;
+  var pct = Math.min(100, treeState.value/treeState.goal*100);
+  document.getElementById('tgbFill').style.width = pct + '%';
+}
+
+
 // Weather types: multiplier + label + class
 var WEATHER = [
   {em:'☀️', mult:1.30, txt:'Sunny year — great for growing!', cls:'sunny', w:3},
@@ -1147,20 +1271,23 @@ function pickSeed(amt){
   document.querySelectorAll('#seedGrid .seed-opt').forEach(function(o){
     o.classList.toggle('picked', +o.dataset.seed===amt);
   });
-  var btn = document.getElementById('plantBtn');
-  btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
-  btn.textContent = 'Plant my $' + amt + ' seed! 🌱';
+  checkPlantReady();
 }
 function plantTree(){
-  if(treeSeedPick===null) return;
-  treeState = { value: treeSeedPick, year: 1, picked: 0, seed: treeSeedPick, totalWatered: treeSeedPick, milestones: {}, plays: treeState.plays };
+  if(treeSeedPick===null || treeGoalPick===null) return;
+  treeState = { value: treeSeedPick, year: 1, picked: 0, seed: treeSeedPick, totalWatered: treeSeedPick, milestones: {}, goal: treeGoalPick, plays: treeState.plays };
+  tapThisYear = 0;
+  document.getElementById('tapAmount').textContent = '0';
+  document.getElementById('waterDoneBtn').style.display = 'none';
   document.getElementById('treeSeedSelect').style.display = 'none';
   document.getElementById('treeGamePlay').style.display = 'block';
   document.getElementById('treeFinale').classList.remove('show');
   document.getElementById('treeControls').style.display = 'block';
+  document.getElementById('tgbTarget').textContent = '$' + treeGoalPick;
+  updateGoalBanner();
   rollWeather();
   renderTree(false);
-  showTreeNote('You planted a $' + treeSeedPick + ' seed! Water it every year to grow it big. 🌱');
+  showTreeNote('You planted a $' + treeSeedPick + ' seed! Tap the watering can to grow it. 🌱');
 }
 
 function treeStageFor(v){
@@ -1236,17 +1363,81 @@ function advanceYear(){
   treeState.year++;
   rollWeather();
   document.getElementById('treeMilestone').classList.remove('show');
-  maybeTempt();
-  if(treeState.year > TREE_MAX_YEARS){ treeFinish(); }
+  if(treeState.year > TREE_MAX_YEARS){ treeFinish(); return; }
+  // surprise event OR temptation (not both)
+  if(!maybeEvent()){ maybeTempt(); }
 }
 
-function treeWater(amount){
+// Surprise events (bugs, bonus years, treasure)
+var TREE_EVENTS = [
+  {type:'bad', emoji:'🐛', title:'Bugs are nibbling!', desc:'Some hungry bugs found your tree. Spend $5 to shoo them away, or risk losing some growth!',
+   btns:[{t:'🧴 Spend $5 to protect it', act:'protect'},{t:'🤞 Risk it', act:'risk'}]},
+  {type:'good', emoji:'🎉', title:'Bonus Fruit Year!', desc:'Wow! Your tree had an amazing year and grew extra fruit!',
+   btns:[{t:'🌟 Awesome!', act:'bonus'}]},
+  {type:'good', emoji:'💎', title:'Treasure Found!', desc:'You found a shiny coin buried near your tree roots!',
+   btns:[{t:'💰 Add it to my tree!', act:'treasure'}]},
+  {type:'bad', emoji:'🌧️', title:'Big Storm!', desc:'A huge storm is coming! Spend $8 to build a shelter, or hope your tree is strong enough.',
+   btns:[{t:'⛺ Spend $8 for shelter', act:'shelter'},{t:'🤞 Hope for the best', act:'riskstorm'}]}
+];
+var eventActive = false;
+function maybeEvent(){
+  // ~25% chance once tree has some value, not on final year
+  if(treeState.value >= treeState.seed*2 && treeState.year <= TREE_MAX_YEARS && Math.random() < 0.25){
+    eventActive = true;
+    var ev = TREE_EVENTS[Math.floor(Math.random()*TREE_EVENTS.length)];
+    treeState.curEvent = ev;
+    var card = document.getElementById('treeEvent');
+    card.className = 'tree-event show ' + ev.type;
+    document.getElementById('teEmoji').textContent = ev.emoji;
+    document.getElementById('teTitle').textContent = ev.title;
+    document.getElementById('teDesc').textContent = ev.desc;
+    document.getElementById('teBtns').innerHTML = ev.btns.map(function(b){
+      var cls = b.act==='protect'||b.act==='shelter'||b.act==='bonus'||b.act==='treasure' ? 'te-btn-primary' : 'te-btn-secondary';
+      return '<button class="'+cls+'" onclick="handleEvent(\''+b.act+'\')">'+b.t+'</button>';
+    }).join('');
+    document.getElementById('treeControls').style.display = 'none';
+    return true;
+  }
+  return false;
+}
+function handleEvent(act){
+  document.getElementById('treeEvent').classList.remove('show');
+  document.getElementById('treeControls').style.display = 'block';
+  eventActive = false;
+  var before = treeState.value;
+  if(act==='protect'){
+    treeState.value = Math.max(treeState.seed, treeState.value - 5);
+    showTreeNote('🧴 You protected your tree from the bugs! Smart move. 🌱');
+  } else if(act==='risk'){
+    if(Math.random() < 0.5){ treeState.value = treeState.value * 0.85; showTreeNote('🐛 Oh no, the bugs ate some growth! Next time, protect your tree.'); }
+    else { showTreeNote('😅 Phew! The bugs left on their own this time. Lucky!'); }
+  } else if(act==='bonus'){
+    treeState.value = treeState.value * 1.15; spawnSparkles(6);
+    showTreeNote('🎉 Bonus year! Your tree grew extra — amazing! 🌟');
+  } else if(act==='treasure'){
+    treeState.value += 15; spawnSparkles(6);
+    showTreeNote('💎 You added $15 of treasure to your tree! 💰');
+  } else if(act==='shelter'){
+    treeState.value = Math.max(treeState.seed, treeState.value - 8);
+    showTreeNote('⛺ Your shelter kept the tree safe from the storm! 🌱');
+  } else if(act==='riskstorm'){
+    if(Math.random() < 0.5){ treeState.value = treeState.value * 0.78; showTreeNote('🌧️ The storm hurt your tree! A shelter would have helped.'); }
+    else { showTreeNote('😅 Your tree was strong and survived the storm! Lucky!'); }
+  }
+  renderTree(false);
+  updateGoalBanner();
+  checkMilestone(before);
+}
+
+function treeWaterApply(amount){
   var before = treeState.value;
   // grow by weather multiplier, then add the watering contribution
   treeState.value = treeState.value * curWeather.mult + amount;
   treeState.totalWatered += amount;
   var grew = Math.round(treeState.value - before);
   renderTree(true);
+  spawnSparkles(grew > 20 ? 5 : 3);
+  updateGoalBanner();
   var wtxt = curWeather.mult >= 1.25 ? 'The sunny weather helped a lot! ' : (curWeather.mult <= 1.08 ? 'Even in rough weather, it grew! ' : '');
   showTreeNote('💧 You added $' + amount + ' and it grew by $' + grew + ' this year! ' + wtxt + '🌱');
   checkMilestone(before);
@@ -1263,6 +1454,7 @@ function treePick(){
   treeState.value = treeState.value - taken;
   treeState.picked += taken;
   renderTree(false);
+  updateGoalBanner();
   showTreeNote('🍎 You picked $' + Math.round(taken) + ' of fruit to spend! Yum — but your tree got smaller.');
   advanceYear();
 }
@@ -1294,6 +1486,7 @@ function temptationBuy(){
   var taken = treeState.value * 0.30;
   treeState.value -= taken; treeState.picked += taken;
   renderTree(false);
+  updateGoalBanner();
   showTreeNote('🍎 You picked $' + Math.round(taken) + ' to buy it! Fun now — but your tree shrank a bit.');
   // buying doesn't advance an extra year (it replaces this year's action)
   advanceYear();
@@ -1328,6 +1521,17 @@ function treeFinish(){
   document.getElementById('tfEm').textContent = em;
   document.getElementById('tfTitle').textContent = title;
   document.getElementById('tfWorth').textContent = '$' + val + (picked>0 ? '  (+ $'+picked+' picked)' : '');
+  // win badge vs goal
+  var existingBadge = document.getElementById('tfWinBadge');
+  if(existingBadge) existingBadge.remove();
+  if(treeState.goal){
+    var badge = document.createElement('div');
+    badge.id = 'tfWinBadge'; badge.className = 'tf-win-badge';
+    if(val >= treeState.goal){ badge.textContent = '🏆 GOAL REACHED! You grew a $' + treeState.goal + ' tree!'; }
+    else { badge.textContent = '🎯 So close! Goal was $' + treeState.goal + ' — try again to reach it!'; badge.style.background='#fcd34d'; }
+    var tfTitleEl = document.getElementById('tfTitle');
+    tfTitleEl.parentNode.insertBefore(badge, tfTitleEl);
+  }
   document.getElementById('tfMsg').textContent = msg;
   // GROWN-UP REVEAL: project forward ~18 more years at ~15%/yr (kid-friendly steady rate)
   var future = treeState.value;
@@ -1337,15 +1541,20 @@ function treeFinish(){
 }
 
 function treeReset(){
-  treeState = { value: 10, year: 1, picked: 0, seed: 10, totalWatered: 0, milestones: {}, plays: treeState.plays+1 };
-  treeSeedPick = null;
+  treeState = { value: 10, year: 1, picked: 0, seed: 10, totalWatered: 0, milestones: {}, goal: null, plays: treeState.plays+1 };
+  treeSeedPick = null; treeGoalPick = null; tapThisYear = 0;
   document.getElementById('treeFinale').classList.remove('show');
   document.getElementById('treeGamePlay').style.display = 'none';
   document.getElementById('treeSeedSelect').style.display = 'block';
   document.getElementById('treeMilestone').classList.remove('show');
+  document.getElementById('treeEvent').classList.remove('show');
   document.getElementById('treeNote').classList.remove('show');
+  document.getElementById('tapAmount').textContent = '0';
+  document.getElementById('waterDoneBtn').style.display = 'none';
+  var wb = document.getElementById('tfWinBadge'); if(wb) wb.remove();
   document.querySelectorAll('#seedGrid .seed-opt').forEach(function(o){ o.classList.remove('picked'); });
-  var btn=document.getElementById('plantBtn'); btn.style.opacity='.4'; btn.style.pointerEvents='none'; btn.textContent='Pick a seed to plant! ⬆️';
+  document.querySelectorAll('#goalTargetRow .goal-target-chip').forEach(function(o){ o.classList.remove('picked'); });
+  var btn=document.getElementById('plantBtn'); btn.style.opacity='.4'; btn.style.pointerEvents='none'; btn.textContent='Pick a seed &amp; goal! ⬆️';
 }
 
 
