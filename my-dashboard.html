@@ -56,6 +56,37 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
 .tile-bar-fill{height:100%;background:linear-gradient(90deg,#8b5cf6,#0EA5A0);border-radius:99px}
 .tile-empty{font-size:.82rem;color:#94a3b8;line-height:1.5;flex:1;display:flex;flex-direction:column;justify-content:center}
 .tile-empty a{color:#7c3aed;font-weight:700;display:inline-block;margin-top:.5rem}
+/* Inline edit on tiles */
+.tile{position:relative}
+.tile-edit-btn{position:absolute;top:.85rem;right:.85rem;width:26px;height:26px;border-radius:7px;border:1px solid #EEF0F4;background:#F8F7FC;color:#8b5cf6;font-size:.8rem;cursor:pointer;display:none;align-items:center;justify-content:center;transition:all .15s;z-index:3;padding:0}
+.tile:hover .tile-edit-btn{display:flex}
+.tile-edit-btn:hover{background:#7c3aed;color:#fff;border-color:#7c3aed}
+.tile-arrow{transition:opacity .15s}
+.tile.editing .tile-arrow{opacity:0}
+.tile.editing .tile-edit-btn{display:none}
+.tile-editform{display:none;margin-top:.4rem}
+.tile.editing .tile-editform{display:block}
+.tile.editing .tile-big,.tile.editing .tile-cap,.tile.editing .tile-stats,.tile.editing .tile-bar{display:none}
+.tef-row{margin-bottom:.6rem}
+.tef-row label{display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.02em;color:#94a3b8;margin-bottom:.25rem}
+.tef-input-wrap{position:relative;display:flex;align-items:center}
+.tef-pfx{position:absolute;left:.6rem;color:#94a3b8;font-weight:600;font-size:.9rem;pointer-events:none}
+.tef-input{width:100%;padding:.55rem .7rem .55rem 1.5rem;border:1.5px solid #E2E8F0;border-radius:8px;font-size:.95rem;font-family:'DM Sans',sans-serif;color:#0B1929;font-weight:600}
+.tef-input.nopfx{padding-left:.7rem}
+.tef-input:focus{outline:none;border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.12)}
+.tef-btns{display:flex;gap:.45rem;margin-top:.2rem}
+.tef-save{flex:1;padding:.5rem;background:#7c3aed;color:#fff;border:none;border-radius:7px;font-size:.82rem;font-weight:700;cursor:pointer;transition:background .15s}
+.tef-save:hover{background:#6d28d9}
+.tef-cancel{padding:.5rem .8rem;background:#F1F5F4;color:#64748B;border:none;border-radius:7px;font-size:.82rem;font-weight:700;cursor:pointer;transition:background .15s}
+.tef-cancel:hover{background:#E2E8F0}
+.tile-saved-flash{position:absolute;inset:0;background:rgba(52,211,153,.95);border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.95rem;opacity:0;pointer-events:none;transition:opacity .2s;z-index:4}
+.tile-saved-flash.show{opacity:1}
+/* Edit my basics button */
+.edit-basics-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:1.25rem}
+.ebb-text{font-size:.85rem;color:rgba(255,255,255,.75)}
+.ebb-text b{color:#c4b5fd}
+.ebb-btn{flex-shrink:0;background:rgba(139,92,246,.2);border:1px solid rgba(139,92,246,.4);color:#c4b5fd;font-size:.82rem;font-weight:700;padding:.5rem 1rem;border-radius:8px;cursor:pointer;transition:all .15s}
+.ebb-btn:hover{background:#7c3aed;color:#fff;border-color:#7c3aed}
 .hub-recs-wrap{background:#fff;border-radius:16px;padding:1.6rem;box-shadow:0 8px 28px rgba(11,25,41,.1);border:1px solid #EEF0F4}
 .hub-recs-wrap h3{font-family:'Playfair Display',serif;font-size:1.15rem;color:#0B1929;margin-bottom:.3rem}
 .hub-recs-sub{font-size:.85rem;color:#64748B;margin-bottom:1.1rem}
@@ -123,6 +154,49 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
   function latestBudgetMonth(b){ if(!b||!b.months||typeof b.months!=='object') return null; var keys=Object.keys(b.months).sort(); for(var i=keys.length-1;i>=0;i--){ var m=b.months[keys[i]]; if(m&&(Array.isArray(m.income)||Array.isArray(m.expenses))) return m; } return null; }
   function el(tag,cls,html){ var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
 
+  // ---------- edit helpers ----------
+  function write(key,obj){ try{ localStorage.setItem(key,JSON.stringify(obj)); return true; }catch(e){ return false; } }
+  function num(v){ return Number(String(v==null?'':v).replace(/[^0-9.\-]/g,''))||0; }
+
+  // Update the savings-goal object's starting balance, preserving the calculator's shape
+  function saveSavingsStart(newStart){
+    var d = read('frf_savgoal_v1') || {};
+    d.goalStart = String(newStart);      // the field the calculator uses
+    if(!d.mode) d.mode = 'target';
+    return write('frf_savgoal_v1', d);
+  }
+  // Update a net-worth field (cash/savings/etc.), preserving the rest
+  function saveNetworthField(field, val){
+    var d = read('frf_networth_v1') || {};
+    d[field] = String(val);
+    return write('frf_networth_v1', d);
+  }
+  // Update the debt-freedom summary's total (kept in sync for the tile)
+  function saveDebtTotal(newTotal){
+    var d = read('frf_debtfreedom_v1') || {};
+    d.totalDebt = num(newTotal);
+    d.ts = Date.now();
+    return write('frf_debtfreedom_v1', d);
+  }
+  // Update profile basics
+  function saveProfileField(field, val){
+    var d = read('frf_profile_v1') || {};
+    d[field] = String(val);
+    return write('frf_profile_v1', d);
+  }
+
+  // Flash a "Saved" confirmation over a tile, then re-render the Hub
+  function flashSavedAndRerender(tileEl){
+    if(tileEl){
+      var flash = el('div','tile-saved-flash','\u2713 Saved');
+      tileEl.appendChild(flash);
+      requestAnimationFrame(function(){ flash.classList.add('show'); });
+      setTimeout(function(){ location.reload(); }, 650);
+    } else {
+      location.reload();
+    }
+  }
+
   var profile=read('frf_profile_v1'), budget=read('frf_budget_v1'), sim=read('frf_sim_v1'), networth=read('frf_networth_v1'), savgoal=read('frf_savgoal_v1'), debtfree=read('frf_debtfreedom_v1'), roadmap=read('frf_roadmap_v1');
   var budMonth=latestBudgetMonth(budget);
   var hasBudget=!!budMonth;
@@ -187,14 +261,15 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
     var assets=(Number(networth.cash)||0)+(Number(networth.savings)||0)+(Number(networth.investments)||0)+(Number(networth.property)||0)+(Number(networth.vehicles)||0);
     var liab=(Number(networth.mortgage)||0)+(Number(networth.loans)||0)+(Number(networth.creditCards)||0)+(Number(networth.debt)||0);
     var nw=assets-liab;
-    var t2=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83D\uDCC8</span>Net Worth</div><span class="tile-arrow">\u2192</span></div><div class="tile-big '+(nw>=0?'violet':'neg')+'">'+(nw<0?'-':'')+money(Math.abs(nw))+'</div><div class="tile-cap">what you own minus what you owe</div>');
+    var nwCash=Number(networth.cash)||0, nwSav=Number(networth.savings)||0;
+    var t2=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83D\uDCC8</span>Net Worth</div><span class="tile-arrow">\u2192</span></div><button class="tile-edit-btn" data-edit="networth" title="Quick-edit cash & savings">\u270E</button><div class="tile-big '+(nw>=0?'violet':'neg')+'">'+(nw<0?'-':'')+money(Math.abs(nw))+'</div><div class="tile-cap">what you own minus what you owe</div><div class="tile-editform"><div class="tef-row"><label>Cash</label><div class="tef-input-wrap"><span class="tef-pfx">$</span><input class="tef-input" type="text" inputmode="numeric" data-field="nw-cash" value="'+nwCash+'"></div></div><div class="tef-row"><label>Savings</label><div class="tef-input-wrap"><span class="tef-pfx">$</span><input class="tef-input" type="text" inputmode="numeric" data-field="nw-savings" value="'+nwSav+'"></div></div><div class="tef-btns"><button class="tef-save" data-save="networth">Save</button><button class="tef-cancel" data-cancel>Cancel</button></div></div>');
     t2.setAttribute('href','simulations/net-worth.html'); grid.appendChild(t2);
   } else { grid.appendChild(makeEmptyTile('\uD83D\uDCC8','Net Worth','The single best measure of progress.','simulations/net-worth.html','Calculate \u2192')); }
 
   if(hasSavgoal){
-    var start=Number(savgoal.current)||Number(savgoal.saved)||0, target=Number(savgoal.goalTarget)||0;
+    var start=Number(savgoal.goalStart)||Number(savgoal.current)||Number(savgoal.saved)||0, target=Number(savgoal.goalTarget)||0;
     var pct=target>0?Math.min(Math.round(start/target*100),100):0;
-    var t3=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83C\uDFAF</span>Savings Goal</div><span class="tile-arrow">\u2192</span></div><div class="tile-big violet">'+money(start)+'</div><div class="tile-cap">of '+money(target)+' goal</div><div class="tile-bar"><div class="tile-bar-fill" style="width:'+pct+'%"></div></div><div class="tile-cap">'+pct+'% there</div>');
+    var t3=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83C\uDFAF</span>Savings Goal</div><span class="tile-arrow">\u2192</span></div><button class="tile-edit-btn" data-edit="savings" title="Edit saved amount">\u270E</button><div class="tile-big violet">'+money(start)+'</div><div class="tile-cap">of '+money(target)+' goal</div><div class="tile-bar"><div class="tile-bar-fill" style="width:'+pct+'%"></div></div><div class="tile-cap">'+pct+'% there</div><div class="tile-editform"><div class="tef-row"><label>Saved so far</label><div class="tef-input-wrap"><span class="tef-pfx">$</span><input class="tef-input" type="text" inputmode="numeric" data-field="savings-start" value="'+start+'"></div></div><div class="tef-btns"><button class="tef-save" data-save="savings">Save</button><button class="tef-cancel" data-cancel>Cancel</button></div></div>');
     t3.setAttribute('href','simulations/savings-goal.html'); grid.appendChild(t3);
   } else { grid.appendChild(makeEmptyTile('\uD83C\uDFAF','Savings Goal','Set a target and see how to reach it.','simulations/savings-goal.html','Set a goal \u2192')); }
 
@@ -211,7 +286,7 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
     var dfMonths=Number(debtfree.payoffMonths)||0;
     var dfYrs=Math.floor(dfMonths/12), dfMo=dfMonths%12;
     var dfTimeline = dfMonths>0 ? (dfYrs>0?dfYrs+'y ':'')+(dfMo>0?dfMo+'mo':(dfYrs>0?'':'0mo')) : '\u2014';
-    var t5=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83D\uDD13</span>Debt Freedom</div><span class="tile-arrow">\u2192</span></div><div class="tile-big '+(Number(debtfree.totalDebt)>0?'neg':'pos')+'">'+money(debtfree.totalDebt)+'</div><div class="tile-cap">total debt \u00b7 debt-free in '+dfTimeline+'</div><div class="tile-stats"><div class="tile-stat"><div class="l">Monthly</div><div class="v">'+money(debtfree.monthlyPayment)+'</div></div><div class="tile-stat"><div class="l">Focus</div><div class="v" style="font-size:.8rem">'+(debtfree.topDebt||'\u2014')+'</div></div></div>');
+    var t5=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83D\uDD13</span>Debt Freedom</div><span class="tile-arrow">\u2192</span></div><button class="tile-edit-btn" data-edit="debt" title="Update total debt">\u270E</button><div class="tile-big '+(Number(debtfree.totalDebt)>0?'neg':'pos')+'">'+money(debtfree.totalDebt)+'</div><div class="tile-cap">total debt \u00b7 debt-free in '+dfTimeline+'</div><div class="tile-stats"><div class="tile-stat"><div class="l">Monthly</div><div class="v">'+money(debtfree.monthlyPayment)+'</div></div><div class="tile-stat"><div class="l">Focus</div><div class="v" style="font-size:.8rem">'+(debtfree.topDebt||'\u2014')+'</div></div></div><div class="tile-editform"><div class="tef-row"><label>Total debt remaining</label><div class="tef-input-wrap"><span class="tef-pfx">$</span><input class="tef-input" type="text" inputmode="numeric" data-field="debt-total" value="'+(Number(debtfree.totalDebt)||0)+'"></div></div><div class="tef-btns"><button class="tef-save" data-save="debt">Save</button><button class="tef-cancel" data-cancel>Cancel</button></div><div style="font-size:.7rem;color:#94a3b8;margin-top:.5rem;line-height:1.4">For a full re-plan, open the Debt Freedom Planner.</div></div>');
     t5.setAttribute('href','simulations/debt-freedom-planner.html'); grid.appendChild(t5);
   } else {
     grid.appendChild(makeEmptyTile('\uD83D\uDD13','Debt Freedom','Build a plan to crush debt fast.','simulations/debt-freedom-planner.html','Make a plan \u2192'));
@@ -243,6 +318,81 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
   for(var a2=0;a2<Math.min(recs.length,5);a2++){ var r=recs[a2]; recsHtml+='<a class="rec-card" href="decisions/'+r[0]+'.html"><span class="rec-icon">'+r[1]+'</span><span class="rec-text"><span class="rec-title">'+r[2]+'</span><span class="rec-desc">'+r[3]+'</span></span><span class="rec-arrow">\u2192</span></a>'; }
   recsWrap.innerHTML=recsHtml;
   body.appendChild(recsWrap);
+
+  // ---------- inline edit interactions (event delegation) ----------
+  document.addEventListener('click', function(e){
+    // Open edit mode
+    var editBtn = e.target.closest ? e.target.closest('.tile-edit-btn') : null;
+    if(editBtn){
+      e.preventDefault(); e.stopPropagation();
+      var tile = editBtn.closest('.tile');
+      // close any other open editors first
+      var open = document.querySelectorAll('.tile.editing');
+      for(var i=0;i<open.length;i++){ if(open[i]!==tile) open[i].classList.remove('editing'); }
+      tile.classList.add('editing');
+      var firstInput = tile.querySelector('.tef-input');
+      if(firstInput){ firstInput.focus(); firstInput.select(); }
+      return;
+    }
+    // Cancel
+    var cancelBtn = e.target.closest ? e.target.closest('[data-cancel]') : null;
+    if(cancelBtn){
+      e.preventDefault(); e.stopPropagation();
+      var t = cancelBtn.closest('.tile'); if(t) t.classList.remove('editing');
+      return;
+    }
+    // Save
+    var saveBtn = e.target.closest ? e.target.closest('[data-save]') : null;
+    if(saveBtn){
+      e.preventDefault(); e.stopPropagation();
+      var which = saveBtn.getAttribute('data-save');
+      var tileEl = saveBtn.closest('.tile');
+      var ok = false;
+      if(which==='savings'){
+        var v = tileEl.querySelector('[data-field="savings-start"]');
+        ok = saveSavingsStart(num(v && v.value));
+      } else if(which==='networth'){
+        var c = tileEl.querySelector('[data-field="nw-cash"]');
+        var s = tileEl.querySelector('[data-field="nw-savings"]');
+        ok = saveNetworthField('cash', num(c && c.value));
+        saveNetworthField('savings', num(s && s.value));
+      } else if(which==='debt'){
+        var d = tileEl.querySelector('[data-field="debt-total"]');
+        ok = saveDebtTotal(num(d && d.value));
+      } else if(which==='profile'){
+        // handled below in the basics editor
+      }
+      if(ok){ flashSavedAndRerender(tileEl); }
+      return;
+    }
+  });
+  // Prevent tile-link navigation when interacting with an input inside the editor
+  document.addEventListener('click', function(e){
+    if(e.target.closest && e.target.closest('.tile-editform')){
+      var a = e.target.closest('a.tile');
+      if(a && (e.target.tagName==='INPUT' || e.target.closest('.tef-input-wrap'))){ e.preventDefault(); }
+    }
+  });
+  // Enter key saves, Escape cancels
+  document.addEventListener('keydown', function(e){
+    var inp = e.target.closest ? e.target.closest('.tef-input') : null;
+    if(!inp) return;
+    if(e.key==='Enter'){ e.preventDefault(); var sb=inp.closest('.tile').querySelector('[data-save]'); if(sb) sb.click(); }
+    if(e.key==='Escape'){ e.preventDefault(); var t=inp.closest('.tile'); if(t) t.classList.remove('editing'); }
+  });
+  // Live comma formatting in edit inputs
+  document.addEventListener('input', function(e){
+    var inp = e.target.closest ? e.target.closest('.tef-input') : null;
+    if(!inp) return;
+    var raw = inp.value.replace(/,/g,'');
+    if(raw==='' || isNaN(Number(raw))) return;
+    var caret = inp.selectionStart, before = inp.value;
+    var parts = raw.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    inp.value = parts.join('.');
+    var diff = inp.value.length - before.length;
+    try{ inp.setSelectionRange(caret+diff, caret+diff); }catch(err){}
+  });
 })();
 </script>
 <script src="search.js"></script>
