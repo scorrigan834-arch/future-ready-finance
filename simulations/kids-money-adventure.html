@@ -501,6 +501,46 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
 /* Win badge in finale */
 .tf-win-badge{display:inline-block;background:#fbbf24;color:#78350f;font-weight:900;font-size:.85rem;padding:.35rem 1rem;border-radius:99px;margin-bottom:.6rem}
 
+/* ===== Money Hero 3.0 — format variety + juice ===== */
+/* Sort challenge (tap items into Need/Want buckets) */
+.sort-items{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;max-width:440px;margin:0 auto 1rem}
+.sort-item{background:#fff;border:2px solid #e2e8f0;border-radius:14px;padding:.7rem .9rem;cursor:pointer;font-weight:700;font-size:.9rem;color:#334155;transition:all .18s;font-family:inherit;display:inline-flex;align-items:center;gap:.4rem}
+.sort-item:hover{border-color:#0EA5A0;transform:translateY(-2px)}
+.sort-item.sorted{opacity:.35;pointer-events:none;transform:scale(.9)}
+.sort-item .si-em{font-size:1.3rem}
+.sort-buckets{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;max-width:440px;margin:0 auto 1rem}
+.sort-bucket{border-radius:16px;padding:1rem .75rem;text-align:center;min-height:110px;border:2px dashed}
+.sort-bucket.need{background:rgba(14,165,160,.06);border-color:#0EA5A0}
+.sort-bucket.want{background:rgba(249,115,22,.06);border-color:#f97316}
+.sb-label{font-weight:800;font-size:.9rem;margin-bottom:.5rem}
+.sort-bucket.need .sb-label{color:#0C7D79}
+.sort-bucket.want .sb-label{color:#ea580c}
+.sb-tap{font-size:.72rem;color:#94a3b8;font-weight:600}
+.sb-dropped{display:flex;flex-wrap:wrap;gap:.3rem;justify-content:center;margin-top:.4rem}
+.sb-chip{background:#fff;border-radius:8px;padding:.2rem .45rem;font-size:.75rem;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.sort-active-note{text-align:center;font-size:.8rem;color:#64748b;font-weight:700;margin-bottom:.6rem}
+.sort-active-note b{color:#0EA5A0}
+/* Slider challenge */
+.slider-wrap{max-width:420px;margin:0 auto 1rem;text-align:center}
+.slider-value-display{font-size:2.2rem;font-weight:900;font-family:"Playfair Display",serif;color:#0C7D79;margin-bottom:.3rem}
+.slider-labels{display:flex;justify-content:space-between;font-size:.72rem;color:#94a3b8;font-weight:700;margin:.3rem .2rem 0}
+.money-slider{width:100%;-webkit-appearance:none;appearance:none;height:12px;border-radius:99px;background:linear-gradient(90deg,#0EA5A0,#3b82f6);outline:none;margin:.5rem 0}
+.money-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:32px;height:32px;border-radius:50%;background:#fff;border:3px solid #0EA5A0;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+.money-slider::-moz-range-thumb{width:32px;height:32px;border-radius:50%;background:#fff;border:3px solid #0EA5A0;cursor:pointer}
+.slider-submit{display:block;margin:1rem auto 0;background:linear-gradient(135deg,#0EA5A0,#3b82f6);color:#fff;border:none;border-radius:12px;padding:.8rem 2rem;font-weight:800;cursor:pointer;font-family:inherit;font-size:.95rem}
+/* Confetti */
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(320px) rotate(540deg);opacity:0}}
+.confetti-piece{position:fixed;top:0;width:10px;height:14px;pointer-events:none;z-index:9999;animation:confettiFall 1.8s ease-in forwards}
+/* Hero card glow that intensifies with level */
+.hero-card.lvl-hero{box-shadow:0 12px 30px rgba(11,25,41,.3),0 0 0 2px rgba(94,234,212,.4)}
+.hero-card.lvl-super{box-shadow:0 12px 34px rgba(11,25,41,.35),0 0 0 3px rgba(251,191,36,.5),0 0 30px rgba(251,191,36,.2)}
+.hero-card.lvl-legend{box-shadow:0 14px 40px rgba(11,25,41,.4),0 0 0 3px rgba(168,85,247,.6),0 0 40px rgba(168,85,247,.35)}
+@keyframes cardPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+.hero-card.leveled{animation:cardPulse .6s}
+/* XP gain float */
+@keyframes xpFloat{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-30px);opacity:0}}
+.xp-float{position:absolute;right:1rem;top:2.5rem;color:#5eead4;font-weight:900;font-size:1.1rem;pointer-events:none;animation:xpFloat 1.2s ease-out forwards;z-index:5}
+
 </style>
 </head>
 <body>
@@ -822,6 +862,22 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
         <div class="q-icon" id="qIcon">🛡️</div>
         <div class="q-question" id="qQuestion">Question</div>
         <div class="q-options" id="qOptions"></div>
+        <div id="qSort" style="display:none">
+          <div class="sort-active-note">Tap each item into <b>Need</b> or <b>Want</b>! Tap the item, then tap a basket.</div>
+          <div class="sort-items" id="sortItems"></div>
+          <div class="sort-buckets">
+            <div class="sort-bucket need" onclick="sortDrop('need')"><div class="sb-label">✅ Need</div><div class="sb-tap">tap here</div><div class="sb-dropped" id="sortNeed"></div></div>
+            <div class="sort-bucket want" onclick="sortDrop('want')"><div class="sb-label">💛 Want</div><div class="sb-tap">tap here</div><div class="sb-dropped" id="sortWant"></div></div>
+          </div>
+        </div>
+        <div id="qSlider" style="display:none">
+          <div class="slider-wrap">
+            <div class="slider-value-display" id="sliderVal">$5</div>
+            <input type="range" class="money-slider" id="moneySlider" min="0" max="10" value="5" oninput="sliderMove()">
+            <div class="slider-labels"><span>Save $0</span><span>Save $10</span></div>
+            <button class="slider-submit" onclick="sliderSubmit()">That's my answer! ✓</button>
+          </div>
+        </div>
         <div class="q-feedback" id="qFeedback"></div>
         <div class="levelup-toast" id="levelupToast"><div class="lt-title" id="ltTitle">⭐ Level Up!</div><div class="lt-sub" id="ltSub"></div></div>
       </div>
@@ -1576,9 +1632,10 @@ var H2_LOCATIONS = [
     key:'saver', power:'🛡️', name:'Savings Bank', icon:'🏦',
     story:'You arrive at the shiny Savings Bank. The banker needs a Saver hero!',
     challenges:[
-      {icon:'🛡️', q:'You get $10 for your birthday. What does a Saver do?',
-       opts:[{t:'Spend it all on candy today',ok:false},{t:'Save some for something bigger later',ok:true},{t:'Give it all away instantly',ok:false}],
-       good:'Yes! A Saver keeps some money for later instead of spending it all at once. 🛡️'},
+      {type:'slider', icon:'🛡️', q:'You got $10! Slide to choose how much a good Saver should SAVE for later.',
+       min:0, max:10, correctMin:3, correctMax:10,
+       good:'A good Saver keeps some for later! Saving even a few dollars builds a great habit. 🛡️',
+       lowMsg:'A Saver tries to keep at least a little for later — try saving more next time!'},
       {icon:'🐷', q:'Where is the BEST place to keep money you\u2019re saving?',
        opts:[{t:'In a piggy bank or savings account',ok:true},{t:'In your pocket at the candy store',ok:false},{t:'Under a rock outside',ok:false}],
        good:'Right! Keeping savings somewhere safe (like a bank) helps it stay put and even grow. 🐷'},
@@ -1597,9 +1654,9 @@ var H2_LOCATIONS = [
       {icon:'🏷️', q:'The same crayons cost $3 at one store and $5 at another. What do you do?',
        opts:[{t:'Buy the $5 ones — bigger price is better!',ok:false},{t:'Buy the $3 ones and save $2',ok:true},{t:'Buy both boxes',ok:false}],
        good:'Yes! A Smart Spender compares prices and picks the better deal. You just saved $2! 🏷️'},
-      {icon:'🛒', q:'Which of these is a NEED, not a want?',
-       opts:[{t:'A warm coat for winter',ok:true},{t:'A third video game',ok:false},{t:'Fancy sparkly shoes',ok:false}],
-       good:'Correct! A warm coat is a need — it keeps you safe and healthy. Great Smart Spending! 🛒'}
+      {type:'sort', icon:'🛒', q:'Sort these into Needs and Wants!',
+       items:[{em:'🍎',t:'Food',a:'need'},{em:'🎮',t:'Game',a:'want'},{em:'👕',t:'Clothes',a:'need'},{em:'🍭',t:'Candy',a:'want'}],
+       good:'Amazing sorting! You know needs (food, clothes) from wants (games, candy). True Smart Spender! 🛒'}
     ]
   },
   {
@@ -1700,7 +1757,13 @@ function renderHeroCard(){
     return '<div class="hc-power-dot'+(on?' on':'')+'">'+loc.power+'</div>';
   }).join('');
   document.getElementById('hcPowers').innerHTML = dots;
-  document.getElementById('h2HeroCard').style.setProperty('--cape', h2.cape);
+  var card = document.getElementById('h2HeroCard');
+  card.style.setProperty('--cape', h2.cape);
+  // level-based glow
+  card.classList.remove('lvl-hero','lvl-super','lvl-legend');
+  if(lv.name==='Hero') card.classList.add('lvl-hero');
+  else if(lv.name==='Super Hero') card.classList.add('lvl-super');
+  else if(lv.name==='Legend') card.classList.add('lvl-legend');
 }
 function renderCity(){
   var earned = Object.keys(h2.powers).length;
@@ -1744,8 +1807,90 @@ function renderQuestStep(){
   document.getElementById('qQuestion').textContent = ch.q;
   document.getElementById('qFeedback').classList.remove('show');
   document.getElementById('levelupToast').classList.remove('show');
-  var opts = document.getElementById('qOptions');
-  opts.innerHTML = ch.opts.map(function(o,i){ return '<button class="q-opt" data-ok="'+(o.ok?'1':'0')+'" onclick="h2AnswerQuest('+i+')">'+o.t+'</button>'; }).join('');
+  // hide all challenge-type containers first
+  document.getElementById('qOptions').style.display = 'none';
+  document.getElementById('qSort').style.display = 'none';
+  document.getElementById('qSlider').style.display = 'none';
+  var type = ch.type || 'choice';
+  if(type === 'choice'){
+    var opts = document.getElementById('qOptions');
+    opts.style.display = 'grid';
+    opts.innerHTML = ch.opts.map(function(o,i){ return '<button class="q-opt" data-ok="'+(o.ok?'1':'0')+'" onclick="h2AnswerQuest('+i+')">'+o.t+'</button>'; }).join('');
+  } else if(type === 'sort'){
+    renderSortChallenge(ch);
+  } else if(type === 'slider'){
+    renderSliderChallenge(ch);
+  }
+}
+
+// ===== SORT challenge =====
+var sortSelected = null;
+var sortState = {};
+function renderSortChallenge(ch){
+  document.getElementById('qSort').style.display = 'block';
+  sortSelected = null; sortState = {};
+  var items = document.getElementById('sortItems');
+  items.innerHTML = ch.items.map(function(it,i){
+    return '<button class="sort-item" id="sortItem'+i+'" data-i="'+i+'" onclick="sortPick('+i+')"><span class="si-em">'+it.em+'</span> '+it.t+'</button>';
+  }).join('');
+  document.getElementById('sortNeed').innerHTML = '';
+  document.getElementById('sortWant').innerHTML = '';
+}
+function sortPick(i){
+  sortSelected = i;
+  document.querySelectorAll('#sortItems .sort-item').forEach(function(el){
+    el.style.borderColor = (+el.dataset.i===i) ? '#0EA5A0' : '';
+    el.style.transform = (+el.dataset.i===i) ? 'scale(1.08)' : '';
+  });
+}
+function sortDrop(bucket){
+  if(sortSelected===null) return;
+  var loc = H2_LOCATIONS.filter(function(l){return l.key===h2.questKey;})[0];
+  var ch = loc.challenges[h2.questStep];
+  var it = ch.items[sortSelected];
+  sortState[sortSelected] = bucket;
+  // mark item sorted
+  var el = document.getElementById('sortItem'+sortSelected);
+  el.classList.add('sorted');
+  // add chip to bucket
+  var chip = document.createElement('span');
+  chip.className = 'sb-chip'; chip.textContent = it.em+' '+it.t;
+  document.getElementById(bucket==='need'?'sortNeed':'sortWant').appendChild(chip);
+  sortSelected = null;
+  // all sorted? evaluate
+  if(Object.keys(sortState).length === ch.items.length){
+    var allCorrect = ch.items.every(function(item,idx){ return sortState[idx]===item.a; });
+    awardXP(25); spawnConfetti(allCorrect ? 18 : 8);
+    var fb = document.getElementById('qFeedback');
+    fb.className='q-feedback show good';
+    var last = h2.questStep >= loc.challenges.length-1;
+    fb.innerHTML = (allCorrect?'⭐ +25 XP! Perfect sorting! ':'💡 +25 XP! Nice try! ') + ch.good
+      + '<button class="q-next" onclick="h2NextQuest()">'+(last?'Claim my power! 🎖️':'Next →')+'</button>';
+  }
+}
+
+// ===== SLIDER challenge =====
+function renderSliderChallenge(ch){
+  document.getElementById('qSlider').style.display = 'block';
+  var s = document.getElementById('moneySlider');
+  s.min = ch.min; s.max = ch.max; s.value = Math.round((ch.min+ch.max)/2);
+  document.getElementById('sliderVal').textContent = '$' + s.value;
+}
+function sliderMove(){
+  document.getElementById('sliderVal').textContent = '$' + document.getElementById('moneySlider').value;
+}
+function sliderSubmit(){
+  var loc = H2_LOCATIONS.filter(function(l){return l.key===h2.questKey;})[0];
+  var ch = loc.challenges[h2.questStep];
+  var val = parseInt(document.getElementById('moneySlider').value,10);
+  var good = val >= ch.correctMin && val <= ch.correctMax;
+  awardXP(25); spawnConfetti(good ? 18 : 8);
+  document.getElementById('qSlider').style.display = 'none';
+  var fb = document.getElementById('qFeedback');
+  fb.className='q-feedback show good';
+  var last = h2.questStep >= loc.challenges.length-1;
+  var msg = good ? ('⭐ +25 XP! You chose to save $'+val+'. ' + ch.good) : ('💡 +25 XP! You saved $'+val+'. ' + (ch.lowMsg||ch.good));
+  fb.innerHTML = msg + '<button class="q-next" onclick="h2NextQuest()">'+(last?'Claim my power! 🎖️':'Next →')+'</button>';
 }
 function h2AnswerQuest(i){
   var loc = H2_LOCATIONS.filter(function(l){return l.key===h2.questKey;})[0];
@@ -1768,6 +1913,7 @@ function h2NextQuest(){
     // earn the power + bonus
     h2.powers[h2.questKey] = true;
     awardXP(25);
+    spawnConfetti(24);
     renderHeroCard();
     h2ShowScreen('h2City');
     renderCity();
@@ -1775,12 +1921,33 @@ function h2NextQuest(){
     renderQuestStep();
   }
 }
+function spawnConfetti(n){
+  var colors = ['#0EA5A0','#3b82f6','#fbbf24','#f97316','#22c55e','#a855f7','#ef4444'];
+  for(var i=0;i<n;i++){(function(){
+    var c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = (10 + Math.random()*80) + '%';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDelay = (Math.random()*0.3) + 's';
+    c.style.borderRadius = Math.random()>0.5 ? '50%' : '2px';
+    document.body.appendChild(c);
+    setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); }, 2200);
+  })();}
+}
 function awardXP(amount){
   var beforeLv = levelFor(h2.xp).name;
   h2.xp += amount;
   var afterLv = levelFor(h2.xp);
   renderHeroCard();
+  // XP float on the hero card
+  var card = document.getElementById('h2HeroCard');
+  if(card){
+    var f = document.createElement('div'); f.className='xp-float'; f.textContent='+'+amount+' XP';
+    card.appendChild(f); setTimeout(function(){ if(f.parentNode) f.parentNode.removeChild(f); }, 1200);
+  }
   if(afterLv.name !== beforeLv){
+    spawnConfetti(30);
+    if(card){ card.classList.add('leveled'); setTimeout(function(){ card.classList.remove('leveled'); }, 600); }
     var t = document.getElementById('levelupToast');
     if(t){
       document.getElementById('ltTitle').textContent = afterLv.em+' Level Up: '+afterLv.name+'!';
@@ -1830,6 +1997,7 @@ function h2NextBoss(){
   }
 }
 function h2Finish(){
+  spawnConfetti(50);
   document.getElementById('h2Boss').classList.remove('show');
   document.getElementById('h2City').classList.remove('show');
   var lv = levelFor(h2.xp);
