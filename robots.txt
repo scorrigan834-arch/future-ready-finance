@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://scorrigan834-arch.github.io/future-ready-finance/sitemap.xml
