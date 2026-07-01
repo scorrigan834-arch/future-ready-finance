@@ -561,7 +561,7 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
       </div>
       <div class="nw-done" id="nwDone">
         <div class="nw-star">🌟</div>
-        <div style="font-size:1.3rem;font-weight:800;font-family:'Playfair Display',serif">You scored <span id="nwFinal">0</span>/8!</div>
+        <div style="font-size:1.3rem;font-weight:800;font-family:'Playfair Display',serif">You scored <span id="nwFinal">0</span>/<span id="nwFinalTotal">10</span>!</div>
         <div id="nwDoneMsg" style="margin-top:.5rem;opacity:.95"></div>
         <button class="nw-replay" onclick="startNW()">Play Again 🔄</button>
       </div>
@@ -1024,11 +1024,27 @@ var NW_ITEMS = [
   ['👕','Clothes','need','We need clothes to stay warm and covered.'],
   ['🎢','Theme Park Trip','want','So exciting — but it\u2019s a special treat, not a need!'],
   ['💧','Clean Water','need','Our bodies need water every single day.'],
-  ['🧸','A New Toy','want','Toys are fun, but we don\u2019t NEED a new one to be okay.']
+  ['🧸','A New Toy','want','Toys are fun, but we don\u2019t NEED a new one to be okay.'],
+  ['💊','Medicine when sick','need','When we\u2019re sick, medicine helps us get better. That\u2019s a need!'],
+  ['🍦','Ice Cream','want','A cold treat is a fun want — not something we need to live.'],
+  ['👟','Shoes','need','We need shoes to protect our feet and stay safe.'],
+  ['🎸','A Guitar','want','Music is awesome, but a guitar is a want, not a need.'],
+  ['🪥','Toothbrush','need','We need to brush our teeth to keep them healthy!'],
+  ['🎈','Balloons','want','Fun for parties, but balloons are definitely a want!'],
+  ['🛏️','A Bed','need','Everyone needs a safe, comfy place to sleep.'],
+  ['📱','The Newest Phone','want','A phone can be useful, but the NEWEST one is a want.'],
+  ['🥦','Vegetables','need','Our bodies need healthy food like veggies to grow strong.'],
+  ['🕹️','Arcade Games','want','Super fun, but playing arcade games is a want!'],
+  ['🧼','Soap','need','We need soap to stay clean and healthy.'],
+  ['🎁','A Birthday Present','want','Presents are lovely surprises — but they\u2019re wants, not needs.'],
+  ['🌡️','A Doctor Visit','need','Seeing a doctor keeps us healthy. That\u2019s an important need!'],
+  ['🍿','Movie Theater Popcorn','want','A tasty treat at the movies — a want, not a need!'],
+  ['🧥','A Warm Coat','need','In cold weather, a warm coat is a need to stay safe.'],
+  ['🛹','A Skateboard','want','Skateboards are fun, but they\u2019re a want, not a need.']
 ];
 var nwOrder=[], nwIdx=0, nwScore=0;
 function startNW(){
-  nwOrder = NW_ITEMS.map(function(x){return x;}).sort(function(){return Math.random()-0.5;});
+  nwOrder = NW_ITEMS.map(function(x){return x;}).sort(function(){return Math.random()-0.5;}).slice(0,10);
   nwIdx=0; nwScore=0;
   document.getElementById('nwDone').classList.remove('show');
   document.getElementById('nwPlay').style.display='block';
@@ -1061,7 +1077,9 @@ function nextNW(){
     document.getElementById('nwPlay').style.display='none';
     var d=document.getElementById('nwDone'); d.classList.add('show');
     document.getElementById('nwFinal').textContent=nwScore;
-    var m = nwScore===8?'Perfect score! You\u2019re a money whiz! 🏆':nwScore>=6?'Great job telling needs from wants! 🌟':'Nice try — play again to get even better! 💪';
+    document.getElementById('nwFinalTotal').textContent=nwOrder.length;
+    var pct = nwScore/nwOrder.length;
+    var m = pct===1?'Perfect score! You\u2019re a money whiz! 🏆':pct>=0.7?'Great job telling needs from wants! 🌟':'Nice try — play again to get even better! 💪';
     document.getElementById('nwDoneMsg').textContent=m;
   } else showNWItem();
 }
