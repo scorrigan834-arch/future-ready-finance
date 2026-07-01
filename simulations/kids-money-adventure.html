@@ -217,6 +217,50 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
 .jar-msg.show{display:block;animation:fadeUp .3s}
 .jar-msg.good{background:#dcfce7;border:2px solid #86efac;color:#166534}
 
+/* ===== Money Tree (showcase game) ===== */
+.tree-game{max-width:540px;margin:0 auto;text-align:center}
+.tree-stage{background:linear-gradient(180deg,#dbeafe 0%,#bfdbfe 40%,#bbf7d0 100%);border-radius:24px;padding:1.5rem 1rem 0;position:relative;overflow:hidden;box-shadow:inset 0 -8px 20px rgba(34,197,94,.15);margin-bottom:1.25rem}
+.tree-sky{position:absolute;top:.8rem;right:1rem;font-size:1.8rem;opacity:.9}
+.tree-svg-wrap{position:relative;height:280px;display:flex;align-items:flex-end;justify-content:center}
+.tree-svg{width:100%;max-width:320px;height:280px;overflow:visible}
+/* tree parts animate smoothly between stages */
+.tr-trunk,.tr-canopy,.tr-canopy2,.tr-canopy3{transition:all .8s cubic-bezier(.34,1.56,.64,1)}
+.tr-coin{opacity:0;transition:opacity .5s}
+.tr-coin.show{opacity:1}
+@keyframes coinDrop{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
+.coin-fall{position:absolute;font-size:1.5rem;animation:coinDrop 1.2s ease-in forwards;pointer-events:none;z-index:5}
+.tree-ground{height:26px;background:linear-gradient(180deg,#a16207,#78350f);border-radius:0 0 24px 24px;position:relative;z-index:1}
+.tree-grass{position:absolute;top:-6px;left:0;right:0;height:10px;background:repeating-linear-gradient(90deg,#22c55e 0,#22c55e 6px,#16a34a 6px,#16a34a 12px);border-radius:2px}
+
+.tree-hud{display:flex;justify-content:space-around;align-items:center;background:#fff;border:2px solid #e2e8f0;border-radius:16px;padding:.9rem;margin-bottom:1.25rem}
+.tree-hud .th-item{text-align:center}
+.tree-hud .th-label{font-size:.68rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.03em;font-weight:700}
+.tree-hud .th-val{font-size:1.5rem;font-weight:900;font-family:"Playfair Display",serif;color:#0C7D79;line-height:1.1}
+.tree-hud .th-val.year{color:#3b82f6}
+.tree-hud .th-val.picked{color:#f97316}
+.tree-hud .th-div{width:1px;height:34px;background:#e2e8f0}
+
+.tree-grow-note{font-size:.9rem;color:#166534;font-weight:700;background:#dcfce7;border-radius:12px;padding:.7rem 1rem;margin-bottom:1.25rem;min-height:1em;transition:opacity .3s;opacity:0}
+.tree-grow-note.show{opacity:1}
+
+.tree-actions{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.75rem}
+.tree-btn{border:none;border-radius:16px;padding:1.1rem .8rem;font-size:1.05rem;font-weight:800;cursor:pointer;font-family:inherit;transition:all .18s;color:#fff;line-height:1.3}
+.tree-btn .tb-sub{display:block;font-size:.72rem;font-weight:600;opacity:.9;margin-top:.15rem}
+.tree-btn.water{background:linear-gradient(135deg,#0EA5A0,#3b82f6);box-shadow:0 8px 20px rgba(14,165,160,.3)}
+.tree-btn.pick{background:linear-gradient(135deg,#f97316,#ea580c);box-shadow:0 8px 20px rgba(249,115,22,.3)}
+.tree-btn:hover{transform:translateY(-2px)}
+.tree-btn:active{transform:translateY(0)}
+.tree-done-btn{background:none;border:2px solid #cbd5e1;border-radius:12px;padding:.6rem 1.5rem;font-weight:700;color:#64748b;cursor:pointer;font-family:inherit;font-size:.85rem}
+.tree-done-btn:hover{border-color:#0EA5A0;color:#0C7D79}
+
+.tree-finale{background:linear-gradient(135deg,#0EA5A0,#3b82f6);border-radius:20px;padding:2rem 1.5rem;color:#fff;display:none}
+.tree-finale.show{display:block;animation:fadeUp .5s}
+.tree-finale .tf-em{font-size:3.5rem;line-height:1}
+.tree-finale .tf-title{font-size:1.5rem;font-weight:900;font-family:"Playfair Display",serif;margin:.3rem 0}
+.tree-finale .tf-worth{font-size:2.5rem;font-weight:900;font-family:"Playfair Display",serif;margin:.5rem 0}
+.tree-finale .tf-msg{font-size:.95rem;line-height:1.55;opacity:.96;margin-top:.5rem}
+.tree-replay{background:#fff;color:#0C7D79;border:none;border-radius:12px;padding:.8rem 1.9rem;font-weight:800;cursor:pointer;margin-top:1.1rem;font-family:inherit;font-size:.95rem}
+
 </style>
 </head>
 <body>
@@ -243,6 +287,7 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
     <button class="k-tab" id="tabGoal" onclick="switchTab('goal')"><span class="t-emoji">🎯</span> Save For a Toy</button>
     <button class="k-tab" id="tabNW" onclick="switchTab('nw')"><span class="t-emoji">🛒</span> Needs or Wants?</button>
     <button class="k-tab" id="tabJars" onclick="switchTab('jars')"><span class="t-emoji">🫙</span> Save/Spend/Share</button>
+    <button class="k-tab" id="tabTree" onclick="switchTab('tree')"><span class="t-emoji">🌳</span> Money Tree</button>
   </div>
 
   <!-- INVEST PANEL -->
@@ -354,6 +399,59 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
     <div class="jar-left">💰 Left to split: <span class="jl-amt">$<span id="jarLeft">12</span></span></div>
     <div class="jar-msg" id="jarMsg"></div>
     <div class="k-tip" style="margin-top:1.5rem"><span class="pt-ic">👨‍👩‍👧</span><div><b>For grown-ups:</b> The Save/Spend/Share system teaches that money has more than one job. There's no single right split — some families do equal thirds, others save more. The lesson is that <i>every</i> dollar gets a purpose on purpose, and that giving feels good too.</div></div>
+  </div>
+
+
+  <!-- MONEY TREE PANEL -->
+  <div class="k-panel" id="panelTree">
+    <div class="step-title"><span class="num">🌱</span> Grow your Money Tree!</div>
+    <div class="tree-game">
+      <div class="tree-stage" id="treeStage">
+        <div class="tree-sky" id="treeSky">☀️</div>
+        <div class="tree-svg-wrap" id="treeSvgWrap">
+          <svg class="tree-svg" viewBox="0 0 320 280" id="treeSvg" xmlns="http://www.w3.org/2000/svg">
+            <!-- canopy layers (grow with stage) -->
+            <ellipse class="tr-canopy3" id="canopy3" cx="160" cy="120" rx="0" ry="0" fill="#16a34a"/>
+            <ellipse class="tr-canopy2" id="canopy2" cx="160" cy="120" rx="0" ry="0" fill="#22c55e"/>
+            <ellipse class="tr-canopy" id="canopy" cx="160" cy="120" rx="0" ry="0" fill="#4ade80"/>
+            <!-- trunk (grows taller) -->
+            <rect class="tr-trunk" id="trunk" x="150" y="250" width="20" height="0" rx="6" fill="#92400e"/>
+            <!-- coins in tree (appear at high stages) -->
+            <text class="tr-coin" id="coin1" x="120" y="110" font-size="22">🪙</text>
+            <text class="tr-coin" id="coin2" x="185" y="95" font-size="22">🪙</text>
+            <text class="tr-coin" id="coin3" x="155" y="140" font-size="22">🪙</text>
+          </svg>
+        </div>
+        <div class="tree-ground"><div class="tree-grass"></div></div>
+      </div>
+
+      <div class="tree-hud">
+        <div class="th-item"><div class="th-label">🌳 Tree Value</div><div class="th-val" id="treeVal">$10</div></div>
+        <div class="th-div"></div>
+        <div class="th-item"><div class="th-label">📅 Year</div><div class="th-val year" id="treeYear">1</div></div>
+        <div class="th-div"></div>
+        <div class="th-item"><div class="th-label">🍎 Picked</div><div class="th-val picked" id="treePicked">$0</div></div>
+      </div>
+
+      <div class="tree-grow-note" id="treeNote">You planted a $10 seed! Water it to make it grow. 🌱</div>
+
+      <div id="treeControls">
+        <div class="tree-actions">
+          <button class="tree-btn water" onclick="treeWater()">💧 Water It<span class="tb-sub">Save &amp; let it grow</span></button>
+          <button class="tree-btn pick" onclick="treePick()">🍎 Pick Fruit<span class="tb-sub">Spend some now</span></button>
+        </div>
+        <button class="tree-done-btn" onclick="treeFinish()">I'm done — how did I do? →</button>
+      </div>
+
+      <div class="tree-finale" id="treeFinale">
+        <div class="tf-em" id="tfEm">🌳</div>
+        <div class="tf-title" id="tfTitle">Your Tree Grew!</div>
+        <div class="tf-worth" id="tfWorth">$10</div>
+        <div class="tf-msg" id="tfMsg"></div>
+        <button class="tree-replay" onclick="treeReset()">Plant a New Tree 🌱</button>
+      </div>
+    </div>
+    <div class="k-tip" style="margin-top:1.5rem"><span class="pt-ic">👨‍👩‍👧</span><div><b>For grown-ups:</b> This is <b>compound growth</b> — the engine behind all investing. The tree grows faster the bigger it gets, because each year's growth builds on all the years before. Waiting is the superpower: the money that grows the most is the money left alone the longest. It's the same math as the grown-up <a href="compound-interest.html">Compound Interest calculator</a>.</div></div>
   </div>
 
   <div class="k-foot">
@@ -504,8 +602,8 @@ function calcBiz(){
 
 // ---------- TABS ----------
 function switchTab(which){
-  var tabs = {invest:'tabInvest', biz:'tabBiz', goal:'tabGoal', nw:'tabNW', jars:'tabJars'};
-  var panels = {invest:'panelInvest', biz:'panelBiz', goal:'panelGoal', nw:'panelNW', jars:'panelJars'};
+  var tabs = {invest:'tabInvest', biz:'tabBiz', goal:'tabGoal', nw:'tabNW', jars:'tabJars', tree:'tabTree'};
+  var panels = {invest:'panelInvest', biz:'panelBiz', goal:'panelGoal', nw:'panelNW', jars:'panelJars', tree:'panelTree'};
   for(var k in tabs){ document.getElementById(tabs[k]).classList.toggle('active', k===which); }
   for(var p in panels){ document.getElementById(panels[p]).classList.toggle('show', p===which); }
 }
@@ -630,7 +728,159 @@ function renderJars(){
 
 // init
 renderInterests(); updateGoBtn(); renderBiz();
-renderGoals(); startNW(); renderJars();
+
+// ===== MONEY TREE (showcase game) =====
+var treeState = { value: 10, year: 1, picked: 0, watered: 0, plays: 0 };
+
+function treeStageFor(v){
+  if(v < 15) return 0;      // seed/sprout
+  if(v < 25) return 1;      // sapling
+  if(v < 45) return 2;      // young tree
+  if(v < 80) return 3;      // big tree
+  return 4;                 // giant golden tree
+}
+
+// Visual specs per stage: trunk height/y, three canopy layers (rx, ry, cy)
+var TREE_VIS = [
+  // stage 0: tiny sprout
+  { trunkH:30, trunkY:220, c1:{rx:14,ry:16,cy:205}, c2:{rx:0,ry:0,cy:205}, c3:{rx:0,ry:0,cy:205}, coins:0, sky:'☀️' },
+  // stage 1: sapling
+  { trunkH:70, trunkY:180, c1:{rx:38,ry:40,cy:150}, c2:{rx:22,ry:24,cy:140}, c3:{rx:0,ry:0,cy:140}, coins:0, sky:'☀️' },
+  // stage 2: young tree
+  { trunkH:110, trunkY:140, c1:{rx:62,ry:60,cy:110}, c2:{rx:46,ry:46,cy:95}, c3:{rx:26,ry:28,cy:85}, coins:0, sky:'🌤️' },
+  // stage 3: big leafy tree
+  { trunkH:140, trunkY:110, c1:{rx:90,ry:80,cy:95}, c2:{rx:70,ry:64,cy:78}, c3:{rx:46,ry:46,cy:66}, coins:1, sky:'🌈' },
+  // stage 4: giant golden tree dropping coins
+  { trunkH:160, trunkY:90, c1:{rx:115,ry:98,cy:88}, c2:{rx:92,ry:80,cy:70}, c3:{rx:64,ry:60,cy:58}, coins:3, sky:'✨' }
+];
+
+function renderTree(animateCoins){
+  var stage = treeStageFor(treeState.value);
+  var v = TREE_VIS[stage];
+  // trunk
+  var trunk = document.getElementById('trunk');
+  trunk.setAttribute('height', v.trunkH);
+  trunk.setAttribute('y', v.trunkY);
+  // canopies
+  function setC(id, spec, baseColor){
+    var el = document.getElementById(id);
+    el.setAttribute('rx', spec.rx); el.setAttribute('ry', spec.ry); el.setAttribute('cy', spec.cy);
+  }
+  setC('canopy', v.c1); setC('canopy2', v.c2); setC('canopy3', v.c3);
+  // golden tint at max stage
+  if(stage===4){
+    document.getElementById('canopy').setAttribute('fill','#fde047');
+    document.getElementById('canopy2').setAttribute('fill','#facc15');
+    document.getElementById('canopy3').setAttribute('fill','#eab308');
+  } else {
+    document.getElementById('canopy').setAttribute('fill','#4ade80');
+    document.getElementById('canopy2').setAttribute('fill','#22c55e');
+    document.getElementById('canopy3').setAttribute('fill','#16a34a');
+  }
+  // coins in tree
+  ['coin1','coin2','coin3'].forEach(function(id,i){
+    document.getElementById(id).classList.toggle('show', i < v.coins);
+  });
+  // sky
+  document.getElementById('treeSky').textContent = v.sky;
+  // HUD
+  document.getElementById('treeVal').textContent = '$' + Math.round(treeState.value);
+  document.getElementById('treeYear').textContent = treeState.year;
+  document.getElementById('treePicked').textContent = '$' + Math.round(treeState.picked);
+  // falling coins animation when watering pays off at high stages
+  if(animateCoins && stage>=3){ dropCoin(); }
+}
+
+function dropCoin(){
+  var wrap = document.getElementById('treeSvgWrap');
+  for(var i=0;i<3;i++){
+    (function(n){
+      setTimeout(function(){
+        var c = document.createElement('div');
+        c.className = 'coin-fall';
+        c.textContent = '🪙';
+        c.style.left = (35 + Math.random()*45) + '%';
+        c.style.top = (20 + Math.random()*20) + '%';
+        wrap.appendChild(c);
+        setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); }, 1300);
+      }, n*180);
+    })(i);
+  }
+}
+
+function showTreeNote(txt){
+  var n = document.getElementById('treeNote');
+  n.textContent = txt;
+  n.classList.add('show');
+}
+
+function treeWater(){
+  var before = treeState.value;
+  treeState.value = treeState.value * 1.20;  // 20% compound growth
+  treeState.year++;
+  treeState.watered++;
+  var grew = Math.round(treeState.value - before);
+  renderTree(true);
+  showTreeNote('💧 You watered it! It grew by $' + grew + ' this year — just from waiting! 🌱');
+  checkTreeAuto();
+}
+
+function treePick(){
+  if(treeState.value <= 10){
+    showTreeNote('🍎 Your tree is too little to pick fruit yet — water it first to help it grow!');
+    return;
+  }
+  var taken = treeState.value * 0.30;  // pick 30% as spending
+  treeState.value = treeState.value - taken;
+  treeState.picked += taken;
+  treeState.year++;
+  renderTree(false);
+  showTreeNote('🍎 You picked $' + Math.round(taken) + ' of fruit to spend! Yum — but your tree got smaller.');
+  checkTreeAuto();
+}
+
+function checkTreeAuto(){
+  // gently wrap up after 12 years
+  if(treeState.year > 12){ treeFinish(); }
+}
+
+function treeFinish(){
+  document.getElementById('treeControls').style.display = 'none';
+  var fin = document.getElementById('treeFinale');
+  var stage = treeStageFor(treeState.value);
+  var val = Math.round(treeState.value);
+  var picked = Math.round(treeState.picked);
+  var em, title, msg;
+  if(stage >= 4){
+    em='🌳✨'; title='WOW! A Giant Money Tree!';
+    msg='You were super patient and kept watering — so your tree grew HUGE! This is the magic of saving: the longer you leave your money to grow, the bigger it gets all by itself. You\u2019re a natural! 🌟';
+  } else if(stage >= 2){
+    em='🌳'; title='Your Tree Grew Big!';
+    msg = (picked>0)
+      ? 'Nice work! You watered it a lot AND picked some fruit to enjoy ($' + picked + ' worth). Balancing saving and spending is a great skill. Try watering even longer next time to grow a GIANT tree! 🌱'
+      : 'Great job watering your tree and letting it grow! The longer you wait, the faster it grows. Keep going next time and watch it get even bigger! 🌟';
+  } else {
+    em='🌿'; title='A Little Sprout!';
+    msg='You picked lots of fruit early — that\u2019s fun, but your tree stayed small! Here\u2019s the secret: if you water it and wait, it grows faster and faster on its own. Try planting again and water more! 💧';
+  }
+  document.getElementById('tfEm').textContent = em;
+  document.getElementById('tfTitle').textContent = title;
+  document.getElementById('tfWorth').textContent = '$' + val + (picked>0 ? '  (+ $'+picked+' picked)' : '');
+  document.getElementById('tfMsg').textContent = msg;
+  fin.classList.add('show');
+}
+
+function treeReset(){
+  treeState = { value: 10, year: 1, picked: 0, watered: 0, plays: treeState.plays+1 };
+  document.getElementById('treeFinale').classList.remove('show');
+  document.getElementById('treeControls').style.display = 'block';
+  document.getElementById('treeNote').classList.remove('show');
+  renderTree(false);
+  setTimeout(function(){ showTreeNote('You planted a fresh $10 seed! Water it to make it grow. 🌱'); }, 100);
+}
+
+
+renderGoals(); startNW(); renderJars(); renderTree(false);
 document.getElementById('goBtn').addEventListener('click', showStocks);
 
 </script>
