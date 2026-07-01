@@ -740,6 +740,18 @@ function calculate(){
   var totalMonthlyPayment=debts.reduce(function(s,x){return s+(x.min||0)+(x.extra||0);},0);
   renderFreedomInvest(totalMonthlyPayment, manual.months);
 
+  // ----- Save a lightweight summary so My Money Hub can show debt progress -----
+  try{
+    var totalBalance=debts.reduce(function(s,x){return s+(x.bal||0);},0);
+    localStorage.setItem('frf_debtfreedom_v1', JSON.stringify({
+      totalDebt: totalBalance,
+      payoffMonths: manual.months,
+      monthlyPayment: totalMonthlyPayment,
+      topDebt: topDebt ? topDebt.name : '',
+      ts: Date.now()
+    }));
+  }catch(e){}
+
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
 }
