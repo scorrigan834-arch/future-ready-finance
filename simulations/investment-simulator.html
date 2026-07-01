@@ -85,16 +85,65 @@ a{text-decoration:none}
 .lcard,.dcard,.diff,.step,.guide-item:not(.dim),.pop-card,.sim-card,.path-card,.stage-card{transition:border-color .25s,box-shadow .25s,transform .25s !important}
 .lcard:hover,.dcard:hover,.diff:hover,.guide-item:not(.dim):hover,.pop-card:hover,.path-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(11,25,41,.1)}
 
-.kids-cta{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,#8b5cf6,#6d28d9);border-radius:16px;padding:1.1rem 1.35rem;margin-bottom:1.25rem;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 10px 26px rgba(139,92,246,.3);position:relative;overflow:hidden}
+.kids-cta{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,#0EA5A0,#0C7D79);border-radius:16px;padding:1.1rem 1.35rem;margin-bottom:1.25rem;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 10px 26px rgba(14,165,160,.3);position:relative;overflow:hidden}
 .kids-cta::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.15),transparent 70%);top:-80px;right:-40px;pointer-events:none}
-.kids-cta:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(139,92,246,.42)}
+.kids-cta:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(14,165,160,.42)}
 .kids-cta .kc-emoji{font-size:2.6rem;line-height:1;flex-shrink:0;position:relative;z-index:1}
 .kids-cta .kc-body{flex:1;min-width:0;position:relative;z-index:1}
-.kids-cta .kc-kick{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#e9d5ff;margin-bottom:.15rem}
+.kids-cta .kc-kick{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#a7f3eb;margin-bottom:.15rem}
 .kids-cta .kc-title{font-family:"Playfair Display",Georgia,serif;font-size:1.15rem;font-weight:700;color:#fff;line-height:1.2}
 .kids-cta .kc-sub{font-size:.83rem;color:rgba(255,255,255,.85);margin-top:.1rem}
 .kids-cta .kc-arrow{flex-shrink:0;background:rgba(255,255,255,.2);color:#fff;font-weight:800;font-size:.85rem;padding:.55rem .9rem;border-radius:10px;white-space:nowrap;position:relative;z-index:1}
 @media(max-width:560px){.kids-cta{flex-wrap:wrap}.kids-cta .kc-arrow{width:100%;text-align:center}}
+
+/* ===== Overhaul: search, watchlist, real-stock market ===== */
+.search-box{position:relative;margin-bottom:1.25rem}
+.search-box input{width:100%;padding:.95rem 1rem .95rem 2.8rem;border:2px solid #E2E8F0;border-radius:14px;font-size:1rem;font-family:"DM Sans",sans-serif;color:#0B1929;background:#fff;transition:border-color .18s,box-shadow .18s}
+.search-box input:focus{outline:none;border-color:#0EA5A0;box-shadow:0 0 0 3px rgba(14,165,160,.14)}
+.search-box .search-ic{position:absolute;left:1rem;top:50%;transform:translateY(-50%);font-size:1.1rem;pointer-events:none;opacity:.6}
+.search-results{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid #E2E8F0;border-radius:14px;box-shadow:0 20px 50px rgba(11,25,41,.18);z-index:60;overflow:hidden;display:none}
+.search-results.show{display:block}
+.sr-item{display:flex;align-items:center;gap:.75rem;padding:.7rem .9rem;cursor:pointer;border-bottom:1px solid #F1F5F4;transition:background .12s}
+.sr-item:last-child{border-bottom:none}
+.sr-item:hover{background:#F5F7F6}
+.sr-ic{font-size:1.5rem;width:2rem;text-align:center;flex-shrink:0}
+.sr-body{flex:1;min-width:0}
+.sr-name{font-weight:700;font-size:.9rem;color:#0B1929}
+.sr-meta{font-size:.72rem;color:#94a3b8}
+.sr-ticker{font-family:monospace;font-weight:700;font-size:.72rem;color:#0EA5A0;background:rgba(14,165,160,.1);padding:.12rem .45rem;border-radius:5px;flex-shrink:0}
+.sr-empty{padding:1rem;text-align:center;color:#94a3b8;font-size:.85rem}
+
+.market-tabs{display:flex;gap:.5rem;margin-bottom:1rem}
+.market-tab{flex:1;background:#fff;border:2px solid #E2E8F0;border-radius:12px;padding:.7rem;font-weight:700;font-size:.85rem;color:#64748B;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .16s;display:flex;align-items:center;justify-content:center;gap:.4rem}
+.market-tab.active{border-color:#0EA5A0;color:#0EA5A0;background:rgba(14,165,160,.06)}
+.market-tab .mt-count{background:#0EA5A0;color:#fff;font-size:.68rem;padding:.05rem .4rem;border-radius:99px;font-weight:800}
+.market-tab:not(.active) .mt-count{background:#cbd5e1}
+
+.rank-badge{background:rgba(14,165,160,.12);color:#0C7D79;font-size:.66rem;font-weight:800;padding:.1rem .4rem;border-radius:5px;font-family:monospace}
+.stock-card{background:#fff;border:1px solid #EAEFEE;border-radius:14px;padding:1rem 1.1rem;margin-bottom:.7rem;display:flex;align-items:center;gap:.9rem;transition:border-color .18s,box-shadow .18s}
+.stock-card:hover{border-color:rgba(14,165,160,.4);box-shadow:0 6px 18px rgba(11,25,41,.08)}
+.sc-ic{font-size:2rem;line-height:1;flex-shrink:0;width:2.6rem;text-align:center}
+.sc-body{flex:1;min-width:0}
+.sc-top{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.sc-name{font-weight:700;font-size:.98rem;color:#0B1929}
+.sc-ticker{font-family:monospace;font-size:.7rem;font-weight:700;color:#0EA5A0;background:rgba(14,165,160,.1);padding:.12rem .45rem;border-radius:5px}
+.sc-sec{font-size:.72rem;color:#94a3b8;margin-top:.1rem}
+.sc-right{display:flex;flex-direction:column;align-items:flex-end;gap:.4rem;flex-shrink:0}
+.sc-price{font-weight:800;font-size:1.05rem;color:#0B1929;font-family:"Playfair Display",serif}
+.sc-actions{display:flex;gap:.4rem}
+.sc-star{background:none;border:1.5px solid #E2E8F0;border-radius:9px;width:2rem;height:2rem;cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center;transition:all .16s;padding:0}
+.sc-star:hover{border-color:#f59e0b;background:rgba(245,158,11,.08)}
+.sc-star.starred{border-color:#f59e0b;background:rgba(245,158,11,.12)}
+.sc-buy{background:#0EA5A0;color:#fff;border:none;border-radius:9px;padding:0 .95rem;height:2rem;font-weight:700;font-size:.82rem;cursor:pointer;font-family:"DM Sans",sans-serif;transition:background .16s;white-space:nowrap}
+.sc-buy:hover{background:#0C7D79}
+.sc-buy:disabled{background:#cbd5e1;cursor:not-allowed}
+
+.watchlist-empty{text-align:center;color:#94a3b8;font-size:.88rem;padding:1.75rem 1rem;line-height:1.6;background:#fff;border:1.5px dashed #E2E8F0;border-radius:14px}
+.watchlist-empty .we-ic{font-size:1.8rem;display:block;margin-bottom:.4rem}
+@media(max-width:560px){
+  .stock-card{flex-wrap:wrap}
+  .sc-right{width:100%;flex-direction:row;justify-content:space-between;align-items:center;border-top:1px solid #F1F5F4;padding-top:.6rem;margin-top:.2rem}
+}
 </style>
 <style>
 .sim-hero{background:linear-gradient(135deg,#0B1929,#0f1e30);padding:2.25rem 1.5rem 1.75rem;text-align:center;position:relative;overflow:hidden}
@@ -187,7 +236,7 @@ a{text-decoration:none}
         <a href="../simulations/compound-interest.html"><span class="dd-t">📈 Compound Interest</span><span class="dd-d">What your money becomes</span></a>
         <a href="../simulations/take-home-pay.html"><span class="dd-t">💼 Take-Home Pay</span><span class="dd-d">Paycheck after taxes</span></a>
         <a href="../simulations/roth-vs-traditional.html"><span class="dd-t">🏦 Roth vs Pre-Tax 401(k)</span><span class="dd-d">Which 401(k) wins</span></a>
-        <a href="../simulations/debt-payoff.html"><span class="dd-t">💳 Debt Payoff</span><span class="dd-d">Fastest way out</span></a>
+        <a href="../simulations/debt-freedom-planner.html"><span class="dd-t">🎯 Debt Freedom Planner</span><span class="dd-d">Your fastest way out</span></a>
         <a href="../simulations/net-worth.html"><span class="dd-t">💰 Net Worth</span><span class="dd-d">Own vs. owe</span></a>
         <a href="../simulations.html"><span class="dd-t">🔢 All Calculators →</span></a>
       </div>
@@ -250,7 +299,7 @@ a{text-decoration:none}
         <div class="s-value" id="investedValue">$0.00</div>
       </div>
       <div class="pb-stat">
-        <div class="s-label">Total Gain/Loss</div>
+        <div class="s-label">Gain/Loss</div>
         <div class="s-value" id="totalGain">$0.00</div>
       </div>
     </div>
@@ -264,10 +313,21 @@ a{text-decoration:none}
   <div class="sim-section-title">📊 Your Holdings <span class="day-badge" id="dayBadge">Day 1</span></div>
   <div id="holdingsList"></div>
 
-  <div class="sim-section-title">🏛️ The Market</div>
-  <div class="stock-grid" id="stockGrid"></div>
+  <div class="sim-section-title">🔍 Find Any Stock</div>
+  <div class="search-box">
+    <span class="search-ic">🔍</span>
+    <input type="text" id="stockSearch" placeholder="Search by name or ticker (e.g. Apple, TSLA, Nike)…" autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+  </div>
 
-  <div class="sim-tip">💡 <b>How to use it:</b> Tap <b>Buy</b> to purchase a share with your cash. Tap <b>Advance One Day</b> to let prices move — watch your portfolio value change. Sell when you want to lock in gains (or cut losses). Try to grow your $10,000 over time. This is exactly how real investing works, just risk-free.</div>
+  <div class="market-tabs">
+    <button class="market-tab active" id="tabTop15" onclick="switchMarket('top15')">🏆 Top 15 <span class="mt-count">15</span></button>
+    <button class="market-tab" id="tabWatch" onclick="switchMarket('watch')">⭐ Watchlist <span class="mt-count" id="watchCount">0</span></button>
+  </div>
+
+  <div id="marketList"></div>
+
+  <div class="sim-tip">💡 <b>How to use it:</b> The <b>Top 15</b> are the biggest companies in the S&amp;P 500 by market cap. <b>Search</b> for any other stock, tap <b>☆</b> to save it to your Watchlist, and tap <b>Buy</b> to purchase a share with your pretend cash. Hit <b>Advance One Day</b> to watch prices move. Prices are realistic samples, not live market data.</div>
 
 </div>
 
@@ -327,43 +387,145 @@ a{text-decoration:none}
 })();
 </script>
 <script>
-// ===== INVESTMENT SIMULATOR ENGINE =====
-var STOCKS = [
-  {t:'APL', n:'Apollo Tech', logo:'A', base:182.50, vol:0.018},
-  {t:'MCS', n:'Macrosoft', logo:'M', base:415.20, vol:0.015},
-  {t:'NVDA', n:'Noventa', logo:'N', base:128.40, vol:0.030},
-  {t:'RVR', n:'Riverstone', logo:'R', base:64.75, vol:0.012},
-  {t:'EVG', n:'Evergrow Energy', logo:'E', base:47.30, vol:0.022},
-  {t:'ORB', n:'Orbit Motors', logo:'O', base:241.80, vol:0.028},
-  {t:'BRW', n:'Brightwave', logo:'B', base:89.15, vol:0.020},
-  {t:'SLR', n:'Solaris Foods', logo:'S', base:33.60, vol:0.010}
+// ===== INVESTMENT SIMULATOR ENGINE (real S&P 500 names, sample prices) =====
+
+// ============================================================
+// FUTURE READY FINANCE — Stock data for the Investment Simulator
+// ------------------------------------------------------------
+// SAMPLE PRICES (not live). Realistic values for early 2026.
+// EASY TO UPDATE: edit the `price` numbers below any time.
+// EASY TO WIRE TO A LIVE API LATER: replace getPrice() internals.
+// ============================================================
+
+// --- Top 15 S&P 500 companies by market cap (sorted, descending) ---
+// Each: ticker, name, emoji/sector icon, sample price, sector
+var TOP15 = [
+  {t:'AAPL',  n:'Apple',              ic:'🍎', price:232.50, sec:'Technology'},
+  {t:'NVDA',  n:'Nvidia',             ic:'🎮', price:138.20, sec:'Technology'},
+  {t:'MSFT',  n:'Microsoft',          ic:'🪟', price:432.80, sec:'Technology'},
+  {t:'AMZN',  n:'Amazon',             ic:'📦', price:218.40, sec:'Consumer'},
+  {t:'GOOGL', n:'Alphabet (Google)',  ic:'🔍', price:178.60, sec:'Technology'},
+  {t:'META',  n:'Meta',               ic:'📱', price:602.30, sec:'Technology'},
+  {t:'BRK.B', n:'Berkshire Hathaway', ic:'🏦', price:462.90, sec:'Finance'},
+  {t:'AVGO',  n:'Broadcom',           ic:'🔗', price:228.70, sec:'Technology'},
+  {t:'TSLA',  n:'Tesla',              ic:'⚡', price:352.40, sec:'Automotive'},
+  {t:'LLY',   n:'Eli Lilly',          ic:'💊', price:788.50, sec:'Healthcare'},
+  {t:'JPM',   n:'JPMorgan Chase',     ic:'🏛️', price:248.30, sec:'Finance'},
+  {t:'WMT',   n:'Walmart',            ic:'🛒', price:92.60,  sec:'Consumer'},
+  {t:'V',     n:'Visa',               ic:'💳', price:312.80, sec:'Finance'},
+  {t:'XOM',   n:'Exxon Mobil',        ic:'⛽', price:118.40, sec:'Energy'},
+  {t:'UNH',   n:'UnitedHealth',       ic:'🏥', price:512.70, sec:'Healthcare'}
 ];
+
+// --- Broader searchable library (well-known names beyond the top 15) ---
+// Kept lightweight but covers brands people search for.
+var MORE_STOCKS = [
+  {t:'DIS',  n:'Disney',            ic:'🏰', price:112.30, sec:'Entertainment'},
+  {t:'NFLX', n:'Netflix',           ic:'🎬', price:842.50, sec:'Entertainment'},
+  {t:'NKE',  n:'Nike',              ic:'👟', price:76.40,  sec:'Consumer'},
+  {t:'MCD',  n:'McDonald\u2019s',    ic:'🍔', price:292.10, sec:'Consumer'},
+  {t:'KO',   n:'Coca-Cola',         ic:'🥤', price:62.80,  sec:'Consumer'},
+  {t:'PEP',  n:'PepsiCo',           ic:'🥤', price:152.30, sec:'Consumer'},
+  {t:'SBUX', n:'Starbucks',         ic:'☕', price:98.70,  sec:'Consumer'},
+  {t:'ADBE', n:'Adobe',             ic:'🎨', price:512.40, sec:'Technology'},
+  {t:'CRM',  n:'Salesforce',        ic:'☁️', price:338.90, sec:'Technology'},
+  {t:'AMD',  n:'AMD',               ic:'🖥️', price:128.60, sec:'Technology'},
+  {t:'INTC', n:'Intel',             ic:'🔲', price:22.40,  sec:'Technology'},
+  {t:'PYPL', n:'PayPal',            ic:'💰', price:86.30,  sec:'Finance'},
+  {t:'SPOT', n:'Spotify',           ic:'🎵', price:478.20, sec:'Entertainment'},
+  {t:'RBLX', n:'Roblox',            ic:'🕹️', price:48.60,  sec:'Entertainment'},
+  {t:'ABNB', n:'Airbnb',            ic:'🏠', price:138.90, sec:'Consumer'},
+  {t:'UBER', n:'Uber',              ic:'🚗', price:72.40,  sec:'Technology'},
+  {t:'F',    n:'Ford',              ic:'🚙', price:11.20,  sec:'Automotive'},
+  {t:'GM',   n:'General Motors',    ic:'🚘', price:52.80,  sec:'Automotive'},
+  {t:'BA',   n:'Boeing',            ic:'✈️', price:178.30, sec:'Industrial'},
+  {t:'RACE', n:'Ferrari',           ic:'🏎️', price:462.10, sec:'Automotive'},
+  {t:'HSY',  n:'Hershey',           ic:'🍫', price:182.50, sec:'Consumer'},
+  {t:'CMG',  n:'Chipotle',          ic:'🌯', price:58.40,  sec:'Consumer'},
+  {t:'CROX', n:'Crocs',             ic:'🐊', price:102.30, sec:'Consumer'},
+  {t:'PFE',  n:'Pfizer',            ic:'💊', price:26.10,  sec:'Healthcare'},
+  {t:'T',    n:'AT&T',              ic:'📞', price:22.80,  sec:'Telecom'},
+  {t:'VZ',   n:'Verizon',           ic:'📶', price:42.60,  sec:'Telecom'},
+  {t:'COST', n:'Costco',            ic:'🏪', price:912.40, sec:'Consumer'},
+  {t:'HD',   n:'Home Depot',        ic:'🔨', price:412.70, sec:'Consumer'},
+  {t:'MA',   n:'Mastercard',        ic:'💳', price:528.30, sec:'Finance'},
+  {t:'CHWY', n:'Chewy',             ic:'🐶', price:32.40,  sec:'Consumer'}
+];
+
+// --- One combined lookup (top 15 first, then the rest) ---
+var ALL_STOCKS = TOP15.concat(MORE_STOCKS);
+
+// Fast lookup by ticker
+var STOCK_BY_TICKER = {};
+ALL_STOCKS.forEach(function(s){ STOCK_BY_TICKER[s.t] = s; });
+
+// --- Price accessor (single choke-point → easy to swap for a live API) ---
+function getPrice(ticker){
+  var s = STOCK_BY_TICKER[ticker];
+  return s ? s.price : null;
+}
+
+// --- Search: match ticker OR name, rank top-15 and exact matches first ---
+function searchStocks(query){
+  query = (query||'').trim().toLowerCase();
+  if(!query) return [];
+  var results = [];
+  ALL_STOCKS.forEach(function(s){
+    var t = s.t.toLowerCase(), n = s.n.toLowerCase();
+    var score = -1;
+    if(t === query) score = 100;
+    else if(t.indexOf(query) === 0) score = 90;
+    else if(n.indexOf(query) === 0) score = 80;
+    else if(n.indexOf(query) !== -1) score = 60;
+    else if(t.indexOf(query) !== -1) score = 50;
+    if(score >= 0){
+      // boost top-15 slightly so household names surface first
+      var isTop = TOP15.indexOf(s) !== -1;
+      results.push({s:s, score:score + (isTop?5:0)});
+    }
+  });
+  results.sort(function(a,b){ return b.score - a.score; });
+  return results.slice(0, 8).map(function(r){ return r.s; });
+}
+
+
 var KEY = 'frf_sim_v1';
 var state = null;
+var marketView = 'top15';
 
 function defaultState(){
   var prices = {}, prev = {};
-  for(var i=0;i<STOCKS.length;i++){ prices[STOCKS[i].t] = STOCKS[i].base; prev[STOCKS[i].t] = STOCKS[i].base; }
-  return { cash:10000, day:1, prices:prices, prevPrices:prev, holdings:{}, costBasis:{} };
+  ALL_STOCKS.forEach(function(s){ prices[s.t] = s.price; prev[s.t] = s.price; });
+  return { cash:10000, day:1, prices:prices, prevPrices:prev, holdings:{}, costBasis:{}, watchlist:[] };
 }
 function load(){
-  try{ var raw = localStorage.getItem(KEY); if(raw){ state = JSON.parse(raw); return; } }catch(e){}
-  state = defaultState();
+  try{ var raw = localStorage.getItem(KEY); if(raw){ state = JSON.parse(raw); } }catch(e){}
+  if(!state){ state = defaultState(); return; }
+  // migrate: ensure new fields exist, and that prices cover all current stocks
+  if(!state.watchlist) state.watchlist = [];
+  if(!state.prices) state.prices = {};
+  if(!state.prevPrices) state.prevPrices = {};
+  ALL_STOCKS.forEach(function(s){
+    if(state.prices[s.t] == null){ state.prices[s.t] = s.price; state.prevPrices[s.t] = s.price; }
+  });
+  if(!state.holdings) state.holdings = {};
+  if(!state.costBasis) state.costBasis = {};
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
 
-function money(n){ return '$' + Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function money(n){ return '$' + (n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 
 function investedValue(){
-  var total = 0;
-  for(var t in state.holdings){ if(state.holdings[t]>0){ total += state.holdings[t] * state.prices[t]; } }
-  return total;
+  var v = 0;
+  for(var t in state.holdings){ v += (state.holdings[t]||0) * (state.prices[t]||0); }
+  return v;
 }
 function totalCostBasis(){
-  var total = 0;
-  for(var t in state.costBasis){ total += state.costBasis[t]; }
-  return total;
+  var v = 0;
+  for(var t in state.costBasis){ v += state.costBasis[t]||0; }
+  return v;
 }
+function getStock(t){ return STOCK_BY_TICKER[t] || null; }
 
 function render(){
   var invested = investedValue();
@@ -373,107 +535,183 @@ function render(){
   document.getElementById('investedValue').textContent = money(invested);
   var gain = total - 10000;
   var gEl = document.getElementById('totalGain');
-  gEl.textContent = (gain>=0?'+':'') + money(gain);
-  gEl.className = 's-value ' + (gain>0?'up':(gain<0?'down':''));
+  gEl.textContent = (gain>=0?'+':'') + money(gain).replace('$-','$');
+  gEl.style.color = gain>0 ? '#059669' : (gain<0 ? '#dc2626' : '#0B1929');
   document.getElementById('dayBadge').textContent = 'Day ' + state.day;
 
   // Holdings
-  var hList = document.getElementById('holdingsList');
   var hHtml = '';
-  var hasHoldings = false;
-  for(var i=0;i<STOCKS.length;i++){
-    var s = STOCKS[i];
-    var sh = state.holdings[s.t] || 0;
-    if(sh>0){
-      hasHoldings = true;
-      var val = sh * state.prices[s.t];
-      var cost = state.costBasis[s.t] || 0;
-      var g = val - cost;
-      var gClass = g>0?'up':(g<0?'down':'');
-      var gPct = cost>0 ? (g/cost*100) : 0;
-      hHtml += '<div class="holding-row"><div class="holding-left"><div class="stock-logo">'+s.logo+'</div><div class="holding-info"><div class="h-name">'+s.n+'</div><div class="h-detail">'+sh+' share'+(sh>1?'s':'')+' @ '+money(state.prices[s.t])+'</div></div></div><div class="holding-value"><div class="hv-total">'+money(val)+'</div><div class="hv-gain '+gClass+'">'+(g>=0?'+':'')+money(g)+' ('+(gPct>=0?'+':'')+gPct.toFixed(1)+'%)</div></div></div>';
+  var tickers = Object.keys(state.holdings).filter(function(t){ return state.holdings[t] > 0; });
+  if(tickers.length === 0){
+    hHtml = '<div class="watchlist-empty"><span class="we-ic">💼</span>You don\u2019t own any shares yet. Pick a company below and tap <b>Buy</b> to start your portfolio!</div>';
+  } else {
+    tickers.forEach(function(t){
+      var s = getStock(t); if(!s) return;
+      var sh = state.holdings[t];
+      var val = sh * state.prices[t];
+      var basis = state.costBasis[t] || 0;
+      var g = val - basis;
+      var gPct = basis>0 ? (g/basis*100) : 0;
+      var gClass = g>0?'gain-pos':(g<0?'gain-neg':'');
+      hHtml += '<div class="stock-card">'
+        + '<div class="sc-ic">'+s.ic+'</div>'
+        + '<div class="sc-body"><div class="sc-top"><span class="sc-name">'+s.n+'</span><span class="sc-ticker">'+s.t+'</span></div>'
+        + '<div class="sc-sec">'+sh+' share'+(sh>1?'s':'')+' \u00b7 avg '+money(basis/sh)+' \u00b7 now '+money(state.prices[t])+'</div></div>'
+        + '<div class="sc-right"><div class="sc-price" style="color:'+(g>=0?'#059669':'#dc2626')+'">'+money(val)+'<div style="font-size:.72rem;font-weight:600">'+(g>=0?'+':'')+money(g).replace('$-','$')+' ('+(gPct>=0?'+':'')+gPct.toFixed(1)+'%)</div></div>'
+        + '<div class="sc-actions"><button class="sc-buy" style="background:#dc2626" onclick="sell(\''+t+'\')">Sell</button></div></div>'
+        + '</div>';
+    });
+  }
+  document.getElementById('holdingsList').innerHTML = hHtml;
+
+  // Watchlist count
+  document.getElementById('watchCount').textContent = state.watchlist.length;
+
+  // Market list (top15 or watchlist)
+  renderMarket();
+}
+
+function stockCard(s, rank){
+  var owned = state.holdings[s.t] || 0;
+  var starred = state.watchlist.indexOf(s.t) !== -1;
+  var canBuy = state.cash >= s.price;
+  return '<div class="stock-card">'
+    + '<div class="sc-ic">'+s.ic+'</div>'
+    + '<div class="sc-body"><div class="sc-top">'
+      + (rank?'<span class="rank-badge">#'+rank+'</span>':'')
+      + '<span class="sc-name">'+s.n+'</span><span class="sc-ticker">'+s.t+'</span></div>'
+      + '<div class="sc-sec">'+s.sec+(owned>0?' \u00b7 you own '+owned:'')+'</div></div>'
+    + '<div class="sc-right"><div class="sc-price">'+money(s.price)+'</div>'
+    + '<div class="sc-actions">'
+      + '<button class="sc-star'+(starred?' starred':'')+'" onclick="toggleWatch(\''+s.t+'\')" aria-label="'+(starred?'Remove from':'Add to')+' watchlist" title="'+(starred?'Remove from':'Add to')+' watchlist">'+(starred?'\u2605':'\u2606')+'</button>'
+      + '<button class="sc-buy" onclick="buy(\''+s.t+'\')"'+(canBuy?'':' disabled')+'>Buy</button>'
+    + '</div></div></div>';
+}
+
+function renderMarket(){
+  var list = document.getElementById('marketList');
+  if(marketView === 'top15'){
+    list.innerHTML = TOP15.map(function(s, i){ return stockCard(s, i+1); }).join('');
+  } else {
+    if(state.watchlist.length === 0){
+      list.innerHTML = '<div class="watchlist-empty"><span class="we-ic">\u2b50</span>Your watchlist is empty. Search for any stock and tap the <b>\u2606</b> star to save it here for quick access.</div>';
+    } else {
+      list.innerHTML = state.watchlist.map(function(t){ var s = getStock(t); return s ? stockCard(s, null) : ''; }).join('');
     }
   }
-  hList.innerHTML = hasHoldings ? hHtml : '<div class="holdings-empty">You don\'t own any stocks yet. Buy some from the market below to start your portfolio!</div>';
-
-  // Market
-  var grid = document.getElementById('stockGrid');
-  var mHtml = '';
-  for(var j=0;j<STOCKS.length;j++){
-    var st = STOCKS[j];
-    var price = state.prices[st.t];
-    var prev = state.prevPrices[st.t];
-    var chg = price - prev;
-    var chgPct = prev>0 ? (chg/prev*100) : 0;
-    var chgClass = chg>0?'up':(chg<0?'down':'');
-    var arrow = chg>0?'▲':(chg<0?'▼':'–');
-    var owned = state.holdings[st.t] || 0;
-    var canSell = owned>0;
-    var canBuy = state.cash >= price;
-    mHtml += '<div class="stock-card"><div class="stock-top"><div class="stock-id"><div class="stock-logo">'+st.logo+'</div><div><div class="stock-name">'+st.n+'</div><div class="stock-ticker">'+st.t+'</div></div></div><div class="stock-price-wrap"><div class="stock-price">'+money(price)+'</div><div class="stock-change '+chgClass+'">'+arrow+' '+(chgPct>=0?'+':'')+chgPct.toFixed(2)+'%</div></div></div><div class="stock-actions"><span class="shares-owned">You own: <b>'+owned+'</b></span><button class="trade-btn sell-btn" onclick="sell(\''+st.t+'\')" '+(canSell?'':'disabled')+'>Sell</button><button class="trade-btn buy-btn" onclick="buy(\''+st.t+'\')" '+(canBuy?'':'disabled style="opacity:.4;cursor:not-allowed"')+'>Buy</button></div></div>';
-  }
-  grid.innerHTML = mHtml;
 }
 
-function showToast(msg, isError){
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast show' + (isError?' error':'');
-  setTimeout(function(){ t.className = 'toast' + (isError?' error':''); }, 2200);
+function switchMarket(v){
+  marketView = v;
+  document.getElementById('tabTop15').classList.toggle('active', v==='top15');
+  document.getElementById('tabWatch').classList.toggle('active', v==='watch');
+  renderMarket();
 }
 
-function buy(ticker){
-  var price = state.prices[ticker];
-  if(state.cash < price){ showToast('Not enough cash to buy this share', true); return; }
+function toggleWatch(t){
+  var i = state.watchlist.indexOf(t);
+  if(i === -1){ state.watchlist.push(t); showToast('\u2b50 Added '+t+' to watchlist'); }
+  else { state.watchlist.splice(i,1); showToast('Removed '+t+' from watchlist'); }
+  save(); render();
+}
+
+function buy(t){
+  var s = getStock(t); if(!s) return;
+  var price = state.prices[t];
+  if(state.cash < price){ showToast('Not enough cash to buy '+t); return; }
   state.cash -= price;
-  state.holdings[ticker] = (state.holdings[ticker]||0) + 1;
-  state.costBasis[ticker] = (state.costBasis[ticker]||0) + price;
+  state.holdings[t] = (state.holdings[t]||0) + 1;
+  state.costBasis[t] = (state.costBasis[t]||0) + price;
   save(); render();
-  var s = getStock(ticker);
-  showToast('Bought 1 share of ' + s.n + ' for ' + money(price));
+  showToast('\u2705 Bought 1 share of '+s.n+' for '+money(price));
 }
-function sell(ticker){
-  var owned = state.holdings[ticker] || 0;
-  if(owned <= 0){ showToast('You don\'t own any shares of this', true); return; }
-  var price = state.prices[ticker];
+
+function sell(t){
+  var s = getStock(t); if(!s) return;
+  var owned = state.holdings[t] || 0;
+  if(owned <= 0) return;
+  var price = state.prices[t];
   state.cash += price;
-  // Reduce cost basis proportionally (average cost)
-  var avgCost = state.costBasis[ticker] / owned;
-  state.costBasis[ticker] -= avgCost;
-  state.holdings[ticker] = owned - 1;
-  if(state.holdings[ticker] === 0){ state.costBasis[ticker] = 0; }
+  // reduce cost basis proportionally
+  var avgCost = (state.costBasis[t]||0) / owned;
+  state.costBasis[t] = Math.max(0, (state.costBasis[t]||0) - avgCost);
+  state.holdings[t] = owned - 1;
+  if(state.holdings[t] === 0){ delete state.holdings[t]; delete state.costBasis[t]; }
   save(); render();
-  var s = getStock(ticker);
-  showToast('Sold 1 share of ' + s.n + ' for ' + money(price));
-}
-function getStock(ticker){
-  for(var i=0;i<STOCKS.length;i++){ if(STOCKS[i].t===ticker) return STOCKS[i]; }
-  return null;
+  showToast('\U0001F4B0 Sold 1 share of '+s.n+' for '+money(price));
 }
 
 function advanceDay(){
   state.day += 1;
-  for(var i=0;i<STOCKS.length;i++){
-    var s = STOCKS[i];
-    state.prevPrices[s.t] = state.prices[s.t];
-    // Realistic movement: small upward drift + random volatility
-    var drift = 0.0003; // slight long-term upward bias
-    var randomShock = (Math.random() - 0.5) * 2 * s.vol;
-    var changePct = drift + randomShock;
-    var newPrice = state.prices[s.t] * (1 + changePct);
-    if(newPrice < 1) newPrice = 1; // floor
-    state.prices[s.t] = Math.round(newPrice * 100) / 100;
-  }
+  state.prevPrices = {};
+  ALL_STOCKS.forEach(function(s){
+    var cur = state.prices[s.t];
+    state.prevPrices[s.t] = cur;
+    // realistic daily move: small random walk, volatility scaled by sector-ish base
+    var vol = 0.015 + (s.price < 50 ? 0.01 : 0);  // cheaper stocks a touch more volatile
+    var drift = (Math.random() - 0.48) * 2 * vol; // slight upward bias over time
+    var np = cur * (1 + drift);
+    state.prices[s.t] = Math.max(0.5, Math.round(np*100)/100);
+  });
   save(); render();
-  showToast('Day ' + state.day + ' — prices updated');
+  showToast('\u23ED\uFE0F Day '+state.day+' \u2014 prices updated');
 }
 
 function resetSim(){
-  if(confirm('Reset your portfolio back to $10,000 and start over?')){
+  if(confirm('Reset the simulator back to $10,000 and clear your portfolio?')){
     state = defaultState();
     save(); render();
-    showToast('Portfolio reset to $10,000');
+    showToast('\u21BA Reset to $10,000');
   }
+}
+
+var toastTimer = null;
+function showToast(msg){
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 2200);
+}
+
+// ===== Search =====
+(function(){
+  var input = document.getElementById('stockSearch');
+  var results = document.getElementById('searchResults');
+  if(!input) return;
+  function doSearch(){
+    var q = input.value;
+    if(!q.trim()){ results.classList.remove('show'); results.innerHTML=''; return; }
+    var matches = searchStocks(q);
+    if(matches.length === 0){
+      results.innerHTML = '<div class="sr-empty">No stock found for \u201c'+q+'\u201d. Try a ticker like AAPL or a name like Nike.</div>';
+    } else {
+      results.innerHTML = matches.map(function(s){
+        return '<div class="sr-item" onclick="pickSearch(\''+s.t+'\')">'
+          + '<div class="sr-ic">'+s.ic+'</div>'
+          + '<div class="sr-body"><div class="sr-name">'+s.n+'</div><div class="sr-meta">'+s.sec+' \u00b7 '+money(s.price)+'</div></div>'
+          + '<div class="sr-ticker">'+s.t+'</div></div>';
+      }).join('');
+    }
+    results.classList.add('show');
+  }
+  input.addEventListener('input', doSearch);
+  input.addEventListener('focus', function(){ if(input.value.trim()) doSearch(); });
+  document.addEventListener('click', function(e){
+    if(!input.contains(e.target) && !results.contains(e.target)) results.classList.remove('show');
+  });
+})();
+
+// When a search result is clicked: add to watchlist, switch to watchlist tab, show it
+function pickSearch(t){
+  if(state.watchlist.indexOf(t) === -1) state.watchlist.push(t);
+  save();
+  document.getElementById('stockSearch').value = '';
+  document.getElementById('searchResults').classList.remove('show');
+  switchMarket('watch');
+  render();
+  var s = getStock(t);
+  showToast('\u2b50 '+(s?s.n:t)+' added to your watchlist');
 }
 
 // Init
