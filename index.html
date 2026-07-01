@@ -86,6 +86,11 @@ a{text-decoration:none}
 .btn-primary:hover{background:#0C7D79;color:#fff;transform:translateY(-2px);box-shadow:0 10px 28px rgba(14,165,160,.42)}
 .btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.22)}
 .btn-ghost:hover{background:rgba(255,255,255,.16);transform:translateY(-2px)}
+.btn-hero-main{font-size:1rem;padding:.95rem 2rem}
+.btn-hero-sub{background:transparent;border:none;color:rgba(255,255,255,.55);font-weight:600;padding:.95rem .6rem;font-size:.88rem}
+.btn-hero-sub:hover{background:transparent;color:rgba(255,255,255,.85);transform:none}
+.hero-cta-hook{margin-top:.95rem;font-size:.83rem;color:rgba(255,255,255,.55);line-height:1.55;max-width:440px}
+.hero-cta-hook b{color:#3fd0c9;font-weight:700}
 
 /* HERO LIVE NUMBER CARD */
 .hero-card{position:relative;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:2rem 1.85rem;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 20px 60px rgba(0,0,0,.35)}
@@ -416,9 +421,10 @@ a{text-decoration:none}
         <div class="search-results" id="searchResults"></div>
       </div>
       <div class="hero-ctas">
-        <a href="my-profile.html" class="btn btn-primary">🎯 Build My Profile → Get My Plan</a>
-        <a href="#calculators" class="btn btn-ghost">Explore the Calculators</a>
+        <a href="my-profile.html" class="btn btn-primary btn-hero-main">🎯 Build My Profile → Get My Plan</a>
+        <a href="#calculators" class="btn btn-ghost btn-hero-sub">or just explore the calculators →</a>
       </div>
+      <div class="hero-cta-hook">Answer a few quick questions and get a personalized plan — which guides to read, which calculators to run, and what to focus on first. <b>Free, no signup.</b></div>
     </div>
     <div class="hero-card">
       <div class="hc-label">The Cost of Waiting</div>
@@ -434,7 +440,7 @@ a{text-decoration:none}
 <div class="stat-strip">
   <div class="stat-inner">
     <div class="stat-item reveal" data-d="1"><div class="stat-num" data-count="37" data-suffix="+">0</div><span class="stat-lbl">In-Depth Guides</span></div>
-    <div class="stat-item reveal" data-d="2"><div class="stat-num" data-count="16">0</div><span class="stat-lbl">Live Calculators</span></div>
+    <div class="stat-item reveal" data-d="2"><div class="stat-num" data-count="17">0</div><span class="stat-lbl">Live Calculators</span></div>
     <div class="stat-item reveal" data-d="3"><div class="stat-num" data-count="5">0</div><span class="stat-lbl">Life Stages</span></div>
     <div class="stat-item reveal" data-d="4"><div class="stat-num" data-count="100" data-suffix="%">0</div><span class="stat-lbl">Free Forever</span></div>
   </div>
@@ -466,7 +472,7 @@ a{text-decoration:none}
       <a href="simulations/budget-builder.html" class="calc-card reveal" data-d="1">
         <div class="calc-icon">💰</div>
         <h3>Smart Budget Builder</h3>
-        <p>50/30/20 budgeting with monthly carryover, category insights, and savings goals.</p>
+        <p>50/30/20 budgeting with category insights — plus what your spending could become if invested instead.</p>
         <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="10" y="10" width="22" height="30"/><rect class="mini-bar b2" x="39" y="6" width="22" height="34"/><rect class="mini-bar b3" x="68" y="18" width="22" height="22"/></svg>
         <div class="calc-cta">Open Calculator →</div>
       </a>
@@ -477,11 +483,11 @@ a{text-decoration:none}
         <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="14" y="8" width="30" height="32"/><rect class="mini-bar b2" x="56" y="4" width="30" height="36"/></svg>
         <div class="calc-cta">Open Calculator →</div>
       </a>
-      <a href="simulations/college-roi.html" class="calc-card reveal" data-d="3">
-        <div class="calc-icon">🎓</div>
-        <h3>College ROI</h3>
-        <p>Is the degree worth the cost? See the real payback period and verdict.</p>
-        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="mini-area" d="M0,38 L0,32 C25,30 40,22 60,16 C75,11 88,7 100,4 L100,40 Z"/><path class="mini-line" d="M0,32 C25,30 40,22 60,16 C75,11 88,7 100,4"/></svg>
+      <a href="simulations/debt-freedom-planner.html" class="calc-card reveal" data-d="3">
+        <div class="calc-icon">🎯</div>
+        <h3>Debt Freedom Planner</h3>
+        <p>Compare payoff strategies, see when each debt clears, and what your freed payment could become invested.</p>
+        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="mini-area" d="M0,2 L0,2 C20,8 35,16 55,24 C72,31 85,35 100,38 L100,40 L0,40 Z"/><path class="mini-line" d="M0,2 C20,8 35,16 55,24 C72,31 85,35 100,38"/></svg>
         <div class="calc-cta">Open Calculator →</div>
       </a>
       <a href="simulations/mortgage-payoff.html" class="calc-card reveal" data-d="4">
@@ -507,7 +513,7 @@ a{text-decoration:none}
       </a>
     </div>
     <div class="calc-seeall-wrap">
-      <a href="simulations.html" class="calc-seeall">See all 16 calculators →</a>
+      <a href="simulations.html" class="calc-seeall">See all 17 calculators →</a>
     </div>
   </div>
 </div>
@@ -853,6 +859,5 @@ a{text-decoration:none}
   });
 })();
 </script>
-  <script src="search.js"></script>
 </body>
 </html>
