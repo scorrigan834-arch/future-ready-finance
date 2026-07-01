@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Profile — Future Ready Finance</title>
+<meta name="description" content="Tell us about your situation and get a personalized plan — the guides and tools that fit you best.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -131,6 +132,19 @@ a{text-decoration:none}
 .rec-title{color:#fff;font-size:.9rem;font-weight:600;line-height:1.3}
 .rec-desc{color:rgba(255,255,255,.5);font-size:.78rem;line-height:1.35}
 .rec-arrow{color:#0EA5A0;font-size:1.1rem;flex-shrink:0}
+/* ---- Ordered roadmap ---- */
+.plan-note{background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.28);border-radius:11px;padding:.85rem 1.1rem;font-size:.85rem;color:#a7e8e3;line-height:1.55;margin-bottom:1.4rem}
+.plan-step{margin-bottom:1.6rem}
+.plan-step-head{display:flex;align-items:center;gap:.8rem;margin-bottom:.7rem}
+.plan-step-num{flex-shrink:0;width:2.1rem;height:2.1rem;border-radius:50%;background:linear-gradient(135deg,#0EA5A0,#0C7D79);color:#fff;font-weight:800;font-size:.95rem;display:flex;align-items:center;justify-content:center;font-family:"Playfair Display",serif}
+.plan-step-kicker{display:block;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:#3fd0c9;line-height:1;margin-bottom:.2rem}
+.plan-step-title{display:block;font-size:1.02rem;font-weight:700;color:#fff;font-family:"Playfair Display",serif;line-height:1.15}
+.plan-step-cards{padding-left:2.9rem}
+.rec-card-tool{border-color:rgba(79,70,229,.35);background:rgba(79,70,229,.08)}
+.rec-card-tool:hover{background:rgba(79,70,229,.16)}
+.rec-card-tool .rec-icon{background:rgba(79,70,229,.16);border-color:rgba(79,70,229,.3)}
+.rec-card-tool .rec-arrow{color:#a5b4fc}
+@media(max-width:560px){.plan-step-cards{padding-left:0}}
 .snapshot{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:.5rem}
 .snap{flex:1;min-width:130px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.85rem 1rem}
 .snap .lbl{color:rgba(255,255,255,.5);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.25rem}
@@ -436,13 +450,48 @@ var GUIDE_MAP = {
   saving: [['emergency-fund','🛟','How to Build an Emergency Fund','The foundation everything stands on']],
   budgeting: [['first-paycheck','💵','Understanding Your First Paycheck','Where your money actually goes']]
 };
-var CALC_MAP = {
-  investing: ['compound-interest','📈','Compound Interest Calculator','See what your money becomes'],
-  retirement: ['roth-vs-traditional','🏦','Roth vs Pre-Tax 401(k)','Which retirement account wins'],
-  debt: ['debt-payoff','💳','Debt Payoff Calculator','The fastest way out'],
-  saving: ['net-worth','💰','Net Worth Calculator','What you own vs owe'],
-  taxes: ['take-home-pay','💼','Take-Home Pay Calculator','Your real paycheck after taxes'],
-  housing: ['take-home-pay','💼','Take-Home Pay Calculator','What you actually bring home']
+// Each financial "step" — canonical priority order, best guide, and BEST tool for it.
+// Lower order = earlier in the roadmap. Numbers can bump these up/down.
+var STEPS = {
+  budgeting: { order: 1, topic:'budgeting', title:'Build a budget that works',
+    guide:['first-paycheck','💵','Understanding Your First Paycheck','Where your money actually goes'],
+    tool:['budget-builder','💰','Smart Budget Builder','See your 50/30/20 — and what your spending could become invested'] },
+  saving: { order: 2, topic:'saving', title:'Build your emergency fund',
+    guide:['emergency-fund','🛟','How to Build an Emergency Fund','The foundation everything stands on'],
+    tool:['savings-goal','🎯','Savings Goal Calculator','Plan exactly how to reach your target'] },
+  debt: { order: 3, topic:'debt', title:'Crush your debt',
+    guide:['debt-payoff','💳','How to Pay Off Debt','Avalanche vs snowball, explained'],
+    tool:['debt-freedom-planner','🎯','Debt Freedom Planner','Compare payoff strategies and see when each debt clears'] },
+  credit: { order: 4, topic:'credit', title:'Build your credit',
+    guide:['credit-basics','💳','How Credit Scores Work','Build the number that shapes your finances'],
+    tool:null },
+  investing: { order: 5, topic:'investing', title:'Start investing',
+    guide:['investing','📈','Should I Start Investing Now?','Why time is your biggest advantage'],
+    tool:['compound-interest','📈','Compound Interest Calculator','See what your money becomes over time'] },
+  retirement: { order: 6, topic:'retirement', title:'Plan for retirement',
+    guide:['retirement-accounts','🏦','Retirement Accounts Explained','401(k), IRA, Roth & more'],
+    tool:['roth-vs-traditional','🏦','Roth vs Pre-Tax 401(k)','Which retirement account wins for you'] },
+  housing: { order: 7, topic:'housing', title:'Navigate housing',
+    guide:['rent-vs-buy','🏠','Should I Rent or Buy?','When buying makes sense, and when renting wins'],
+    tool:['rent-vs-buy-calc','🏠','Rent vs Buy Calculator','Run the real numbers for your situation'] },
+  taxes: { order: 8, topic:'taxes', title:'Understand your taxes',
+    guide:['taxes-101','🧾','Taxes 101','How brackets and deductions really work'],
+    tool:['take-home-pay','💼','Take-Home Pay Calculator','Your real paycheck after taxes'] },
+  education: { order: 9, topic:'education', title:'Weigh education costs',
+    guide:['college','🎓','Should I Go To College?','Weigh the cost against the payoff'],
+    tool:['college-roi','🎓','College ROI Calculator','Is the degree worth the cost?'] },
+  career: { order: 10, topic:'career', title:'Grow your income',
+    guide:['salary-negotiation','💼','Should I Negotiate My Salary?','Worth tens of thousands over a career'],
+    tool:['take-home-pay','💼','Take-Home Pay Calculator','What a raise really adds to your paycheck'] },
+  insurance: { order: 11, topic:'insurance', title:'Protect yourself',
+    guide:['insurance','🛡️','Insurance Basics','What you actually need'],
+    tool:null },
+  banking: { order: 12, topic:'banking', title:'Optimize your banking',
+    guide:['banking-basics','🏛️','Banking Basics','Checking, savings & high-yield accounts'],
+    tool:null },
+  family: { order: 13, topic:'family', title:'Plan as a family',
+    guide:['couples-money','👨‍👩‍👧','Managing Money as a Couple','Combining finances and goals'],
+    tool:null }
 };
 
 var KEY = 'frf_profile_v1';
@@ -513,45 +562,59 @@ function buildProfile(){
   var d = collectData();
   saveProfile();
 
-  // Build recommendation set: prioritize needhelp, then interests; de-dupe; skip confident areas
-  var seen = {};
-  var guideRecs = [];
-  var priority = d.needhelp.concat(d.interests);
-  for(var i=0;i<priority.length;i++){
-    var topic = priority[i];
-    if(d.confident.indexOf(topic) > -1 && d.needhelp.indexOf(topic) === -1) continue; // skip if confident & not flagged for help
-    var gs = GUIDE_MAP[topic] || [];
-    for(var j=0;j<gs.length;j++){
-      var g = gs[j];
-      if(!seen['g'+g[0]]){ seen['g'+g[0]] = true; guideRecs.push(g); }
-    }
-  }
-  // Calculators from needhelp + interests
-  var calcRecs = [];
-  for(var k=0;k<priority.length;k++){
-    var c = CALC_MAP[priority[k]];
-    if(c && !seen['c'+c[0]]){ seen['c'+c[0]] = true; calcRecs.push(c); }
-  }
+  // ===== Build the ORDERED ROADMAP =====
+  // Start from the steps the user flagged (need help + interests), in canonical order.
+  var chosen = {};
+  d.needhelp.forEach(function(t){ if(STEPS[t]) chosen[t]=true; });
+  d.interests.forEach(function(t){ if(STEPS[t]) chosen[t]=true; });
+  // Drop areas they're confident about UNLESS they also asked for help there
+  d.confident.forEach(function(t){ if(d.needhelp.indexOf(t)===-1) delete chosen[t]; });
 
-  // Fallback if nothing selected
-  if(guideRecs.length === 0 && calcRecs.length === 0){
-    guideRecs = [['investing','📈','Should I Start Investing Now?','Why time is your biggest advantage'],['emergency-fund','🛟','How to Build an Emergency Fund','The foundation everything stands on'],['banking-basics','🏛️','Banking Basics','The right account setup earns you more']];
-  }
+  var num = { income:Number(d.income)||0, debt:Number(d.debt)||0, invested:Number(d.invested)||0 };
+  var dti = (num.income>0 && num.debt>0) ? (num.debt/num.income*100) : null;
 
-  // Greeting
-  var helpCount = d.needhelp.length;
-  var greet = 'Here\'s a plan tailored to what you told us.';
-  if(helpCount > 0){ greet = 'We focused on the ' + helpCount + ' area' + (helpCount>1?'s':'') + ' you want help with most.'; }
+  // Numbers refine what's included + the order:
+  // - Meaningful debt => make sure "debt" is in the plan
+  // - Little/no savings => make sure "saving" (emergency fund) is in the plan
+  // - Has income + nothing invested => surface "investing"
+  if(num.debt >= 1000) chosen['debt']=true;
+  if(num.invested < 1000) chosen['saving']=true;
+  if(num.income >= 1000 && num.invested < 500) chosen['investing']=true;
+
+  // Turn chosen topics into an ordered list using each step's canonical order
+  var steps = [];
+  for(var t in chosen){ if(chosen[t] && STEPS[t]) steps.push(STEPS[t]); }
+  steps.sort(function(a,b){ return a.order-b.order; });
+
+  // Numbers can BUMP priority: high debt-to-income pushes debt to the very front;
+  // no savings pushes emergency fund to the front (before debt, per standard advice).
+  function bump(topic, toFront){
+    var idx=-1; for(var i=0;i<steps.length;i++){ if(steps[i].topic===topic) idx=i; }
+    if(idx>0){ var it=steps.splice(idx,1)[0]; steps.splice(toFront,0,it); }
+  }
+  var priorityNote = '';
+  if(dti !== null && dti >= 35){ bump('debt',0); priorityNote = 'Your debt is high relative to your income ('+dti.toFixed(0)+'%), so we put paying it down first.'; }
+  if(num.invested < 1000 && chosen['saving']){ bump('saving',0); if(!priorityNote) priorityNote = 'You don\u2019t have much saved yet, so we start with an emergency fund \u2014 the foundation everything else stands on.'; }
+
+  // Fallback: nothing chosen at all -> sensible default starter roadmap
+  if(steps.length === 0){
+    steps = [STEPS.saving, STEPS.budgeting, STEPS.investing];
+  }
+  // Cap at 5 steps so the roadmap stays focused
+  steps = steps.slice(0,5);
+
+  // ===== Greeting =====
+  var greet = 'Here\u2019s your step-by-step money roadmap, in the order that makes sense for you.';
   document.getElementById('greeting').textContent = greet;
 
-  // Snapshot (only if numbers entered)
+  // ===== Smart snapshot (with a read on where they stand) =====
   var snapHtml = '';
-  if(d.income){ snapHtml += '<div class="snap"><div class="lbl">Income</div><div class="val">'+fmt(d.income)+'</div></div>'; }
-  if(d.debt){ snapHtml += '<div class="snap"><div class="lbl">Debt</div><div class="val">'+fmt(d.debt)+'</div></div>'; }
-  if(d.invested){ snapHtml += '<div class="snap"><div class="lbl">Invested/Saved</div><div class="val">'+fmt(d.invested)+'</div></div>'; }
-  if(d.income && d.debt){
-    var ratio = (Number(d.debt)/Number(d.income)*100);
-    snapHtml += '<div class="snap"><div class="lbl">Debt-to-Income</div><div class="val">'+ratio.toFixed(0)+'%</div></div>';
+  if(num.income){ snapHtml += '<div class="snap"><div class="lbl">Income</div><div class="val">'+fmt(d.income)+'</div></div>'; }
+  if(num.debt){ snapHtml += '<div class="snap"><div class="lbl">Debt</div><div class="val">'+fmt(d.debt)+'</div></div>'; }
+  if(num.invested){ snapHtml += '<div class="snap"><div class="lbl">Invested/Saved</div><div class="val">'+fmt(d.invested)+'</div></div>'; }
+  if(dti !== null){
+    var dtiColor = dti>=35 ? '#dc2626' : (dti>=20 ? '#d97706' : '#059669');
+    snapHtml += '<div class="snap"><div class="lbl">Debt-to-Income</div><div class="val" style="color:'+dtiColor+'">'+dti.toFixed(0)+'%</div></div>';
   }
   if(snapHtml){
     document.getElementById('snapshot').innerHTML = snapHtml;
@@ -560,23 +623,28 @@ function buildProfile(){
     document.getElementById('snapshotWrap').style.display = 'none';
   }
 
-  // Build recommendations HTML
+  // ===== Build the ordered roadmap HTML =====
   var html = '';
-  if(guideRecs.length){
-    html += '<h3>📚 Guides picked for you</h3>';
-    for(var a=0;a<Math.min(guideRecs.length,6);a++){
-      var g = guideRecs[a];
-      html += '<a class="rec-card" href="decisions/'+g[0]+'.html"><span class="rec-icon">'+g[1]+'</span><span class="rec-text"><span class="rec-title">'+g[2]+'</span><span class="rec-desc">'+g[3]+'</span></span><span class="rec-arrow">→</span></a>';
+  if(priorityNote){ html += '<div class="plan-note">\ud83d\udca1 '+priorityNote+'</div>'; }
+  var stepLabels = ['Start here','Then','Then','Then','Then','Then'];
+  for(var s=0; s<steps.length; s++){
+    var st = steps[s];
+    var kicker = stepLabels[s] || 'Then';
+    html += '<div class="plan-step">';
+    html += '<div class="plan-step-head"><span class="plan-step-num">'+(s+1)+'</span><div><span class="plan-step-kicker">'+kicker+'</span><span class="plan-step-title">'+st.title+'</span></div></div>';
+    html += '<div class="plan-step-cards">';
+    // guide card
+    var g = st.guide;
+    html += '<a class="rec-card" href="decisions/'+g[0]+'.html"><span class="rec-icon">'+g[1]+'</span><span class="rec-text"><span class="rec-title">'+g[2]+'</span><span class="rec-desc">'+g[3]+'</span></span><span class="rec-arrow">\u2192</span></a>';
+    // tool card (if this step has one)
+    if(st.tool){
+      var c = st.tool;
+      html += '<a class="rec-card rec-card-tool" href="simulations/'+c[0]+'.html"><span class="rec-icon">'+c[1]+'</span><span class="rec-text"><span class="rec-title">'+c[2]+'</span><span class="rec-desc">'+c[3]+'</span></span><span class="rec-arrow">\u2192</span></a>';
     }
-  }
-  if(calcRecs.length){
-    html += '<h3>🔢 Calculators for your situation</h3>';
-    for(var b=0;b<calcRecs.length;b++){
-      var c = calcRecs[b];
-      html += '<a class="rec-card" href="simulations/'+c[0]+'.html"><span class="rec-icon">'+c[1]+'</span><span class="rec-text"><span class="rec-title">'+c[2]+'</span><span class="rec-desc">'+c[3]+'</span></span><span class="rec-arrow">→</span></a>';
-    }
+    html += '</div></div>';
   }
   document.getElementById('recommendations').innerHTML = html;
+
 
   var res = document.getElementById('result');
   res.classList.add('show');
