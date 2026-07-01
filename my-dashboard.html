@@ -1,510 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Money Hub — Future Ready Finance</title>
-<meta name="description" content="Track your budget, investments, savings goals, and net worth in one place — with a personalized health score.">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="description" content="Your complete financial picture in one place — budget, savings, net worth, and investing progress, with a personalized health score.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"DM Sans",sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:#0B1929;color:#0B1929;line-height:1.6}
 a{text-decoration:none}
-.nav{position:sticky;top:0;z-index:200;background:rgba(11,25,41,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px;border-bottom:1px solid rgba(255,255,255,.07)}
-.nav-brand{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none;z-index:2}.nav-brand span{color:#0EA5A0}
-.nav-links{display:flex;gap:.1rem;align-items:center}
-.nav-item{position:relative}
-.nav-link{display:inline-flex;align-items:center;gap:.3rem;color:rgba(255,255,255,.66);padding:.45rem .8rem;border-radius:7px;font-size:.8rem;font-weight:500;transition:color .18s,background .18s;cursor:pointer;background:none;border:none;font-family:"DM Sans",sans-serif;text-decoration:none}
-.nav-link:hover,.nav-item:hover .nav-link,.nav-item.open .nav-link,.nav-link.active{color:#0EA5A0;background:rgba(14,165,160,.08)}
-.nav-caret{width:.55rem;height:.55rem;fill:none;stroke:currentColor;stroke-width:2.5;transition:transform .25s ease;opacity:.7}
-.nav-item:hover .nav-caret,.nav-item.open .nav-caret{transform:rotate(180deg)}
-.nav-dd{position:absolute;top:calc(100% + 10px);left:0;min-width:250px;background:rgba(15,30,48,.97);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:.55rem;box-shadow:0 24px 60px rgba(0,0,0,.45);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .22s ease,transform .22s ease,visibility .22s;z-index:210}
-.nav-dd::before{content:"";position:absolute;top:-14px;left:0;right:0;height:14px}
-.nav-item:hover .nav-dd,.nav-item.open .nav-dd{opacity:1;visibility:visible;transform:translateY(0)}
-.nav-dd-wide{min-width:430px;display:grid;grid-template-columns:1fr 1fr;gap:.15rem}
-.nav-dd a{display:flex;flex-direction:column;gap:.1rem;padding:.55rem .7rem;border-radius:9px;color:rgba(255,255,255,.85);transition:background .15s,color .15s;text-decoration:none}
-.nav-dd a:hover{background:rgba(14,165,160,.12)}
-.nav-dd a .dd-t{font-size:.83rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:.45rem}
-.nav-dd a:hover .dd-t{color:#0EA5A0}
-.nav-dd a .dd-d{font-size:.71rem;color:rgba(255,255,255,.45);line-height:1.4}
-.nav-dd-head{grid-column:1/-1;font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0EA5A0;padding:.5rem .7rem .3rem}
-.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:9px;cursor:pointer;padding:0;z-index:2}
-.nav-burger span{display:block;width:19px;height:2px;background:#fff;border-radius:2px;margin:0 auto;transition:transform .28s ease,opacity .28s ease}
-.nav-burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.nav-burger.active span:nth-child(2){opacity:0}
-.nav-burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mobile-menu{position:fixed;top:58px;left:0;right:0;bottom:0;background:rgba(11,25,41,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:190;padding:1.25rem 1.5rem 2.5rem;overflow-y:auto;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);visibility:hidden}
-.mobile-menu.open{transform:translateX(0);visibility:visible}
-.mm-group{border-bottom:1px solid rgba(255,255,255,.08)}
-.mm-top{width:100%;display:flex;align-items:center;justify-content:space-between;background:none;border:none;color:#fff;font-family:"DM Sans",sans-serif;font-size:1rem;font-weight:600;padding:1.05rem .25rem;cursor:pointer;text-align:left}
-.mm-top a{color:#fff;text-decoration:none}
-.mm-caret{width:.8rem;height:.8rem;fill:none;stroke:#0EA5A0;stroke-width:2.5;transition:transform .25s ease;flex-shrink:0}
-.mm-group.open .mm-caret{transform:rotate(180deg)}
-.mm-sub{max-height:0;overflow:hidden;transition:max-height .3s ease;padding-bottom:0}
-.mm-group.open .mm-sub{max-height:600px;padding-bottom:.6rem}
-.mm-sub a{display:block;color:rgba(255,255,255,.7);font-size:.9rem;padding:.6rem .25rem .6rem 1rem;text-decoration:none;border-left:2px solid rgba(14,165,160,.3);margin-left:.25rem}
-.mm-sub a:hover{color:#0EA5A0}
-.page-hero{background:#0B1929;padding:3.5rem 2rem 2.75rem;text-align:center}.page-hero-inner{max-width:760px;margin:0 auto}
-.eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#0EA5A0;display:block;margin-bottom:.7rem}
-.page-hero h1{font-family:"Playfair Display",serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;color:#fff;margin-bottom:.7rem;line-height:1.15}
-.page-hero p{color:rgba(255,255,255,.65);font-size:.975rem;max-width:560px;margin:0 auto;line-height:1.75}
-.wrap{max-width:760px;margin:0 auto;padding:3rem 2rem}
-.step{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.85rem;margin-bottom:1.5rem;display:flex;gap:1.4rem;align-items:flex-start;transition:border-color .2s,box-shadow .2s,transform .2s}
-.step:hover{border-color:rgba(14,165,160,.4);box-shadow:0 14px 40px rgba(11,25,41,.09);transform:translateY(-3px)}
-.step-num{flex-shrink:0;width:48px;height:48px;border-radius:50%;background:rgba(14,165,160,.1);border:1.5px solid rgba(14,165,160,.3);display:flex;align-items:center;justify-content:center;font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:900;color:#0EA5A0}
-.step-body{flex:1}
-.step-body h3{font-family:"Playfair Display",serif;font-size:1.2rem;font-weight:700;margin-bottom:.45rem;color:#0B1929}
-.step-body p{color:#64748B;font-size:.9rem;line-height:1.7;margin-bottom:.9rem}
-.step-link{color:#0EA5A0;font-weight:700;font-size:.85rem;display:inline-flex;align-items:center;gap:.3rem;transition:gap .2s}
-.step:hover .step-link{gap:.6rem}
-.remember{background:linear-gradient(135deg,rgba(14,165,160,.1),rgba(14,165,160,.03));border:1px solid rgba(14,165,160,.25);border-left:4px solid #0EA5A0;border-radius:12px;padding:1.5rem 1.75rem;margin-top:2rem}
-.remember p{color:#0B1929;font-size:.95rem;line-height:1.75;margin:0}
-.remember strong{color:#0C7D79}
-.footer{background:#0B1929;padding:2rem;color:rgba(255,255,255,.55);font-size:.8rem;text-align:center;margin-top:1rem}
-.footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 .5rem}.footer a:hover{color:#0EA5A0}
-@media(max-width:640px){.nav-links{display:none}.nav-burger{display:flex}.wrap{padding:2rem 1.25rem}.step{padding:1.4rem;gap:1rem}}
-
-/* PREMIUM: animated mesh hero */
-.page-hero{position:relative;overflow:hidden}
-.mesh{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.mesh span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
-.mesh .m1{width:480px;height:480px;background:radial-gradient(circle,rgba(14,165,160,.45),transparent 65%);top:-160px;left:-100px;animation:drift1 20s ease-in-out infinite}
-.mesh .m2{width:420px;height:420px;background:radial-gradient(circle,rgba(63,208,201,.28),transparent 65%);bottom:-180px;right:-90px;animation:drift2 24s ease-in-out infinite}
-.mesh .m3{width:340px;height:340px;background:radial-gradient(circle,rgba(14,165,160,.24),transparent 65%);top:30%;left:55%;animation:drift3 28s ease-in-out infinite}
-@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,50px) scale(1.1)}}
-@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-60px,-45px) scale(1.12)}}
-@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,35px) scale(1.08)}}
-.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 85%);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 85%);pointer-events:none}
-.page-hero-inner{position:relative;z-index:1}
-.eyebrow{box-shadow:0 0 24px rgba(14,165,160,.15)}
-/* PREMIUM: scroll reveal */
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
-.reveal.in{opacity:1;transform:none}
-.reveal[data-d="1"]{transition-delay:.07s}.reveal[data-d="2"]{transition-delay:.14s}.reveal[data-d="3"]{transition-delay:.21s}.reveal[data-d="4"]{transition-delay:.28s}.reveal[data-d="5"]{transition-delay:.35s}.reveal[data-d="6"]{transition-delay:.42s}
-/* PREMIUM: card depth */
-.lcard,.dcard,.diff,.step,.guide-item:not(.dim),.pop-card,.sim-card,.path-card,.stage-card{transition:border-color .25s,box-shadow .25s,transform .25s !important}
-.lcard:hover,.dcard:hover,.diff:hover,.guide-item:not(.dim):hover,.pop-card:hover,.path-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(11,25,41,.1)}
-</style>
-<style>
-.hub-hero{background:linear-gradient(135deg,#0B1929,#0f1e30);padding:2.5rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden}
-.hub-hero::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.22),transparent 70%);top:-130px;right:-90px}
-.hub-hero .eyebrow{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#0EA5A0;display:block;margin-bottom:.55rem;position:relative;z-index:1}
-.hub-hero h1{font-family:"Playfair Display",serif;font-size:2rem;color:#fff;margin-bottom:.5rem;position:relative;z-index:1}
-.hub-hero p{color:rgba(255,255,255,.6);font-size:.95rem;max-width:540px;margin:0 auto;position:relative;z-index:1}
-.hub-wrap{max-width:920px;margin:0 auto;padding:1.75rem 1.25rem 3rem}
-.hub-empty{background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:2.5rem 1.6rem;text-align:center;box-shadow:0 1px 3px rgba(11,25,41,.04)}
-.hub-empty .ic{font-size:2.5rem;margin-bottom:.75rem}
-.hub-empty h2{font-family:"Playfair Display",serif;font-size:1.3rem;color:#0B1929;margin-bottom:.5rem}
-.hub-empty p{font-size:.9rem;color:#64748B;margin-bottom:1.3rem;line-height:1.6}
-.hub-empty .empty-btns{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center}
-.hub-btn{display:inline-block;background:#0EA5A0;color:#fff;padding:.85rem 1.5rem;border-radius:10px;font-weight:700;font-size:.92rem;text-decoration:none;transition:background .2s}
-.hub-btn:hover{background:#0C7D79}
-.hub-btn.ghost{background:#ECF1F0;color:#475569}.hub-btn.ghost:hover{background:#E2E8F0}
-.hub-content{display:none}
-.hub-content.show{display:block}
-.greeting-card{background:linear-gradient(135deg,#0B1929,#0f1e30);border-radius:16px;padding:1.5rem 1.7rem;margin-bottom:1.25rem;position:relative;overflow:hidden}
-.greeting-card::after{content:"";position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.15),transparent 70%);top:-80px;right:-40px}
-.greeting-card h2{font-family:"Playfair Display",serif;color:#0EA5A0;font-size:1.4rem;margin-bottom:.35rem;position:relative;z-index:1}
-.greeting-card p{color:rgba(255,255,255,.65);font-size:.9rem;line-height:1.6;position:relative;z-index:1}
-.hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:1.25rem}
-.hub-tile{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.3rem 1.4rem;box-shadow:0 1px 3px rgba(11,25,41,.04);transition:border-color .2s,transform .2s;text-decoration:none;display:block}
-.hub-tile:hover{border-color:#0EA5A0;transform:translateY(-2px)}
+.nav{position:sticky;top:0;z-index:100;background:rgba(11,25,41,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.5rem}
+.nav-brand{font-family:'Playfair Display',serif;font-weight:800;font-size:1.15rem;color:#fff}
+.nav-brand span{color:#0EA5A0}
+.nav-links{display:flex;gap:.3rem;align-items:center}
+.nav-link{color:rgba(255,255,255,.75);font-size:.88rem;font-weight:500;padding:.5rem .8rem;border-radius:7px;background:none;border:none;cursor:pointer;font-family:inherit}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav-home{color:#c4b5fd;font-weight:600}
+@media(max-width:720px){.nav-links{display:none}}
+.page{max-width:920px;margin:0 auto;padding:2.25rem 1.2rem 4rem}
+.hub-head{margin-bottom:1.75rem}
+.hub-eyebrow{display:inline-flex;align-items:center;gap:.45rem;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#c4b5fd;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3);padding:.32rem .85rem;border-radius:99px;margin-bottom:1rem}
+.hub-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:#a78bfa}
+h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#fff;line-height:1.12;margin-bottom:.4rem}
+.hub-sub{color:rgba(255,255,255,.62);font-size:.98rem;max-width:600px}
+.hub-greet{color:#c4b5fd;font-weight:600}
+.score-banner{background:linear-gradient(135deg,#4c1d95 0%,#5b21b6 45%,#0EA5A0 130%);border-radius:20px;padding:1.75rem;margin-bottom:1.75rem;display:flex;align-items:center;gap:1.75rem;position:relative;overflow:hidden;box-shadow:0 18px 50px rgba(76,29,149,.35)}
+.score-banner::after{content:"";position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%);top:-120px;right:-60px;pointer-events:none}
+.score-ring{flex-shrink:0;width:110px;height:110px;position:relative;z-index:1}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff}
+.score-ring-num .n{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;line-height:1}
+.score-ring-num .of{font-size:.66rem;opacity:.7;font-weight:600}
+.score-text{position:relative;z-index:1;color:#fff}
+.score-label{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:.35rem}
+.score-desc{font-size:.9rem;color:rgba(255,255,255,.82);line-height:1.55}
+@media(max-width:560px){.score-banner{flex-direction:column;text-align:center;gap:1.1rem;padding:1.5rem}}
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem;margin-bottom:1.75rem}
+.tile{background:#fff;border-radius:16px;padding:1.35rem;box-shadow:0 8px 28px rgba(11,25,41,.1);border:1px solid #EEF0F4;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;position:relative}
+.tile:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(76,29,149,.16)}
 .tile-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem}
-.tile-title{display:flex;align-items:center;gap:.55rem;font-size:.95rem;font-weight:700;color:#0B1929}
-.tile-icon{width:34px;height:34px;border-radius:9px;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.22);display:flex;align-items:center;justify-content:center;font-size:1.05rem}
-.tile-arrow{color:#0EA5A0;font-size:1.05rem}
-.tile-main{font-size:1.7rem;font-weight:800;font-family:"Playfair Display",serif;color:#0B1929;line-height:1;margin-bottom:.3rem}
-.tile-main.green{color:#059669}.tile-main.red{color:#dc2626}.tile-main.teal{color:#0C7D79}
-.tile-sub{font-size:.8rem;color:#64748B;line-height:1.45}
-.tile-empty{font-size:.84rem;color:#94a3b8;line-height:1.5;padding:.3rem 0}
-.tile-empty a{color:#0C7D79;font-weight:600;text-decoration:none}
-.tile-bar{height:8px;background:#ECF1F0;border-radius:5px;overflow:hidden;margin:.7rem 0 .4rem}
-.tile-bar-fill{height:100%;background:#0EA5A0;border-radius:5px;transition:width .5s}
-.tile-mini-stats{display:flex;gap:1rem;margin-top:.6rem}
-.tile-mini{flex:1}
-.tile-mini .tm-label{font-size:.68rem;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
-.tile-mini .tm-val{font-size:.95rem;font-weight:700;color:#0B1929}
-.section-head{font-family:"Playfair Display",serif;font-size:1.25rem;color:#0B1929;margin:1.75rem 0 .9rem;display:flex;align-items:center;gap:.5rem}
-.rec-grid{display:grid;gap:.7rem;margin-bottom:1.25rem}
-.rec-card{display:flex;align-items:center;gap:.85rem;background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:.9rem 1.05rem;text-decoration:none;transition:all .15s;box-shadow:0 1px 3px rgba(11,25,41,.04)}
-.rec-card:hover{border-color:#0EA5A0;transform:translateY(-1px)}
-.rec-icon{width:42px;height:42px;border-radius:10px;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.22);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.tile-name{display:flex;align-items:center;gap:.55rem;font-size:.9rem;font-weight:700;color:#334155}
+.tile-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;background:rgba(139,92,246,.1)}
+.tile-arrow{color:#a78bfa;font-size:1.15rem;font-weight:700}
+.tile-big{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:800;line-height:1;margin-bottom:.3rem;color:#0B1929}
+.tile-big.pos{color:#059669}.tile-big.neg{color:#dc2626}.tile-big.violet{color:#6d28d9}
+.tile-cap{font-size:.8rem;color:#64748B;line-height:1.4}
+.tile-stats{display:flex;gap:1.2rem;margin-top:.85rem;padding-top:.85rem;border-top:1px solid #F1F5F4}
+.tile-stat{flex:1}
+.tile-stat .l{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:#94a3b8;margin-bottom:.2rem}
+.tile-stat .v{font-size:.92rem;font-weight:700;color:#0B1929}
+.tile-bar{height:7px;background:#EEF0F4;border-radius:99px;overflow:hidden;margin:.7rem 0 .4rem}
+.tile-bar-fill{height:100%;background:linear-gradient(90deg,#8b5cf6,#0EA5A0);border-radius:99px}
+.tile-empty{font-size:.82rem;color:#94a3b8;line-height:1.5;flex:1;display:flex;flex-direction:column;justify-content:center}
+.tile-empty a{color:#7c3aed;font-weight:700;display:inline-block;margin-top:.5rem}
+.hub-recs-wrap{background:#fff;border-radius:16px;padding:1.6rem;box-shadow:0 8px 28px rgba(11,25,41,.1);border:1px solid #EEF0F4}
+.hub-recs-wrap h3{font-family:'Playfair Display',serif;font-size:1.15rem;color:#0B1929;margin-bottom:.3rem}
+.hub-recs-sub{font-size:.85rem;color:#64748B;margin-bottom:1.1rem}
+.rec-card{display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;border:1px solid #EEF0F4;border-radius:11px;margin-bottom:.55rem;transition:border-color .15s,background .15s}
+.rec-card:hover{border-color:#a78bfa;background:rgba(139,92,246,.04)}
+.rec-icon{width:38px;height:38px;border-radius:9px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
 .rec-text{flex:1;min-width:0}
-.rec-title{color:#0B1929;font-size:.92rem;font-weight:700;line-height:1.3}
-.rec-desc{color:#64748B;font-size:.79rem;line-height:1.35}
-.rec-arrow{color:#0EA5A0;font-size:1.15rem;flex-shrink:0}
-.quick-links{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem}
-.quick-link{flex:1;min-width:140px;text-align:center;background:#ECF1F0;color:#475569;padding:.8rem;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none;transition:background .2s}
-.quick-link:hover{background:#E2E8F0}
-.quick-link.primary{background:#0EA5A0;color:#fff}.quick-link.primary:hover{background:#0C7D79}
-.health-score{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:1.4rem 1.5rem;margin-bottom:1.25rem;box-shadow:0 1px 3px rgba(11,25,41,.04)}
-.health-score h3{font-size:.95rem;font-weight:700;color:#0B1929;margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem}
-.score-row{display:flex;align-items:center;gap:1rem}
-.score-circle{width:80px;height:80px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:800;font-family:"Playfair Display",serif;color:#fff}
-.score-detail{flex:1}
-.score-detail .sd-label{font-size:.9rem;font-weight:700;color:#0B1929;margin-bottom:.25rem}
-.score-detail .sd-text{font-size:.82rem;color:#64748B;line-height:1.5}
+.rec-title{display:block;font-size:.9rem;font-weight:700;color:#0B1929}
+.rec-desc{display:block;font-size:.78rem;color:#64748B}
+.rec-arrow{color:#a78bfa;font-weight:700;flex-shrink:0}
+.empty-state{background:#fff;border-radius:18px;padding:2.5rem 2rem;text-align:center;box-shadow:0 8px 28px rgba(11,25,41,.1)}
+.empty-emoji{font-size:2.75rem;margin-bottom:.85rem}
+.empty-state h2{font-family:'Playfair Display',serif;font-size:1.4rem;color:#0B1929;margin-bottom:.5rem}
+.empty-state p{font-size:.92rem;color:#64748B;max-width:440px;margin:0 auto 1.4rem;line-height:1.6}
+.empty-tools{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
+.empty-tool{padding:.7rem 1.1rem;border-radius:10px;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);color:#6d28d9;font-size:.85rem;font-weight:700;transition:all .15s}
+.empty-tool:hover{background:#7c3aed;color:#fff;border-color:#7c3aed}
+.footer{text-align:center;padding:2rem 1rem;color:rgba(255,255,255,.3);font-size:.8rem}
+.footer a{color:rgba(255,255,255,.4)}
+@media(max-width:560px){h1{font-size:1.7rem}.page{padding:1.75rem 1rem 3rem}}
 </style>
-
-</head><body>
+</head>
+<body>
 <nav class="nav">
   <a href="index.html" class="nav-brand">Future Ready <span>Finance</span></a>
   <div class="nav-links">
-    <a href="start-here.html" class="nav-link active">Start Here</a>
-    <div class="nav-item">
-      <button class="nav-link" type="button">Life Stages <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
-      <div class="nav-dd">
-        <a href="paths/high-school.html"><span class="dd-t">🎓 High School</span><span class="dd-d">Ages 14–18</span></a>
-        <a href="paths/college.html"><span class="dd-t">📚 College</span><span class="dd-d">Ages 17–23</span></a>
-        <a href="paths/early-career.html"><span class="dd-t">🚀 Early Career</span><span class="dd-d">Ages 21–28</span></a>
-        <a href="paths/establishing.html"><span class="dd-t">🏡 Establishing</span><span class="dd-d">Ages 26+</span></a>
-        <a href="paths/starting-from-ahead.html"><span class="dd-t">💎 Starting From Ahead</span><span class="dd-d">Inheritance & windfalls</span></a>
-      </div>
-    </div>
-    <div class="nav-item">
-      <button class="nav-link" type="button">Guides <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
-      <div class="nav-dd nav-dd-wide">
-        <div class="nav-dd-head">Browse by Topic</div>
-        <a href="guides.html"><span class="dd-t">🏛️ Banking & Cash</span></a>
-        <a href="guides.html"><span class="dd-t">💳 Credit & Debt</span></a>
-        <a href="guides.html"><span class="dd-t">🧾 Taxes</span></a>
-        <a href="guides.html"><span class="dd-t">🎓 Education</span></a>
-        <a href="guides.html"><span class="dd-t">💼 Career</span></a>
-        <a href="guides.html"><span class="dd-t">🏠 Housing</span></a>
-        <a href="guides.html"><span class="dd-t">📈 Investing</span></a>
-        <a href="guides.html"><span class="dd-t">🛡️ Insurance</span></a>
-        <a href="guides.html"><span class="dd-t">👨‍👩‍👧 Family</span></a>
-        <a href="guides.html"><span class="dd-t">📚 View All Guides →</span></a>
-      </div>
-    </div>
-    <div class="nav-item">
-      <button class="nav-link" type="button">Calculators <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
-      <div class="nav-dd">
-        <a href="simulations/compound-interest.html"><span class="dd-t">📈 Compound Interest</span><span class="dd-d">What your money becomes</span></a>
-        <a href="simulations/take-home-pay.html"><span class="dd-t">💼 Take-Home Pay</span><span class="dd-d">Paycheck after taxes</span></a>
-        <a href="simulations/roth-vs-traditional.html"><span class="dd-t">🏦 Roth vs Pre-Tax 401(k)</span><span class="dd-d">Which 401(k) wins</span></a>
-        <a href="simulations/debt-payoff.html"><span class="dd-t">💳 Debt Payoff</span><span class="dd-d">Fastest way out</span></a>
-        <a href="simulations/net-worth.html"><span class="dd-t">💰 Net Worth</span><span class="dd-d">Own vs. owe</span></a>
-        <a href="simulations.html"><span class="dd-t">🔢 All Calculators →</span></a>
-      </div>
-    </div>
-    <div class="nav-item">
-      <button class="nav-link" type="button">Big Decisions <svg class="nav-caret" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg></button>
-      <div class="nav-dd">
-        <a href="big-decisions.html"><span class="dd-t">🎓 Education Decisions</span><span class="dd-d">College, debt, grad school</span></a>
-        <a href="big-decisions.html"><span class="dd-t">💼 Career Decisions</span><span class="dd-d">Offers, raises, job changes</span></a>
-        <a href="big-decisions.html"><span class="dd-t">🏠 Housing Decisions</span><span class="dd-d">Rent vs buy, affordability</span></a>
-        <a href="big-decisions.html"><span class="dd-t">📈 Investing Decisions</span><span class="dd-d">When, how much, which account</span></a>
-        <a href="big-decisions.html"><span class="dd-t">🚗 Cars, Debt & Family</span><span class="dd-d">Major life purchases</span></a>
-        <a href="big-decisions.html"><span class="dd-t">🧭 Decision Framework →</span></a>
-      </div>
-    </div>
-    <a href="resources.html" class="nav-link">Resources</a>
-    <a href="about.html" class="nav-link">About</a>
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="money-roadmap.html" class="nav-link">Money Roadmap</a>
+    <a href="simulations.html" class="nav-link">Calculators</a>
+    <a href="guides.html" class="nav-link">Guides</a>
+    <a href="my-dashboard.html" class="nav-link nav-home">My Hub</a>
   </div>
-  <button class="nav-burger" id="navBurger" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mm-group"><button class="mm-top"><a href="start-here.html">Start Here</a></button></div>
-<div class="hub-hero">
-  <span class="eyebrow">Your Financial Command Center</span>
-  <h1>My Money Hub</h1>
-  <p>Everything in one place — your budget, investments, savings goals, net worth, and the next steps that fit you.</p>
+<div class="page">
+  <div class="hub-head">
+    <span class="hub-eyebrow"><span class="dot"></span>Your Financial Picture</span>
+    <h1>My Money Hub</h1>
+    <p class="hub-sub" id="hubSub">Everything you've tracked, in one place.</p>
+  </div>
+  <div id="hubBody"></div>
 </div>
 
-<div class="hub-wrap">
-
-  <!-- EMPTY STATE -->
-  <div class="hub-empty" id="emptyState">
-    <div class="ic">🚀</div>
-    <h2>Let's set up your hub</h2>
-    <p>Your Money Hub pulls together everything you do across the site — your budget, investment practice, savings goals, and more. Start with any tool below and watch your hub come to life. It's all private and saved on your device.</p>
-    <div class="empty-btns">
-      <a href="my-profile.html" class="hub-btn">🎯 Build My Profile</a>
-      <a href="simulations/budget-builder.html" class="hub-btn ghost">💰 Start Budgeting</a>
-    </div>
-  </div>
-
-  <!-- FILLED STATE -->
-  <div class="hub-content" id="hubContent">
-    <div class="greeting-card">
-      <h2 id="hubGreeting">Welcome back!</h2>
-      <p id="hubGreetingSub">Here's your complete financial picture.</p>
-    </div>
-
-    <!-- Financial Health Score -->
-    <div class="health-score" id="healthScoreCard" style="display:none">
-      <h3>💚 Your Financial Health</h3>
-      <div class="score-row">
-        <div class="score-circle" id="scoreCircle">—</div>
-        <div class="score-detail">
-          <div class="sd-label" id="scoreLabel">Building your picture</div>
-          <div class="sd-text" id="scoreText">Use more tools to get a fuller read on your financial health.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tiles pulling from each tool -->
-    <div class="hub-grid" id="hubGrid"></div>
-
-    <!-- Recommendations -->
-    <div class="section-head">📚 Your Next Steps</div>
-    <div class="rec-grid" id="hubRecs"></div>
-
-    <!-- Quick links -->
-    <div class="quick-links">
-      <a href="my-profile.html" class="quick-link primary">✏️ Edit Profile</a>
-      <a href="simulations.html" class="quick-link">All Calculators</a>
-      <a href="guides.html" class="quick-link">All Guides</a>
-    </div>
-  </div>
-
+<div class="footer">
+  Your data lives only on this device — private and free. <a href="index.html">Back to home</a>
 </div>
-<footer class="footer"><a href="index.html">Home</a><a href="life-stages.html">Life Stages</a><a href="guides.html">Guides</a><a href="simulations.html">Calculators</a><br><br>Educational content only. Not financial, legal, tax, or investment advice.</footer>
-<script>
-(function(){
-  var burger = document.getElementById('navBurger');
-  var mobileMenu = document.getElementById('mobileMenu');
-  if (burger && mobileMenu){
-    burger.addEventListener('click', function(){
-      burger.classList.toggle('active');
-      mobileMenu.classList.toggle('open');
-      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-    });
-    mobileMenu.querySelectorAll('.mm-top').forEach(function(btn){
-      var group = btn.parentElement;
-      var sub = group.querySelector('.mm-sub');
-      if (sub){ btn.addEventListener('click', function(){ group.classList.toggle('open'); }); }
-    });
-    mobileMenu.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', function(){
-        burger.classList.remove('active');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-      });
-    });
-  }
-  var navItems = document.querySelectorAll('.nav-item');
-  navItems.forEach(function(item){
-    var btn = item.querySelector('.nav-link');
-    if (btn){
-      btn.addEventListener('click', function(e){
-        e.stopPropagation();
-        var wasOpen = item.classList.contains('open');
-        navItems.forEach(function(i){ i.classList.remove('open'); });
-        if (!wasOpen) item.classList.add('open');
-      });
-    }
-  });
-  document.addEventListener('click', function(){
-    navItems.forEach(function(i){ i.classList.remove('open'); });
-  });
-})();
-</script>
-<script>
-(function(){
-  var els = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window){
-    var obs = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    els.forEach(function(el){ obs.observe(el); });
-  } else {
-    els.forEach(function(el){ el.classList.add('in'); });
-  }
-})();
-</script>
-<script>
-(function(){
-  function money(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
-  function read(key){ try{ var r=localStorage.getItem(key); return r?JSON.parse(r):null; }catch(e){ return null; } }
-  // Safely sum an array of {amount} items; returns 0 if not a valid array.
-  function sumAmt(arr){ if(!Array.isArray(arr)) return 0; var s=0; for(var i=0;i<arr.length;i++){ s+=Number(arr[i]&&arr[i].amount)||0; } return s; }
-  // Get the latest valid budget month (one that actually has income/expenses arrays). Returns null if none.
-  function latestBudgetMonth(b){
-    if(!b||!b.months) return null;
-    var keys=Object.keys(b.months).sort();
-    for(var i=keys.length-1;i>=0;i--){
-      var m=b.months[keys[i]];
-      if(m && (Array.isArray(m.income)||Array.isArray(m.expenses))) return m;
-    }
-    return null;
-  }
 
-  // ===== RENDER (guarded so bad data can never blank the page) =====
-  try{
-  // ===== READ ALL DATA SOURCES =====
-  var profile = read('frf_profile_v1');
-  var budget = read('frf_budget_v1');
-  var sim = read('frf_sim_v1');
-  var networth = read('frf_networth_v1');
-  var savgoal = read('frf_savgoal_v1');
-  var debt = read('frf_debtpayoff_v1');
+<script>
+(function(){
+  "use strict";
+  function money(n){ n = Math.round(Number(n)||0); return '$' + n.toLocaleString('en-US'); }
+  function read(key){ try{ var r = localStorage.getItem(key); return r ? JSON.parse(r) : null; }catch(e){ return null; } }
+  function sumAmt(arr){ if(!Array.isArray(arr)) return 0; var s=0; for(var i=0;i<arr.length;i++){ var a=arr[i]; s+=Number(a&&a.amount)||0; } return s; }
+  function latestBudgetMonth(b){ if(!b||!b.months||typeof b.months!=='object') return null; var keys=Object.keys(b.months).sort(); for(var i=keys.length-1;i>=0;i--){ var m=b.months[keys[i]]; if(m&&(Array.isArray(m.income)||Array.isArray(m.expenses))) return m; } return null; }
+  function el(tag,cls,html){ var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
 
-  // Determine if there's ANY data
-  var hasProfile = profile && ((profile.interests&&profile.interests.length)||(profile.needhelp&&profile.needhelp.length)||profile.income||profile.debt||profile.invested);
-  var hasBudget = !!latestBudgetMonth(budget);
-  var hasSim = sim && (sim.cash!==undefined);
-  var hasNetworth = networth && (networth.cash||networth.savings||networth.investments||networth.property);
-  var hasSavgoal = savgoal && savgoal.goalTarget;
-  var anyData = hasProfile||hasBudget||hasSim||hasNetworth||hasSavgoal;
+  var profile=read('frf_profile_v1'), budget=read('frf_budget_v1'), sim=read('frf_sim_v1'), networth=read('frf_networth_v1'), savgoal=read('frf_savgoal_v1');
+  var budMonth=latestBudgetMonth(budget);
+  var hasBudget=!!budMonth;
+  var hasSim=!!(sim&&sim.cash!==undefined);
+  var hasNetworth=!!(networth&&(networth.cash||networth.savings||networth.investments||networth.property||networth.vehicles));
+  var hasSavgoal=!!(savgoal&&savgoal.goalTarget);
+  var hasProfile=!!(profile&&((profile.interests&&profile.interests.length)||(profile.needhelp&&profile.needhelp.length)||profile.income||profile.debt||profile.invested));
+  var anyData=hasBudget||hasSim||hasNetworth||hasSavgoal||hasProfile;
+  var body=document.getElementById('hubBody');
 
   if(!anyData){
-    document.getElementById('emptyState').style.display='block';
+    var empty=el('div','empty-state');
+    empty.innerHTML='<div class="empty-emoji">\uD83D\uDCCA</div><h2>Let\u2019s build your hub</h2><p>Use any of the calculators below and your results show up here automatically \u2014 a live snapshot of your whole financial picture, with a health score.</p><div class="empty-tools"><a class="empty-tool" href="money-roadmap.html">\uD83D\uDDFA\uFE0F Money Roadmap</a><a class="empty-tool" href="simulations/budget-builder.html">\uD83D\uDCB0 Budget Builder</a><a class="empty-tool" href="simulations/net-worth.html">\uD83D\uDCC8 Net Worth</a><a class="empty-tool" href="simulations/savings-goal.html">\uD83C\uDFAF Savings Goal</a></div>';
+    body.appendChild(empty);
     return;
   }
-  document.getElementById('emptyState').style.display='none';
-  document.getElementById('hubContent').classList.add('show');
 
-  // ===== GREETING =====
-  var greetSub = 'Here\'s your complete financial picture.';
+  var sub=document.getElementById('hubSub');
   if(hasBudget){
-    var latest = latestBudgetMonth(budget);
-    if(latest){
-      var binc=sumAmt(latest.income), bexp=sumAmt(latest.expenses);
-      var left = binc-bexp;
-      if(left>0) greetSub = 'You have '+money(left)+' left in your budget this month. Nice work staying ahead.';
-      else if(left<0) greetSub = 'Your budget is '+money(Math.abs(left))+' over this month — let\'s find a way to rebalance.';
+    var gInc=sumAmt(budMonth.income), gExp=sumAmt(budMonth.expenses), gLeft=gInc-gExp;
+    if(gInc>0){
+      if(gLeft>0) sub.innerHTML='You have <span class="hub-greet">'+money(gLeft)+'</span> left in your budget this month. Nice work staying ahead.';
+      else if(gLeft<0) sub.innerHTML='Your budget is <span class="hub-greet">'+money(Math.abs(gLeft))+'</span> over this month \u2014 let\u2019s rebalance.';
+      else sub.textContent='You\u2019re breaking even this month. Every dollar has a job.';
     }
   }
-  document.getElementById('hubGreetingSub').textContent = greetSub;
 
-  // ===== BUILD TILES =====
-  var tiles = [];
+  var score=0, notes=[];
+  if(hasBudget){ var bInc=sumAmt(budMonth.income), bExp=sumAmt(budMonth.expenses); if(bInc>0){ var sr=(bInc-bExp)/bInc; if(sr>=0.2){score+=25;notes.push('a strong savings rate');} else if(sr>=0){score+=15;} else {score+=5;notes.push('spending above income');} } else {score+=10;} }
+  if(hasNetworth){ score+=20; notes.push('a tracked net worth'); }
+  if(hasSavgoal){ score+=20; notes.push('an active savings goal'); }
+  if(hasSim){ score+=15; notes.push('investing practice'); }
+  if(hasProfile){ score+=10; }
+  if(score>100) score=100;
+  if(score<8&&anyData) score=8;
 
-  // BUDGET tile
+  var scoreLabel, scoreDesc, scoreColor;
+  if(score>=75){ scoreColor='#34d399'; scoreLabel='Excellent shape \uD83C\uDF1F'; scoreDesc='You\u2019re doing the things that build real financial security. Keep the momentum going.'; }
+  else if(score>=50){ scoreColor='#a78bfa'; scoreLabel='Solid foundation \uD83D\uDC4D'; scoreDesc='Good habits are forming. '+(notes.length?'You\u2019ve got '+notes.slice(0,2).join(' and ')+'.':'A few more steps will round out your picture.'); }
+  else { scoreColor='#fbbf24'; scoreLabel='Getting started \uD83C\uDF31'; scoreDesc='You\u2019ve taken the first step. Each calculator you use makes this picture \u2014 and your finances \u2014 stronger.'; }
+
+  var circ=2*Math.PI*48, dash=(score/100)*circ;
+  var banner=el('div','score-banner');
+  banner.innerHTML='<div class="score-ring"><svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r="48" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="9"/><circle cx="55" cy="55" r="48" fill="none" stroke="'+scoreColor+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+dash+' '+circ+'"/></svg><div class="score-ring-num"><span class="n">'+score+'</span><span class="of">/ 100</span></div></div><div class="score-text"><div class="score-label">'+scoreLabel+'</div><div class="score-desc">'+scoreDesc+'</div></div>';
+  body.appendChild(banner);
+
+  var grid=el('div','hub-grid');
+  function makeEmptyTile(ic,name,desc,href,cta){ var a=el('a','tile'); a.setAttribute('href',href); a.innerHTML='<div class="tile-head"><div class="tile-name"><span class="tile-ic">'+ic+'</span>'+name+'</div><span class="tile-arrow">\u2192</span></div><div class="tile-empty">'+desc+'<a href="'+href+'">'+cta+'</a></div>'; return a; }
+
   if(hasBudget){
-    var cur = latestBudgetMonth(budget);
-    var inc=sumAmt(cur.income), exp=sumAmt(cur.expenses);
-    var left = inc-exp;
-    var savRate = inc>0 ? Math.round((left>0?left:0)/inc*100) : 0;
-    tiles.push('<a class="hub-tile" href="simulations/budget-builder.html"><div class="tile-head"><div class="tile-title"><span class="tile-icon">💰</span>Budget</div><span class="tile-arrow">→</span></div><div class="tile-main '+(left>=0?'green':'red')+'">'+(left>=0?'':'-')+money(Math.abs(left))+'</div><div class="tile-sub">left over this month</div><div class="tile-mini-stats"><div class="tile-mini"><div class="tm-label">Income</div><div class="tm-val">'+money(inc)+'</div></div><div class="tile-mini"><div class="tm-label">Spent</div><div class="tm-val">'+money(exp)+'</div></div></div></a>');
-  } else {
-    tiles.push('<a class="hub-tile" href="simulations/budget-builder.html"><div class="tile-head"><div class="tile-title"><span class="tile-icon">💰</span>Budget</div><span class="tile-arrow">→</span></div><div class="tile-empty">Build your first budget to track income, expenses, and savings. <a href="simulations/budget-builder.html">Start now →</a></div></a>');
-  }
+    var inc=sumAmt(budMonth.income), exp=sumAmt(budMonth.expenses), left=inc-exp;
+    var t1=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83D\uDCB0</span>Budget</div><span class="tile-arrow">\u2192</span></div><div class="tile-big '+(left>=0?'pos':'neg')+'">'+(left<0?'-':'')+money(Math.abs(left))+'</div><div class="tile-cap">left over this month</div><div class="tile-stats"><div class="tile-stat"><div class="l">Income</div><div class="v">'+money(inc)+'</div></div><div class="tile-stat"><div class="l">Spent</div><div class="v">'+money(exp)+'</div></div></div>');
+    t1.setAttribute('href','simulations/budget-builder.html'); grid.appendChild(t1);
+  } else { grid.appendChild(makeEmptyTile('\uD83D\uDCB0','Budget','Track income, spending, and what\u2019s left.','simulations/budget-builder.html','Build one \u2192')); }
 
-  // INVESTMENT SIMULATOR tile
-  if(hasSim){
-    var invested = 0;
-    if(sim.holdings && sim.prices){
-      for(var t in sim.holdings){ if(sim.holdings[t]>0){ invested += sim.holdings[t]*sim.prices[t]; } }
-    }
-    var total = (sim.cash||0) + invested;
-    var gain = total - 10000;
-    var gainPct = (gain/10000*100);
-    tiles.push('<a class="hub-tile" href="simulations/investment-simulator.html"><div class="tile-head"><div class="tile-title"><span class="tile-icon">📈</span>Investing Practice</div><span class="tile-arrow">→</span></div><div class="tile-main '+(gain>=0?'green':'red')+'">'+money(total)+'</div><div class="tile-sub">'+(gain>=0?'+':'')+money(gain)+' ('+(gainPct>=0?'+':'')+gainPct.toFixed(1)+'%) · Day '+(sim.day||1)+'</div></a>');
-  } else {
-    tiles.push('<a class="hub-tile" href="simulations/investment-simulator.html"><div class="tile-head"><div class="tile-title"><span class="tile-icon">📈</span>Investing Practice</div><span class="tile-arrow">→</span></div><div class="tile-empty">Practice investing with $10,000 in fake money — risk-free. <a href="simulations/investment-simulator.html">Try it →</a></div></a>');
-  }
-
-  // NET WORTH tile (compute from saved fields, or from profile)
-  var nwValue = null;
   if(hasNetworth){
-    var assets = (Number(networth.cash)||0)+(Number(networth.savings)||0)+(Number(networth.investments)||0)+(Number(networth.property)||0)+(Number(networth.vehicles)||0);
-    var liabilities = (Number(networth.mortgage)||0);
-    nwValue = assets - liabilities;
-  } else if(hasProfile && (profile.invested||profile.debt)){
-    nwValue = (Number(profile.invested)||0) - (Number(profile.debt)||0);
-  }
-  if(nwValue!==null){
-    tiles.push('<a class="hub-tile" href="simulations/net-worth.html"><div class="tile-head"><div class="tile-title"><span class="tile-icon">📊</span>Net Worth</div><span class="tile-arrow">→</span></div><div class="tile-main '+(nwValue>=0?'teal':'red')+'">'+(nwValue>=0?'':'-')+money(Math.abs(nwValue))+'</div><div class="tile-sub">what you own minus what you owe</div></a>');
-  } else {
-    tiles.push('<a class="hub-tile" href="simulations/net-worth.html"><div class="tile-head"><div class="tile-title"><span class="tile-icon">📊</span>Net Worth</div><span class="tile-arrow">→</span></div><div class="tile-empty">Calculate your net worth — the single best measure of progress. <a href="simulations/net-worth.html">Calculate →</a></div></a>');
-  }
+    var assets=(Number(networth.cash)||0)+(Number(networth.savings)||0)+(Number(networth.investments)||0)+(Number(networth.property)||0)+(Number(networth.vehicles)||0);
+    var liab=(Number(networth.mortgage)||0)+(Number(networth.loans)||0)+(Number(networth.creditCards)||0)+(Number(networth.debt)||0);
+    var nw=assets-liab;
+    var t2=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83D\uDCC8</span>Net Worth</div><span class="tile-arrow">\u2192</span></div><div class="tile-big '+(nw>=0?'violet':'neg')+'">'+(nw<0?'-':'')+money(Math.abs(nw))+'</div><div class="tile-cap">what you own minus what you owe</div>');
+    t2.setAttribute('href','simulations/net-worth.html'); grid.appendChild(t2);
+  } else { grid.appendChild(makeEmptyTile('\uD83D\uDCC8','Net Worth','The single best measure of progress.','simulations/net-worth.html','Calculate \u2192')); }
 
-  // SAVINGS GOAL tile
   if(hasSavgoal){
-    var target = Number(savgoal.goalTarget)||0;
-    var start = Number(savgoal.goalStart)||0;
-    var pct = target>0 ? Math.min(Math.round(start/target*100),100) : 0;
-    tiles.push('<a class="hub-tile" href="simulations/savings-goal.html"><div class="tile-head"><div class="tile-title"><span class="tile-icon">🎯</span>Savings Goal</div><span class="tile-arrow">→</span></div><div class="tile-main teal">'+money(start)+'</div><div class="tile-sub">of '+money(target)+' goal</div><div class="tile-bar"><div class="tile-bar-fill" style="width:'+pct+'%"></div></div><div class="tile-sub">'+pct+'% there</div></a>');
-  } else {
-    tiles.push('<a class="hub-tile" href="simulations/savings-goal.html"><div class="tile-head"><div class="tile-title"><span class="tile-icon">🎯</span>Savings Goal</div><span class="tile-arrow">→</span></div><div class="tile-empty">Set a savings goal and see exactly how long to reach it. <a href="simulations/savings-goal.html">Set a goal →</a></div></a>');
+    var start=Number(savgoal.current)||Number(savgoal.saved)||0, target=Number(savgoal.goalTarget)||0;
+    var pct=target>0?Math.min(Math.round(start/target*100),100):0;
+    var t3=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83C\uDFAF</span>Savings Goal</div><span class="tile-arrow">\u2192</span></div><div class="tile-big violet">'+money(start)+'</div><div class="tile-cap">of '+money(target)+' goal</div><div class="tile-bar"><div class="tile-bar-fill" style="width:'+pct+'%"></div></div><div class="tile-cap">'+pct+'% there</div>');
+    t3.setAttribute('href','simulations/savings-goal.html'); grid.appendChild(t3);
+  } else { grid.appendChild(makeEmptyTile('\uD83C\uDFAF','Savings Goal','Set a target and see how to reach it.','simulations/savings-goal.html','Set a goal \u2192')); }
+
+  if(hasSim){
+    var invested=0;
+    if(sim.holdings&&sim.prices){ for(var t in sim.holdings){ if(sim.holdings[t]>0&&sim.prices[t]){ invested+=sim.holdings[t]*sim.prices[t]; } } }
+    var total=(Number(sim.cash)||0)+invested, gain=total-10000, gainPct=gain/10000*100;
+    var t4=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83D\uDCC9</span>Investing Practice</div><span class="tile-arrow">\u2192</span></div><div class="tile-big '+(gain>=0?'pos':'neg')+'">'+money(total)+'</div><div class="tile-cap">'+(gain>=0?'+':'')+money(gain)+' ('+(gainPct>=0?'+':'')+gainPct.toFixed(1)+'%)</div>');
+    t4.setAttribute('href','simulations/investment-simulator.html'); grid.appendChild(t4);
+  } else { grid.appendChild(makeEmptyTile('\uD83D\uDCC9','Investing Practice','Practice with $10,000 in fake money.','simulations/investment-simulator.html','Try it \u2192')); }
+
+  body.appendChild(grid);
+
+  var GUIDE_MAP={ banking:['banking-basics','\uD83C\uDFDB\uFE0F','Banking Basics','Checking, savings & high-yield'], credit:['credit-basics','\uD83D\uDCB3','How Credit Scores Work','Build the number that matters'], taxes:['taxes-101','\uD83E\uDDFE','Taxes 101','How brackets & deductions work'], education:['college','\uD83C\uDF93','Should I Go To College?','Weigh cost against payoff'], career:['salary-negotiation','\uD83D\uDCBC','Should I Negotiate Salary?','Worth tens of thousands'], housing:['rent-vs-buy','\uD83C\uDFE0','Rent or Buy?','When each one wins'], investing:['investing','\uD83D\uDCC8','Should I Start Investing?','Why time is your advantage'], insurance:['insurance','\uD83D\uDEE1\uFE0F','Insurance Basics','What you actually need'], retirement:['retirement-accounts','\uD83C\uDFE6','Retirement Accounts','401(k), IRA, Roth & more'], family:['couples-money','\uD83D\uDC6A','Money as a Couple','Combining finances'], debt:['debt-payoff','\uD83D\uDCB3','How to Pay Off Debt','Avalanche vs snowball'], saving:['emergency-fund','\uD83D\uDEDF','Build an Emergency Fund','The foundation of it all'], budgeting:['first-paycheck','\uD83D\uDCB5','Your First Paycheck','Where your money goes'] };
+  var recs=[], seen={};
+  if(hasProfile){
+    var priority=(profile.needhelp||[]).concat(profile.interests||[]);
+    for(var i=0;i<priority.length;i++){ var topic=priority[i]; if((profile.confident||[]).indexOf(topic)>-1&&(profile.needhelp||[]).indexOf(topic)===-1) continue; var g=GUIDE_MAP[topic]; if(g&&!seen[g[0]]){ seen[g[0]]=true; recs.push(g); } }
   }
-
-  document.getElementById('hubGrid').innerHTML = tiles.join('');
-
-  // ===== FINANCIAL HEALTH SCORE =====
-  computeHealthScore(profile, budget, hasBudget, hasSim, nwValue, hasSavgoal);
-
-  // ===== RECOMMENDATIONS (from profile) =====
-  buildRecs(profile);
-
-  function computeHealthScore(profile, budget, hasBudget, hasSim, nwValue, hasSavgoal){
-    var score = 0; var factors = 0; var notes = [];
-    // Budget: positive cashflow
-    if(hasBudget){
-      var cur=latestBudgetMonth(budget);
-      var inc=sumAmt(cur.income), exp=sumAmt(cur.expenses);
-      factors++;
-      if(inc>0){ var sr=(inc-exp)/inc; if(sr>=0.2){ score+=25; notes.push('strong savings rate'); } else if(sr>=0){ score+=15; } else { score+=5; notes.push('spending more than income'); } }
-    }
-    // Net worth positive
-    if(nwValue!==null){ factors++; if(nwValue>0){ score+=25; } else { score+=10; } }
-    // Has savings goal
-    if(hasSavgoal){ factors++; score+=20; notes.push('actively saving toward a goal'); }
-    // Engaged with investing
-    if(hasSim){ factors++; score+=15; notes.push('learning to invest'); }
-    // Has a profile / plan
-    if(profile && profile.income){ factors++; score+=15; }
-
-    if(factors===0){ return; }
-    document.getElementById('healthScoreCard').style.display='block';
-    var pct = Math.min(score, 100);
-    var circle = document.getElementById('scoreCircle');
-    circle.textContent = pct;
-    var color, label, text;
-    if(pct>=75){ color='#059669'; label='Looking strong! 💪'; text='You\'re doing many things right — positive habits across budgeting, saving, and planning.'; }
-    else if(pct>=50){ color='#0EA5A0'; label='Solid foundation 👍'; text='You\'ve got good habits forming. Keep building — '+(notes.length?notes.slice(0,2).join(' and '):'a few more steps will strengthen your picture')+'.'; }
-    else if(pct>=30){ color='#d97706'; label='Getting started 📈'; text='You\'re on your way. Using a few more tools — budgeting, a savings goal — will round out your financial picture.'; }
-    else { color='#64748b'; label='Just beginning 🌱'; text='Every journey starts somewhere. Set up a budget and a savings goal to build momentum.'; }
-    circle.style.background = color;
-    document.getElementById('scoreLabel').textContent = label;
-    document.getElementById('scoreText').textContent = text;
-  }
-
-  function buildRecs(profile){
-    var GUIDE_MAP = {
-      banking:[['banking-basics','🏛️','Banking Basics','Checking, savings & high-yield']],
-      credit:[['credit-basics','💳','How Credit Scores Work','Build the number that matters']],
-      taxes:[['taxes-101','🧾','Taxes 101','How brackets & deductions work']],
-      education:[['college','🎓','Should I Go To College?','Weigh cost against payoff']],
-      career:[['salary-negotiation','💼','Should I Negotiate Salary?','Worth tens of thousands']],
-      housing:[['rent-vs-buy','🏠','Rent or Buy?','When each one wins']],
-      investing:[['investing','📈','Should I Start Investing?','Why time is your advantage']],
-      insurance:[['insurance','🛡️','Insurance Basics','What you actually need']],
-      retirement:[['retirement-accounts','🏦','Retirement Accounts','401(k), IRA, Roth & more']],
-      family:[['couples-money','👨‍👩‍👧','Money as a Couple','Combining finances']],
-      debt:[['debt-payoff','💳','How to Pay Off Debt','Avalanche vs snowball']],
-      saving:[['emergency-fund','🛟','Build an Emergency Fund','The foundation of it all']],
-      budgeting:[['first-paycheck','💵','Your First Paycheck','Where your money goes']]
-    };
-    var seen={}, recs=[];
-    if(profile){
-      var priority=(profile.needhelp||[]).concat(profile.interests||[]);
-      for(var i=0;i<priority.length;i++){
-        if((profile.confident||[]).indexOf(priority[i])>-1 && (profile.needhelp||[]).indexOf(priority[i])===-1) continue;
-        var gs=GUIDE_MAP[priority[i]]||[];
-        for(var j=0;j<gs.length;j++){ var g=gs[j]; if(!seen[g[0]]){ seen[g[0]]=true; recs.push(g); } }
-      }
-    }
-    if(recs.length===0){ recs=[['emergency-fund','🛟','Build an Emergency Fund','The foundation of it all'],['investing','📈','Should I Start Investing?','Why time is your advantage'],['banking-basics','🏛️','Banking Basics','The right account setup']]; }
-    var html='';
-    for(var a=0;a<Math.min(recs.length,5);a++){ var g=recs[a]; html+='<a class="rec-card" href="decisions/'+g[0]+'.html"><span class="rec-icon">'+g[1]+'</span><span class="rec-text"><span class="rec-title">'+g[2]+'</span><span class="rec-desc">'+g[3]+'</span></span><span class="rec-arrow">→</span></a>'; }
-    document.getElementById('hubRecs').innerHTML = html;
-  }
-  }catch(err){
-    // Something in the saved data was unexpected. Fail gracefully: show the empty state
-    // instead of a blank page, so the person can still use the site.
-    try{
-      var es=document.getElementById('emptyState'); if(es) es.style.display='block';
-      var hc=document.getElementById('hubContent'); if(hc) hc.classList.remove('show');
-    }catch(e2){}
-    if(window.console&&console.warn) console.warn('Money Hub render skipped:', err);
-  }
+  if(recs.length===0){ recs=[GUIDE_MAP.saving,GUIDE_MAP.investing,GUIDE_MAP.banking]; }
+  var recsWrap=el('div','hub-recs-wrap');
+  var recsHtml='<h3>\uD83D\uDCDA Picked for you</h3><div class="hub-recs-sub">Guides that fit where you are right now.</div>';
+  for(var a2=0;a2<Math.min(recs.length,5);a2++){ var r=recs[a2]; recsHtml+='<a class="rec-card" href="decisions/'+r[0]+'.html"><span class="rec-icon">'+r[1]+'</span><span class="rec-text"><span class="rec-title">'+r[2]+'</span><span class="rec-desc">'+r[3]+'</span></span><span class="rec-arrow">\u2192</span></a>'; }
+  recsWrap.innerHTML=recsHtml;
+  body.appendChild(recsWrap);
 })();
 </script>
-
-  <script src="search.js"></script>
+<script src="search.js"></script>
 </body>
 </html>
