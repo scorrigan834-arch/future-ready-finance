@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"DM Sans",sans-serif;background:#F5F7F6;color:#0B1929;line-height:1.6}
+body{font-family:"DM Sans",sans-serif;background:#0B1929;color:#0B1929;line-height:1.6}
 a{text-decoration:none}
 .nav{position:sticky;top:0;z-index:200;background:rgba(11,25,41,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:58px;border-bottom:1px solid rgba(255,255,255,.07)}
 .nav-brand{font-family:"Playfair Display",serif;font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none;z-index:2}.nav-brand span{color:#0EA5A0}
@@ -83,6 +83,21 @@ a{text-decoration:none}
 /* PREMIUM: card depth */
 .lcard,.dcard,.diff,.step,.guide-item:not(.dim),.pop-card,.sim-card,.path-card,.stage-card{transition:border-color .25s,box-shadow .25s,transform .25s !important}
 .lcard:hover,.dcard:hover,.diff:hover,.guide-item:not(.dim):hover,.pop-card:hover,.path-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(11,25,41,.1)}
+
+/* ===== More-navy: floating white content cards on navy body ===== */
+.wrap{background:#fff;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.28);padding:2.75rem 2.75rem;margin-top:-1.5rem;margin-bottom:3rem;position:relative;z-index:5}
+.section{padding:0}
+.section-inner{background:#fff;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.28);padding:2.75rem 2.75rem;margin:2rem auto;max-width:1000px;position:relative;z-index:5}
+/* first content card tucks up under the hero for a smooth navy→card transition */
+.page-hero{padding-bottom:3.5rem}
+/* navy accent callout that can break up long white content */
+.navy-accent{background:linear-gradient(135deg,#0B1929,#0f2338);border-radius:18px;padding:2rem 2.25rem;margin:2rem 0;color:#fff;box-shadow:0 12px 34px rgba(11,25,41,.25)}
+.navy-accent h2,.navy-accent h3{color:#fff !important}
+.navy-accent p{color:rgba(255,255,255,.8) !important}
+/* buttons match homepage */
+.btn-primary{background:#0EA5A0;color:#fff;box-shadow:0 6px 20px rgba(14,165,160,.32)}
+.btn-ghost{background:transparent;color:#0B1929;border:1.5px solid #cbd5e1}
+@media(max-width:768px){.wrap{padding:1.75rem 1.4rem;margin-top:-1rem}.section-inner{padding:1.75rem 1.4rem}}
 </style>
 </head>
 <body>
