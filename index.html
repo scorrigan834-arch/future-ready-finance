@@ -8,9 +8,15 @@
 <meta property="og:description" content="Free, clear financial guidance for ages 14–35. Guides, calculators, and a personalized profile that fits your situation.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://scorrigan834-arch.github.io/future-ready-finance/">
+<meta property="og:image" content="https://scorrigan834-arch.github.io/future-ready-finance/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Future Ready Finance">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Future Ready Finance — Free Financial Education">
 <meta name="twitter:description" content="Free, clear financial guidance for ages 14–35. Guides, calculators, and a personalized profile.">
+<meta name="twitter:image" content="https://scorrigan834-arch.github.io/future-ready-finance/og-image.png">
+<link rel="canonical" href="https://scorrigan834-arch.github.io/future-ready-finance/">
 <title>Future Ready Finance — Learn the financial lessons most people discover too late</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -256,6 +262,21 @@ a{text-decoration:none}
 
 /* Money Hub promo strip */
 .hub-promo-section{background:#F5F7F6;padding:2.5rem 1.5rem}
+/* Trust band */
+.trust-band{background:#0B1929;padding:3rem 1.5rem;border-top:1px solid rgba(14,165,160,.15)}
+.trust-inner{max-width:1000px;margin:0 auto}
+.trust-head{text-align:center;margin-bottom:2rem}
+.trust-head h2{font-family:"Playfair Display",serif;color:#fff;font-size:1.7rem;margin-bottom:.5rem}
+.trust-head p{color:rgba(255,255,255,.6);font-size:.95rem;max-width:560px;margin:0 auto}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.trust-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:1.5rem 1.3rem;text-align:center;transition:border-color .2s,transform .2s}
+.trust-card:hover{border-color:rgba(14,165,160,.35);transform:translateY(-3px)}
+.trust-ic{width:52px;height:52px;border-radius:13px;background:rgba(14,165,160,.12);border:1px solid rgba(14,165,160,.25);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem}
+.trust-card h3{color:#5eead4;font-size:1.02rem;font-weight:700;margin-bottom:.45rem}
+.trust-card p{color:rgba(255,255,255,.62);font-size:.85rem;line-height:1.55}
+.trust-foot{text-align:center;margin-top:1.75rem;color:rgba(255,255,255,.45);font-size:.82rem;line-height:1.6}
+.trust-foot a{color:#5eead4;font-weight:600}
+@media(max-width:680px){.trust-grid{grid-template-columns:1fr;gap:.9rem}.trust-card{display:flex;align-items:center;text-align:left;gap:1rem;padding:1.1rem}.trust-ic{margin:0;flex-shrink:0;width:44px;height:44px;font-size:1.25rem}.trust-card>div{flex:1}}
 .hub-promo-inner{max-width:1080px;margin:0 auto}
 .hub-promo{display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;align-items:center;background:linear-gradient(135deg,#0B1929 0%,#0f2338 55%,#123040 100%);border:1px solid rgba(14,165,160,.25);border-radius:20px;padding:2.25rem 2.4rem;text-decoration:none;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s;box-shadow:0 14px 44px rgba(11,25,41,.35)}
 .hub-promo:hover{transform:translateY(-4px);box-shadow:0 22px 60px rgba(14,165,160,.28)}
@@ -493,6 +514,43 @@ a{text-decoration:none}
   </div>
 </div>
 
+<!-- TRUST BAND -->
+<div class="trust-band">
+  <div class="trust-inner">
+    <div class="trust-head">
+      <h2>Built to be trusted</h2>
+      <p>No catch, no upsell, no data grab. Just clear financial education that respects you.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-ic">🆓</div>
+        <div>
+          <h3>Free, always</h3>
+          <p>Every guide, calculator, and tool is completely free. No paywalls, no premium tier, no credit card.</p>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-ic">🔒</div>
+        <div>
+          <h3>Private by design</h3>
+          <p>Your numbers stay on your own device — never sent to a server, never sold, never shared. You can use most of the site without an account at all.</p>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-ic">🎯</div>
+        <div>
+          <h3>Genuinely useful</h3>
+          <p>Real tools that run your actual numbers and a plan built around your situation — not generic tips you've heard a hundred times.</p>
+        </div>
+      </div>
+    </div>
+    <div class="trust-foot">
+      Educational content to help you make informed decisions — not financial, legal, or tax advice.<br>
+      Learn more <a href="about.html">about why this exists</a>.
+    </div>
+  </div>
+</div>
+
 <div class="calc-section" id="calculators">
   <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="mgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(14,165,160,.35)"/><stop offset="100%" stop-color="rgba(14,165,160,0)"/></linearGradient></defs></svg>
   <div class="calc-inner">
@@ -676,7 +734,7 @@ a{text-decoration:none}
         </div>
       </div>
     </div>
-    <div class="footer-legal">Educational content only. Not financial, legal, tax, or investment advice.</div>
+    <div class="footer-legal">Educational content only. Not financial, legal, tax, or investment advice.<br><span style="opacity:.65">Last reviewed July 2026 · Made to be genuinely helpful, and always free.</span></div>
   </div>
 </footer>
 
