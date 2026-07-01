@@ -66,6 +66,17 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
 .rec-title{display:block;font-size:.9rem;font-weight:700;color:#0B1929}
 .rec-desc{display:block;font-size:.78rem;color:#64748B}
 .rec-arrow{color:#a78bfa;font-weight:700;flex-shrink:0}
+/* Money Roadmap resume card */
+.rm-resume{display:flex;align-items:center;gap:1.1rem;background:linear-gradient(120deg,rgba(139,92,246,.12),rgba(14,165,160,.08));border:1px solid rgba(139,92,246,.28);border-radius:16px;padding:1.25rem 1.4rem;margin-bottom:1.75rem;transition:transform .2s,box-shadow .2s}
+.rm-resume:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(76,29,149,.14)}
+.rm-icon{flex-shrink:0;width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#8b5cf6,#6d28d9);display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 6px 16px rgba(139,92,246,.3)}
+.rm-body{flex:1;min-width:0}
+.rm-body .rm-kick{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7c3aed;margin-bottom:.15rem}
+.rm-body h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff;margin-bottom:.15rem;line-height:1.2}
+.rm-body p{font-size:.82rem;color:rgba(255,255,255,.6);line-height:1.4}
+.rm-cta{flex-shrink:0;background:#7c3aed;color:#fff;font-size:.84rem;font-weight:700;padding:.6rem 1.1rem;border-radius:9px;white-space:nowrap;transition:background .2s}
+.rm-resume:hover .rm-cta{background:#6d28d9}
+@media(max-width:560px){.rm-resume{flex-wrap:wrap}.rm-cta{width:100%;text-align:center}}
 .empty-state{background:#fff;border-radius:18px;padding:2.5rem 2rem;text-align:center;box-shadow:0 8px 28px rgba(11,25,41,.1)}
 .empty-emoji{font-size:2.75rem;margin-bottom:.85rem}
 .empty-state h2{font-family:'Playfair Display',serif;font-size:1.4rem;color:#0B1929;margin-bottom:.5rem}
@@ -112,14 +123,17 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
   function latestBudgetMonth(b){ if(!b||!b.months||typeof b.months!=='object') return null; var keys=Object.keys(b.months).sort(); for(var i=keys.length-1;i>=0;i--){ var m=b.months[keys[i]]; if(m&&(Array.isArray(m.income)||Array.isArray(m.expenses))) return m; } return null; }
   function el(tag,cls,html){ var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
 
-  var profile=read('frf_profile_v1'), budget=read('frf_budget_v1'), sim=read('frf_sim_v1'), networth=read('frf_networth_v1'), savgoal=read('frf_savgoal_v1');
+  var profile=read('frf_profile_v1'), budget=read('frf_budget_v1'), sim=read('frf_sim_v1'), networth=read('frf_networth_v1'), savgoal=read('frf_savgoal_v1'), debtfree=read('frf_debtfreedom_v1'), roadmap=read('frf_roadmap_v1');
   var budMonth=latestBudgetMonth(budget);
   var hasBudget=!!budMonth;
   var hasSim=!!(sim&&sim.cash!==undefined);
   var hasNetworth=!!(networth&&(networth.cash||networth.savings||networth.investments||networth.property||networth.vehicles));
   var hasSavgoal=!!(savgoal&&savgoal.goalTarget);
   var hasProfile=!!(profile&&((profile.interests&&profile.interests.length)||(profile.needhelp&&profile.needhelp.length)||profile.income||profile.debt||profile.invested));
-  var anyData=hasBudget||hasSim||hasNetworth||hasSavgoal||hasProfile;
+  var hasDebtfree=!!(debtfree&&debtfree.totalDebt>0);
+  var rmData=(roadmap&&roadmap.data)?roadmap.data:null;
+  var hasRoadmap=!!(rmData&&(rmData.income||rmData.debt||rmData.savings));
+  var anyData=hasBudget||hasSim||hasNetworth||hasSavgoal||hasProfile||hasDebtfree||hasRoadmap;
   var body=document.getElementById('hubBody');
 
   if(!anyData){
@@ -140,11 +154,13 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
   }
 
   var score=0, notes=[];
-  if(hasBudget){ var bInc=sumAmt(budMonth.income), bExp=sumAmt(budMonth.expenses); if(bInc>0){ var sr=(bInc-bExp)/bInc; if(sr>=0.2){score+=25;notes.push('a strong savings rate');} else if(sr>=0){score+=15;} else {score+=5;notes.push('spending above income');} } else {score+=10;} }
-  if(hasNetworth){ score+=20; notes.push('a tracked net worth'); }
-  if(hasSavgoal){ score+=20; notes.push('an active savings goal'); }
-  if(hasSim){ score+=15; notes.push('investing practice'); }
-  if(hasProfile){ score+=10; }
+  if(hasBudget){ var bInc=sumAmt(budMonth.income), bExp=sumAmt(budMonth.expenses); if(bInc>0){ var sr=(bInc-bExp)/bInc; if(sr>=0.2){score+=22;notes.push('a strong savings rate');} else if(sr>=0){score+=14;} else {score+=5;notes.push('spending above income');} } else {score+=8;} }
+  if(hasNetworth){ score+=18; notes.push('a tracked net worth'); }
+  if(hasSavgoal){ score+=18; notes.push('an active savings goal'); }
+  if(hasSim){ score+=12; notes.push('investing practice'); }
+  if(hasDebtfree){ score+=15; notes.push('a debt-payoff plan'); }
+  if(hasRoadmap){ score+=10; notes.push('a money roadmap'); }
+  if(hasProfile){ score+=8; }
   if(score>100) score=100;
   if(score<8&&anyData) score=8;
 
@@ -190,7 +206,30 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
     t4.setAttribute('href','simulations/investment-simulator.html'); grid.appendChild(t4);
   } else { grid.appendChild(makeEmptyTile('\uD83D\uDCC9','Investing Practice','Practice with $10,000 in fake money.','simulations/investment-simulator.html','Try it \u2192')); }
 
+  // Debt Freedom tile — from the Debt Freedom Planner
+  if(hasDebtfree){
+    var dfMonths=Number(debtfree.payoffMonths)||0;
+    var dfYrs=Math.floor(dfMonths/12), dfMo=dfMonths%12;
+    var dfTimeline = dfMonths>0 ? (dfYrs>0?dfYrs+'y ':'')+(dfMo>0?dfMo+'mo':(dfYrs>0?'':'0mo')) : '\u2014';
+    var t5=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83D\uDD13</span>Debt Freedom</div><span class="tile-arrow">\u2192</span></div><div class="tile-big '+(Number(debtfree.totalDebt)>0?'neg':'pos')+'">'+money(debtfree.totalDebt)+'</div><div class="tile-cap">total debt \u00b7 debt-free in '+dfTimeline+'</div><div class="tile-stats"><div class="tile-stat"><div class="l">Monthly</div><div class="v">'+money(debtfree.monthlyPayment)+'</div></div><div class="tile-stat"><div class="l">Focus</div><div class="v" style="font-size:.8rem">'+(debtfree.topDebt||'\u2014')+'</div></div></div>');
+    t5.setAttribute('href','simulations/debt-freedom-planner.html'); grid.appendChild(t5);
+  } else {
+    grid.appendChild(makeEmptyTile('\uD83D\uDD13','Debt Freedom','Build a plan to crush debt fast.','simulations/debt-freedom-planner.html','Make a plan \u2192'));
+  }
+
   body.appendChild(grid);
+
+  // Money Roadmap resume card — appears if they have wizard progress
+  if(hasRoadmap){
+    var rmStep=(roadmap.step!=null)?Number(roadmap.step):0;
+    var rmTotal=6;
+    var rmStepNum=Math.min(rmStep+1,rmTotal);
+    var rmDone=(rmStep>=rmTotal-1);
+    var resume=el('a','rm-resume');
+    resume.setAttribute('href','money-roadmap.html');
+    resume.innerHTML='<div class="rm-icon">\uD83D\uDDFA\uFE0F</div><div class="rm-body"><div class="rm-kick">Money Roadmap</div><h3>'+(rmDone?'Your roadmap is ready':'Pick up where you left off')+'</h3><p>'+(rmDone?'Revisit your personalized step-by-step plan anytime.':'You\u2019re on step '+rmStepNum+' of '+rmTotal+' \u2014 continue building your plan.')+'</p></div><span class="rm-cta">'+(rmDone?'View plan \u2192':'Continue \u2192')+'</span>';
+    body.appendChild(resume);
+  }
 
   var GUIDE_MAP={ banking:['banking-basics','\uD83C\uDFDB\uFE0F','Banking Basics','Checking, savings & high-yield'], credit:['credit-basics','\uD83D\uDCB3','How Credit Scores Work','Build the number that matters'], taxes:['taxes-101','\uD83E\uDDFE','Taxes 101','How brackets & deductions work'], education:['college','\uD83C\uDF93','Should I Go To College?','Weigh cost against payoff'], career:['salary-negotiation','\uD83D\uDCBC','Should I Negotiate Salary?','Worth tens of thousands'], housing:['rent-vs-buy','\uD83C\uDFE0','Rent or Buy?','When each one wins'], investing:['investing','\uD83D\uDCC8','Should I Start Investing?','Why time is your advantage'], insurance:['insurance','\uD83D\uDEE1\uFE0F','Insurance Basics','What you actually need'], retirement:['retirement-accounts','\uD83C\uDFE6','Retirement Accounts','401(k), IRA, Roth & more'], family:['couples-money','\uD83D\uDC6A','Money as a Couple','Combining finances'], debt:['debt-payoff','\uD83D\uDCB3','How to Pay Off Debt','Avalanche vs snowball'], saving:['emergency-fund','\uD83D\uDEDF','Build an Emergency Fund','The foundation of it all'], budgeting:['first-paycheck','\uD83D\uDCB5','Your First Paycheck','Where your money goes'] };
   var recs=[], seen={};
