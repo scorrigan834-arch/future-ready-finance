@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kids' Money Adventure — Future Ready Finance</title>
+<meta name="description" content="A fun, hands-on way to teach kids about money — explore the companies behind their favorite brands, and build a pretend business like a lemonade stand.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B1929;--teal:#0EA5A0;--teal-d:#0C7D79;--teal-l:#5eead4;
+  --ink:#0B1929;--muted:#64748B;--line:#E2E8F0;--paper:#F5F7F6;
+  --sun:#f59e0b;--sun-d:#d97706;--grape:#8b5cf6;--grape-d:#7c3aed;
+  --berry:#ec4899;--sky:#38bdf8;--lime:#84cc16;--tang:#fb7185;
+}
+body{font-family:"DM Sans",-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a1826;color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ===== NAV (matches site) ===== */
+.nav{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:60px;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-brand{color:#fff;font-weight:800;font-size:1.15rem;text-decoration:none;font-family:"Playfair Display",Georgia,serif;white-space:nowrap}
+.nav-brand span{color:var(--teal-l)}
+.nav-links{display:flex;align-items:center;gap:.35rem}
+.nav-link{color:rgba(255,255,255,.82);text-decoration:none;font-size:.9rem;font-weight:500;padding:.5rem .7rem;border-radius:8px;background:none;border:none;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:.3rem}
+.nav-link:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-link.active{color:var(--teal-l)}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:9px;cursor:pointer;padding:0}
+.nav-burger span{display:block;width:19px;height:2px;background:#fff;border-radius:2px;margin:0 auto;transition:transform .28s,opacity .28s}
+.nav-burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.active span:nth-child(2){opacity:0}
+.nav-burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.1);padding:.5rem 1rem 1rem;z-index:99;flex-direction:column;gap:.2rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:rgba(255,255,255,.85);font-size:1rem;font-weight:500;padding:.85rem .6rem;border-radius:8px;border-bottom:1px solid rgba(255,255,255,.05);text-decoration:none}
+.mobile-menu a:hover{background:rgba(14,165,160,.12);color:#fff}
+@media(max-width:820px){.nav-links{display:none}.nav-burger{display:flex}}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(135deg,#0B1929,#10233a);padding:2.5rem 1.5rem 4rem;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.16),transparent 68%);top:-160px;right:-120px;pointer-events:none}
+.hero::before{content:"";position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.14),transparent 70%);bottom:-160px;left:-120px;pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(139,92,246,.18);border:1px solid rgba(139,92,246,.4);color:#c4b5fd;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.35rem .85rem;border-radius:99px;margin-bottom:1rem;position:relative;z-index:1}
+.hero h1{font-family:"Playfair Display",Georgia,serif;color:#fff;font-size:2.2rem;line-height:1.1;margin-bottom:.6rem;position:relative;z-index:1}
+.hero h1 .emoji{font-family:inherit}
+.hero p{color:rgba(255,255,255,.72);font-size:1.02rem;max-width:600px;margin:0 auto;position:relative;z-index:1}
+
+/* ===== MAIN WRAP (floating card) ===== */
+.wrap{max-width:920px;margin:-2.5rem auto 3rem;padding:0 1rem;position:relative;z-index:2}
+.panel{background:#F7F9FB;border:1px solid rgba(255,255,255,.1);border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.45);padding:1.75rem;position:relative;overflow:hidden}
+.panel::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--grape),var(--teal),var(--sun));border-radius:22px 22px 0 0}
+
+/* ===== TABS ===== */
+.tabs{display:flex;gap:.6rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab{flex:1;min-width:150px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:1rem;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:.7rem;text-align:left;font-family:inherit}
+.tab .tab-ic{font-size:1.8rem;line-height:1}
+.tab .tab-txt{font-weight:800;font-size:1rem;color:var(--ink)}
+.tab .tab-sub{font-size:.75rem;color:var(--muted);font-weight:500}
+.tab:hover{border-color:var(--grape);transform:translateY(-2px)}
+.tab.active{border-color:var(--grape);background:linear-gradient(135deg,rgba(139,92,246,.1),rgba(14,165,160,.06));box-shadow:0 8px 20px rgba(139,92,246,.15)}
+.tab.active.biz{border-color:var(--sun);background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(251,113,133,.06));box-shadow:0 8px 20px rgba(245,158,11,.15)}
+
+.tool{display:none}
+.tool.show{display:block;animation:fadeUp .4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ===== SECTION HEADINGS ===== */
+.step-title{font-family:"Playfair Display",Georgia,serif;font-size:1.3rem;color:var(--ink);margin:0 0 .3rem;display:flex;align-items:center;gap:.5rem}
+.step-num{background:var(--grape);color:#fff;width:1.7rem;height:1.7rem;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:800;flex-shrink:0;font-family:"DM Sans",sans-serif}
+.step-num.sun{background:var(--sun)}
+.step-desc{color:var(--muted);font-size:.9rem;margin:0 0 1rem;padding-left:2.2rem}
+
+/* ===== INTEREST ICON GRID ===== */
+.icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.ic-tile{background:#fff;border:2px solid var(--line);border-radius:18px;padding:1rem .5rem;cursor:pointer;transition:all .16s;text-align:center;position:relative;user-select:none}
+.ic-tile .ic-emoji{font-size:2.5rem;line-height:1;display:block;margin-bottom:.4rem;transition:transform .16s}
+.ic-tile .ic-label{font-size:.78rem;font-weight:700;color:var(--ink);line-height:1.2}
+.ic-tile:hover{border-color:var(--grape);transform:translateY(-3px)}
+.ic-tile:hover .ic-emoji{transform:scale(1.15) rotate(-5deg)}
+.ic-tile.picked{border-color:var(--grape);background:linear-gradient(135deg,rgba(139,92,246,.14),rgba(14,165,160,.06));box-shadow:0 6px 16px rgba(139,92,246,.2)}
+.ic-tile.picked::after{content:"✓";position:absolute;top:.4rem;right:.5rem;background:var(--grape);color:#fff;width:1.3rem;height:1.3rem;border-radius:50%;font-size:.8rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+.big-btn{display:block;width:100%;background:linear-gradient(135deg,var(--grape),var(--grape-d));color:#fff;border:none;border-radius:16px;padding:1.1rem;font-size:1.15rem;font-weight:800;cursor:pointer;font-family:inherit;transition:all .18s;box-shadow:0 10px 26px rgba(139,92,246,.32);letter-spacing:.01em}
+.big-btn:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(139,92,246,.42)}
+.big-btn:active{transform:translateY(0)}
+.big-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.big-btn.sun{background:linear-gradient(135deg,var(--sun),var(--sun-d));box-shadow:0 10px 26px rgba(245,158,11,.32)}
+.big-btn.sun:hover{box-shadow:0 14px 32px rgba(245,158,11,.42)}
+
+/* ===== RESULTS: matched companies ===== */
+.results{margin-top:1.5rem}
+.match-intro{text-align:center;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:1rem}
+.match-intro .hl{color:var(--grape-d)}
+.company-card{background:#fff;border:2px solid var(--line);border-radius:18px;padding:1.1rem 1.2rem;margin-bottom:.85rem;display:flex;align-items:center;gap:1rem;transition:all .18s}
+.company-card:hover{border-color:var(--teal);box-shadow:0 8px 22px rgba(14,165,160,.14)}
+.cc-emoji{font-size:2.6rem;line-height:1;flex-shrink:0}
+.cc-body{flex:1;min-width:0}
+.cc-name{font-weight:800;font-size:1.05rem;color:var(--ink);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.cc-ticker{background:var(--navy);color:var(--teal-l);font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:6px;font-family:monospace;letter-spacing:.03em}
+.cc-because{font-size:.83rem;color:var(--muted);margin-top:.15rem}
+.cc-fact{font-size:.83rem;color:var(--teal-d);margin-top:.35rem;background:rgba(14,165,160,.08);border-radius:8px;padding:.4rem .6rem;line-height:1.45}
+.cc-private{background:var(--sun);color:#fff;font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:6px}
+.cc-add{flex-shrink:0;background:var(--teal);color:#fff;border:none;border-radius:12px;padding:.6rem .85rem;font-weight:800;font-size:.82rem;cursor:pointer;font-family:inherit;transition:all .16s;white-space:nowrap}
+.cc-add:hover{background:var(--teal-d);transform:scale(1.05)}
+.cc-add.added{background:var(--lime)}
+
+/* ===== PARENT TIP ===== */
+.parent-tip{background:linear-gradient(135deg,#0B1929,#12293f);border-radius:14px;padding:1rem 1.2rem;margin:1.25rem 0;color:#cdd9e3;font-size:.86rem;line-height:1.6;border-left:4px solid var(--teal-l)}
+.parent-tip .pt-head{color:var(--teal-l);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.35rem;display:flex;align-items:center;gap:.4rem}
+.parent-tip b{color:#fff}
+
+/* ===== PRETEND PORTFOLIO ===== */
+.portfolio{background:linear-gradient(135deg,#0B1929,#123040);border-radius:18px;padding:1.4rem;margin-top:1.5rem;color:#fff}
+.pf-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+.pf-title{font-family:"Playfair Display",Georgia,serif;font-size:1.15rem;display:flex;align-items:center;gap:.5rem}
+.pf-cash{background:rgba(94,234,212,.15);border:1px solid rgba(94,234,212,.35);border-radius:10px;padding:.4rem .8rem;font-weight:800;font-size:.9rem;color:var(--teal-l)}
+.pf-empty{text-align:center;color:rgba(255,255,255,.55);font-size:.9rem;padding:1.5rem 1rem;line-height:1.6}
+.pf-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:.75rem .9rem;margin-bottom:.6rem;display:flex;align-items:center;gap:.75rem}
+.pf-item .pfi-emoji{font-size:1.7rem}
+.pf-item .pfi-body{flex:1;min-width:0}
+.pf-item .pfi-name{font-weight:700;font-size:.92rem}
+.pf-item .pfi-shares{font-size:.76rem;color:rgba(255,255,255,.55)}
+.pf-item .pfi-val{font-weight:800;font-size:.95rem;color:var(--teal-l);text-align:right}
+.pf-item .pfi-remove{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);width:1.6rem;height:1.6rem;border-radius:50%;cursor:pointer;font-size:.9rem;flex-shrink:0}
+.pf-item .pfi-remove:hover{background:var(--tang);color:#fff}
+.pf-total{border-top:1px solid rgba(255,255,255,.15);margin-top:.75rem;padding-top:.85rem;display:flex;justify-content:space-between;align-items:center}
+.pf-total .l{font-size:.88rem;color:rgba(255,255,255,.7)}
+.pf-total .v{font-size:1.4rem;font-weight:800;color:var(--teal-l);font-family:"Playfair Display",Georgia,serif}
+
+/* ===== BUSINESS BUILDER ===== */
+.biz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.biz-tile{background:#fff;border:2px solid var(--line);border-radius:18px;padding:1.2rem .6rem;cursor:pointer;transition:all .16s;text-align:center;user-select:none}
+.biz-tile .bt-emoji{font-size:2.7rem;line-height:1;display:block;margin-bottom:.5rem;transition:transform .16s}
+.biz-tile .bt-label{font-size:.85rem;font-weight:800;color:var(--ink);line-height:1.2}
+.biz-tile .bt-tag{font-size:.72rem;color:var(--muted);margin-top:.2rem}
+.biz-tile:hover{border-color:var(--sun);transform:translateY(-3px)}
+.biz-tile:hover .bt-emoji{transform:scale(1.15) rotate(5deg)}
+.biz-tile.picked{border-color:var(--sun);background:linear-gradient(135deg,rgba(245,158,11,.14),rgba(251,113,133,.06));box-shadow:0 6px 16px rgba(245,158,11,.2)}
+
+.biz-workshop{display:none}
+.biz-workshop.show{display:block;animation:fadeUp .4s ease}
+.biz-banner{background:linear-gradient(135deg,var(--sun),var(--tang));border-radius:16px;padding:1.2rem 1.4rem;color:#fff;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem}
+.biz-banner .bb-emoji{font-size:3rem;line-height:1}
+.biz-banner .bb-title{font-family:"Playfair Display",Georgia,serif;font-size:1.4rem;font-weight:700}
+.biz-banner .bb-sub{font-size:.85rem;opacity:.95}
+
+.money-card{background:#fff;border:2px solid var(--line);border-radius:16px;padding:1.2rem;margin-bottom:1rem}
+.money-card h4{font-size:1rem;font-weight:800;color:var(--ink);margin-bottom:.2rem;display:flex;align-items:center;gap:.45rem}
+.money-card .mc-hint{font-size:.8rem;color:var(--muted);margin-bottom:.9rem}
+.cost-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem}
+.cost-row .cr-emoji{font-size:1.5rem;width:2rem;text-align:center;flex-shrink:0}
+.cost-row .cr-name{flex:1;font-weight:600;font-size:.9rem;color:var(--ink)}
+.cost-row .cr-input{position:relative;width:110px;flex-shrink:0}
+.cost-row .cr-input .dollar{position:absolute;left:.6rem;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700;font-size:.9rem;pointer-events:none}
+.cost-row input,.charge-input input{width:100%;padding:.55rem .6rem .55rem 1.5rem;border:2px solid var(--line);border-radius:10px;font-size:.95rem;font-weight:700;font-family:inherit;color:var(--ink);text-align:right}
+.cost-row input:focus,.charge-input input:focus{outline:none;border-color:var(--sun);box-shadow:0 0 0 3px rgba(245,158,11,.15)}
+.add-cost{background:none;border:2px dashed var(--line);border-radius:10px;padding:.55rem;width:100%;color:var(--muted);font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;transition:all .16s;margin-top:.3rem}
+.add-cost:hover{border-color:var(--sun);color:var(--sun-d)}
+
+.charge-input{max-width:170px;position:relative}
+.charge-input .dollar{position:absolute;left:.7rem;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700;pointer-events:none}
+.charge-input input{padding:.7rem .7rem .7rem 1.6rem;font-size:1.15rem;border-color:var(--sun)}
+.sell-row{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+.sell-row .sr-label{font-weight:700;color:var(--ink);font-size:.9rem}
+
+/* ===== PROFIT DASHBOARD ===== */
+.profit-box{background:linear-gradient(135deg,#0B1929,#123040);border-radius:18px;padding:1.4rem;color:#fff;margin-top:1.25rem}
+.profit-box .pb-title{font-family:"Playfair Display",Georgia,serif;font-size:1.2rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.pb-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;margin-bottom:1rem}
+.pb-stat{background:rgba(255,255,255,.06);border-radius:12px;padding:.9rem .7rem;text-align:center}
+.pb-stat .pbs-emoji{font-size:1.4rem}
+.pb-stat .pbs-label{font-size:.7rem;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.03em;margin:.2rem 0}
+.pb-stat .pbs-val{font-size:1.2rem;font-weight:800}
+.pb-stat.cost .pbs-val{color:var(--tang)}
+.pb-stat.income .pbs-val{color:var(--teal-l)}
+.pb-stat.profit .pbs-val{color:#fff}
+.pb-verdict{border-radius:12px;padding:1rem 1.2rem;font-size:.95rem;line-height:1.55;text-align:center;font-weight:600}
+.pb-verdict.win{background:rgba(132,204,22,.18);border:1px solid rgba(132,204,22,.4);color:#d9f99d}
+.pb-verdict.even{background:rgba(245,158,11,.18);border:1px solid rgba(245,158,11,.4);color:#fde68a}
+.pb-verdict.loss{background:rgba(251,113,133,.18);border:1px solid rgba(251,113,133,.4);color:#fecdd3}
+.pb-sell-note{text-align:center;font-size:.8rem;color:rgba(255,255,255,.55);margin-top:.75rem}
+
+/* ===== DISCLAIMER / FOOTER ===== */
+.learn-note{background:rgba(14,165,160,.08);border:1px solid rgba(14,165,160,.25);border-radius:12px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--teal-d);margin-top:1.5rem;line-height:1.55;text-align:center}
+.learn-note b{color:var(--ink)}
+.foot{text-align:center;padding:2rem 1.5rem;color:rgba(255,255,255,.4);font-size:.8rem}
+.foot a{color:var(--teal-l);text-decoration:none}
+
+/* ===== ACCESSIBILITY ===== */
+a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--grape);outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}}
+
+@media(max-width:600px){
+  .hero h1{font-size:1.7rem}
+  .panel{padding:1.25rem 1rem}
+  .icon-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.6rem}
+  .ic-tile .ic-emoji{font-size:2.1rem}
+  .pb-stats{grid-template-columns:1fr}
+  .company-card{flex-wrap:wrap}
+  .cc-add{width:100%}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../index.html" class="nav-brand">Future Ready <span>Finance</span></a>
+  <div class="nav-links">
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="../simulations.html" class="nav-link">Calculators</a>
+    <a href="investment-simulator.html" class="nav-link">Investing Practice</a>
+    <a href="../guides.html" class="nav-link">Guides</a>
+    <a href="../my-dashboard.html" class="nav-link">My Hub</a>
+  </div>
+  <button class="nav-burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../index.html">Home</a>
+  <a href="../simulations.html">Calculators</a>
+  <a href="investment-simulator.html">Investing Practice</a>
+  <a href="../guides.html">Guides</a>
+  <a href="../my-dashboard.html">My Hub</a>
+</div>
+
+<div class="hero">
+  <div class="hero-badge">🚀 For Kids &amp; Parents</div>
+  <h1>Kids' Money <span class="emoji">Adventure</span> 🌟</h1>
+  <p>Discover the real companies behind your favorite things — and build your very own pretend business!</p>
+</div>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="tabs">
+      <button class="tab active" id="tabExplore" onclick="switchTool('explore')">
+        <span class="tab-ic">🔍</span>
+        <span><span class="tab-txt">Brand Explorer</span><br><span class="tab-sub">Find companies you love</span></span>
+      </button>
+      <button class="tab biz" id="tabBiz" onclick="switchTool('biz')">
+        <span class="tab-ic">🍋</span>
+        <span><span class="tab-txt">Business Builder</span><br><span class="tab-sub">Start a pretend business</span></span>
+      </button>
+    </div>
+
+    <!-- ============ TOOL 1: BRAND EXPLORER ============ -->
+    <div class="tool show" id="toolExplore">
+      <h2 class="step-title"><span class="step-num">1</span> What do you LOVE?</h2>
+      <p class="step-desc">Tap all the things you like! Pick as many as you want.</p>
+      <div class="icon-grid" id="interestGrid"></div>
+
+      <button class="big-btn" id="findBtn" onclick="findCompanies()" disabled>🔮 Show My Companies!</button>
+
+      <div class="parent-tip">
+        <div class="pt-head">💡 For Grown-Ups</div>
+        Many of the brands your kid loves are real, publicly-traded companies. This turns "I love Disney movies" into "Disney is a company people can own a tiny piece of." It makes an abstract idea click. <b>This is for learning, not investment advice.</b>
+      </div>
+
+      <div class="results" id="exploreResults"></div>
+
+      <div class="portfolio" id="portfolioBox" style="display:none">
+        <div class="pf-head">
+          <div class="pf-title">🎒 My Pretend Portfolio</div>
+          <div class="pf-cash" id="pfCash">$1,000 to play with</div>
+        </div>
+        <div id="pfList"></div>
+      </div>
+    </div>
+
+    <!-- ============ TOOL 2: BUSINESS BUILDER ============ -->
+    <div class="tool" id="toolBiz">
+      <h2 class="step-title"><span class="step-num sun">1</span> Pick your business!</h2>
+      <p class="step-desc">What do you want to start? Tap one to begin.</p>
+      <div class="biz-grid" id="bizGrid"></div>
+
+      <div class="biz-workshop" id="bizWorkshop">
+        <div class="biz-banner">
+          <div class="bb-emoji" id="bizBannerEmoji">🍋</div>
+          <div>
+            <div class="bb-title" id="bizBannerTitle">Lemonade Stand</div>
+            <div class="bb-sub">Let's figure out how to make money!</div>
+          </div>
+        </div>
+
+        <div class="money-card">
+          <h4>💸 What do you need to buy?</h4>
+          <div class="mc-hint">These are your <b>costs</b> — the money you spend to start.</div>
+          <div id="costList"></div>
+          <button class="add-cost" onclick="addCustomCost()">+ Add something else</button>
+        </div>
+
+        <div class="money-card">
+          <h4>🏷️ What will you charge?</h4>
+          <div class="mc-hint">This is your <b>price</b> — what each customer pays you.</div>
+          <div class="sell-row">
+            <span class="sr-label" id="chargeLabel">Price per cup:</span>
+            <div class="charge-input">
+              <span class="dollar">$</span>
+              <input type="text" inputmode="decimal" id="priceInput" value="1.00" oninput="calcBiz()">
+            </div>
+          </div>
+          <div class="sell-row" style="margin-top:.9rem">
+            <span class="sr-label" id="sellLabel">How many will you sell?</span>
+            <div class="charge-input" style="max-width:120px">
+              <input type="text" inputmode="numeric" id="qtyInput" value="20" oninput="calcBiz()" style="padding-left:.7rem;border-color:var(--sun)">
+            </div>
+          </div>
+        </div>
+
+        <div class="profit-box">
+          <div class="pb-title">📊 Did you make money?</div>
+          <div class="pb-stats">
+            <div class="pb-stat cost">
+              <div class="pbs-emoji">💸</div>
+              <div class="pbs-label">You spent</div>
+              <div class="pbs-val" id="statCost">$0</div>
+            </div>
+            <div class="pb-stat income">
+              <div class="pbs-emoji">💰</div>
+              <div class="pbs-label">You made</div>
+              <div class="pbs-val" id="statIncome">$0</div>
+            </div>
+            <div class="pb-stat profit">
+              <div class="pbs-emoji">🎉</div>
+              <div class="pbs-label">Profit</div>
+              <div class="pbs-val" id="statProfit">$0</div>
+            </div>
+          </div>
+          <div class="pb-verdict even" id="bizVerdict">Fill in your costs and price to see if you make a profit!</div>
+          <div class="pb-sell-note" id="bizSellNote"></div>
+        </div>
+
+        <div class="parent-tip">
+          <div class="pt-head">💡 For Grown-Ups</div>
+          This teaches the heart of every business: <b>profit = money in − money out</b>. Ask your kid: "What if lemons cost more? What if you charge more but sell fewer cups?" These trade-offs are real business thinking — at a kid's level.
+        </div>
+      </div>
+    </div>
+
+    <div class="learn-note">
+      🌱 <b>Just for learning &amp; fun!</b> This uses pretend money to teach how companies and businesses work. It is not investment advice, and nothing here is a suggestion to buy anything real.
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  Made with 💙 by <a href="../index.html">Future Ready Finance</a> · A fun way to learn about money
+</div>
+
+<script>
+// ============ DATA ============
+// Kid interests → real companies behind them. Emoji-forward for pre-readers.
+var INTERESTS = [
+  {id:'disney', emoji:'🏰', label:'Disney'},
+  {id:'games', emoji:'🎮', label:'Video Games'},
+  {id:'youtube', emoji:'📺', label:'YouTube'},
+  {id:'lego', emoji:'🧱', label:'Building Blocks'},
+  {id:'sports', emoji:'⚽', label:'Sports'},
+  {id:'cars', emoji:'🏎️', label:'Cars & Racing'},
+  {id:'burgers', emoji:'🍔', label:'Burgers'},
+  {id:'phones', emoji:'📱', label:'Phones & Tablets'},
+  {id:'space', emoji:'🚀', label:'Space'},
+  {id:'animals', emoji:'🐶', label:'Animals & Pets'},
+  {id:'music', emoji:'🎵', label:'Music'},
+  {id:'shoes', emoji:'👟', label:'Sneakers'},
+  {id:'icecream', emoji:'🍦', label:'Sweets & Treats'},
+  {id:'superhero', emoji:'🦸', label:'Superheroes'},
+  {id:'science', emoji:'🔬', label:'Science'},
+  {id:'art', emoji:'🎨', label:'Art & Drawing'}
+];
+
+// Map each interest to real companies (with a fun kid-friendly fact).
+// "priv" = private/not buyable, shown honestly.
+var COMPANIES = {
+  disney:[
+    {emoji:'🏰', name:'Disney', ticker:'DIS', because:'Makes your favorite movies & parks', fact:'Disney owns Mickey Mouse, Marvel, Star Wars, AND Pixar!'}
+  ],
+  games:[
+    {emoji:'🎮', name:'Nintendo', ticker:'NTDOY', because:'Makes Mario, Zelda & Switch', fact:'Mario has been around for over 40 years!'},
+    {emoji:'🟩', name:'Microsoft', ticker:'MSFT', because:'Owns Minecraft & Xbox', fact:'Minecraft is the best-selling video game ever made.'},
+    {emoji:'🕹️', name:'Roblox', ticker:'RBLX', because:'The Roblox game platform', fact:'Kids around the world build their own games on Roblox.'}
+  ],
+  youtube:[
+    {emoji:'📺', name:'Alphabet (Google)', ticker:'GOOGL', because:'Owns YouTube', fact:'People watch over 1 billion hours of YouTube every day!'}
+  ],
+  lego:[
+    {emoji:'🧱', name:'LEGO', ticker:'', priv:true, because:'The famous building bricks', fact:'LEGO is family-owned, so you can\u2019t buy it on the stock market — but it\u2019s a huge company!'},
+    {emoji:'🚗', name:'Mattel', ticker:'MAT', because:'Makes Hot Wheels & Barbie', fact:'Mattel has made over 4 billion Hot Wheels cars!'}
+  ],
+  sports:[
+    {emoji:'👟', name:'Nike', ticker:'NKE', because:'Makes sports shoes & gear', fact:'The Nike "swoosh" logo was designed for just $35!'},
+    {emoji:'🏀', name:'Adidas', ticker:'ADDYY', because:'Sports shoes & clothes', fact:'Adidas is named after its founder, Adi Dassler.'}
+  ],
+  cars:[
+    {emoji:'🏎️', name:'Ferrari', ticker:'RACE', because:'Famous fast race cars', fact:'Ferrari makes only a small number of cars each year to keep them special.'},
+    {emoji:'⚡', name:'Tesla', ticker:'TSLA', because:'Electric cars', fact:'Tesla cars can drive using electricity instead of gas.'},
+    {emoji:'🚗', name:'Mattel (Hot Wheels)', ticker:'MAT', because:'Makes Hot Wheels toy cars', fact:'If you lined up every Hot Wheels car made, they\u2019d circle the Earth many times!'}
+  ],
+  burgers:[
+    {emoji:'🍔', name:'McDonald\u2019s', ticker:'MCD', because:'The famous golden arches', fact:'McDon\u2019s serves millions of people every single day!'},
+    {emoji:'🌮', name:'Chipotle', ticker:'CMG', because:'Burritos & tacos', fact:'Chipotle rolls its burritos fresh, right in front of you.'}
+  ],
+  phones:[
+    {emoji:'📱', name:'Apple', ticker:'AAPL', because:'Makes iPhone & iPad', fact:'Apple started in a garage and became one of the biggest companies in the world!'},
+    {emoji:'📲', name:'Samsung', ticker:'SSNLF', because:'Makes phones & tablets', fact:'Samsung makes everything from phones to fridges to TVs.'}
+  ],
+  space:[
+    {emoji:'🚀', name:'Boeing', ticker:'BA', because:'Builds rockets & planes', fact:'Boeing has helped build parts of the International Space Station!'},
+    {emoji:'🛰️', name:'Lockheed Martin', ticker:'LMT', because:'Builds spacecraft', fact:'They\u2019ve built spacecraft that visited other planets.'}
+  ],
+  animals:[
+    {emoji:'🐶', name:'Chewy', ticker:'CHWY', because:'Sells pet food & toys', fact:'Chewy sends treats and toys right to pets\u2019 homes.'},
+    {emoji:'🐾', name:'Zoetis', ticker:'ZTS', because:'Makes medicine for animals', fact:'They help keep pets and farm animals healthy.'}
+  ],
+  music:[
+    {emoji:'🎵', name:'Spotify', ticker:'SPOT', because:'App for listening to music', fact:'Spotify has millions of songs you can play any time.'},
+    {emoji:'🎧', name:'Apple', ticker:'AAPL', because:'Makes AirPods & Apple Music', fact:'Apple makes the earbuds lots of people use for music.'}
+  ],
+  shoes:[
+    {emoji:'👟', name:'Nike', ticker:'NKE', because:'Famous sneakers', fact:'Some rare Nike sneakers sell for thousands of dollars!'},
+    {emoji:'👟', name:'Crocs', ticker:'CROX', because:'The comfy foam shoes', fact:'Crocs come in tons of colors and you can decorate them with charms.'}
+  ],
+  icecream:[
+    {emoji:'🍦', name:'McDonald\u2019s', ticker:'MCD', because:'Ice cream & McFlurries', fact:'The McDonald\u2019s ice cream machine is famous around the world!'},
+    {emoji:'🍫', name:'Hershey', ticker:'HSY', because:'Makes chocolate', fact:'Hershey makes millions of chocolate bars and Kisses every day.'},
+    {emoji:'🥤', name:'Coca-Cola', ticker:'KO', because:'Fizzy drinks', fact:'Coca-Cola is sold in almost every country on Earth.'}
+  ],
+  superhero:[
+    {emoji:'🦸', name:'Disney (Marvel)', ticker:'DIS', because:'Owns Marvel superheroes', fact:'Disney owns Spider-Man, Iron Man, and all the Avengers!'}
+  ],
+  science:[
+    {emoji:'🔬', name:'3M', ticker:'MMM', because:'Invents cool science stuff', fact:'3M invented sticky notes and hundreds of other things!'},
+    {emoji:'💊', name:'Pfizer', ticker:'PFE', because:'Makes medicine', fact:'Scientists at Pfizer create medicines that help people feel better.'}
+  ],
+  art:[
+    {emoji:'🎨', name:'Adobe', ticker:'ADBE', because:'Makes art & drawing apps', fact:'Artists use Adobe apps to draw, paint, and design on computers.'},
+    {emoji:'🖍️', name:'Newell (Crayola)', ticker:'NWL', because:'Makes Crayola crayons', fact:'Crayola makes billions of crayons every year!'}
+  ]
+};
+
+// Pretend prices (rounded, kid-friendly — NOT real-time, just for the game)
+var PRICES = {
+  DIS:110, NTDOY:14, MSFT:420, GOOGL:170, MAT:20, NKE:75, ADDYY:110,
+  RACE:460, TSLA:250, MCD:290, CMG:60, AAPL:230, SSNLF:40, BA:180,
+  LMT:460, CHWY:32, ZTS:180, SPOT:480, CROX:100, HSY:180, KO:70,
+  MMM:130, PFE:26, ADBE:500, NWL:8, RBLX:45
+};
+
+var picked = {};      // interest ids chosen
+var portfolio = {};   // ticker -> {shares, emoji, name}
+var START_CASH = 1000;
+
+var KEY = 'frf_kids_v1';
+
+// ============ TAB SWITCHING ============
+function switchTool(which){
+  document.getElementById('toolExplore').classList.toggle('show', which==='explore');
+  document.getElementById('toolBiz').classList.toggle('show', which==='biz');
+  document.getElementById('tabExplore').classList.toggle('active', which==='explore');
+  document.getElementById('tabBiz').classList.toggle('active', which==='biz');
+  save();
+}
+
+// ============ BRAND EXPLORER ============
+function buildInterestGrid(){
+  var g = document.getElementById('interestGrid');
+  g.innerHTML = '';
+  INTERESTS.forEach(function(it){
+    var t = document.createElement('button');
+    t.className = 'ic-tile' + (picked[it.id]?' picked':'');
+    t.type = 'button';
+    t.setAttribute('aria-pressed', picked[it.id]?'true':'false');
+    t.setAttribute('aria-label', it.label);
+    t.innerHTML = '<span class="ic-emoji">'+it.emoji+'</span><span class="ic-label">'+it.label+'</span>';
+    t.onclick = function(){ toggleInterest(it.id, t); };
+    g.appendChild(t);
+  });
+}
+function toggleInterest(id, el){
+  if(picked[id]){ delete picked[id]; el.classList.remove('picked'); el.setAttribute('aria-pressed','false'); }
+  else { picked[id]=true; el.classList.add('picked'); el.setAttribute('aria-pressed','true'); }
+  var any = Object.keys(picked).length>0;
+  document.getElementById('findBtn').disabled = !any;
+  save();
+}
+
+function findCompanies(){
+  var chosen = Object.keys(picked);
+  if(chosen.length===0) return;
+  // Gather companies, dedupe by ticker (or name for private)
+  var seen = {}, list = [];
+  chosen.forEach(function(id){
+    (COMPANIES[id]||[]).forEach(function(c){
+      var key = c.ticker || c.name;
+      if(!seen[key]){ seen[key]=true; list.push(c); }
+    });
+  });
+  var box = document.getElementById('exploreResults');
+  var html = '<div class="match-intro">🎉 We found <span class="hl">'+list.length+'</span> companies you might like!</div>';
+  list.forEach(function(c){
+    var canAdd = !c.priv;
+    var price = PRICES[c.ticker];
+    html += '<div class="company-card">'
+      + '<div class="cc-emoji">'+c.emoji+'</div>'
+      + '<div class="cc-body">'
+        + '<div class="cc-name">'+c.name
+          + (c.ticker?'<span class="cc-ticker">'+c.ticker+'</span>':'')
+          + (c.priv?'<span class="cc-private">Not for sale</span>':'')
+        + '</div>'
+        + '<div class="cc-because">'+c.because+'</div>'
+        + '<div class="cc-fact">✨ '+c.fact+'</div>'
+      + '</div>'
+      + (canAdd
+          ? '<button class="cc-add" data-ticker="'+c.ticker+'" onclick="addToPortfolio(\''+c.ticker+'\',\''+c.emoji+'\',\''+c.name.replace(/'/g,"\\'")+'\',this)">+ Follow<br>$'+price+'</button>'
+          : '')
+      + '</div>';
+  });
+  box.innerHTML = html;
+  document.getElementById('portfolioBox').style.display = 'block';
+  renderPortfolio();
+  box.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function addToPortfolio(ticker, emoji, name, btn){
+  var price = PRICES[ticker]||0;
+  var spent = portfolioSpent();
+  if(spent + price > START_CASH){
+    btn.textContent = 'Not enough 💰';
+    setTimeout(function(){ btn.innerHTML = '+ Follow<br>$'+price; }, 1500);
+    return;
+  }
+  if(!portfolio[ticker]) portfolio[ticker] = {shares:0, emoji:emoji, name:name};
+  portfolio[ticker].shares += 1;
+  btn.classList.add('added');
+  btn.innerHTML = '✓ Added!';
+  setTimeout(function(){ btn.classList.remove('added'); btn.innerHTML = '+ More<br>$'+price; }, 1200);
+  renderPortfolio();
+  save();
+}
+
+function portfolioSpent(){
+  var s = 0;
+  for(var t in portfolio){ s += (PRICES[t]||0) * portfolio[t].shares; }
+  return s;
+}
+function removeFromPortfolio(ticker){
+  delete portfolio[ticker];
+  renderPortfolio(); save();
+}
+function renderPortfolio(){
+  var spent = portfolioSpent();
+  var left = START_CASH - spent;
+  document.getElementById('pfCash').textContent = '$'+left.toLocaleString()+' left to play';
+  var list = document.getElementById('pfList');
+  var tickers = Object.keys(portfolio);
+  if(tickers.length===0){
+    list.innerHTML = '<div class="pf-empty">Tap <b>"+ Follow"</b> on a company above to start your pretend portfolio! You have <b>$1,000</b> of play money. 🎮</div>';
+    return;
+  }
+  var html = '';
+  tickers.forEach(function(t){
+    var p = portfolio[t];
+    var val = (PRICES[t]||0)*p.shares;
+    html += '<div class="pf-item">'
+      + '<div class="pfi-emoji">'+p.emoji+'</div>'
+      + '<div class="pfi-body"><div class="pfi-name">'+p.name+'</div>'
+      + '<div class="pfi-shares">'+p.shares+' share'+(p.shares>1?'s':'')+' · $'+(PRICES[t]||0)+' each</div></div>'
+      + '<div class="pfi-val">$'+val+'</div>'
+      + '<button class="pfi-remove" onclick="removeFromPortfolio(\''+t+'\')" aria-label="Remove '+p.name+'">×</button>'
+      + '</div>';
+  });
+  html += '<div class="pf-total"><span class="l">🎒 Total value of my picks</span><span class="v">$'+spent.toLocaleString()+'</span></div>';
+  list.innerHTML = html;
+}
+
+// ============ BUSINESS BUILDER ============
+var BIZZES = [
+  {id:'lemonade', emoji:'🍋', label:'Lemonade Stand', tag:'A classic!', unit:'cup', costs:[
+    {emoji:'🍋', name:'Lemons', val:'3.00'},
+    {emoji:'🍬', name:'Sugar', val:'2.00'},
+    {emoji:'🥤', name:'Cups', val:'2.50'}
+  ]},
+  {id:'dogwalk', emoji:'🐕', label:'Dog Walking', tag:'Love pets?', unit:'walk', costs:[
+    {emoji:'🦮', name:'Leash & bags', val:'8.00'},
+    {emoji:'🦴', name:'Dog treats', val:'5.00'}
+  ]},
+  {id:'bracelets', emoji:'📿', label:'Bracelet Making', tag:'Get crafty!', unit:'bracelet', costs:[
+    {emoji:'🔮', name:'Beads', val:'6.00'},
+    {emoji:'🧵', name:'String', val:'3.00'}
+  ]},
+  {id:'carwash', emoji:'🚗', label:'Car Washing', tag:'Splash!', unit:'car', costs:[
+    {emoji:'🧼', name:'Soap', val:'4.00'},
+    {emoji:'🧽', name:'Sponges', val:'3.00'},
+    {emoji:'🪣', name:'Bucket', val:'5.00'}
+  ]},
+  {id:'cookies', emoji:'🍪', label:'Cookie Sale', tag:'Yum!', unit:'cookie', costs:[
+    {emoji:'🌾', name:'Flour', val:'2.00'},
+    {emoji:'🧈', name:'Butter', val:'3.00'},
+    {emoji:'🍫', name:'Choc chips', val:'3.50'}
+  ]},
+  {id:'plants', emoji:'🌱', label:'Plant Selling', tag:'Grow it!', unit:'plant', costs:[
+    {emoji:'🌰', name:'Seeds', val:'4.00'},
+    {emoji:'🪴', name:'Pots', val:'6.00'},
+    {emoji:'🟤', name:'Soil', val:'3.00'}
+  ]}
+];
+
+var currentBiz = null;
+var bizCosts = []; // working copy of costs
+
+function buildBizGrid(){
+  var g = document.getElementById('bizGrid');
+  g.innerHTML = '';
+  BIZZES.forEach(function(b){
+    var t = document.createElement('button');
+    t.className = 'biz-tile' + (currentBiz===b.id?' picked':'');
+    t.type = 'button';
+    t.setAttribute('aria-label', b.label);
+    t.innerHTML = '<span class="bt-emoji">'+b.emoji+'</span><span class="bt-label">'+b.label+'</span><span class="bt-tag">'+b.tag+'</span>';
+    t.onclick = function(){ pickBiz(b.id); };
+    g.appendChild(t);
+  });
+}
+
+function pickBiz(id){
+  currentBiz = id;
+  var biz = BIZZES.filter(function(b){return b.id===id;})[0];
+  bizCosts = biz.costs.map(function(c){ return {emoji:c.emoji, name:c.name, val:c.val}; });
+  // highlight
+  buildBizGrid();
+  // banner
+  document.getElementById('bizBannerEmoji').textContent = biz.emoji;
+  document.getElementById('bizBannerTitle').textContent = biz.label;
+  document.getElementById('chargeLabel').textContent = 'Price per '+biz.unit+':';
+  document.getElementById('sellLabel').textContent = 'How many '+biz.unit+'s will you sell?';
+  renderCosts();
+  document.getElementById('bizWorkshop').classList.add('show');
+  document.getElementById('bizWorkshop').scrollIntoView({behavior:'smooth', block:'nearest'});
+  calcBiz();
+  save();
+}
+
+function renderCosts(){
+  var list = document.getElementById('costList');
+  list.innerHTML = '';
+  bizCosts.forEach(function(c, i){
+    var row = document.createElement('div');
+    row.className = 'cost-row';
+    row.innerHTML = '<span class="cr-emoji">'+c.emoji+'</span>'
+      + '<span class="cr-name">'+c.name+'</span>'
+      + '<div class="cr-input"><span class="dollar">$</span>'
+      + '<input type="text" inputmode="decimal" value="'+c.val+'" data-i="'+i+'" aria-label="Cost of '+c.name+'"></div>';
+    var inp = row.querySelector('input');
+    inp.addEventListener('input', function(){
+      bizCosts[i].val = inp.value;
+      calcBiz(); save();
+    });
+    list.appendChild(row);
+  });
+}
+
+function addCustomCost(){
+  bizCosts.push({emoji:'📦', name:'Something', val:'1.00'});
+  renderCosts(); calcBiz(); save();
+}
+
+function num(v){ return parseFloat(String(v).replace(/[^0-9.]/g,''))||0; }
+
+function calcBiz(){
+  var totalCost = 0;
+  bizCosts.forEach(function(c){ totalCost += num(c.val); });
+  var price = num(document.getElementById('priceInput').value);
+  var qty = Math.round(num(document.getElementById('qtyInput').value));
+  var income = price * qty;
+  var profit = income - totalCost;
+
+  document.getElementById('statCost').textContent = '$'+totalCost.toFixed(2);
+  document.getElementById('statIncome').textContent = '$'+income.toFixed(2);
+  document.getElementById('statProfit').textContent = (profit<0?'-$':'$')+Math.abs(profit).toFixed(2);
+
+  var v = document.getElementById('bizVerdict');
+  var note = document.getElementById('bizSellNote');
+  v.className = 'pb-verdict';
+  if(income===0 && totalCost===0){
+    v.classList.add('even');
+    v.textContent = 'Fill in your costs and price to see if you make a profit!';
+    note.textContent = '';
+  } else if(profit > 0){
+    v.classList.add('win');
+    v.innerHTML = '🎉 Amazing! You made a profit of <b>$'+profit.toFixed(2)+'</b>! That\u2019s money you get to keep after paying for everything.';
+    var perUnit = qty>0 ? (profit/qty) : 0;
+    note.innerHTML = 'That\u2019s about <b>$'+perUnit.toFixed(2)+' profit</b> for each one you sell. 💪';
+  } else if(profit === 0){
+    v.classList.add('even');
+    v.innerHTML = '😮 You broke even! You made back exactly what you spent — but no extra yet. Try charging a little more, or selling a few more!';
+    note.textContent = '';
+  } else {
+    v.classList.add('loss');
+    v.innerHTML = '😅 Uh oh — you\u2019d lose <b>$'+Math.abs(profit).toFixed(2)+'</b>. You\u2019re spending more than you\u2019re making. Try charging more or lowering your costs!';
+    var needed = price>0 ? Math.ceil(totalCost/price) : 0;
+    if(needed>0) note.innerHTML = 'Tip: at $'+price.toFixed(2)+' each, you\u2019d need to sell <b>'+needed+'</b> just to break even.';
+  }
+}
+
+// ============ SAVE / LOAD (device-only) ============
+function save(){
+  try{
+    var activeTab = document.getElementById('tabBiz').classList.contains('active') ? 'biz':'explore';
+    localStorage.setItem(KEY, JSON.stringify({
+      picked:picked, portfolio:portfolio, currentBiz:currentBiz, bizCosts:bizCosts,
+      price:document.getElementById('priceInput')?document.getElementById('priceInput').value:'',
+      qty:document.getElementById('qtyInput')?document.getElementById('qtyInput').value:'',
+      tab:activeTab
+    }));
+  }catch(e){}
+}
+function load(){
+  try{
+    var raw = localStorage.getItem(KEY); if(!raw) return;
+    var d = JSON.parse(raw);
+    if(d.picked) picked = d.picked;
+    if(d.portfolio) portfolio = d.portfolio;
+    if(d.currentBiz) currentBiz = d.currentBiz;
+    if(d.bizCosts) bizCosts = d.bizCosts;
+    return d;
+  }catch(e){ return null; }
+}
+
+// ============ INIT ============
+(function init(){
+  var d = load();
+  buildInterestGrid();
+  buildBizGrid();
+  // restore explorer state
+  if(Object.keys(picked).length>0){
+    document.getElementById('findBtn').disabled = false;
+  }
+  if(Object.keys(portfolio).length>0){
+    findCompanies();
+  }
+  // restore biz state
+  if(currentBiz){
+    var biz = BIZZES.filter(function(b){return b.id===currentBiz;})[0];
+    if(biz){
+      document.getElementById('bizBannerEmoji').textContent = biz.emoji;
+      document.getElementById('bizBannerTitle').textContent = biz.label;
+      document.getElementById('chargeLabel').textContent = 'Price per '+biz.unit+':';
+      document.getElementById('sellLabel').textContent = 'How many '+biz.unit+'s will you sell?';
+      renderCosts();
+      document.getElementById('bizWorkshop').classList.add('show');
+    }
+  }
+  if(d){
+    if(d.price && document.getElementById('priceInput')) document.getElementById('priceInput').value = d.price;
+    if(d.qty && document.getElementById('qtyInput')) document.getElementById('qtyInput').value = d.qty;
+    if(d.tab) switchTool(d.tab);
+  }
+  calcBiz();
+
+  // mobile menu
+  var burger=document.getElementById('navBurger'), menu=document.getElementById('mobileMenu');
+  if(burger&&menu){
+    burger.addEventListener('click', function(){
+      var open=menu.classList.toggle('open');
+      burger.classList.toggle('active', open);
+      burger.setAttribute('aria-expanded', open?'true':'false');
+      burger.setAttribute('aria-label', open?'Close menu':'Open menu');
+    });
+  }
+})();
+</script>
+</body>
+</html>
