@@ -103,6 +103,19 @@ a{text-decoration:none}
 .chip.on{background:#0EA5A0;border-color:#0EA5A0;color:#fff}
 .chip.on.help{background:#d97706;border-color:#d97706}
 .chip.on.good{background:#059669;border-color:#059669}
+/* About-you personalization controls */
+.pf-field-block{margin-bottom:1.15rem}
+.pf-flabel{display:block;font-size:.9rem;font-weight:700;color:#0B1929;margin-bottom:.5rem}
+.pf-flabel .req{color:#dc2626;font-weight:700}
+.pf-flabel .opt{color:#94a3b8;font-weight:500;font-size:.8rem}
+.btn-group{display:flex;gap:.6rem}
+.btn-group-wrap{flex-wrap:wrap}
+.opt-btn{padding:.6rem 1.1rem;border-radius:10px;border:1.5px solid #E2E8F0;background:#F5F7F6;color:#475569;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .15s;font-family:"DM Sans",sans-serif;display:inline-flex;align-items:center;gap:.35rem}
+.opt-btn:hover{border-color:#0EA5A0;color:#0C7D79}
+.opt-btn.on{background:#0EA5A0;border-color:#0EA5A0;color:#fff}
+.pf-field-block .pw{max-width:280px}
+.pf-missing{border-color:#dc2626 !important;box-shadow:0 0 0 3px rgba(220,38,38,.1)}
+@media(max-width:520px){.btn-group{flex-wrap:wrap}.opt-btn{flex:1;min-width:calc(50% - .3rem);justify-content:center}}
 .field-row{display:flex;flex-wrap:wrap;gap:1rem;margin-top:.4rem}
 .field{flex:1;min-width:150px}
 .field label{display:block;font-size:.8rem;font-weight:600;color:#0B1929;margin-bottom:.35rem}
@@ -277,6 +290,62 @@ a{text-decoration:none}
   <div class="pf-saved-note" id="savedNote">
     <span>↩️ We restored your saved profile.</span>
     <button class="pf-btn-ghost" style="flex:0;min-width:auto;padding:.4rem .8rem;font-size:.78rem" onclick="clearProfile()">Clear it</button>
+  </div>
+
+  <!-- ABOUT YOU (personalization) -->
+  <div class="pf-section">
+    <h2>About you</h2>
+    <p class="sub">A few quick basics so your plan actually fits your life. <b>Single/Married</b> and your <b>main goal</b> are required — the rest are optional.</p>
+
+    <div class="pf-field-block">
+      <label class="pf-flabel">Are you single or married? <span class="req">*</span></label>
+      <div class="btn-group" id="maritalGroup">
+        <button type="button" class="opt-btn" data-v="single">🧍 Single</button>
+        <button type="button" class="opt-btn" data-v="married">💑 Married</button>
+      </div>
+    </div>
+
+    <div class="pf-field-block" id="partnerBlock" style="display:none">
+      <label class="pf-flabel">Partner's annual income <span class="opt">(optional)</span></label>
+      <div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" id="partnerIncome" class="frf-comma" placeholder="40,000" min="0" step="1000"></div>
+      <div class="hint">We'll factor your household income into the plan.</div>
+    </div>
+
+    <div class="pf-field-block">
+      <label class="pf-flabel">What's your #1 goal right now? <span class="req">*</span></label>
+      <div class="btn-group btn-group-wrap" id="goalGroup">
+        <button type="button" class="opt-btn" data-v="debt">💳 Get out of debt</button>
+        <button type="button" class="opt-btn" data-v="invest">📈 Start / grow investing</button>
+        <button type="button" class="opt-btn" data-v="home">🏠 Buy a home</button>
+        <button type="button" class="opt-btn" data-v="savings">🛟 Build savings</button>
+        <button type="button" class="opt-btn" data-v="retirement">🏦 Plan for retirement</button>
+        <button type="button" class="opt-btn" data-v="understand">💡 Understand money better</button>
+      </div>
+    </div>
+
+    <div class="pf-field-block">
+      <label class="pf-flabel">Do you have kids or dependents? <span class="opt">(optional)</span></label>
+      <div class="btn-group" id="kidsGroup">
+        <button type="button" class="opt-btn" data-v="yes">Yes</button>
+        <button type="button" class="opt-btn" data-v="no">No</button>
+      </div>
+    </div>
+
+    <div class="pf-field-block">
+      <label class="pf-flabel">Do you own or rent your home? <span class="opt">(optional)</span></label>
+      <div class="btn-group" id="homeGroup">
+        <button type="button" class="opt-btn" data-v="own">🏡 Own</button>
+        <button type="button" class="opt-btn" data-v="rent">🔑 Rent</button>
+      </div>
+    </div>
+
+    <div class="pf-field-block">
+      <label class="pf-flabel">How are you paid? <span class="opt">(optional)</span></label>
+      <div class="btn-group" id="employmentGroup">
+        <button type="button" class="opt-btn" data-v="w2">💼 Employee (W-2)</button>
+        <button type="button" class="opt-btn" data-v="self">🧾 Self-employed</button>
+      </div>
+    </div>
   </div>
 
   <!-- INTERESTS -->
@@ -515,6 +584,35 @@ document.addEventListener('click', function(e){
   }
 });
 
+// ===== Button-group (single-select) handling for About You =====
+function getBtn(groupId){
+  var on=document.querySelector('#'+groupId+' .opt-btn.on');
+  return on?on.getAttribute('data-v'):'';
+}
+function setBtn(groupId,val){
+  if(!val) return;
+  var btns=document.querySelectorAll('#'+groupId+' .opt-btn');
+  for(var i=0;i<btns.length;i++){
+    if(btns[i].getAttribute('data-v')===val) btns[i].classList.add('on');
+    else btns[i].classList.remove('on');
+  }
+}
+document.addEventListener('click', function(e){
+  var b=e.target.closest ? e.target.closest('.opt-btn') : null;
+  if(!b) return;
+  var group=b.parentElement;
+  // single-select: clear siblings, set this one
+  var sibs=group.querySelectorAll('.opt-btn');
+  for(var i=0;i<sibs.length;i++) sibs[i].classList.remove('on');
+  b.classList.add('on');
+  group.classList.remove('pf-missing');
+  // Show/hide partner income when marital status changes
+  if(group.id==='maritalGroup'){
+    document.getElementById('partnerBlock').style.display = (b.getAttribute('data-v')==='married')?'block':'none';
+  }
+  saveProfile();
+});
+
 function collectData(){
   return {
     interests: getChips('interests'),
@@ -523,7 +621,13 @@ function collectData(){
     income: document.getElementById('income').value.replace(/,/g,''),
     debt: document.getElementById('debt').value.replace(/,/g,''),
     invested: document.getElementById('invested').value.replace(/,/g,''),
-    stage: document.getElementById('stage').value
+    stage: document.getElementById('stage').value,
+    marital: getBtn('maritalGroup'),
+    partnerIncome: document.getElementById('partnerIncome').value.replace(/,/g,''),
+    goal: getBtn('goalGroup'),
+    kids: getBtn('kidsGroup'),
+    home: getBtn('homeGroup'),
+    employment: getBtn('employmentGroup')
   };
 }
 function saveProfile(){
@@ -541,6 +645,12 @@ function loadProfile(){
     if(d.debt) document.getElementById('debt').value = formatWithCommas(d.debt);
     if(d.invested) document.getElementById('invested').value = formatWithCommas(d.invested);
     if(d.stage) document.getElementById('stage').value = d.stage;
+    if(d.marital){ setBtn('maritalGroup', d.marital); if(d.marital==='married') document.getElementById('partnerBlock').style.display='block'; }
+    if(d.partnerIncome) document.getElementById('partnerIncome').value = formatWithCommas(d.partnerIncome);
+    if(d.goal) setBtn('goalGroup', d.goal);
+    if(d.kids) setBtn('kidsGroup', d.kids);
+    if(d.home) setBtn('homeGroup', d.home);
+    if(d.employment) setBtn('employmentGroup', d.employment);
     return true;
   }catch(e){ return false; }
 }
@@ -552,6 +662,10 @@ function clearProfile(){
   document.getElementById('debt').value='';
   document.getElementById('invested').value='';
   document.getElementById('stage').value='';
+  document.getElementById('partnerIncome').value='';
+  document.getElementById('partnerBlock').style.display='none';
+  var offbtns=document.querySelectorAll('.opt-btn.on');
+  for(var b=0;b<offbtns.length;b++) offbtns[b].classList.remove('on');
   document.getElementById('result').classList.remove('show');
   document.getElementById('savedNote').classList.remove('show');
 }
@@ -560,9 +674,30 @@ function fmt(n){ return '$' + Number(n).toLocaleString(); }
 
 function buildProfile(){
   var d = collectData();
+
+  // ===== Required fields: Single/Married + #1 goal =====
+  var missing = [];
+  if(!d.marital){ missing.push('maritalGroup'); }
+  if(!d.goal){ missing.push('goalGroup'); }
+  if(missing.length){
+    for(var mi=0; mi<missing.length; mi++){
+      var g=document.getElementById(missing[mi]);
+      if(g) g.classList.add('pf-missing');
+    }
+    // scroll to the first missing group and stop
+    var firstG=document.getElementById(missing[0]);
+    if(firstG) firstG.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+
   saveProfile();
 
   // ===== Build the ORDERED ROADMAP =====
+  // Household income if married (their income + partner's)
+  var householdIncome = (Number(d.income)||0) + (d.marital==='married' ? (Number(d.partnerIncome)||0) : 0);
+
+  // Map the #1 goal to the topic it should push to the front
+  var GOAL_TOPIC = { debt:'debt', invest:'investing', home:'housing', savings:'saving', retirement:'retirement', understand:'' };
   // Start from the steps the user flagged (need help + interests), in canonical order.
   var chosen = {};
   d.needhelp.forEach(function(t){ if(STEPS[t]) chosen[t]=true; });
@@ -571,7 +706,7 @@ function buildProfile(){
   d.confident.forEach(function(t){ if(d.needhelp.indexOf(t)===-1) delete chosen[t]; });
 
   var num = { income:Number(d.income)||0, debt:Number(d.debt)||0, invested:Number(d.invested)||0 };
-  var dti = (num.income>0 && num.debt>0) ? (num.debt/num.income*100) : null;
+  var dti = (householdIncome>0 && num.debt>0) ? (num.debt/householdIncome*100) : null;
 
   // Numbers refine what's included + the order:
   // - Meaningful debt => make sure "debt" is in the plan
@@ -580,6 +715,19 @@ function buildProfile(){
   if(num.debt >= 1000) chosen['debt']=true;
   if(num.invested < 1000) chosen['saving']=true;
   if(num.income >= 1000 && num.invested < 500) chosen['investing']=true;
+
+  // ===== Personalization: new About-You fields shape the plan =====
+  // #1 goal always gets its topic into the plan
+  var goalTopic = GOAL_TOPIC[d.goal] || '';
+  if(goalTopic && STEPS[goalTopic]) chosen[goalTopic]=true;
+  // Homeowner/renter interested in housing, or goal is buying -> ensure housing
+  if(d.goal==='home' || d.home==='rent') { if(STEPS['housing']) chosen['housing']=true; }
+  // Kids/dependents -> surface insurance (life/protection matters more)
+  if(d.kids==='yes' && STEPS['insurance']) chosen['insurance']=true;
+  // Self-employed -> surface taxes (quarterly, deductions, no withholding)
+  if(d.employment==='self' && STEPS['taxes']) chosen['taxes']=true;
+  // Married -> couple money guidance is relevant
+  if(d.marital==='married' && STEPS['family']) chosen['family']=true;
 
   // Turn chosen topics into an ordered list using each step's canonical order
   var steps = [];
@@ -593,8 +741,24 @@ function buildProfile(){
     if(idx>0){ var it=steps.splice(idx,1)[0]; steps.splice(toFront,0,it); }
   }
   var priorityNote = '';
-  if(dti !== null && dti >= 35){ bump('debt',0); priorityNote = 'Your debt is high relative to your income ('+dti.toFixed(0)+'%), so we put paying it down first.'; }
+
+  // The #1 goal moves its topic toward the front first...
+  if(goalTopic){ bump(goalTopic, 0); }
+
+  // ...but financial fundamentals still take precedence for a sound plan:
+  // high debt-to-income and an empty emergency fund come first regardless.
+  if(dti !== null && dti >= 35){ bump('debt',0); priorityNote = 'Your debt is high relative to your household income ('+dti.toFixed(0)+'%), so we put paying it down first.'; }
   if(num.invested < 1000 && chosen['saving']){ bump('saving',0); if(!priorityNote) priorityNote = 'You don\u2019t have much saved yet, so we start with an emergency fund \u2014 the foundation everything else stands on.'; }
+
+  // If no fundamental override fired, acknowledge their chosen goal in the note.
+  if(!priorityNote && goalTopic){
+    var GOAL_LABEL = { debt:'getting out of debt', investing:'growing your investments', housing:'buying a home', saving:'building your savings', retirement:'planning for retirement' };
+    if(GOAL_LABEL[goalTopic]) priorityNote = 'Since your main goal is ' + GOAL_LABEL[goalTopic] + ', we put that front and center.';
+  }
+  // Married note
+  if(d.marital==='married' && householdIncome>0 && !(/household income/.test(priorityNote))){
+    priorityNote = (priorityNote ? priorityNote+' ' : '') + 'We\u2019re basing this on your household income of ' + fmt(householdIncome) + '.';
+  }
 
   // Fallback: nothing chosen at all -> sensible default starter roadmap
   if(steps.length === 0){
@@ -676,6 +840,7 @@ function initCommaInputs(){
         inp.value=formatWithCommas(inp.value);
         var diff=inp.value.length-before.length;
         try{ inp.setSelectionRange(start+diff, start+diff); }catch(e){}
+        if(typeof saveProfile==='function') saveProfile();
       });
     })(inputs[i]);
   }
