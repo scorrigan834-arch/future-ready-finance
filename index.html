@@ -257,18 +257,19 @@ a{text-decoration:none}
 /* Money Hub promo strip */
 .hub-promo-section{background:#F5F7F6;padding:2.5rem 1.5rem}
 .hub-promo-inner{max-width:1080px;margin:0 auto}
-.hub-promo{display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;align-items:center;background:linear-gradient(135deg,#4c1d95 0%,#5b21b6 48%,#6d28d9 100%);border-radius:20px;padding:2.25rem 2.4rem;text-decoration:none;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s;box-shadow:0 14px 44px rgba(76,29,149,.28)}
-.hub-promo:hover{transform:translateY(-4px);box-shadow:0 22px 60px rgba(76,29,149,.4)}
-.hub-promo::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.22),transparent 70%);bottom:-160px;right:-80px;pointer-events:none}
+.hub-promo{display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;align-items:center;background:linear-gradient(135deg,#0B1929 0%,#0f2338 55%,#123040 100%);border:1px solid rgba(14,165,160,.25);border-radius:20px;padding:2.25rem 2.4rem;text-decoration:none;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s;box-shadow:0 14px 44px rgba(11,25,41,.35)}
+.hub-promo:hover{transform:translateY(-4px);box-shadow:0 22px 60px rgba(14,165,160,.28)}
+.hub-promo::after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.2),transparent 70%);bottom:-170px;right:-90px;pointer-events:none}
+.hub-promo::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.16),transparent 70%);top:-130px;left:-70px;pointer-events:none}
 .hub-promo-text{position:relative;z-index:1}
-.hub-promo-label{display:inline-flex;align-items:center;gap:.4rem;color:#e9d5ff;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.7rem;background:rgba(255,255,255,.12);padding:.3rem .75rem;border-radius:99px}
+.hub-promo-label{display:inline-flex;align-items:center;gap:.4rem;color:#5eead4;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.7rem;background:rgba(14,165,160,.15);border:1px solid rgba(14,165,160,.3);padding:.3rem .75rem;border-radius:99px}
 .hub-promo-text h3{color:#fff;font-family:"Playfair Display",serif;font-size:1.6rem;margin-bottom:.5rem;line-height:1.18}
 .hub-promo-text p{color:rgba(255,255,255,.82);font-size:.93rem;line-height:1.6;margin-bottom:1.1rem;max-width:440px}
-.hub-promo-cta{display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:#5b21b6;font-weight:700;font-size:.9rem;padding:.7rem 1.4rem;border-radius:10px;transition:transform .2s}
-.hub-promo:hover .hub-promo-cta{transform:translateX(3px)}
+.hub-promo-cta{display:inline-flex;align-items:center;gap:.5rem;background:#0EA5A0;color:#fff;font-weight:700;font-size:.95rem;padding:.85rem 1.7rem;border-radius:11px;box-shadow:0 8px 22px rgba(14,165,160,.35);transition:transform .2s,background .2s,box-shadow .2s}
+.hub-promo:hover .hub-promo-cta{background:#0C7D79;transform:translateY(-2px);box-shadow:0 12px 28px rgba(14,165,160,.45)}
 /* visual preview panel */
 .hub-preview{position:relative;z-index:1;display:flex;flex-direction:column;gap:.7rem}
-.hpv-score{display:flex;align-items:center;gap:.9rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);border-radius:13px;padding:.9rem 1.1rem;backdrop-filter:blur(6px)}
+.hpv-score{display:flex;align-items:center;gap:.9rem;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.22);border-radius:13px;padding:.9rem 1.1rem;backdrop-filter:blur(6px)}
 .hpv-ring{flex-shrink:0;width:52px;height:52px;position:relative}
 .hpv-ring svg{transform:rotate(-90deg)}
 .hpv-ring-n{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:"Playfair Display",serif;font-weight:800;font-size:1.1rem}
@@ -277,7 +278,7 @@ a{text-decoration:none}
 .hpv-score-t .v{font-size:.98rem;font-weight:700;font-family:"Playfair Display",serif}
 .hpv-tiles{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
 .hpv-tile{background:rgba(255,255,255,.94);border-radius:11px;padding:.7rem .8rem}
-.hpv-tile .l{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.02em;color:#8b5cf6;margin-bottom:.15rem;display:flex;align-items:center;gap:.25rem}
+.hpv-tile .l{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.02em;color:#0C7D79;margin-bottom:.15rem;display:flex;align-items:center;gap:.25rem}
 .hpv-tile .v{font-size:1rem;font-weight:800;font-family:"Playfair Display",serif;color:#0B1929;line-height:1}
 .hpv-tile .v.g{color:#059669}
 @media(max-width:720px){.hub-promo{grid-template-columns:1fr;gap:1.5rem}.hub-preview{order:-1}}
