@@ -328,6 +328,43 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
 .hf-pi-icon{font-size:1.5rem}
 .hero-replay{background:#fff;color:#0C7D79;border:2px solid #0EA5A0;border-radius:12px;padding:.7rem 1.75rem;font-weight:800;cursor:pointer;margin-top:1rem;font-family:inherit}
 
+/* ===== Money Tree 2.0 additions ===== */
+.tree-seed-select{text-align:center;padding:.5rem 0}
+.tss-title{font-family:"Playfair Display",serif;font-size:1.2rem;font-weight:700;color:#1e293b;margin-bottom:.4rem}
+.tss-sub{font-size:.85rem;color:#64748b;margin-bottom:1.1rem}
+.seed-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;max-width:400px;margin:0 auto}
+.seed-opt{background:#fff;border:2px solid #e2e8f0;border-radius:18px;padding:1.1rem .5rem;cursor:pointer;transition:all .18s;font-family:inherit}
+.seed-opt:hover{border-color:#0EA5A0;transform:translateY(-2px)}
+.seed-opt.picked{border-color:#0EA5A0;background:linear-gradient(135deg,#ecfeff,#fff);box-shadow:0 8px 20px rgba(14,165,160,.22)}
+.seed-em{font-size:2.3rem;display:block;line-height:1;margin-bottom:.3rem}
+.seed-amt{font-size:1.15rem;font-weight:900;color:#0C7D79;font-family:"Playfair Display",serif}
+.seed-lbl{font-size:.68rem;color:#94a3b8;font-weight:600;margin-top:.15rem}
+.tree-weather{display:flex;align-items:center;justify-content:center;gap:.5rem;background:#fff;border:2px solid #e2e8f0;border-radius:14px;padding:.6rem 1rem;max-width:360px;margin:0 auto 1rem;font-weight:700;font-size:.88rem;color:#334155;transition:all .3s}
+.tree-weather .tw-em{font-size:1.5rem}
+.tree-weather.sunny{background:linear-gradient(135deg,#fef9c3,#fff);border-color:#fde047}
+.tree-weather.cloudy{background:linear-gradient(135deg,#f1f5f9,#fff);border-color:#cbd5e1}
+.tree-weather.stormy{background:linear-gradient(135deg,#e0e7ff,#fff);border-color:#a5b4fc}
+.water-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;max-width:400px;margin:0 auto .6rem}
+.water-btn{background:linear-gradient(135deg,#0EA5A0,#3b82f6);color:#fff;border:none;border-radius:14px;padding:.8rem .4rem;cursor:pointer;font-family:inherit;transition:all .18s;box-shadow:0 6px 16px rgba(14,165,160,.28)}
+.water-btn:hover{transform:translateY(-2px)}
+.water-btn .wb-drops{font-size:1.1rem;line-height:1}
+.water-btn .wb-amt{font-size:1rem;font-weight:800;display:block;margin-top:.15rem}
+.water-btn .wb-lbl{font-size:.62rem;opacity:.9;display:block}
+.tree-milestone{background:linear-gradient(135deg,#fef3c7,#fff);border:2px solid #fcd34d;border-radius:14px;padding:.7rem 1rem;max-width:400px;margin:.6rem auto 0;text-align:center;font-weight:700;font-size:.85rem;color:#92400e;display:none}
+.tree-milestone.show{display:block;animation:fadeUp .4s}
+.temptation-card{background:linear-gradient(135deg,#fce7f3,#fff);border:2px solid #f9a8d4;border-radius:16px;padding:1rem 1.1rem;max-width:400px;margin:0 auto .7rem;text-align:center;display:none}
+.temptation-card.show{display:block;animation:fadeUp .4s}
+.tc-title{font-weight:800;color:#9d174d;font-size:.95rem;margin-bottom:.5rem}
+.tc-btns{display:flex;gap:.5rem;justify-content:center}
+.tc-btns button{border:none;border-radius:10px;padding:.55rem 1rem;font-weight:700;cursor:pointer;font-family:inherit;font-size:.85rem}
+.tc-buy{background:linear-gradient(135deg,#f97316,#ea580c);color:#fff}
+.tc-skip{background:#0EA5A0;color:#fff}
+.tf-reveal{background:rgba(255,255,255,.15);border-radius:14px;padding:1rem 1.25rem;margin-top:1rem}
+.tf-reveal-big{font-size:2rem;font-weight:900;font-family:"Playfair Display",serif;margin:.2rem 0}
+/* SVG bonus elements */
+.tr-bird,.tr-house,.tr-glow{opacity:0;transition:opacity .5s}
+.tr-bird.show,.tr-house.show,.tr-glow.show{opacity:1}
+
 </style>
 </head>
 <body>
@@ -389,6 +426,10 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
     <div class="step-title"><span class="num">1</span> What do you want to save for?</div>
     <div class="goal-setup">
       <div class="goal-pick" id="goalPick"></div>
+      <div class="goal-field" id="goalOtherWrap" style="display:none">
+        <label>✏️ What are you saving for?</label>
+        <div class="goal-input no-dollar"><input type="text" id="goalOtherInput" maxlength="24" placeholder="Type it here!" oninput="calcGoal()"></div>
+      </div>
       <div class="goal-field">
         <label>💵 How much does it cost?</label>
         <div class="goal-input"><span class="dollar">$</span><input type="text" inputmode="numeric" id="goalPrice" placeholder="25" oninput="calcGoal()"></div>
@@ -474,49 +515,95 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
   <div class="k-panel" id="panelTree">
     <div class="step-title"><span class="num">🌱</span> Grow your Money Tree!</div>
     <div class="tree-game">
-      <div class="tree-stage" id="treeStage">
-        <div class="tree-sky" id="treeSky">☀️</div>
-        <div class="tree-svg-wrap" id="treeSvgWrap">
-          <svg class="tree-svg" viewBox="0 0 320 280" id="treeSvg" xmlns="http://www.w3.org/2000/svg">
-            <!-- canopy layers (grow with stage) -->
-            <ellipse class="tr-canopy3" id="canopy3" cx="160" cy="120" rx="0" ry="0" fill="#16a34a"/>
-            <ellipse class="tr-canopy2" id="canopy2" cx="160" cy="120" rx="0" ry="0" fill="#22c55e"/>
-            <ellipse class="tr-canopy" id="canopy" cx="160" cy="120" rx="0" ry="0" fill="#4ade80"/>
-            <!-- trunk (grows taller) -->
-            <rect class="tr-trunk" id="trunk" x="150" y="250" width="20" height="0" rx="6" fill="#92400e"/>
-            <!-- coins in tree (appear at high stages) -->
-            <text class="tr-coin" id="coin1" x="120" y="110" font-size="22">🪙</text>
-            <text class="tr-coin" id="coin2" x="185" y="95" font-size="22">🪙</text>
-            <text class="tr-coin" id="coin3" x="155" y="140" font-size="22">🪙</text>
-          </svg>
+
+      <!-- SEED SELECT screen -->
+      <div class="tree-seed-select" id="treeSeedSelect">
+        <div class="tss-title">Plant your money seed! 🌱</div>
+        <div class="tss-sub">How much do you want to start with? A bigger seed grows into a bigger tree!</div>
+        <div class="seed-grid" id="seedGrid">
+          <button class="seed-opt" data-seed="5" onclick="pickSeed(5)"><span class="seed-em">🌰</span><span class="seed-amt">$5</span><span class="seed-lbl">Small seed</span></button>
+          <button class="seed-opt" data-seed="10" onclick="pickSeed(10)"><span class="seed-em">🌱</span><span class="seed-amt">$10</span><span class="seed-lbl">Medium seed</span></button>
+          <button class="seed-opt" data-seed="20" onclick="pickSeed(20)"><span class="seed-em">🌿</span><span class="seed-amt">$20</span><span class="seed-lbl">Big seed</span></button>
         </div>
-        <div class="tree-ground"><div class="tree-grass"></div></div>
+        <button class="tree-done-btn" id="plantBtn" onclick="plantTree()" style="max-width:320px;margin:1.25rem auto 0;opacity:.4;pointer-events:none">Pick a seed to plant! ⬆️</button>
       </div>
 
-      <div class="tree-hud">
-        <div class="th-item"><div class="th-label">🌳 Tree Value</div><div class="th-val" id="treeVal">$10</div></div>
-        <div class="th-div"></div>
-        <div class="th-item"><div class="th-label">📅 Year</div><div class="th-val year" id="treeYear">1</div></div>
-        <div class="th-div"></div>
-        <div class="th-item"><div class="th-label">🍎 Picked</div><div class="th-val picked" id="treePicked">$0</div></div>
-      </div>
-
-      <div class="tree-grow-note" id="treeNote">You planted a $10 seed! Water it to make it grow. 🌱</div>
-
-      <div id="treeControls">
-        <div class="tree-actions">
-          <button class="tree-btn water" onclick="treeWater()">💧 Water It<span class="tb-sub">Save &amp; let it grow</span></button>
-          <button class="tree-btn pick" onclick="treePick()">🍎 Pick Fruit<span class="tb-sub">Spend some now</span></button>
+      <!-- GAME (hidden until planted) -->
+      <div id="treeGamePlay" style="display:none">
+        <div class="tree-stage" id="treeStage">
+          <div class="tree-sky" id="treeSky">☀️</div>
+          <div class="tree-svg-wrap" id="treeSvgWrap">
+            <svg class="tree-svg" viewBox="0 0 320 280" id="treeSvg" xmlns="http://www.w3.org/2000/svg">
+              <!-- golden glow (max stage) -->
+              <circle class="tr-glow" id="treeGlow" cx="160" cy="95" r="120" fill="url(#glowGrad)"/>
+              <defs><radialGradient id="glowGrad"><stop offset="0%" stop-color="rgba(253,224,71,.5)"/><stop offset="100%" stop-color="rgba(253,224,71,0)"/></radialGradient></defs>
+              <!-- canopy layers (grow with stage) -->
+              <ellipse class="tr-canopy3" id="canopy3" cx="160" cy="120" rx="0" ry="0" fill="#16a34a"/>
+              <ellipse class="tr-canopy2" id="canopy2" cx="160" cy="120" rx="0" ry="0" fill="#22c55e"/>
+              <ellipse class="tr-canopy" id="canopy" cx="160" cy="120" rx="0" ry="0" fill="#4ade80"/>
+              <!-- trunk (grows taller) -->
+              <rect class="tr-trunk" id="trunk" x="150" y="250" width="20" height="0" rx="6" fill="#92400e"/>
+              <!-- treehouse ($100 milestone) -->
+              <text class="tr-house" id="treeHouse" x="138" y="145" font-size="26">🏠</text>
+              <!-- bird ($50 milestone) -->
+              <text class="tr-bird" id="treeBird" x="95" y="80" font-size="20">🐦</text>
+              <!-- coins in tree (appear at high stages) -->
+              <text class="tr-coin" id="coin1" x="120" y="110" font-size="22">🪙</text>
+              <text class="tr-coin" id="coin2" x="185" y="95" font-size="22">🪙</text>
+              <text class="tr-coin" id="coin3" x="155" y="140" font-size="22">🪙</text>
+            </svg>
+          </div>
+          <div class="tree-ground"><div class="tree-grass"></div></div>
         </div>
-        <button class="tree-done-btn" onclick="treeFinish()">I'm done — how did I do? →</button>
-      </div>
 
-      <div class="tree-finale" id="treeFinale">
-        <div class="tf-em" id="tfEm">🌳</div>
-        <div class="tf-title" id="tfTitle">Your Tree Grew!</div>
-        <div class="tf-worth" id="tfWorth">$10</div>
-        <div class="tf-msg" id="tfMsg"></div>
-        <button class="tree-replay" onclick="treeReset()">Plant a New Tree 🌱</button>
+        <div class="tree-hud">
+          <div class="th-item"><div class="th-label">🌳 Tree Value</div><div class="th-val" id="treeVal">$10</div></div>
+          <div class="th-div"></div>
+          <div class="th-item"><div class="th-label">📅 Year</div><div class="th-val year" id="treeYear">1</div></div>
+          <div class="th-div"></div>
+          <div class="th-item"><div class="th-label">🍎 Picked</div><div class="th-val picked" id="treePicked">$0</div></div>
+        </div>
+
+        <div class="tree-weather" id="treeWeather"><span class="tw-em">☀️</span> <span id="treeWeatherTxt">Sunny year — great for growing!</span></div>
+
+        <div class="tree-grow-note" id="treeNote">Water your tree to make it grow! 🌱</div>
+
+        <div class="tree-milestone" id="treeMilestone"></div>
+
+        <!-- temptation (occasional) -->
+        <div class="temptation-card" id="treeTemptation">
+          <div class="tc-title" id="tcTitle">🎮 A shiny new toy appeared!</div>
+          <div class="tc-btns">
+            <button class="tc-buy" onclick="temptationBuy()">🍎 Pick fruit to buy it</button>
+            <button class="tc-skip" onclick="temptationSkip()">💧 Skip — keep growing</button>
+          </div>
+        </div>
+
+        <div id="treeControls">
+          <div style="text-align:center;font-size:.8rem;font-weight:700;color:#64748b;margin-bottom:.4rem">💧 How much to water this year?</div>
+          <div class="water-choices">
+            <button class="water-btn" onclick="treeWater(1)"><span class="wb-drops">💧</span><span class="wb-amt">$1</span><span class="wb-lbl">a little</span></button>
+            <button class="water-btn" onclick="treeWater(5)"><span class="wb-drops">💧💧</span><span class="wb-amt">$5</span><span class="wb-lbl">some</span></button>
+            <button class="water-btn" onclick="treeWater(10)"><span class="wb-drops">💧💧💧</span><span class="wb-amt">$10</span><span class="wb-lbl">a lot!</span></button>
+          </div>
+          <div class="tree-actions" style="margin-top:.3rem">
+            <button class="tree-btn pick" onclick="treePick()">🍎 Pick Fruit<span class="tb-sub">Spend some now</span></button>
+          </div>
+          <button class="tree-done-btn" onclick="treeFinish()">I'm done — how did I do? →</button>
+        </div>
+
+        <div class="tree-finale" id="treeFinale">
+          <div class="tf-em" id="tfEm">🌳</div>
+          <div class="tf-title" id="tfTitle">Your Tree Grew!</div>
+          <div class="tf-worth" id="tfWorth">$10</div>
+          <div class="tf-msg" id="tfMsg"></div>
+          <div class="tf-reveal" id="tfReveal">
+            <div style="font-size:.85rem;opacity:.9">🔮 If you kept this up until you’re a grown-up (age 30)...</div>
+            <div class="tf-reveal-big" id="tfRevealBig">$0</div>
+            <div style="font-size:.82rem;opacity:.9">That’s the magic of letting money grow for a long, long time!</div>
+          </div>
+          <button class="tree-replay" onclick="treeReset()">Plant a New Tree 🌱</button>
+        </div>
       </div>
     </div>
     <div class="k-tip" style="margin-top:1.5rem"><span class="pt-ic">👨‍👩‍👧</span><div><b>For grown-ups:</b> This is <b>compound growth</b> — the engine behind all investing. The tree grows faster the bigger it gets, because each year's growth builds on all the years before. Waiting is the superpower: the money that grows the most is the money left alone the longest. It's the same math as the grown-up <a href="compound-interest.html">Compound Interest calculator</a>.</div></div>
@@ -741,23 +828,39 @@ var GOALS = [
 var goalPicked = null;
 function renderGoals(){
   var g = document.getElementById('goalPick');
-  g.innerHTML = GOALS.map(function(it,i){
+  var html = GOALS.map(function(it,i){
     return '<button class="goal-opt" data-i="'+i+'" onclick="pickGoal('+i+')"><span class="go-em">'+it[0]+'</span><span class="go-lbl">'+it[1]+'</span></button>';
   }).join('');
+  // "Something else" custom tile
+  html += '<button class="goal-opt" data-i="other" onclick="pickGoalOther()"><span class="go-em">✏️</span><span class="go-lbl">Something else</span></button>';
+  g.innerHTML = html;
 }
+var goalCustom = false;
 function pickGoal(i){
-  goalPicked = i;
+  goalPicked = i; goalCustom = false;
   var opts = document.querySelectorAll('#goalPick .goal-opt');
-  opts.forEach(function(o){ o.classList.toggle('picked', +o.dataset.i===i); });
+  opts.forEach(function(o){ o.classList.toggle('picked', o.dataset.i===String(i)); });
+  document.getElementById('goalOtherWrap').style.display = 'none';
+  calcGoal();
+}
+function pickGoalOther(){
+  goalPicked = 'other'; goalCustom = true;
+  var opts = document.querySelectorAll('#goalPick .goal-opt');
+  opts.forEach(function(o){ o.classList.toggle('picked', o.dataset.i==='other'); });
+  document.getElementById('goalOtherWrap').style.display = 'block';
+  document.getElementById('goalOtherInput').focus();
   calcGoal();
 }
 function calcGoal(){
   var price = parseFloat((document.getElementById('goalPrice').value||'').replace(/[^0-9.]/g,''))||0;
   var weekly = parseFloat((document.getElementById('goalWeekly').value||'').replace(/[^0-9.]/g,''))||0;
   var res = document.getElementById('goalResult');
-  if(goalPicked===null || price<=0 || weekly<=0){ res.classList.remove('show'); return; }
+  var customName = (document.getElementById('goalOtherInput').value||'').trim();
+  var haveGoal = goalPicked!==null && (!goalCustom || customName.length>0);
+  if(!haveGoal || price<=0 || weekly<=0){ res.classList.remove('show'); return; }
   var weeks = Math.ceil(price/weekly);
-  document.getElementById('goalName').textContent = GOALS[goalPicked][1];
+  var goalLabel = goalCustom ? customName : GOALS[goalPicked][1];
+  document.getElementById('goalName').textContent = goalLabel;
   document.getElementById('goalWeeks').textContent = weeks;
   document.getElementById('goalBar').style.width = Math.min(100, (weekly/price*100)) + '%';
   var msg = '';
@@ -852,45 +955,75 @@ function renderJars(){
 // init
 renderInterests(); updateGoBtn(); renderBiz();
 
-// ===== MONEY TREE (showcase game) =====
-var treeState = { value: 10, year: 1, picked: 0, watered: 0, plays: 0 };
+// ===== MONEY TREE 2.0 (showcase game) =====
+var treeState = { value: 10, year: 1, picked: 0, seed: 10, totalWatered: 0, milestones: {}, plays: 0 };
+var treeSeedPick = null;
+var TREE_MAX_YEARS = 12;
 
-function treeStageFor(v){
-  if(v < 15) return 0;      // seed/sprout
-  if(v < 25) return 1;      // sapling
-  if(v < 45) return 2;      // young tree
-  if(v < 80) return 3;      // big tree
-  return 4;                 // giant golden tree
+// Weather types: multiplier + label + class
+var WEATHER = [
+  {em:'☀️', mult:1.30, txt:'Sunny year — great for growing!', cls:'sunny', w:3},
+  {em:'🌤️', mult:1.20, txt:'Nice weather — steady growth.', cls:'sunny', w:4},
+  {em:'☁️', mult:1.12, txt:'Cloudy year — a bit slower.', cls:'cloudy', w:2},
+  {em:'⛈️', mult:1.05, txt:'Stormy year — but your tree held on!', cls:'stormy', w:1}
+];
+var curWeather = WEATHER[1];
+
+function rollWeather(){
+  // weighted random
+  var pool = [];
+  WEATHER.forEach(function(wx){ for(var i=0;i<wx.w;i++) pool.push(wx); });
+  curWeather = pool[Math.floor(Math.random()*pool.length)];
+  var el = document.getElementById('treeWeather');
+  el.className = 'tree-weather ' + curWeather.cls;
+  el.querySelector('.tw-em').textContent = curWeather.em;
+  document.getElementById('treeWeatherTxt').textContent = curWeather.txt;
+  document.getElementById('treeSky').textContent = curWeather.em;
 }
 
-// Visual specs per stage: trunk height/y, three canopy layers (rx, ry, cy)
+function pickSeed(amt){
+  treeSeedPick = amt;
+  document.querySelectorAll('#seedGrid .seed-opt').forEach(function(o){
+    o.classList.toggle('picked', +o.dataset.seed===amt);
+  });
+  var btn = document.getElementById('plantBtn');
+  btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
+  btn.textContent = 'Plant my $' + amt + ' seed! 🌱';
+}
+function plantTree(){
+  if(treeSeedPick===null) return;
+  treeState = { value: treeSeedPick, year: 1, picked: 0, seed: treeSeedPick, totalWatered: treeSeedPick, milestones: {}, plays: treeState.plays };
+  document.getElementById('treeSeedSelect').style.display = 'none';
+  document.getElementById('treeGamePlay').style.display = 'block';
+  document.getElementById('treeFinale').classList.remove('show');
+  document.getElementById('treeControls').style.display = 'block';
+  rollWeather();
+  renderTree(false);
+  showTreeNote('You planted a $' + treeSeedPick + ' seed! Water it every year to grow it big. 🌱');
+}
+
+function treeStageFor(v){
+  if(v < 20) return 0;
+  if(v < 40) return 1;
+  if(v < 80) return 2;
+  if(v < 150) return 3;
+  return 4;
+}
 var TREE_VIS = [
-  // stage 0: tiny sprout
-  { trunkH:30, trunkY:220, c1:{rx:14,ry:16,cy:205}, c2:{rx:0,ry:0,cy:205}, c3:{rx:0,ry:0,cy:205}, coins:0, sky:'☀️' },
-  // stage 1: sapling
-  { trunkH:70, trunkY:180, c1:{rx:38,ry:40,cy:150}, c2:{rx:22,ry:24,cy:140}, c3:{rx:0,ry:0,cy:140}, coins:0, sky:'☀️' },
-  // stage 2: young tree
-  { trunkH:110, trunkY:140, c1:{rx:62,ry:60,cy:110}, c2:{rx:46,ry:46,cy:95}, c3:{rx:26,ry:28,cy:85}, coins:0, sky:'🌤️' },
-  // stage 3: big leafy tree
-  { trunkH:140, trunkY:110, c1:{rx:90,ry:80,cy:95}, c2:{rx:70,ry:64,cy:78}, c3:{rx:46,ry:46,cy:66}, coins:1, sky:'🌈' },
-  // stage 4: giant golden tree dropping coins
-  { trunkH:160, trunkY:90, c1:{rx:115,ry:98,cy:88}, c2:{rx:92,ry:80,cy:70}, c3:{rx:64,ry:60,cy:58}, coins:3, sky:'✨' }
+  { trunkH:30, trunkY:220, c1:{rx:14,ry:16,cy:205}, c2:{rx:0,ry:0,cy:205}, c3:{rx:0,ry:0,cy:205}, coins:0 },
+  { trunkH:70, trunkY:180, c1:{rx:38,ry:40,cy:150}, c2:{rx:22,ry:24,cy:140}, c3:{rx:0,ry:0,cy:140}, coins:0 },
+  { trunkH:110, trunkY:140, c1:{rx:62,ry:60,cy:110}, c2:{rx:46,ry:46,cy:95}, c3:{rx:26,ry:28,cy:85}, coins:0 },
+  { trunkH:140, trunkY:110, c1:{rx:90,ry:80,cy:95}, c2:{rx:70,ry:64,cy:78}, c3:{rx:46,ry:46,cy:66}, coins:1 },
+  { trunkH:160, trunkY:90, c1:{rx:115,ry:98,cy:88}, c2:{rx:92,ry:80,cy:70}, c3:{rx:64,ry:60,cy:58}, coins:3 }
 ];
 
 function renderTree(animateCoins){
   var stage = treeStageFor(treeState.value);
   var v = TREE_VIS[stage];
-  // trunk
   var trunk = document.getElementById('trunk');
-  trunk.setAttribute('height', v.trunkH);
-  trunk.setAttribute('y', v.trunkY);
-  // canopies
-  function setC(id, spec, baseColor){
-    var el = document.getElementById(id);
-    el.setAttribute('rx', spec.rx); el.setAttribute('ry', spec.ry); el.setAttribute('cy', spec.cy);
-  }
+  trunk.setAttribute('height', v.trunkH); trunk.setAttribute('y', v.trunkY);
+  function setC(id, spec){ var el=document.getElementById(id); el.setAttribute('rx',spec.rx); el.setAttribute('ry',spec.ry); el.setAttribute('cy',spec.cy); }
   setC('canopy', v.c1); setC('canopy2', v.c2); setC('canopy3', v.c3);
-  // golden tint at max stage
   if(stage===4){
     document.getElementById('canopy').setAttribute('fill','#fde047');
     document.getElementById('canopy2').setAttribute('fill','#facc15');
@@ -900,75 +1033,120 @@ function renderTree(animateCoins){
     document.getElementById('canopy2').setAttribute('fill','#22c55e');
     document.getElementById('canopy3').setAttribute('fill','#16a34a');
   }
-  // coins in tree
-  ['coin1','coin2','coin3'].forEach(function(id,i){
-    document.getElementById(id).classList.toggle('show', i < v.coins);
-  });
-  // sky
-  document.getElementById('treeSky').textContent = v.sky;
+  ['coin1','coin2','coin3'].forEach(function(id,i){ document.getElementById(id).classList.toggle('show', i < v.coins); });
+  // milestone visuals
+  document.getElementById('treeBird').classList.toggle('show', treeState.value>=50);
+  document.getElementById('treeHouse').classList.toggle('show', treeState.value>=100);
+  document.getElementById('treeGlow').classList.toggle('show', treeState.value>=250);
   // HUD
   document.getElementById('treeVal').textContent = '$' + Math.round(treeState.value);
   document.getElementById('treeYear').textContent = treeState.year;
   document.getElementById('treePicked').textContent = '$' + Math.round(treeState.picked);
-  // falling coins animation when watering pays off at high stages
   if(animateCoins && stage>=3){ dropCoin(); }
 }
 
 function dropCoin(){
   var wrap = document.getElementById('treeSvgWrap');
-  for(var i=0;i<3;i++){
-    (function(n){
-      setTimeout(function(){
-        var c = document.createElement('div');
-        c.className = 'coin-fall';
-        c.textContent = '🪙';
-        c.style.left = (35 + Math.random()*45) + '%';
-        c.style.top = (20 + Math.random()*20) + '%';
-        wrap.appendChild(c);
-        setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); }, 1300);
-      }, n*180);
-    })(i);
+  for(var i=0;i<3;i++){(function(n){setTimeout(function(){
+    var c=document.createElement('div'); c.className='coin-fall'; c.textContent='🪙';
+    c.style.left=(35+Math.random()*45)+'%'; c.style.top=(20+Math.random()*20)+'%';
+    wrap.appendChild(c); setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); },1300);
+  },n*180);})(i);}
+}
+function showTreeNote(txt){ var n=document.getElementById('treeNote'); n.textContent=txt; n.classList.add('show'); }
+
+function checkMilestone(before){
+  var marks = [
+    {v:50, msg:'🐦 $50! A little bird came to visit your tree!'},
+    {v:100, msg:'🏠 $100! Your tree is big enough for a treehouse!'},
+    {v:250, msg:'🌟 $250! Your tree is glowing golden — amazing!'}
+  ];
+  for(var i=0;i<marks.length;i++){
+    if(before < marks[i].v && treeState.value >= marks[i].v && !treeState.milestones[marks[i].v]){
+      treeState.milestones[marks[i].v] = true;
+      var m = document.getElementById('treeMilestone');
+      m.textContent = marks[i].msg; m.classList.add('show');
+      return;
+    }
   }
 }
 
-function showTreeNote(txt){
-  var n = document.getElementById('treeNote');
-  n.textContent = txt;
-  n.classList.add('show');
+function advanceYear(){
+  treeState.year++;
+  rollWeather();
+  document.getElementById('treeMilestone').classList.remove('show');
+  maybeTempt();
+  if(treeState.year > TREE_MAX_YEARS){ treeFinish(); }
 }
 
-function treeWater(){
+function treeWater(amount){
   var before = treeState.value;
-  treeState.value = treeState.value * 1.20;  // 20% compound growth
-  treeState.year++;
-  treeState.watered++;
+  // grow by weather multiplier, then add the watering contribution
+  treeState.value = treeState.value * curWeather.mult + amount;
+  treeState.totalWatered += amount;
   var grew = Math.round(treeState.value - before);
   renderTree(true);
-  showTreeNote('💧 You watered it! It grew by $' + grew + ' this year — just from waiting! 🌱');
-  checkTreeAuto();
+  var wtxt = curWeather.mult >= 1.25 ? 'The sunny weather helped a lot! ' : (curWeather.mult <= 1.08 ? 'Even in rough weather, it grew! ' : '');
+  showTreeNote('💧 You added $' + amount + ' and it grew by $' + grew + ' this year! ' + wtxt + '🌱');
+  checkMilestone(before);
+  advanceYear();
 }
 
 function treePick(){
-  if(treeState.value <= 10){
+  if(treeState.value <= treeState.seed){
     showTreeNote('🍎 Your tree is too little to pick fruit yet — water it first to help it grow!');
     return;
   }
-  var taken = treeState.value * 0.30;  // pick 30% as spending
+  var before = treeState.value;
+  var taken = treeState.value * 0.30;
   treeState.value = treeState.value - taken;
   treeState.picked += taken;
-  treeState.year++;
   renderTree(false);
   showTreeNote('🍎 You picked $' + Math.round(taken) + ' of fruit to spend! Yum — but your tree got smaller.');
-  checkTreeAuto();
+  advanceYear();
 }
 
-function checkTreeAuto(){
-  // gently wrap up after 12 years
-  if(treeState.year > 12){ treeFinish(); }
+// Temptations (occasional)
+var TEMPTATIONS = [
+  '🎮 A shiny new video game appeared!',
+  '🍬 A giant candy jar is on sale!',
+  '🧸 A cute new toy is calling your name!',
+  '🎨 A fancy art set just came out!',
+  '⚽ A cool new ball at the store!'
+];
+var temptActive = false;
+function maybeTempt(){
+  // ~30% chance once tree has some value, not on final year
+  if(treeState.value >= treeState.seed*1.5 && treeState.year <= TREE_MAX_YEARS && Math.random() < 0.3){
+    temptActive = true;
+    document.getElementById('tcTitle').textContent = TEMPTATIONS[Math.floor(Math.random()*TEMPTATIONS.length)];
+    document.getElementById('treeTemptation').classList.add('show');
+    document.getElementById('treeControls').style.display = 'none';
+  }
+}
+function temptationBuy(){
+  document.getElementById('treeTemptation').classList.remove('show');
+  document.getElementById('treeControls').style.display = 'block';
+  temptActive = false;
+  // picking fruit to buy it
+  var before = treeState.value;
+  var taken = treeState.value * 0.30;
+  treeState.value -= taken; treeState.picked += taken;
+  renderTree(false);
+  showTreeNote('🍎 You picked $' + Math.round(taken) + ' to buy it! Fun now — but your tree shrank a bit.');
+  // buying doesn't advance an extra year (it replaces this year's action)
+  advanceYear();
+}
+function temptationSkip(){
+  document.getElementById('treeTemptation').classList.remove('show');
+  document.getElementById('treeControls').style.display = 'block';
+  temptActive = false;
+  showTreeNote('💪 You skipped the treat and kept your tree growing — smart Saver move! 🌱');
 }
 
 function treeFinish(){
   document.getElementById('treeControls').style.display = 'none';
+  document.getElementById('treeTemptation').classList.remove('show');
   var fin = document.getElementById('treeFinale');
   var stage = treeStageFor(treeState.value);
   var val = Math.round(treeState.value);
@@ -976,32 +1154,38 @@ function treeFinish(){
   var em, title, msg;
   if(stage >= 4){
     em='🌳✨'; title='WOW! A Giant Money Tree!';
-    msg='You were super patient and kept watering — so your tree grew HUGE! This is the magic of saving: the longer you leave your money to grow, the bigger it gets all by itself. You\u2019re a natural! 🌟';
+    msg='You were super patient and kept watering — so your tree grew HUGE! This is the magic of saving: the longer you leave your money to grow, the bigger it gets all by itself. You\\u2019re a natural! 🌟';
   } else if(stage >= 2){
     em='🌳'; title='Your Tree Grew Big!';
     msg = (picked>0)
-      ? 'Nice work! You watered it a lot AND picked some fruit to enjoy ($' + picked + ' worth). Balancing saving and spending is a great skill. Try watering even longer next time to grow a GIANT tree! 🌱'
-      : 'Great job watering your tree and letting it grow! The longer you wait, the faster it grows. Keep going next time and watch it get even bigger! 🌟';
+      ? 'Nice work! You watered it AND picked some fruit to enjoy ($' + picked + ' worth). Balancing saving and spending is a great skill. Try watering more next time to grow a GIANT tree! 🌱'
+      : 'Great job watering your tree and letting it grow! The longer you wait, the faster it grows. Keep going next time to get even bigger! 🌟';
   } else {
     em='🌿'; title='A Little Sprout!';
-    msg='You picked lots of fruit early — that\u2019s fun, but your tree stayed small! Here\u2019s the secret: if you water it and wait, it grows faster and faster on its own. Try planting again and water more! 💧';
+    msg='You picked lots of fruit early — fun, but your tree stayed small! The secret: water it and wait, and it grows faster and faster on its own. Try again and water more! 💧';
   }
   document.getElementById('tfEm').textContent = em;
   document.getElementById('tfTitle').textContent = title;
   document.getElementById('tfWorth').textContent = '$' + val + (picked>0 ? '  (+ $'+picked+' picked)' : '');
   document.getElementById('tfMsg').textContent = msg;
+  // GROWN-UP REVEAL: project forward ~18 more years at ~15%/yr (kid-friendly steady rate)
+  var future = treeState.value;
+  for(var yr=0; yr<18; yr++){ future = future * 1.15; }
+  document.getElementById('tfRevealBig').textContent = '$' + Math.round(future).toLocaleString();
   fin.classList.add('show');
 }
 
 function treeReset(){
-  treeState = { value: 10, year: 1, picked: 0, watered: 0, plays: treeState.plays+1 };
+  treeState = { value: 10, year: 1, picked: 0, seed: 10, totalWatered: 0, milestones: {}, plays: treeState.plays+1 };
+  treeSeedPick = null;
   document.getElementById('treeFinale').classList.remove('show');
-  document.getElementById('treeControls').style.display = 'block';
+  document.getElementById('treeGamePlay').style.display = 'none';
+  document.getElementById('treeSeedSelect').style.display = 'block';
+  document.getElementById('treeMilestone').classList.remove('show');
   document.getElementById('treeNote').classList.remove('show');
-  renderTree(false);
-  setTimeout(function(){ showTreeNote('You planted a fresh $10 seed! Water it to make it grow. 🌱'); }, 100);
+  document.querySelectorAll('#seedGrid .seed-opt').forEach(function(o){ o.classList.remove('picked'); });
+  var btn=document.getElementById('plantBtn'); btn.style.opacity='.4'; btn.style.pointerEvents='none'; btn.textContent='Pick a seed to plant! ⬆️';
 }
-
 
 
 // ===== MONEY HERO (capstone) =====
@@ -1142,7 +1326,7 @@ function resetHero(){
 }
 
 
-renderGoals(); startNW(); renderJars(); renderTree(false); renderAvatars();
+renderGoals(); startNW(); renderJars(); renderAvatars();
 document.getElementById('goBtn').addEventListener('click', showStocks);
 
 </script>
