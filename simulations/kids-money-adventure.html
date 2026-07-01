@@ -365,6 +365,98 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
 .tr-bird,.tr-house,.tr-glow{opacity:0;transition:opacity .5s}
 .tr-bird.show,.tr-house.show,.tr-glow.show{opacity:1}
 
+/* ===== Money Hero 2.0 — Money City ===== */
+/* Game pill on tabs */
+.game-pill{display:inline-block;background:linear-gradient(135deg,#8b5cf6,#6366f1);color:#fff;font-size:.58rem;font-weight:800;padding:.1rem .35rem;border-radius:5px;margin-left:.35rem;vertical-align:middle;letter-spacing:.03em}
+/* Cape color themes (set via inline var --cape) */
+.h2-screen{display:none}
+.h2-screen.show{display:block;animation:fadeUp .35s}
+/* Hero card */
+.hero-card{background:linear-gradient(135deg,var(--cape,#0EA5A0),#0f2338);border-radius:20px;padding:1.1rem 1.25rem;color:#fff;display:flex;align-items:center;gap:1rem;box-shadow:0 12px 30px rgba(11,25,41,.3);position:relative;overflow:hidden}
+.hero-card::after{content:"";position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hc-avatar{font-size:2.8rem;line-height:1;position:relative;z-index:1}
+.hc-info{flex:1;position:relative;z-index:1;min-width:0}
+.hc-name{font-family:"Playfair Display",serif;font-size:1.2rem;font-weight:800;line-height:1.1}
+.hc-level{font-size:.75rem;opacity:.9;font-weight:700;margin-top:.1rem}
+.hc-xp-track{background:rgba(255,255,255,.25);border-radius:99px;height:8px;margin-top:.4rem;overflow:hidden}
+.hc-xp-fill{background:#fff;height:100%;border-radius:99px;width:0;transition:width .6s}
+.hc-powers{display:flex;gap:.3rem;margin-top:.5rem}
+.hc-power-dot{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:.85rem;filter:grayscale(1);opacity:.5;transition:all .3s}
+.hc-power-dot.on{filter:none;opacity:1;background:rgba(255,255,255,.35)}
+/* Creation */
+.h2c-title{font-family:"Playfair Display",serif;font-size:1.3rem;font-weight:700;color:#1e293b;text-align:center;margin-bottom:.3rem}
+.h2c-sub{font-size:.83rem;color:#64748b;text-align:center;margin-bottom:1rem}
+.h2c-section{margin-bottom:1.1rem}
+.h2c-label{font-size:.8rem;font-weight:800;color:#475569;margin-bottom:.5rem;text-align:center}
+.cape-row{display:flex;justify-content:center;gap:.6rem}
+.cape-opt{width:2.6rem;height:2.6rem;border-radius:50%;border:3px solid #fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15);transition:transform .18s}
+.cape-opt:hover{transform:scale(1.1)}
+.cape-opt.picked{box-shadow:0 0 0 3px #1e293b;transform:scale(1.12)}
+/* City map */
+.city-header{text-align:center;margin:1rem 0 .75rem}
+.city-title{font-family:"Playfair Display",serif;font-size:1.35rem;font-weight:800;color:#1e293b}
+.city-sub{font-size:.82rem;color:#64748b}
+.city-map{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1rem}
+.city-loc{background:#fff;border:2px solid #e2e8f0;border-radius:18px;padding:1.1rem .85rem;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+.city-loc:hover{border-color:#0EA5A0;transform:translateY(-3px);box-shadow:0 10px 24px rgba(14,165,160,.18)}
+.city-loc.done{border-color:#22c55e;background:linear-gradient(135deg,#f0fdf4,#fff)}
+.city-loc.done::after{content:"✓";position:absolute;top:.5rem;right:.6rem;width:24px;height:24px;background:#22c55e;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800}
+.city-loc.locked{opacity:.5;cursor:not-allowed}
+.cl-icon{font-size:2.6rem;line-height:1;margin-bottom:.35rem}
+.cl-name{font-weight:800;font-size:.9rem;color:#1e293b}
+.cl-power{font-size:.7rem;color:#64748b;margin-top:.15rem}
+.cl-status{font-size:.68rem;font-weight:700;margin-top:.3rem}
+.city-loc.done .cl-status{color:#16a34a}
+.city-loc:not(.done):not(.locked) .cl-status{color:#0EA5A0}
+.boss-tower{background:linear-gradient(135deg,#7c3aed,#4c1d95);border:2px solid #a78bfa;border-radius:20px;padding:1.25rem;text-align:center;color:#fff;margin-top:.9rem;cursor:pointer;transition:all .2s}
+.boss-tower:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,58,237,.4)}
+.boss-tower.locked{opacity:.5;cursor:not-allowed;filter:grayscale(.6)}
+.bt-icon{font-size:2.5rem;line-height:1}
+.bt-title{font-weight:800;font-size:1.05rem;margin:.25rem 0}
+.bt-sub{font-size:.75rem;opacity:.9}
+/* Quest */
+.quest-loc-head{text-align:center;background:linear-gradient(135deg,var(--cape,#0EA5A0),#0f2338);border-radius:16px;padding:1rem;color:#fff;margin-bottom:1rem}
+.qlh-icon{font-size:2.5rem;line-height:1}
+.qlh-name{font-family:"Playfair Display",serif;font-size:1.2rem;font-weight:800;margin-top:.2rem}
+.qlh-story{font-size:.8rem;opacity:.92;margin-top:.3rem;line-height:1.4}
+.quest-progress{display:flex;justify-content:center;gap:.4rem;margin-bottom:1rem}
+.qp-dot{width:12px;height:12px;border-radius:50%;background:#e2e8f0;transition:all .3s}
+.qp-dot.done{background:#22c55e}
+.qp-dot.current{background:#0EA5A0;transform:scale(1.3)}
+.q-icon{font-size:3rem;text-align:center;line-height:1;margin-bottom:.5rem}
+.q-question{font-family:"Playfair Display",serif;font-size:1.2rem;font-weight:700;color:#1e293b;text-align:center;line-height:1.35;margin-bottom:1.1rem;max-width:440px;margin-left:auto;margin-right:auto}
+.q-options{display:grid;gap:.65rem;max-width:440px;margin:0 auto}
+.q-opt{background:#fff;border:2px solid #e2e8f0;border-radius:14px;padding:.95rem 1.1rem;font-size:.94rem;font-weight:600;color:#334155;cursor:pointer;text-align:left;transition:all .18s;font-family:inherit;line-height:1.4}
+.q-opt:hover{border-color:#0EA5A0;transform:translateY(-1px)}
+.q-opt.correct{border-color:#22c55e;background:#dcfce7;color:#166534}
+.q-opt.wrong{border-color:#fca5a5;background:#fee2e2;color:#991b1b}
+.q-opt:disabled{cursor:default}
+.q-feedback{max-width:440px;margin:1rem auto 0;border-radius:14px;padding:1rem 1.2rem;font-size:.9rem;line-height:1.5;font-weight:600;display:none}
+.q-feedback.show{display:block;animation:fadeUp .3s}
+.q-feedback.good{background:#dcfce7;border:2px solid #86efac;color:#166534}
+.q-next{display:block;margin:.9rem auto 0;background:linear-gradient(135deg,#0EA5A0,#3b82f6);color:#fff;border:none;border-radius:12px;padding:.75rem 2rem;font-weight:800;cursor:pointer;font-family:inherit}
+.xp-pop{text-align:center;color:#0C7D79;font-weight:800;font-size:.9rem;margin-top:.6rem;animation:fadeUp .4s}
+/* Level up toast */
+.levelup-toast{position:relative;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;border-radius:16px;padding:1rem 1.25rem;text-align:center;margin:1rem auto 0;max-width:400px;display:none}
+.levelup-toast.show{display:block;animation:heroPop .6s}
+.lt-title{font-weight:900;font-size:1.1rem;font-family:"Playfair Display",serif}
+.lt-sub{font-size:.82rem;opacity:.95}
+/* Boss */
+.boss-intro{text-align:center;background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:20px;padding:1.5rem;color:#fff;margin-bottom:1rem}
+.boss-intro .bi-icon{font-size:3.5rem;line-height:1}
+.boss-intro .bi-title{font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:900;margin:.3rem 0}
+.boss-intro .bi-story{font-size:.85rem;opacity:.95;line-height:1.5}
+.boss-money{text-align:center;font-weight:800;color:#7c3aed;font-size:1.1rem;margin-bottom:1rem}
+/* Finale */
+.h2-finale{display:none;text-align:center}
+.h2-finale.show{display:block;animation:fadeUp .5s}
+.legend-burst{background:linear-gradient(135deg,#f59e0b,#7c3aed);border-radius:24px;padding:2.25rem 1.5rem;color:#fff;position:relative;overflow:hidden}
+.lb-avatar{font-size:5rem;line-height:1;animation:heroFloat 2s ease-in-out infinite}
+.lb-crown{font-size:2rem;margin-top:-.5rem}
+.lb-title{font-family:"Playfair Display",serif;font-size:1.8rem;font-weight:900;margin:.5rem 0 .25rem}
+.lb-sub{font-size:1rem;opacity:.95;line-height:1.5;margin-bottom:1rem}
+.lb-card-mini{background:rgba(255,255,255,.18);border-radius:14px;padding:1rem;margin-top:1rem}
+
 </style>
 </head>
 <body>
@@ -391,8 +483,8 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
     <button class="k-tab" id="tabGoal" onclick="switchTab('goal')"><span class="t-emoji">🎯</span> Save For a Toy</button>
     <button class="k-tab" id="tabNW" onclick="switchTab('nw')"><span class="t-emoji">🛒</span> Needs or Wants?</button>
     <button class="k-tab" id="tabJars" onclick="switchTab('jars')"><span class="t-emoji">🫙</span> Save/Spend/Share</button>
-    <button class="k-tab" id="tabTree" onclick="switchTab('tree')"><span class="t-emoji">🌳</span> Money Tree</button>
-    <button class="k-tab" id="tabHero" onclick="switchTab('hero')"><span class="t-emoji">🦸</span> Money Hero</button>
+    <button class="k-tab" id="tabTree" onclick="switchTab('tree')"><span class="t-emoji">🌳</span> Money Tree<span class="game-pill">🎮 GAME</span></button>
+    <button class="k-tab" id="tabHero" onclick="switchTab('hero')"><span class="t-emoji">🦸</span> Money Hero<span class="game-pill">🎮 GAME</span></button>
   </div>
 
   <!-- INVEST PANEL -->
@@ -612,43 +704,92 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
 
   <!-- MONEY HERO PANEL (capstone) -->
   <div class="k-panel" id="panelHero">
-    <div class="step-title"><span class="num">🦸</span> Become a Money Hero!</div>
+    <div class="step-title"><span class="num">🦸</span> Money Hero: Money City Adventure!</div>
     <div class="hero-game">
 
-      <!-- STEP 1: Create your hero -->
-      <div class="hero-create" id="heroCreate">
-        <div class="hc-title">Pick your hero!</div>
-        <div class="avatar-grid" id="avatarGrid"></div>
-        <input type="text" class="hero-name-input" id="heroNameInput" maxlength="14" placeholder="Name your hero (optional)">
-        <button class="hero-start-btn" id="heroStartBtn" onclick="startHero()" disabled>Pick a hero to begin! ⬆️</button>
+      <!-- SCREEN 1: CREATE -->
+      <div class="h2-screen show" id="h2Create">
+        <div class="h2c-title">Create your Money Hero! 🦸</div>
+        <div class="h2c-sub">Design your hero, then explore Money City to earn your powers!</div>
+        <div class="h2c-section">
+          <div class="h2c-label">1. Pick your hero</div>
+          <div class="avatar-grid" id="h2AvatarGrid"></div>
+        </div>
+        <div class="h2c-section">
+          <div class="h2c-label">2. Pick your cape color</div>
+          <div class="cape-row" id="h2CapeRow"></div>
+        </div>
+        <div class="h2c-section">
+          <div class="h2c-label">3. Name your hero</div>
+          <input type="text" class="hero-name-input" id="h2NameInput" maxlength="14" placeholder="Type a hero name (optional)" style="display:block;margin:0 auto">
+        </div>
+        <button class="hero-start-btn" id="h2StartBtn" onclick="h2Start()" disabled>Pick a hero to begin! ⬆️</button>
       </div>
 
-      <!-- STEP 2: Hero HQ / power board -->
-      <div class="hero-hq" id="heroHQ" style="display:none">
-        <div class="hero-avatar-big" id="heroAvatarBig">🦸</div>
-        <div class="hero-name-display" id="heroNameDisplay">Money Hero</div>
-        <div class="hero-subtitle" id="heroSubtitle">Earn all 4 powers to become a true Money Hero!</div>
-        <div class="power-meter"><div class="power-meter-fill" id="powerMeter"></div></div>
-        <div class="powers-grid" id="powersGrid"></div>
+      <!-- SCREEN 2: CITY MAP -->
+      <div class="h2-screen" id="h2City">
+        <div class="hero-card" id="h2HeroCard">
+          <div class="hc-avatar" id="hcAvatar">🦸</div>
+          <div class="hc-info">
+            <div class="hc-name" id="hcName">Money Hero</div>
+            <div class="hc-level" id="hcLevel">⭐ Rookie · 0 XP</div>
+            <div class="hc-xp-track"><div class="hc-xp-fill" id="hcXpFill"></div></div>
+            <div class="hc-powers" id="hcPowers"></div>
+          </div>
+        </div>
+        <div class="city-header">
+          <div class="city-title">🏙️ Welcome to Money City!</div>
+          <div class="city-sub" id="citySub">Visit each place to earn a money power!</div>
+        </div>
+        <div class="city-map" id="cityMap"></div>
+        <div class="boss-tower locked" id="bossTower" onclick="h2StartBoss()">
+          <div class="bt-icon">🏰</div>
+          <div class="bt-title">The Big Money Day</div>
+          <div class="bt-sub" id="bossTowerSub">Earn all 4 powers to unlock the final challenge!</div>
+        </div>
       </div>
 
-      <!-- Challenge screen -->
-      <div class="hero-challenge" id="heroChallenge">
-        <div style="text-align:center"><span class="hch-badge" id="hchBadge">🛡️ Saver Challenge</span></div>
-        <div class="hch-icon" id="hchIcon">🛡️</div>
-        <div class="hch-q" id="hchQ">Question</div>
-        <div class="hch-options" id="hchOptions"></div>
-        <div class="hch-feedback" id="hchFeedback"></div>
+      <!-- SCREEN 3: QUEST -->
+      <div class="h2-screen" id="h2Quest">
+        <div class="quest-loc-head" id="questHead">
+          <div class="qlh-icon" id="qlhIcon">🏦</div>
+          <div class="qlh-name" id="qlhName">Savings Bank</div>
+          <div class="qlh-story" id="qlhStory">Story</div>
+        </div>
+        <div class="quest-progress" id="questProgress"></div>
+        <div class="q-icon" id="qIcon">🛡️</div>
+        <div class="q-question" id="qQuestion">Question</div>
+        <div class="q-options" id="qOptions"></div>
+        <div class="q-feedback" id="qFeedback"></div>
+        <div class="levelup-toast" id="levelupToast"><div class="lt-title" id="ltTitle">⭐ Level Up!</div><div class="lt-sub" id="ltSub"></div></div>
       </div>
 
-      <!-- Finale -->
-      <div class="hero-finale" id="heroFinale">
-        <div class="hf-burst">
-          <div class="hf-avatar" id="hfAvatar">🦸</div>
-          <div class="hf-cape">🦸‍♂️✨</div>
-          <div class="hf-title" id="hfTitle">You're a Money Hero!</div>
-          <div class="hf-sub" id="hfSub">You earned all 4 money powers!</div>
-          <div class="hf-powers"><span class="hf-power">🛡️</span><span class="hf-power">🧠</span><span class="hf-power">❤️</span><span class="hf-power">📈</span></div>
+      <!-- SCREEN 4: BOSS -->
+      <div class="h2-screen" id="h2Boss">
+        <div class="boss-intro" id="bossIntro">
+          <div class="bi-icon">🏰</div>
+          <div class="bi-title">The Big Money Day!</div>
+          <div class="bi-story">It's a big day! You have <b>$50</b> and lots of choices. Use ALL your hero powers to make smart money moves and save the day! 🦸</div>
+        </div>
+        <div class="boss-money" id="bossMoney">💰 Your money: $50</div>
+        <div class="quest-progress" id="bossProgress"></div>
+        <div class="q-icon" id="bossIcon">🛡️</div>
+        <div class="q-question" id="bossQuestion">Question</div>
+        <div class="q-options" id="bossOptions"></div>
+        <div class="q-feedback" id="bossFeedback"></div>
+      </div>
+
+      <!-- FINALE -->
+      <div class="h2-finale" id="h2Finale">
+        <div class="legend-burst">
+          <div class="lb-avatar" id="lbAvatar">🦸</div>
+          <div class="lb-crown">👑✨</div>
+          <div class="lb-title" id="lbTitle">You're a LEGEND!</div>
+          <div class="lb-sub" id="lbSub">You mastered every money power and saved the Big Money Day!</div>
+          <div class="lb-card-mini">
+            <div style="font-size:.8rem;opacity:.9;margin-bottom:.3rem">🎖️ Your Hero Powers</div>
+            <div style="font-size:1.6rem">🛡️ 🧠 ❤️ 📈</div>
+          </div>
         </div>
         <div class="hf-practice">
           <h4>🎮 Keep practicing your powers!</h4>
@@ -657,11 +798,13 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
           <button class="hf-practice-item" onclick="switchTab('jars')"><span class="hf-pi-icon">🫙</span> <span><b>Sharer</b> → Play Save/Spend/Share</span></button>
           <button class="hf-practice-item" onclick="switchTab('tree')"><span class="hf-pi-icon">🌳</span> <span><b>Investor</b> → Play Money Tree</span></button>
         </div>
-        <button class="hero-replay" onclick="resetHero()">Make a New Hero 🦸</button>
+        <button class="hero-replay" onclick="h2Reset()">Make a New Hero 🦸</button>
       </div>
 
     </div>
-    <div class="k-tip" style="margin-top:1.5rem"><span class="pt-ic">👨‍👩‍👧</span><div><b>For grown-ups:</b> Money Hero pulls together the four big money skills — <b>saving, spending wisely, sharing, and investing (letting money grow)</b>. Each challenge is a real decision kids face. There are no punishments for a "wrong" pick — every answer teaches. When your hero finishes, use the links to revisit the matching games and practice each power for real!</div></div>
+    <div class="k-tip" style="margin-top:1.5rem"><span class="pt-ic">👨‍👩‍👧</span><div><b>For grown-ups:</b> Money City turns the four big money skills — <b>saving, smart spending, sharing, and investing</b> — into an adventure. Your child designs a hero, then earns each power through short story challenges, levels up from Rookie to Legend, and finishes with a "big day" where they use every power together. There are no punishments for a "wrong" pick — every answer teaches. Afterward, the links revisit the matching games to practice each power for real!</div></div>
+
+  
   </div>
 
   <div class="k-foot">
@@ -1188,145 +1331,299 @@ function treeReset(){
 }
 
 
-// ===== MONEY HERO (capstone) =====
-var HERO_AVATARS = ['🦸','🦸‍♀️','🦸‍♂️','🐯','🦁','🐻','🦊','🐨'];
-var heroPicked = null;
-var heroName = 'Money Hero';
-var POWERS = [
-  {key:'saver', icon:'🛡️', name:'Saver', badge:'Saver Challenge',
-   q:'You have $10. There\u2019s a small toy you could buy right now for $10 \u2014 OR you could save it. What does a Saver do?',
-   opts:[
-     {t:'Buy the toy right away \u2014 spend it all!', ok:false},
-     {t:'Save some of it for something even better later', ok:true},
-     {t:'Lose it under the couch', ok:false}
-   ],
-   good:'Yes! A Saver keeps some money for later instead of spending every dollar right away. That\u2019s how you afford bigger, better things! 🛡️'},
-  {key:'spender', icon:'🧠', name:'Smart Spender', badge:'Smart Spender Challenge',
-   q:'You have $5. You\u2019re hungry AND you see a cool toy. What does a Smart Spender do first?',
-   opts:[
-     {t:'Buy the toy \u2014 toys are awesome!', ok:false},
-     {t:'Get food first (that\u2019s a need), toy can wait', ok:true},
-     {t:'Buy both and worry later', ok:false}
-   ],
-   good:'Exactly! A Smart Spender takes care of needs (like food) before wants (like toys). Needs come first! 🧠'},
-  {key:'sharer', icon:'❤️', name:'Sharer', badge:'Sharer Challenge',
-   q:'You got $12 of allowance. Your friend forgot their lunch money. What does a Sharer do?',
-   opts:[
-     {t:'Keep it all \u2014 it\u2019s mine!', ok:false},
-     {t:'Share a little to help a friend in need', ok:true},
-     {t:'Spend it fast before anyone asks', ok:false}
-   ],
-   good:'Wonderful! A Sharer knows money can help others too. Sharing a little to help someone feels really good. ❤️'},
-  {key:'investor', icon:'📈', name:'Investor', badge:'Investor Challenge',
-   q:'You have $10 you don\u2019t need right now. What does an Investor do to make it GROW?',
-   opts:[
-     {t:'Spend it all today', ok:false},
-     {t:'Let it grow over time \u2014 the longer, the bigger!', ok:true},
-     {t:'Hide it and forget about it', ok:false}
-   ],
-   good:'You got it! An Investor lets money grow over time. Like your Money Tree \u2014 the longer you wait, the bigger it gets! 📈'}
+// ===== MONEY HERO 2.0 — MONEY CITY =====
+var H2_AVATARS = ['🦸','🦸‍♀️','🦸‍♂️','🐯','🦁','🐻','🦊','🐨'];
+var H2_CAPES = ['#0EA5A0','#3b82f6','#ef4444','#f97316','#8b5cf6'];
+var H2_LEVELS = [
+  {min:0, name:'Rookie', em:'⭐'},
+  {min:100, name:'Hero', em:'🦸'},
+  {min:250, name:'Super Hero', em:'💥'},
+  {min:500, name:'Legend', em:'👑'}
 ];
-var heroEarned = {};
-var heroCurrentChallenge = null;
+var h2 = null;
+var h2AvatarPick = null, h2CapePick = 0;
 
-function renderAvatars(){
-  var g = document.getElementById('avatarGrid');
-  g.innerHTML = HERO_AVATARS.map(function(a,i){
-    return '<button class="avatar-opt" data-i="'+i+'" onclick="pickAvatar('+i+')">'+a+'</button>';
+// The 4 locations, each with a 3-challenge quest
+var H2_LOCATIONS = [
+  {
+    key:'saver', power:'🛡️', name:'Savings Bank', icon:'🏦',
+    story:'You arrive at the shiny Savings Bank. The banker needs a Saver hero!',
+    challenges:[
+      {icon:'🛡️', q:'You get $10 for your birthday. What does a Saver do?',
+       opts:[{t:'Spend it all on candy today',ok:false},{t:'Save some for something bigger later',ok:true},{t:'Give it all away instantly',ok:false}],
+       good:'Yes! A Saver keeps some money for later instead of spending it all at once. 🛡️'},
+      {icon:'🐷', q:'Where is the BEST place to keep money you\u2019re saving?',
+       opts:[{t:'In a piggy bank or savings account',ok:true},{t:'In your pocket at the candy store',ok:false},{t:'Under a rock outside',ok:false}],
+       good:'Right! Keeping savings somewhere safe (like a bank) helps it stay put and even grow. 🐷'},
+      {icon:'💰', q:'You want a $20 toy but only have $8. What\u2019s the Saver move?',
+       opts:[{t:'Give up on the toy forever',ok:false},{t:'Keep saving a little until you reach $20',ok:true},{t:'Take money from someone',ok:false}],
+       good:'Exactly! Saving a bit at a time gets you there. Patience is a Saver\u2019s superpower! 💰'}
+    ]
+  },
+  {
+    key:'spender', power:'🧠', name:'Market Street', icon:'🛒',
+    story:'Market Street is full of things to buy! A Smart Spender knows what really matters.',
+    challenges:[
+      {icon:'🧠', q:'You\u2019re hungry AND you see a toy. What comes first?',
+       opts:[{t:'Buy the toy — toys are fun!',ok:false},{t:'Get food first (a need), toy can wait',ok:true},{t:'Buy neither and stay hungry',ok:false}],
+       good:'Smart! Needs (like food) come before wants (like toys). That\u2019s Smart Spender thinking! 🧠'},
+      {icon:'🏷️', q:'The same crayons cost $3 at one store and $5 at another. What do you do?',
+       opts:[{t:'Buy the $5 ones — bigger price is better!',ok:false},{t:'Buy the $3 ones and save $2',ok:true},{t:'Buy both boxes',ok:false}],
+       good:'Yes! A Smart Spender compares prices and picks the better deal. You just saved $2! 🏷️'},
+      {icon:'🛒', q:'Which of these is a NEED, not a want?',
+       opts:[{t:'A warm coat for winter',ok:true},{t:'A third video game',ok:false},{t:'Fancy sparkly shoes',ok:false}],
+       good:'Correct! A warm coat is a need — it keeps you safe and healthy. Great Smart Spending! 🛒'}
+    ]
+  },
+  {
+    key:'sharer', power:'❤️', name:'Sharing Bridge', icon:'🌉',
+    story:'At the Sharing Bridge, heroes learn that money can help others too.',
+    challenges:[
+      {icon:'❤️', q:'Your friend forgot their lunch money. What does a Sharer do?',
+       opts:[{t:'Keep all your money — not my problem',ok:false},{t:'Share a little to help your friend',ok:true},{t:'Laugh at them',ok:false}],
+       good:'Wonderful! A Sharer helps others when they can. Sharing makes everyone feel good. ❤️'},
+      {icon:'🎁', q:'It\u2019s your grandma\u2019s birthday. What\u2019s a kind money choice?',
+       opts:[{t:'Keep all your money for yourself',ok:false},{t:'Use a little to get or make her a gift',ok:true},{t:'Forget her birthday',ok:false}],
+       good:'So thoughtful! Using some money to show you care is what Sharers do. 🎁'},
+      {icon:'🤝', q:'Why do people donate money to help others?',
+       opts:[{t:'Because sharing helps people in need',ok:true},{t:'Because money is useless',ok:false},{t:'Because they have to',ok:false}],
+       good:'Exactly! Sharing some of what we have helps people who need it. That\u2019s a true hero. 🤝'}
+    ]
+  },
+  {
+    key:'investor', power:'📈', name:'Investor Peak', icon:'⛰️',
+    story:'High on Investor Peak, heroes learn to make money GROW over time.',
+    challenges:[
+      {icon:'📈', q:'You have $10 you don\u2019t need now. How do you make it GROW?',
+       opts:[{t:'Spend it all today',ok:false},{t:'Let it grow over time — the longer the bigger!',ok:true},{t:'Rip it up',ok:false}],
+       good:'You got it! An Investor lets money grow over time. Just like your Money Tree! 📈'},
+      {icon:'🌳', q:'Two trees: you water one and pick all the fruit off the other. Which grows bigger?',
+       opts:[{t:'The one you keep watering',ok:true},{t:'The one you pick fruit from',ok:false},{t:'They stay the same',ok:false}],
+       good:'Right! The tree you leave to grow gets bigger and bigger. Patience grows wealth! 🌳'},
+      {icon:'⏳', q:'When is the BEST time to start letting money grow?',
+       opts:[{t:'As early as you can — even now!',ok:true},{t:'Only when you\u2019re very old',ok:false},{t:'Never',ok:false}],
+       good:'Yes! The earlier money starts growing, the more time it has to get big. Start early! ⏳'}
+    ]
+  }
+];
+
+// Boss challenge: use all powers in one "big day"
+var H2_BOSS = [
+  {icon:'🍎', money:50, q:'Your tummy rumbles — you\u2019re hungry! You have $50. What\u2019s the smart first move?',
+   opts:[{t:'Buy $5 of food (it\u2019s a need!)',ok:true},{t:'Buy a $30 toy instead',ok:false},{t:'Spend it all on candy',ok:false}],
+   good:'🧠 Smart Spender power! You took care of a need first. You have $45 left.', deduct:5},
+  {icon:'❤️', money:45, q:'Your little brother lost his lunch money and is sad. What does a hero do?',
+   opts:[{t:'Share $5 to help him',ok:true},{t:'Keep it all',ok:false},{t:'Tease him about it',ok:false}],
+   good:'❤️ Sharer power! You helped your brother. That\u2019s what heroes do. You have $40 left.', deduct:5},
+  {icon:'🛡️', money:40, q:'You see a cool $40 gadget. Buying it spends ALL your money. What\u2019s the Saver move?',
+   opts:[{t:'Save most of it, don\u2019t spend it all',ok:true},{t:'Buy the gadget — spend everything!',ok:false},{t:'Borrow more to buy two',ok:false}],
+   good:'🛡️ Saver power! You kept your money safe instead of spending it all. You have $40 left.', deduct:0},
+  {icon:'📈', money:40, q:'Last choice! You have $40 you don\u2019t need today. What makes it grow the most?',
+   opts:[{t:'Let it grow over many years',ok:true},{t:'Spend it right now',ok:false},{t:'Hide it and forget it',ok:false}],
+   good:'📈 Investor power! You let your money grow. In time, $40 could become so much more! 🌟', deduct:0}
+];
+
+function levelFor(xp){
+  var lv = H2_LEVELS[0];
+  for(var i=0;i<H2_LEVELS.length;i++){ if(xp>=H2_LEVELS[i].min) lv=H2_LEVELS[i]; }
+  return lv;
+}
+function renderAvatarsH2(){
+  var g = document.getElementById('h2AvatarGrid');
+  g.innerHTML = H2_AVATARS.map(function(a,i){ return '<button class="avatar-opt" data-i="'+i+'" onclick="h2PickAvatar('+i+')">'+a+'</button>'; }).join('');
+  var c = document.getElementById('h2CapeRow');
+  c.innerHTML = H2_CAPES.map(function(col,i){ return '<button class="cape-opt'+(i===0?' picked':'')+'" data-i="'+i+'" style="background:'+col+'" onclick="h2PickCape('+i+')"></button>'; }).join('');
+}
+function h2PickAvatar(i){
+  h2AvatarPick = i;
+  document.querySelectorAll('#h2AvatarGrid .avatar-opt').forEach(function(o){ o.classList.toggle('picked', +o.dataset.i===i); });
+  var btn = document.getElementById('h2StartBtn'); btn.disabled=false; btn.textContent='Enter Money City! 🏙️';
+}
+function h2PickCape(i){
+  h2CapePick = i;
+  document.querySelectorAll('#h2CapeRow .cape-opt').forEach(function(o){ o.classList.toggle('picked', +o.dataset.i===i); });
+}
+function h2ShowScreen(id){
+  ['h2Create','h2City','h2Quest','h2Boss'].forEach(function(s){ document.getElementById(s).classList.toggle('show', s===id); });
+  document.getElementById('h2Finale').classList.remove('show');
+}
+function h2Start(){
+  if(h2AvatarPick===null) return;
+  var nm = (document.getElementById('h2NameInput').value||'').trim();
+  h2 = { avatar:H2_AVATARS[h2AvatarPick], name: nm||'Money Hero', cape:H2_CAPES[h2CapePick],
+         xp:0, powers:{}, questKey:null, questStep:0, bossStep:0 };
+  document.documentElement.style.setProperty('--cape', h2.cape);
+  document.getElementById('h2HeroCard').style.setProperty('--cape', h2.cape);
+  h2ShowScreen('h2City');
+  renderHeroCard();
+  renderCity();
+}
+function renderHeroCard(){
+  document.getElementById('hcAvatar').textContent = h2.avatar;
+  document.getElementById('hcName').textContent = h2.name;
+  var lv = levelFor(h2.xp);
+  document.getElementById('hcLevel').textContent = lv.em+' '+lv.name+' · '+h2.xp+' XP';
+  var nextLv = null;
+  for(var i=0;i<H2_LEVELS.length;i++){ if(H2_LEVELS[i].min>h2.xp){ nextLv=H2_LEVELS[i]; break; } }
+  var pct = nextLv ? (h2.xp - lv.min)/(nextLv.min - lv.min)*100 : 100;
+  document.getElementById('hcXpFill').style.width = Math.min(100,pct)+'%';
+  // power dots
+  var dots = H2_LOCATIONS.map(function(loc){
+    var on = h2.powers[loc.key];
+    return '<div class="hc-power-dot'+(on?' on':'')+'">'+loc.power+'</div>';
   }).join('');
+  document.getElementById('hcPowers').innerHTML = dots;
+  document.getElementById('h2HeroCard').style.setProperty('--cape', h2.cape);
 }
-function pickAvatar(i){
-  heroPicked = i;
-  var opts = document.querySelectorAll('#avatarGrid .avatar-opt');
-  opts.forEach(function(o){ o.classList.toggle('picked', +o.dataset.i===i); });
-  var btn = document.getElementById('heroStartBtn');
-  btn.disabled = false; btn.textContent = 'Start my hero journey! 🚀';
-}
-function startHero(){
-  if(heroPicked===null) return;
-  var nm = (document.getElementById('heroNameInput').value||'').trim();
-  heroName = nm || 'Money Hero';
-  heroEarned = {};
-  document.getElementById('heroCreate').style.display='none';
-  document.getElementById('heroFinale').classList.remove('show');
-  document.getElementById('heroHQ').style.display='block';
-  document.getElementById('heroAvatarBig').textContent = HERO_AVATARS[heroPicked];
-  document.getElementById('hfAvatar').textContent = HERO_AVATARS[heroPicked];
-  document.getElementById('heroNameDisplay').textContent = heroName;
-  renderPowers();
-}
-function renderPowers(){
-  var g = document.getElementById('powersGrid');
-  g.innerHTML = POWERS.map(function(p){
-    var earned = heroEarned[p.key];
-    return '<button class="power-card'+(earned?' earned':'')+'" onclick="startChallenge(\''+p.key+'\')">'
-      + '<span class="pc-icon">'+p.icon+'</span>'
-      + '<div class="pc-name">'+p.name+'</div>'
-      + '<div class="pc-status">'+(earned?'Earned! ✓':'Tap to earn')+'</div>'
-      + '</button>';
+function renderCity(){
+  var earned = Object.keys(h2.powers).length;
+  var map = document.getElementById('cityMap');
+  map.innerHTML = H2_LOCATIONS.map(function(loc){
+    var done = h2.powers[loc.key];
+    return '<div class="city-loc'+(done?' done':'')+'" onclick="h2StartQuest(\''+loc.key+'\')">'
+      + '<div class="cl-icon">'+loc.icon+'</div>'
+      + '<div class="cl-name">'+loc.name+'</div>'
+      + '<div class="cl-power">'+loc.power+' '+({saver:'Saver',spender:'Smart Spender',sharer:'Sharer',investor:'Investor'})[loc.key]+'</div>'
+      + '<div class="cl-status">'+(done?'Power earned! ✓':'Tap to start')+'</div>'
+      + '</div>';
   }).join('');
-  var count = Object.keys(heroEarned).length;
-  document.getElementById('powerMeter').style.width = (count/4*100)+'%';
-  var sub = document.getElementById('heroSubtitle');
-  if(count===0) sub.textContent = 'Earn all 4 powers to become a true Money Hero!';
-  else if(count<4) sub.textContent = 'You have '+count+' of 4 powers \u2014 keep going!';
-  else sub.textContent = 'All powers earned! 🎉';
-  if(count===4){ setTimeout(heroFinish, 600); }
+  document.getElementById('citySub').textContent = earned<4 ? ('You have '+earned+' of 4 powers — explore to earn more!') : 'All powers earned! The Big Money Day awaits! 🏰';
+  var bt = document.getElementById('bossTower');
+  if(earned>=4){ bt.classList.remove('locked'); document.getElementById('bossTowerSub').textContent='You\u2019re ready! Tap to face the final challenge! 🦸'; }
+  else { bt.classList.add('locked'); document.getElementById('bossTowerSub').textContent='Earn all 4 powers to unlock the final challenge!'; }
 }
-function startChallenge(key){
-  if(heroEarned[key]){ return; } // already earned
-  var p = POWERS.filter(function(x){return x.key===key;})[0];
-  heroCurrentChallenge = key;
-  document.getElementById('heroHQ').style.display='none';
-  var c = document.getElementById('heroChallenge'); c.classList.add('show');
-  document.getElementById('hchBadge').innerHTML = p.icon+' '+p.badge;
-  document.getElementById('hchIcon').textContent = p.icon;
-  document.getElementById('hchQ').textContent = p.q;
-  document.getElementById('hchFeedback').classList.remove('show');
-  var opts = document.getElementById('hchOptions');
-  opts.innerHTML = p.opts.map(function(o,i){
-    return '<button class="hch-opt" data-ok="'+(o.ok?'1':'0')+'" onclick="answerChallenge('+i+')">'+o.t+'</button>';
+
+function h2StartQuest(key){
+  if(h2.powers[key]){ return; } // already done
+  h2.questKey = key; h2.questStep = 0;
+  var loc = H2_LOCATIONS.filter(function(l){return l.key===key;})[0];
+  h2ShowScreen('h2Quest');
+  document.getElementById('qlhIcon').textContent = loc.icon;
+  document.getElementById('qlhName').textContent = loc.name;
+  document.getElementById('qlhStory').textContent = loc.story;
+  document.getElementById('questHead').style.setProperty('--cape', h2.cape);
+  renderQuestStep();
+}
+function renderQuestStep(){
+  var loc = H2_LOCATIONS.filter(function(l){return l.key===h2.questKey;})[0];
+  var ch = loc.challenges[h2.questStep];
+  // progress dots
+  var dots = loc.challenges.map(function(c,i){
+    var cls = i<h2.questStep ? 'done' : (i===h2.questStep ? 'current' : '');
+    return '<div class="qp-dot '+cls+'"></div>';
   }).join('');
+  document.getElementById('questProgress').innerHTML = dots;
+  document.getElementById('qIcon').textContent = ch.icon;
+  document.getElementById('qQuestion').textContent = ch.q;
+  document.getElementById('qFeedback').classList.remove('show');
+  document.getElementById('levelupToast').classList.remove('show');
+  var opts = document.getElementById('qOptions');
+  opts.innerHTML = ch.opts.map(function(o,i){ return '<button class="q-opt" data-ok="'+(o.ok?'1':'0')+'" onclick="h2AnswerQuest('+i+')">'+o.t+'</button>'; }).join('');
 }
-function answerChallenge(i){
-  var p = POWERS.filter(function(x){return x.key===heroCurrentChallenge;})[0];
-  var btns = document.querySelectorAll('#hchOptions .hch-opt');
-  var chosen = btns[i];
-  var isOk = chosen.dataset.ok==='1';
+function h2AnswerQuest(i){
+  var loc = H2_LOCATIONS.filter(function(l){return l.key===h2.questKey;})[0];
+  var ch = loc.challenges[h2.questStep];
+  var btns = document.querySelectorAll('#qOptions .q-opt');
+  var isOk = btns[i].dataset.ok==='1';
   btns.forEach(function(b){ b.disabled=true; if(b.dataset.ok==='1') b.classList.add('correct'); });
-  if(!isOk) chosen.classList.add('wrong');
-  var fb = document.getElementById('hchFeedback');
-  fb.className='hch-feedback show good';
-  fb.innerHTML = (isOk?'⭐ Power earned! ':'💡 Good thinking! Here\u2019s the hero move: ') + p.good
-    + '<button class="hch-next" onclick="earnPower()">Got it! →</button>';
+  if(!isOk) btns[i].classList.add('wrong');
+  awardXP(25);
+  var fb = document.getElementById('qFeedback');
+  fb.className='q-feedback show good';
+  var last = h2.questStep >= loc.challenges.length-1;
+  fb.innerHTML = (isOk?'⭐ +25 XP! ':'💡 Good try! +25 XP. ') + ch.good
+    + '<button class="q-next" onclick="h2NextQuest()">'+(last?'Claim my power! 🎖️':'Next →')+'</button>';
 }
-function earnPower(){
-  heroEarned[heroCurrentChallenge] = true;
-  document.getElementById('heroChallenge').classList.remove('show');
-  document.getElementById('heroHQ').style.display='block';
-  var av = document.getElementById('heroAvatarBig');
-  av.classList.remove('super'); void av.offsetWidth; av.classList.add('super');
-  renderPowers();
+function h2NextQuest(){
+  var loc = H2_LOCATIONS.filter(function(l){return l.key===h2.questKey;})[0];
+  h2.questStep++;
+  if(h2.questStep >= loc.challenges.length){
+    // earn the power + bonus
+    h2.powers[h2.questKey] = true;
+    awardXP(25);
+    renderHeroCard();
+    h2ShowScreen('h2City');
+    renderCity();
+  } else {
+    renderQuestStep();
+  }
 }
-function heroFinish(){
-  document.getElementById('heroHQ').style.display='none';
-  var f = document.getElementById('heroFinale'); f.classList.add('show');
-  document.getElementById('hfTitle').textContent = heroName + ' is a Money Hero!';
-  document.getElementById('hfSub').textContent = 'You mastered saving, smart spending, sharing, AND investing. That\u2019s what money superheroes are made of!';
+function awardXP(amount){
+  var beforeLv = levelFor(h2.xp).name;
+  h2.xp += amount;
+  var afterLv = levelFor(h2.xp);
+  renderHeroCard();
+  if(afterLv.name !== beforeLv){
+    var t = document.getElementById('levelupToast');
+    if(t){
+      document.getElementById('ltTitle').textContent = afterLv.em+' Level Up: '+afterLv.name+'!';
+      document.getElementById('ltSub').textContent = 'Your hero is getting stronger!';
+      t.classList.add('show');
+    }
+  }
 }
-function resetHero(){
-  heroPicked=null; heroName='Money Hero'; heroEarned={};
-  document.getElementById('heroFinale').classList.remove('show');
-  document.getElementById('heroHQ').style.display='none';
-  document.getElementById('heroChallenge').classList.remove('show');
-  document.getElementById('heroCreate').style.display='block';
-  document.getElementById('heroNameInput').value='';
-  var btn=document.getElementById('heroStartBtn'); btn.disabled=true; btn.textContent='Pick a hero to begin! ⬆️';
-  document.querySelectorAll('#avatarGrid .avatar-opt').forEach(function(o){o.classList.remove('picked');});
+
+// ===== BOSS =====
+function h2StartBoss(){
+  if(Object.keys(h2.powers).length < 4) return;
+  h2.bossStep = 0; h2.bossMoney = 50;
+  h2ShowScreen('h2Boss');
+  renderBossStep();
+}
+function renderBossStep(){
+  var step = H2_BOSS[h2.bossStep];
+  document.getElementById('bossMoney').textContent = '💰 Your money: $' + h2.bossMoney;
+  var dots = H2_BOSS.map(function(s,i){ var cls=i<h2.bossStep?'done':(i===h2.bossStep?'current':''); return '<div class="qp-dot '+cls+'"></div>'; }).join('');
+  document.getElementById('bossProgress').innerHTML = dots;
+  document.getElementById('bossIcon').textContent = step.icon;
+  document.getElementById('bossQuestion').textContent = step.q;
+  document.getElementById('bossFeedback').classList.remove('show');
+  var opts = document.getElementById('bossOptions');
+  opts.innerHTML = step.opts.map(function(o,i){ return '<button class="q-opt" data-ok="'+(o.ok?'1':'0')+'" onclick="h2AnswerBoss('+i+')">'+o.t+'</button>'; }).join('');
+}
+function h2AnswerBoss(i){
+  var step = H2_BOSS[h2.bossStep];
+  var btns = document.querySelectorAll('#bossOptions .q-opt');
+  var isOk = btns[i].dataset.ok==='1';
+  btns.forEach(function(b){ b.disabled=true; if(b.dataset.ok==='1') b.classList.add('correct'); });
+  if(!isOk) btns[i].classList.add('wrong');
+  if(isOk){ h2.bossMoney -= step.deduct; }
+  var fb = document.getElementById('bossFeedback');
+  fb.className='q-feedback show good';
+  var last = h2.bossStep >= H2_BOSS.length-1;
+  fb.innerHTML = step.good + '<button class="q-next" onclick="h2NextBoss()">'+(last?'Finish! 👑':'Next →')+'</button>';
+}
+function h2NextBoss(){
+  h2.bossStep++;
+  if(h2.bossStep >= H2_BOSS.length){
+    awardXP(100);
+    h2Finish();
+  } else {
+    renderBossStep();
+  }
+}
+function h2Finish(){
+  document.getElementById('h2Boss').classList.remove('show');
+  document.getElementById('h2City').classList.remove('show');
+  var lv = levelFor(h2.xp);
+  document.getElementById('lbAvatar').textContent = h2.avatar;
+  document.getElementById('lbTitle').textContent = h2.name + ' is a ' + (lv.name==='Legend'?'LEGEND':'Money Hero') + '!';
+  document.getElementById('lbSub').textContent = 'You earned all 4 powers, reached '+lv.em+' '+lv.name+' with '+h2.xp+' XP, and saved the Big Money Day!';
+  document.getElementById('h2Finale').classList.add('show');
+  document.getElementById('h2Finale').scrollIntoView({block:'start', behavior:'smooth'});
+}
+function h2Reset(){
+  h2 = null; h2AvatarPick=null; h2CapePick=0;
+  document.getElementById('h2Finale').classList.remove('show');
+  h2ShowScreen('h2Create');
+  document.getElementById('h2NameInput').value='';
+  var btn=document.getElementById('h2StartBtn'); btn.disabled=true; btn.textContent='Pick a hero to begin! ⬆️';
+  document.querySelectorAll('#h2AvatarGrid .avatar-opt').forEach(function(o){o.classList.remove('picked');});
+  document.querySelectorAll('#h2CapeRow .cape-opt').forEach(function(o,idx){o.classList.toggle('picked', idx===0);});
 }
 
 
-renderGoals(); startNW(); renderJars(); renderAvatars();
+renderGoals(); startNW(); renderJars(); renderAvatarsH2();
 document.getElementById('goBtn').addEventListener('click', showStocks);
 
 </script>
