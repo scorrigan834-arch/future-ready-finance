@@ -20,7 +20,17 @@ a{text-decoration:none}
 .nav-link{color:rgba(255,255,255,.75);font-size:.88rem;font-weight:500;padding:.5rem .8rem;border-radius:7px;background:none;border:none;cursor:pointer;font-family:inherit}
 .nav-link:hover{color:#fff;background:rgba(255,255,255,.06)}
 .nav-home{color:#3fd0c9;font-weight:600}
-@media(max-width:640px){.nav-links{display:none}}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:9px;cursor:pointer;padding:0}
+.nav-burger span{display:block;width:19px;height:2px;background:#fff;border-radius:2px;margin:0 auto;transition:transform .28s,opacity .28s}
+.nav-burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.active span:nth-child(2){opacity:0}
+.nav-burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:#0B1929;border-bottom:1px solid rgba(255,255,255,.1);padding:.5rem 1rem 1rem;z-index:99;flex-direction:column;gap:.2rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:rgba(255,255,255,.85);font-size:1rem;font-weight:500;padding:.85rem .6rem;border-radius:8px;border-bottom:1px solid rgba(255,255,255,.05)}
+.mobile-menu a:hover,.mobile-menu a:active{background:rgba(14,165,160,.12);color:#fff}
+.mobile-menu a.nav-home{color:#3fd0c9;font-weight:700}
+@media(max-width:640px){.nav-links{display:none}.nav-burger{display:flex}}
 /* page shell */
 .page{max-width:720px;margin:0 auto;padding:2rem 1.2rem 4rem}
 .rm-head{text-align:center;margin-bottom:1.5rem}
@@ -126,6 +136,10 @@ select:focus{border-color:#0EA5A0}
 .resume-bar b{color:#6ee7b7}
 .resume-btn{background:#0EA5A0;color:#fff;border:none;border-radius:7px;padding:.45rem .9rem;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap}
 .footer{text-align:center;padding:2rem 1rem;color:rgba(255,255,255,.3);font-size:.8rem}
+
+/* ===== Accessibility ===== */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid #0EA5A0;outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}}
 </style>
 </head>
 <body>
@@ -137,7 +151,14 @@ select:focus{border-color:#0EA5A0}
     <a href="guides.html" class="nav-link">Guides</a>
     <a href="my-dashboard.html" class="nav-link">My Hub</a>
   </div>
+  <button class="nav-burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="nav-home">Home</a>
+  <a href="simulations.html">Calculators</a>
+  <a href="guides.html">Guides</a>
+  <a href="my-dashboard.html">My Hub</a>
+</div>
 
 <div class="page">
   <div class="rm-head">
@@ -302,6 +323,19 @@ select:focus{border-color:#0EA5A0}
 
 <div class="saved-badge" id="savedBadge">✓ Progress saved</div>
 
+<script>
+(function(){
+  var burger=document.getElementById('navBurger'), menu=document.getElementById('mobileMenu');
+  if(burger&&menu){
+    burger.addEventListener('click', function(){
+      var open=menu.classList.toggle('open');
+      burger.classList.toggle('active', open);
+      burger.setAttribute('aria-expanded', open?'true':'false');
+      burger.setAttribute('aria-label', open?'Close menu':'Open menu');
+    });
+  }
+})();
+</script>
 <script src="search.js"></script>
 <script>
 var KEY='frf_roadmap_v1';

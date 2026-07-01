@@ -19,7 +19,17 @@ a{text-decoration:none}
 .nav-link{color:rgba(255,255,255,.75);font-size:.88rem;font-weight:500;padding:.5rem .8rem;border-radius:7px;background:none;border:none;cursor:pointer;font-family:inherit}
 .nav-link:hover{color:#fff;background:rgba(255,255,255,.06)}
 .nav-home{color:#c4b5fd;font-weight:600}
-@media(max-width:720px){.nav-links{display:none}}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:9px;cursor:pointer;padding:0}
+.nav-burger span{display:block;width:19px;height:2px;background:#fff;border-radius:2px;margin:0 auto;transition:transform .28s,opacity .28s}
+.nav-burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.active span:nth-child(2){opacity:0}
+.nav-burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:#0B1929;border-bottom:1px solid rgba(255,255,255,.1);padding:.5rem 1rem 1rem;z-index:99;flex-direction:column;gap:.2rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:rgba(255,255,255,.85);font-size:1rem;font-weight:500;padding:.85rem .6rem;border-radius:8px;border-bottom:1px solid rgba(255,255,255,.05)}
+.mobile-menu a:hover,.mobile-menu a:active{background:rgba(139,92,246,.12);color:#fff}
+.mobile-menu a.nav-home{color:#c4b5fd;font-weight:700}
+@media(max-width:720px){.nav-links{display:none}.nav-burger{display:flex}}
 .page{max-width:920px;margin:0 auto;padding:2.25rem 1.2rem 4rem}
 .hub-head{margin-bottom:1.75rem}
 .hub-eyebrow{display:inline-flex;align-items:center;gap:.45rem;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#c4b5fd;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3);padding:.32rem .85rem;border-radius:99px;margin-bottom:1rem}
@@ -58,8 +68,10 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
 .tile-empty a{color:#7c3aed;font-weight:700;display:inline-block;margin-top:.5rem}
 /* Inline edit on tiles */
 .tile{position:relative}
-.tile-edit-btn{position:absolute;top:.85rem;right:.85rem;width:26px;height:26px;border-radius:7px;border:1px solid #EEF0F4;background:#F8F7FC;color:#8b5cf6;font-size:.8rem;cursor:pointer;display:none;align-items:center;justify-content:center;transition:all .15s;z-index:3;padding:0}
+.tile-edit-btn{position:absolute;top:.7rem;right:.7rem;width:36px;height:36px;border-radius:9px;border:1px solid #EEF0F4;background:#F8F7FC;color:#8b5cf6;font-size:.95rem;cursor:pointer;display:none;align-items:center;justify-content:center;transition:all .15s;z-index:3;padding:0}
 .tile:hover .tile-edit-btn{display:flex}
+/* On touch devices (no hover), always show the edit button so it's reachable */
+@media (hover:none){.tile-edit-btn{display:flex}}
 .tile-edit-btn:hover{background:#7c3aed;color:#fff;border-color:#7c3aed}
 .tile-arrow{transition:opacity .15s}
 .tile.editing .tile-arrow{opacity:0}
@@ -118,6 +130,10 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
 .footer{text-align:center;padding:2rem 1rem;color:rgba(255,255,255,.3);font-size:.8rem}
 .footer a{color:rgba(255,255,255,.4)}
 @media(max-width:560px){h1{font-size:1.7rem}.page{padding:1.75rem 1rem 3rem}}
+
+/* ===== Accessibility ===== */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid #8b5cf6;outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}}
 </style>
 </head>
 <body>
@@ -130,7 +146,15 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
     <a href="guides.html" class="nav-link">Guides</a>
     <a href="my-dashboard.html" class="nav-link nav-home">My Hub</a>
   </div>
+  <button class="nav-burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="money-roadmap.html">Money Roadmap</a>
+  <a href="simulations.html">Calculators</a>
+  <a href="guides.html">Guides</a>
+  <a href="my-dashboard.html" class="nav-home">My Hub</a>
+</div>
 
 <div class="page">
   <div class="hub-head">
@@ -262,14 +286,14 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
     var liab=(Number(networth.mortgage)||0)+(Number(networth.loans)||0)+(Number(networth.creditCards)||0)+(Number(networth.debt)||0);
     var nw=assets-liab;
     var nwCash=Number(networth.cash)||0, nwSav=Number(networth.savings)||0;
-    var t2=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83D\uDCC8</span>Net Worth</div><span class="tile-arrow">\u2192</span></div><button class="tile-edit-btn" data-edit="networth" title="Quick-edit cash & savings">\u270E</button><div class="tile-big '+(nw>=0?'violet':'neg')+'">'+(nw<0?'-':'')+money(Math.abs(nw))+'</div><div class="tile-cap">what you own minus what you owe</div><div class="tile-editform"><div class="tef-row"><label>Cash</label><div class="tef-input-wrap"><span class="tef-pfx">$</span><input class="tef-input" type="text" inputmode="numeric" data-field="nw-cash" value="'+nwCash+'"></div></div><div class="tef-row"><label>Savings</label><div class="tef-input-wrap"><span class="tef-pfx">$</span><input class="tef-input" type="text" inputmode="numeric" data-field="nw-savings" value="'+nwSav+'"></div></div><div class="tef-btns"><button class="tef-save" data-save="networth">Save</button><button class="tef-cancel" data-cancel>Cancel</button></div></div>');
+    var t2=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83D\uDCC8</span>Net Worth</div><span class="tile-arrow">\u2192</span></div><button class="tile-edit-btn" data-edit="networth" title="Quick-edit cash & savings" aria-label="Edit cash and savings">\u270E</button><div class="tile-big '+(nw>=0?'violet':'neg')+'">'+(nw<0?'-':'')+money(Math.abs(nw))+'</div><div class="tile-cap">what you own minus what you owe</div><div class="tile-editform"><div class="tef-row"><label>Cash</label><div class="tef-input-wrap"><span class="tef-pfx">$</span><input class="tef-input" type="text" inputmode="numeric" data-field="nw-cash" value="'+nwCash+'"></div></div><div class="tef-row"><label>Savings</label><div class="tef-input-wrap"><span class="tef-pfx">$</span><input class="tef-input" type="text" inputmode="numeric" data-field="nw-savings" value="'+nwSav+'"></div></div><div class="tef-btns"><button class="tef-save" data-save="networth">Save</button><button class="tef-cancel" data-cancel>Cancel</button></div></div>');
     t2.setAttribute('href','simulations/net-worth.html'); grid.appendChild(t2);
   } else { grid.appendChild(makeEmptyTile('\uD83D\uDCC8','Net Worth','The single best measure of progress.','simulations/net-worth.html','Calculate \u2192')); }
 
   if(hasSavgoal){
     var start=Number(savgoal.goalStart)||Number(savgoal.current)||Number(savgoal.saved)||0, target=Number(savgoal.goalTarget)||0;
     var pct=target>0?Math.min(Math.round(start/target*100),100):0;
-    var t3=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83C\uDFAF</span>Savings Goal</div><span class="tile-arrow">\u2192</span></div><button class="tile-edit-btn" data-edit="savings" title="Edit saved amount">\u270E</button><div class="tile-big violet">'+money(start)+'</div><div class="tile-cap">of '+money(target)+' goal</div><div class="tile-bar"><div class="tile-bar-fill" style="width:'+pct+'%"></div></div><div class="tile-cap">'+pct+'% there</div><div class="tile-editform"><div class="tef-row"><label>Saved so far</label><div class="tef-input-wrap"><span class="tef-pfx">$</span><input class="tef-input" type="text" inputmode="numeric" data-field="savings-start" value="'+start+'"></div></div><div class="tef-btns"><button class="tef-save" data-save="savings">Save</button><button class="tef-cancel" data-cancel>Cancel</button></div></div>');
+    var t3=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83C\uDFAF</span>Savings Goal</div><span class="tile-arrow">\u2192</span></div><button class="tile-edit-btn" data-edit="savings" title="Edit saved amount" aria-label="Edit amount saved">\u270E</button><div class="tile-big violet">'+money(start)+'</div><div class="tile-cap">of '+money(target)+' goal</div><div class="tile-bar"><div class="tile-bar-fill" style="width:'+pct+'%"></div></div><div class="tile-cap">'+pct+'% there</div><div class="tile-editform"><div class="tef-row"><label>Saved so far</label><div class="tef-input-wrap"><span class="tef-pfx">$</span><input class="tef-input" type="text" inputmode="numeric" data-field="savings-start" value="'+start+'"></div></div><div class="tef-btns"><button class="tef-save" data-save="savings">Save</button><button class="tef-cancel" data-cancel>Cancel</button></div></div>');
     t3.setAttribute('href','simulations/savings-goal.html'); grid.appendChild(t3);
   } else { grid.appendChild(makeEmptyTile('\uD83C\uDFAF','Savings Goal','Set a target and see how to reach it.','simulations/savings-goal.html','Set a goal \u2192')); }
 
@@ -286,7 +310,7 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
     var dfMonths=Number(debtfree.payoffMonths)||0;
     var dfYrs=Math.floor(dfMonths/12), dfMo=dfMonths%12;
     var dfTimeline = dfMonths>0 ? (dfYrs>0?dfYrs+'y ':'')+(dfMo>0?dfMo+'mo':(dfYrs>0?'':'0mo')) : '\u2014';
-    var t5=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83D\uDD13</span>Debt Freedom</div><span class="tile-arrow">\u2192</span></div><button class="tile-edit-btn" data-edit="debt" title="Update total debt">\u270E</button><div class="tile-big '+(Number(debtfree.totalDebt)>0?'neg':'pos')+'">'+money(debtfree.totalDebt)+'</div><div class="tile-cap">total debt \u00b7 debt-free in '+dfTimeline+'</div><div class="tile-stats"><div class="tile-stat"><div class="l">Monthly</div><div class="v">'+money(debtfree.monthlyPayment)+'</div></div><div class="tile-stat"><div class="l">Focus</div><div class="v" style="font-size:.8rem">'+(debtfree.topDebt||'\u2014')+'</div></div></div><div class="tile-editform"><div class="tef-row"><label>Total debt remaining</label><div class="tef-input-wrap"><span class="tef-pfx">$</span><input class="tef-input" type="text" inputmode="numeric" data-field="debt-total" value="'+(Number(debtfree.totalDebt)||0)+'"></div></div><div class="tef-btns"><button class="tef-save" data-save="debt">Save</button><button class="tef-cancel" data-cancel>Cancel</button></div><div style="font-size:.7rem;color:#94a3b8;margin-top:.5rem;line-height:1.4">For a full re-plan, open the Debt Freedom Planner.</div></div>');
+    var t5=el('a','tile','<div class="tile-head"><div class="tile-name"><span class="tile-ic">\uD83D\uDD13</span>Debt Freedom</div><span class="tile-arrow">\u2192</span></div><button class="tile-edit-btn" data-edit="debt" title="Update total debt" aria-label="Edit total debt">\u270E</button><div class="tile-big '+(Number(debtfree.totalDebt)>0?'neg':'pos')+'">'+money(debtfree.totalDebt)+'</div><div class="tile-cap">total debt \u00b7 debt-free in '+dfTimeline+'</div><div class="tile-stats"><div class="tile-stat"><div class="l">Monthly</div><div class="v">'+money(debtfree.monthlyPayment)+'</div></div><div class="tile-stat"><div class="l">Focus</div><div class="v" style="font-size:.8rem">'+(debtfree.topDebt||'\u2014')+'</div></div></div><div class="tile-editform"><div class="tef-row"><label>Total debt remaining</label><div class="tef-input-wrap"><span class="tef-pfx">$</span><input class="tef-input" type="text" inputmode="numeric" data-field="debt-total" value="'+(Number(debtfree.totalDebt)||0)+'"></div></div><div class="tef-btns"><button class="tef-save" data-save="debt">Save</button><button class="tef-cancel" data-cancel>Cancel</button></div><div style="font-size:.7rem;color:#94a3b8;margin-top:.5rem;line-height:1.4">For a full re-plan, open the Debt Freedom Planner.</div></div>');
     t5.setAttribute('href','simulations/debt-freedom-planner.html'); grid.appendChild(t5);
   } else {
     grid.appendChild(makeEmptyTile('\uD83D\uDD13','Debt Freedom','Build a plan to crush debt fast.','simulations/debt-freedom-planner.html','Make a plan \u2192'));
@@ -393,6 +417,19 @@ h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:800;color:#
     var diff = inp.value.length - before.length;
     try{ inp.setSelectionRange(caret+diff, caret+diff); }catch(err){}
   });
+})();
+</script>
+<script>
+(function(){
+  var burger=document.getElementById('navBurger'), menu=document.getElementById('mobileMenu');
+  if(burger&&menu){
+    burger.addEventListener('click', function(){
+      var open=menu.classList.toggle('open');
+      burger.classList.toggle('active', open);
+      burger.setAttribute('aria-expanded', open?'true':'false');
+      burger.setAttribute('aria-label', open?'Close menu':'Open menu');
+    });
+  }
 })();
 </script>
 <script src="search.js"></script>
