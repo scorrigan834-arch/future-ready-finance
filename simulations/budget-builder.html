@@ -200,6 +200,19 @@ input:focus{border-color:#0EA5A0;box-shadow:0 0 0 4px rgba(14,165,160,.16)}
 .sv2-note{font-size:.8rem;color:#0C7D79;background:rgba(14,165,160,.07);border-left:3px solid #0EA5A0;border-radius:0 6px 6px 0;padding:.65rem .85rem;margin-top:1rem;line-height:1.55}
 .sv2-note b{color:#059669}
 @media(max-width:520px){.sv2-grid{gap:.4rem}.sv2-card{padding:.75rem .4rem}.sv2-monthly{font-size:.92rem}}
+
+.related-box{background:#F5F7F6;border-radius:12px;padding:1.5rem;margin-top:2rem}
+.related-box h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:1rem;color:#0B1929}
+.related-box .rl-sub{font-size:.8rem;color:#64748B;margin:-0.6rem 0 1rem;line-height:1.5}
+.rli{display:flex;align-items:center;justify-content:space-between;border:1px solid #E2E8F0;border-radius:8px;padding:.75rem 1rem;background:#fff;text-decoration:none;color:#0B1929;margin-bottom:.5rem;transition:border-color .15s}
+.rli:hover{border-color:#0EA5A0}
+.rli .rli-l{display:flex;align-items:center;gap:.6rem;min-width:0}
+.rli .rli-ic{font-size:1.05rem;flex-shrink:0}
+.rli .rli-t{font-size:.875rem;font-weight:600;line-height:1.3}
+.rli .rli-tag{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:.12rem .45rem;border-radius:99px;flex-shrink:0;margin-left:.5rem}
+.rli .tag-guide{background:rgba(14,165,160,.12);color:#0C7D79}
+.rli .tag-tool{background:rgba(79,70,229,.1);color:#4f46e5}
+.rli .rli-ar{color:#0EA5A0;font-weight:700;flex-shrink:0;margin-left:.5rem}
 </style>
 
 </head><body>
@@ -450,6 +463,14 @@ input:focus{border-color:#0EA5A0;box-shadow:0 0 0 4px rgba(14,165,160,.16)}
 </div>
 
 <div class="toast" id="toast"></div>
+  <div class="related-box">
+    <h4>Keep going — related guides &amp; tools</h4>
+    <div class="rl-sub">Learn more, or run the numbers a different way.</div>
+    <a class="rli" href="../decisions/first-paycheck.html"><span class="rli-l"><span class="rli-ic">💵</span><span class="rli-t">Understanding Your First Paycheck</span></span><span class="rli-tag tag-guide">Guide</span><span class="rli-ar">→</span></a>
+    <a class="rli" href="../decisions/emergency-fund.html"><span class="rli-l"><span class="rli-ic">🛟</span><span class="rli-t">How to Build an Emergency Fund</span></span><span class="rli-tag tag-guide">Guide</span><span class="rli-ar">→</span></a>
+    <a class="rli" href="debt-freedom-planner.html"><span class="rli-l"><span class="rli-ic">🎯</span><span class="rli-t">Debt Freedom Planner</span></span><span class="rli-tag tag-tool">Tool</span><span class="rli-ar">→</span></a>
+  </div>
+
 <footer class="footer"><a href="../index.html">Home</a><a href="../life-stages.html">Life Stages</a><a href="../guides.html">Guides</a><a href="../simulations.html">Calculators</a><br><br>Educational content only. Not financial, legal, tax, or investment advice.</footer>
 <script>
 (function(){
