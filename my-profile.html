@@ -108,6 +108,9 @@ a{text-decoration:none}
 .pf-flabel{display:block;font-size:.9rem;font-weight:700;color:#0B1929;margin-bottom:.5rem}
 .pf-flabel .req{color:#dc2626;font-weight:700}
 .pf-flabel .opt{color:#94a3b8;font-weight:500;font-size:.8rem}
+.opt-inline{color:#94a3b8;font-weight:500;font-size:.78rem}
+#equityHint.has-equity{color:#059669;font-weight:600}
+#incomeHouseholdHint{color:#0C7D79;font-weight:600}
 .btn-group{display:flex;gap:.6rem}
 .btn-group-wrap{flex-wrap:wrap}
 .opt-btn{padding:.6rem 1.1rem;border-radius:10px;border:1.5px solid #E2E8F0;background:#F5F7F6;color:#475569;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .15s;font-family:"DM Sans",sans-serif;display:inline-flex;align-items:center;gap:.35rem}
@@ -298,6 +301,12 @@ a{text-decoration:none}
     <p class="sub">A few quick basics so your plan actually fits your life. <b>Single/Married</b> and your <b>main goal</b> are required — the rest are optional.</p>
 
     <div class="pf-field-block">
+      <label class="pf-flabel">How old are you? <span class="opt">(optional, but makes your plan much sharper)</span></label>
+      <div class="pw" style="max-width:160px"><input type="text" inputmode="numeric" id="age" placeholder="35" min="14" max="100" style="text-align:left"></div>
+      <div class="hint">Lets us check if you're on track for your stage.</div>
+    </div>
+
+    <div class="pf-field-block">
       <label class="pf-flabel">Are you single or married? <span class="req">*</span></label>
       <div class="btn-group" id="maritalGroup">
         <button type="button" class="opt-btn" data-v="single">🧍 Single</button>
@@ -404,12 +413,12 @@ a{text-decoration:none}
       <div class="field">
         <label for="income">Annual income</label>
         <div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" id="income" class="frf-comma" placeholder="45,000" min="0" step="1000"></div>
-        <div class="hint">Before taxes</div>
+        <div class="hint">Before taxes<span id="incomeHouseholdHint"></span></div>
       </div>
       <div class="field">
-        <label for="debt">Total debt</label>
+        <label for="debt">Debt (not counting your mortgage)</label>
         <div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" id="debt" class="frf-comma" placeholder="15,000" min="0" step="500"></div>
-        <div class="hint">Loans, cards, etc.</div>
+        <div class="hint">Cards, student &amp; auto loans, etc.</div>
       </div>
     </div>
     <div class="field-row">
@@ -417,6 +426,18 @@ a{text-decoration:none}
         <label for="invested">Amount invested / saved</label>
         <div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" id="invested" class="frf-comma" placeholder="8,000" min="0" step="500"></div>
         <div class="hint">Retirement, savings, brokerage</div>
+      </div>
+      <div class="field">
+        <label for="homeValue">Home value <span class="opt-inline">(if you own)</span></label>
+        <div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" id="homeValue" class="frf-comma" placeholder="350,000" min="0" step="5000"></div>
+        <div class="hint">Estimated market value</div>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="mortgage">Mortgage balance <span class="opt-inline">(if you own)</span></label>
+        <div class="pw"><span class="pfx">$</span><input type="text" inputmode="numeric" id="mortgage" class="frf-comma" placeholder="220,000" min="0" step="5000"></div>
+        <div class="hint" id="equityHint">What you still owe on your home</div>
       </div>
       <div class="field">
         <label for="stage">Life stage</label>
@@ -560,7 +581,10 @@ var STEPS = {
     tool:null },
   family: { order: 13, topic:'family', title:'Plan as a family',
     guide:['couples-money','👨‍👩‍👧','Managing Money as a Couple','Combining finances and goals'],
-    tool:null }
+    tool:null },
+  estate: { order: 14, topic:'estate', title:'Protect your wealth',
+    guide:['estate-planning','📜','Estate Planning Basics','Wills, beneficiaries & protecting what you\u2019ve built'],
+    tool:['net-worth','📈','Net Worth Tracker','See your complete financial picture'] }
 };
 
 var KEY = 'frf_profile_v1';
@@ -624,6 +648,9 @@ function collectData(){
     stage: document.getElementById('stage').value,
     marital: getBtn('maritalGroup'),
     partnerIncome: document.getElementById('partnerIncome').value.replace(/,/g,''),
+    age: document.getElementById('age').value.replace(/[^0-9]/g,''),
+    homeValue: document.getElementById('homeValue').value.replace(/,/g,''),
+    mortgage: document.getElementById('mortgage').value.replace(/,/g,''),
     goal: getBtn('goalGroup'),
     kids: getBtn('kidsGroup'),
     home: getBtn('homeGroup'),
@@ -647,6 +674,9 @@ function loadProfile(){
     if(d.stage) document.getElementById('stage').value = d.stage;
     if(d.marital){ setBtn('maritalGroup', d.marital); if(d.marital==='married') document.getElementById('partnerBlock').style.display='block'; }
     if(d.partnerIncome) document.getElementById('partnerIncome').value = formatWithCommas(d.partnerIncome);
+    if(d.age) document.getElementById('age').value = d.age;
+    if(d.homeValue) document.getElementById('homeValue').value = formatWithCommas(d.homeValue);
+    if(d.mortgage) document.getElementById('mortgage').value = formatWithCommas(d.mortgage);
     if(d.goal) setBtn('goalGroup', d.goal);
     if(d.kids) setBtn('kidsGroup', d.kids);
     if(d.home) setBtn('homeGroup', d.home);
@@ -663,6 +693,9 @@ function clearProfile(){
   document.getElementById('invested').value='';
   document.getElementById('stage').value='';
   document.getElementById('partnerIncome').value='';
+  document.getElementById('age').value='';
+  document.getElementById('homeValue').value='';
+  document.getElementById('mortgage').value='';
   document.getElementById('partnerBlock').style.display='none';
   var offbtns=document.querySelectorAll('.opt-btn.on');
   for(var b=0;b<offbtns.length;b++) offbtns[b].classList.remove('on');
@@ -705,16 +738,76 @@ function buildProfile(){
   // Drop areas they're confident about UNLESS they also asked for help there
   d.confident.forEach(function(t){ if(d.needhelp.indexOf(t)===-1) delete chosen[t]; });
 
-  var num = { income:Number(d.income)||0, debt:Number(d.debt)||0, invested:Number(d.invested)||0 };
-  var dti = (householdIncome>0 && num.debt>0) ? (num.debt/householdIncome*100) : null;
+  var num = { income:Number(d.income)||0, debt:Number(d.debt)||0, invested:Number(d.invested)||0, homeValue:Number(d.homeValue)||0, mortgage:Number(d.mortgage)||0 };
+
+  // ===== Household net-worth-aware picture =====
+  // Consumer debt (cards, student, auto) is what we treat as "debt to attack".
+  // A mortgage is secured by the home, so it's handled as part of net worth, not alarm-debt.
+  var consumerDebt = num.debt;
+  var homeEquity = (num.homeValue>0) ? Math.max(num.homeValue - num.mortgage, 0) : 0;
+  // Approximate net worth from what we know: investments + home equity - consumer debt.
+  var estNetWorth = num.invested + homeEquity - consumerDebt;
+
+  // Debt-to-income uses CONSUMER debt vs HOUSEHOLD income (a mortgage shouldn't trigger debt panic).
+  var dti = (householdIncome>0 && consumerDebt>0) ? (consumerDebt/householdIncome*100) : null;
+
+  // Wealth signals: someone with substantial assets needs a different plan (preserve/optimize, not "start").
+  var isWealthy = (estNetWorth >= 500000) || (num.invested >= 250000);
+  var isVeryWealthy = (estNetWorth >= 1000000) || (num.invested >= 750000);
+
+  // ===== Age-based "on track" check =====
+  var age = Number(d.age)||0;
+  var trackStatus = '';   // 'ahead' | 'onpace' | 'behind' | ''
+  var trackNote = '';
+  var yearsToRetire = (age>0) ? Math.max(65 - age, 0) : null;
+  // Retirement savings rules of thumb (multiple of annual income by age):
+  // ~1x by 30, 3x by 40, 6x by 50, 8x by 60, 10x by 67. Interpolate for a target multiple.
+  function targetMultiple(a){
+    if(a < 30) return (a-22)/8 * 1;          // ramping toward 1x at 30
+    if(a < 40) return 1 + (a-30)/10 * 2;     // 1x -> 3x
+    if(a < 50) return 3 + (a-40)/10 * 3;     // 3x -> 6x
+    if(a < 60) return 6 + (a-50)/10 * 2;     // 6x -> 8x
+    if(a < 67) return 8 + (a-60)/7 * 2;      // 8x -> 10x
+    return 10;
+  }
+  // Use household income as the benchmark base when married, else personal.
+  var trackIncomeBase = householdIncome > 0 ? householdIncome : num.income;
+  if(age >= 22 && trackIncomeBase > 0 && num.invested > 0){
+    var tMult = Math.max(targetMultiple(age), 0.1);
+    var targetSavings = tMult * trackIncomeBase;
+    var ratio = num.invested / targetSavings;
+    if(ratio >= 1.25){ trackStatus='ahead'; }
+    else if(ratio >= 0.75){ trackStatus='onpace'; }
+    else { trackStatus='behind'; }
+  }
+
 
   // Numbers refine what's included + the order:
-  // - Meaningful debt => make sure "debt" is in the plan
-  // - Little/no savings => make sure "saving" (emergency fund) is in the plan
-  // - Has income + nothing invested => surface "investing"
-  if(num.debt >= 1000) chosen['debt']=true;
-  if(num.invested < 1000) chosen['saving']=true;
-  if(num.income >= 1000 && num.invested < 500) chosen['investing']=true;
+  if(consumerDebt >= 1000) chosen['debt']=true;
+  // Emergency fund only matters if they don't already have real assets to fall back on.
+  if(num.invested < 1000 && !isWealthy) chosen['saving']=true;
+  // Surface investing only for people still building it (not the already-heavily-invested).
+  if(householdIncome >= 1000 && num.invested < 500) chosen['investing']=true;
+  // Wealthy households: shift toward retirement/tax/estate topics instead of basics.
+  if(isWealthy){
+    if(STEPS['retirement']) chosen['retirement']=true;
+    if(STEPS['taxes']) chosen['taxes']=true;
+    delete chosen['saving']; // they don't need an "emergency fund 101" nudge
+  }
+  if(isVeryWealthy && STEPS['estate']){ chosen['estate']=true; }
+
+  // Age/stage-appropriate priorities:
+  if(age > 0){
+    if(age >= 50){
+      // Nearing retirement: retirement + estate move up in relevance.
+      if(STEPS['retirement']) chosen['retirement']=true;
+      if(age >= 55 && STEPS['estate']) chosen['estate']=true;
+    } else if(age <= 26 && num.invested < 5000 && !isWealthy){
+      // Young + not much invested: build the habit early (investing + budgeting).
+      if(STEPS['investing']) chosen['investing']=true;
+      if(STEPS['budgeting']) chosen['budgeting']=true;
+    }
+  }
 
   // ===== Personalization: new About-You fields shape the plan =====
   // #1 goal always gets its topic into the plan
@@ -745,10 +838,18 @@ function buildProfile(){
   // The #1 goal moves its topic toward the front first...
   if(goalTopic){ bump(goalTopic, 0); }
 
-  // ...but financial fundamentals still take precedence for a sound plan:
-  // high debt-to-income and an empty emergency fund come first regardless.
-  if(dti !== null && dti >= 35){ bump('debt',0); priorityNote = 'Your debt is high relative to your household income ('+dti.toFixed(0)+'%), so we put paying it down first.'; }
+  // ...but financial fundamentals still take precedence for a sound plan.
+  // Note: DTI here is CONSUMER debt only — a mortgage never triggers this.
+  if(dti !== null && dti >= 35){ bump('debt',0); priorityNote = 'Your non-mortgage debt is high relative to your household income ('+dti.toFixed(0)+'%), so we put paying it down first.'; }
   if(num.invested < 1000 && chosen['saving']){ bump('saving',0); if(!priorityNote) priorityNote = 'You don\u2019t have much saved yet, so we start with an emergency fund \u2014 the foundation everything else stands on.'; }
+
+  // Wealth-aware: for households with substantial assets, lead with preserve/optimize.
+  if(isWealthy && !priorityNote){
+    if(isVeryWealthy && chosen['estate']){ bump('estate',0); }
+    else if(chosen['retirement']){ bump('retirement',0); }
+    var nwText = (estNetWorth>0) ? ' (an estimated net worth around ' + fmt(estNetWorth) + ')' : '';
+    priorityNote = 'You\u2019ve built real assets' + nwText + ', so your plan leans toward protecting and optimizing what you have \u2014 tax efficiency, retirement structure' + (isVeryWealthy?', and estate planning':'') + ' \u2014 rather than the basics.';
+  }
 
   // If no fundamental override fired, acknowledge their chosen goal in the note.
   if(!priorityNote && goalTopic){
@@ -758,6 +859,22 @@ function buildProfile(){
   // Married note
   if(d.marital==='married' && householdIncome>0 && !(/household income/.test(priorityNote))){
     priorityNote = (priorityNote ? priorityNote+' ' : '') + 'We\u2019re basing this on your household income of ' + fmt(householdIncome) + '.';
+  }
+
+  // On-track message (age + income + invested) — prepended so it leads the note.
+  if(trackStatus){
+    var multBenchmark = Math.round(targetMultiple(age)*10)/10;
+    if(trackStatus==='ahead'){
+      trackNote = 'At ' + age + ', you\u2019re \u2705 ahead of the curve \u2014 your ' + fmt(num.invested) + ' invested is above the typical benchmark for your age (~' + multBenchmark + '\u00d7 income). Focus on keeping it going and optimizing.';
+    } else if(trackStatus==='onpace'){
+      trackNote = 'At ' + age + ', you\u2019re \uD83D\uDC4D on pace \u2014 your ' + fmt(num.invested) + ' invested is right around the typical benchmark for your age (~' + multBenchmark + '\u00d7 income). Stay consistent.';
+    } else {
+      trackNote = 'At ' + age + ', you\u2019re a bit \uD83D\uDCC8 behind the typical benchmark for your age (~' + multBenchmark + '\u00d7 income) \u2014 that\u2019s common and fixable. The steps below are ordered to help you catch up.';
+    }
+    if(yearsToRetire !== null && yearsToRetire > 0 && age >= 30){
+      trackNote += ' You have about ' + yearsToRetire + ' years until 65.';
+    }
+    priorityNote = trackNote + (priorityNote ? ' ' + priorityNote : '');
   }
 
   // Fallback: nothing chosen at all -> sensible default starter roadmap
@@ -773,12 +890,29 @@ function buildProfile(){
 
   // ===== Smart snapshot (with a read on where they stand) =====
   var snapHtml = '';
-  if(num.income){ snapHtml += '<div class="snap"><div class="lbl">Income</div><div class="val">'+fmt(d.income)+'</div></div>'; }
-  if(num.debt){ snapHtml += '<div class="snap"><div class="lbl">Debt</div><div class="val">'+fmt(d.debt)+'</div></div>'; }
-  if(num.invested){ snapHtml += '<div class="snap"><div class="lbl">Invested/Saved</div><div class="val">'+fmt(d.invested)+'</div></div>'; }
+  if(age > 0){
+    var trackBadge = '', trackColor = '#64748B';
+    if(trackStatus==='ahead'){ trackBadge=' \u2705'; trackColor='#059669'; }
+    else if(trackStatus==='onpace'){ trackBadge=''; trackColor='#0C7D79'; }
+    else if(trackStatus==='behind'){ trackBadge=''; trackColor='#d97706'; }
+    snapHtml += '<div class="snap"><div class="lbl">Age</div><div class="val" style="color:'+trackColor+'">'+age+trackBadge+'</div></div>';
+  }
+  // Show household income if married & partner income present, else personal income.
+  if(d.marital==='married' && Number(d.partnerIncome)>0 && householdIncome>0){
+    snapHtml += '<div class="snap"><div class="lbl">Household income</div><div class="val">'+fmt(householdIncome)+'</div></div>';
+  } else if(num.income){
+    snapHtml += '<div class="snap"><div class="lbl">Income</div><div class="val">'+fmt(num.income)+'</div></div>';
+  }
+  if(consumerDebt){ snapHtml += '<div class="snap"><div class="lbl">Debt (non-mortgage)</div><div class="val">'+fmt(consumerDebt)+'</div></div>'; }
+  if(num.invested){ snapHtml += '<div class="snap"><div class="lbl">Invested/Saved</div><div class="val">'+fmt(num.invested)+'</div></div>'; }
+  if(homeEquity > 0){ snapHtml += '<div class="snap"><div class="lbl">Home equity</div><div class="val" style="color:#059669">'+fmt(homeEquity)+'</div></div>'; }
+  if((num.homeValue>0 || num.invested>0) && estNetWorth!==0){
+    var nwColor = estNetWorth>=0 ? '#059669' : '#dc2626';
+    snapHtml += '<div class="snap"><div class="lbl">Est. net worth</div><div class="val" style="color:'+nwColor+'">'+fmt(estNetWorth)+'</div></div>';
+  }
   if(dti !== null){
     var dtiColor = dti>=35 ? '#dc2626' : (dti>=20 ? '#d97706' : '#059669');
-    snapHtml += '<div class="snap"><div class="lbl">Debt-to-Income</div><div class="val" style="color:'+dtiColor+'">'+dti.toFixed(0)+'%</div></div>';
+    snapHtml += '<div class="snap"><div class="lbl">Non-mortgage DTI</div><div class="val" style="color:'+dtiColor+'">'+dti.toFixed(0)+'%</div></div>';
   }
   if(snapHtml){
     document.getElementById('snapshot').innerHTML = snapHtml;
