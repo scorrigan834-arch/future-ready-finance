@@ -255,15 +255,32 @@ a{text-decoration:none}
 @media(max-width:640px){.search-kbd{display:none}.search-wrap{max-width:100%}}
 
 /* Money Hub promo strip */
-.hub-promo-section{background:#F5F7F6;padding:2rem 1.5rem}
+.hub-promo-section{background:#F5F7F6;padding:2.5rem 1.5rem}
 .hub-promo-inner{max-width:1080px;margin:0 auto}
-.hub-promo{display:block;background:linear-gradient(135deg,#0EA5A0,#0C7D79);border-radius:18px;padding:1.75rem 1.9rem;text-decoration:none;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s}
-.hub-promo:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(14,165,160,.28)}
-.hub-promo::after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.14),transparent 70%);top:-110px;right:-60px}
-.hub-promo-label{display:inline-block;color:rgba(255,255,255,.9);font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;position:relative;z-index:1}
-.hub-promo-text h3{color:#fff;font-family:"Playfair Display",serif;font-size:1.45rem;margin-bottom:.4rem;position:relative;z-index:1}
-.hub-promo-text p{color:rgba(255,255,255,.85);font-size:.92rem;line-height:1.55;margin-bottom:.85rem;max-width:620px;position:relative;z-index:1}
-.hub-promo-cta{display:inline-block;color:#fff;font-weight:700;font-size:.92rem;position:relative;z-index:1}
+.hub-promo{display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;align-items:center;background:linear-gradient(135deg,#4c1d95 0%,#5b21b6 48%,#6d28d9 100%);border-radius:20px;padding:2.25rem 2.4rem;text-decoration:none;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s;box-shadow:0 14px 44px rgba(76,29,149,.28)}
+.hub-promo:hover{transform:translateY(-4px);box-shadow:0 22px 60px rgba(76,29,149,.4)}
+.hub-promo::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.22),transparent 70%);bottom:-160px;right:-80px;pointer-events:none}
+.hub-promo-text{position:relative;z-index:1}
+.hub-promo-label{display:inline-flex;align-items:center;gap:.4rem;color:#e9d5ff;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.7rem;background:rgba(255,255,255,.12);padding:.3rem .75rem;border-radius:99px}
+.hub-promo-text h3{color:#fff;font-family:"Playfair Display",serif;font-size:1.6rem;margin-bottom:.5rem;line-height:1.18}
+.hub-promo-text p{color:rgba(255,255,255,.82);font-size:.93rem;line-height:1.6;margin-bottom:1.1rem;max-width:440px}
+.hub-promo-cta{display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:#5b21b6;font-weight:700;font-size:.9rem;padding:.7rem 1.4rem;border-radius:10px;transition:transform .2s}
+.hub-promo:hover .hub-promo-cta{transform:translateX(3px)}
+/* visual preview panel */
+.hub-preview{position:relative;z-index:1;display:flex;flex-direction:column;gap:.7rem}
+.hpv-score{display:flex;align-items:center;gap:.9rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);border-radius:13px;padding:.9rem 1.1rem;backdrop-filter:blur(6px)}
+.hpv-ring{flex-shrink:0;width:52px;height:52px;position:relative}
+.hpv-ring svg{transform:rotate(-90deg)}
+.hpv-ring-n{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:"Playfair Display",serif;font-weight:800;font-size:1.1rem}
+.hpv-score-t{color:#fff}
+.hpv-score-t .l{font-size:.68rem;color:rgba(255,255,255,.7);font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.hpv-score-t .v{font-size:.98rem;font-weight:700;font-family:"Playfair Display",serif}
+.hpv-tiles{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.hpv-tile{background:rgba(255,255,255,.94);border-radius:11px;padding:.7rem .8rem}
+.hpv-tile .l{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.02em;color:#8b5cf6;margin-bottom:.15rem;display:flex;align-items:center;gap:.25rem}
+.hpv-tile .v{font-size:1rem;font-weight:800;font-family:"Playfair Display",serif;color:#0B1929;line-height:1}
+.hpv-tile .v.g{color:#059669}
+@media(max-width:720px){.hub-promo{grid-template-columns:1fr;gap:1.5rem}.hub-preview{order:-1}}
 /* See all calculators button */
 .calc-seeall-wrap{text-align:center;margin-top:2rem}
 .calc-seeall{display:inline-block;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);color:#fff;padding:.9rem 2rem;border-radius:11px;font-weight:700;font-size:.95rem;text-decoration:none;transition:all .2s}
@@ -451,10 +468,25 @@ a{text-decoration:none}
   <div class="hub-promo-inner">
     <a href="my-dashboard.html" class="hub-promo">
       <div class="hub-promo-text">
-        <span class="hub-promo-label">🎯 Your Money Hub</span>
-        <h3>Your whole financial picture, in one place</h3>
-        <p>Track your budget, investments, savings goals, and net worth — with a personalized health score. Pick up right where you left off.</p>
+        <span class="hub-promo-label">✨ Your Money Hub</span>
+        <h3>See your whole financial picture in one place</h3>
+        <p>Every calculator you use feeds one live dashboard — your budget, net worth, savings goals, and investing progress, plus a personal financial health score that grows as you do.</p>
         <span class="hub-promo-cta">Open My Money Hub →</span>
+      </div>
+      <div class="hub-preview" aria-hidden="true">
+        <div class="hpv-score">
+          <div class="hpv-ring">
+            <svg width="52" height="52" viewBox="0 0 52 52"><circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="5"/><circle cx="26" cy="26" r="22" fill="none" stroke="#34d399" stroke-width="5" stroke-linecap="round" stroke-dasharray="110 138"/></svg>
+            <div class="hpv-ring-n">80</div>
+          </div>
+          <div class="hpv-score-t"><div class="l">Financial Health</div><div class="v">Excellent shape 🌟</div></div>
+        </div>
+        <div class="hpv-tiles">
+          <div class="hpv-tile"><div class="l">💰 Budget</div><div class="v g">$1,500</div></div>
+          <div class="hpv-tile"><div class="l">📈 Net Worth</div><div class="v">$23,000</div></div>
+          <div class="hpv-tile"><div class="l">🎯 Savings</div><div class="v">30%</div></div>
+          <div class="hpv-tile"><div class="l">📉 Investing</div><div class="v g">+$500</div></div>
+        </div>
       </div>
     </a>
   </div>
