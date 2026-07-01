@@ -333,6 +333,28 @@ a{text-decoration:none}
 /* ===== Accessibility ===== */
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid #0EA5A0;outline-offset:2px;border-radius:6px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}}
+
+/* ===== Build My Profile spotlight (funnel centerpiece — bold card) ===== */
+.profile-spotlight{background:#F5F7F6;padding:3.5rem 1.5rem 4rem;position:relative}
+.profile-spotlight-inner{max-width:1080px;margin:0 auto}
+.ps-card{background:linear-gradient(135deg,#0B1929 0%,#0f2338 55%,#123040 100%);border:2px solid rgba(14,165,160,.45);border-radius:24px;padding:3.25rem 3rem;text-align:center;position:relative;overflow:hidden;box-shadow:0 24px 70px rgba(11,25,41,.45),0 0 0 1px rgba(14,165,160,.1)}
+.ps-card::before{content:"";position:absolute;top:-160px;right:-100px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,160,.22),transparent 66%);pointer-events:none}
+.ps-card::after{content:"";position:absolute;bottom:-180px;left:-120px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(94,234,212,.12),transparent 70%);pointer-events:none}
+.ps-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(14,165,160,.2);border:1px solid rgba(14,165,160,.5);color:#5eead4;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;padding:.45rem 1.1rem;border-radius:99px;margin-bottom:1.5rem;position:relative;z-index:1}
+.ps-title{font-family:"Playfair Display",serif;font-size:2.9rem;font-weight:900;color:#fff;line-height:1.06;margin-bottom:1.15rem;position:relative;z-index:1}
+.ps-sub{color:rgba(255,255,255,.75);font-size:1.12rem;line-height:1.65;max-width:640px;margin:0 auto 2rem;position:relative;z-index:1}
+.ps-sub em{color:#5eead4;font-style:italic}
+.ps-features{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem 2rem;margin-bottom:2.25rem;position:relative;z-index:1}
+.ps-feature{display:flex;align-items:center;gap:.6rem;color:rgba(255,255,255,.88);font-size:.94rem;font-weight:500}
+.ps-feature b{color:#fff;font-weight:700}
+.ps-fic{font-size:1.3rem}
+.ps-cta{display:inline-block;background:#0EA5A0;color:#fff;font-family:"DM Sans",sans-serif;font-weight:800;font-size:1.15rem;padding:1.15rem 2.75rem;border-radius:12px;text-decoration:none;box-shadow:0 12px 36px rgba(14,165,160,.5);transition:transform .18s,box-shadow .18s;position:relative;z-index:1}
+.ps-cta:hover{transform:translateY(-3px);box-shadow:0 18px 48px rgba(14,165,160,.62)}
+.ps-note{color:rgba(255,255,255,.55);font-size:.84rem;margin-top:1.15rem;position:relative;z-index:1}
+@media(max-width:640px){.profile-spotlight{padding:2.5rem 1rem 3rem}.ps-card{padding:2.25rem 1.4rem}.ps-title{font-size:2rem}.ps-sub{font-size:1rem}.ps-features{gap:.75rem}.ps-feature{font-size:.87rem}.ps-cta{font-size:1.05rem;padding:1rem 2rem}}
+
+/* Kids tag on the Investment Simulator calc card */
+.kids-tag{display:inline-block;background:rgba(14,165,160,.14);color:#5eead4;font-size:.72rem;font-weight:700;padding:.2rem .55rem;border-radius:6px;margin-top:.4rem}
 </style>
 </head>
 <body>
@@ -465,7 +487,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[t
       </div>
       <div class="hero-ctas">
         <a href="my-profile.html" class="btn btn-primary btn-hero-main">🎯 Build My Profile → Get My Plan</a>
-        <a href="#calculators" class="btn btn-ghost btn-hero-sub">or just explore the calculators →</a>
+        <a href="#calculators" class="btn btn-ghost btn-hero-sub">or browse the tools ↓</a>
       </div>
       <div class="hero-cta-hook">Answer a few quick questions and get a personalized plan — which guides to read, which calculators to run, and what to focus on first. <b>Free, no signup.</b></div>
     </div>
@@ -480,14 +502,82 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[t
   </div>
 </div>
 
-<div class="stat-strip">
-  <div class="stat-inner">
-    <div class="stat-item reveal" data-d="1"><div class="stat-num" data-count="37" data-suffix="+">0</div><span class="stat-lbl">In-Depth Guides</span></div>
-    <div class="stat-item reveal" data-d="2"><div class="stat-num" data-count="17">0</div><span class="stat-lbl">Live Calculators</span></div>
-    <div class="stat-item reveal" data-d="3"><div class="stat-num" data-count="5">0</div><span class="stat-lbl">Life Stages</span></div>
-    <div class="stat-item reveal" data-d="4"><div class="stat-num" data-count="100" data-suffix="%">0</div><span class="stat-lbl">Free Forever</span></div>
+
+<div class="profile-spotlight">
+  <div class="profile-spotlight-inner">
+    <div class="ps-card">
+      <div class="ps-badge">⭐ Start Here — The Best First Step</div>
+      <h2 class="ps-title">Build My Profile.<br>Get your whole plan.</h2>
+      <p class="ps-sub">Answer a few quick questions and get a personalized roadmap — which guides to read, which calculators to run, and exactly what to focus on first for <em>your</em> situation. Everything on this site works better once you've done this.</p>
+      <div class="ps-features">
+        <div class="ps-feature"><span class="ps-fic">🎯</span><span>A plan built around <b>your</b> real numbers</span></div>
+        <div class="ps-feature"><span class="ps-fic">🧭</span><span>Know exactly what to do <b>first</b> — and next</span></div>
+        <div class="ps-feature"><span class="ps-fic">🔒</span><span>Private on your device · Free · No signup to start</span></div>
+      </div>
+      <a href="my-profile.html" class="ps-cta">🎯 Build My Profile → Get My Plan</a>
+      <p class="ps-note">Takes about 3 minutes · Updates as your life changes</p>
+    </div>
   </div>
 </div>
+
+<div class="calc-section" id="calculators">
+  <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="mgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(14,165,160,.35)"/><stop offset="100%" stop-color="rgba(14,165,160,0)"/></linearGradient></defs></svg>
+  <div class="calc-inner">
+    <div class="section-head section-head-center reveal">
+      <span class="section-label section-label-center">Real Numbers, Real Answers</span>
+      <div class="section-title section-title-light">Calculators that show you exactly where you stand.</div>
+      <p class="section-sub section-sub-center" style="color:rgba(255,255,255,.6)">Enter your own numbers and see how today's decisions play out over time. <a href="my-profile.html" style="color:#5eead4;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(94,234,212,.4)">Or build your profile for a personalized plan →</a></p>
+    </div>
+    <div class="calc-grid">
+      <a href="simulations/budget-builder.html" class="calc-card reveal" data-d="1">
+        <div class="calc-icon">💰</div>
+        <h3>Smart Budget Builder</h3>
+        <p>50/30/20 budgeting with category insights — plus what your spending could become if invested instead.</p>
+        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="10" y="10" width="22" height="30"/><rect class="mini-bar b2" x="39" y="6" width="22" height="34"/><rect class="mini-bar b3" x="68" y="18" width="22" height="22"/></svg>
+        <div class="calc-cta">Open Calculator →</div>
+      </a>
+      <a href="simulations/roth-vs-traditional.html" class="calc-card reveal" data-d="2">
+        <div class="calc-icon">🏦</div>
+        <h3>Roth vs Pre-Tax 401(k)</h3>
+        <p>Compare Roth and Traditional — including the taxes you'll owe at retirement.</p>
+        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="14" y="8" width="30" height="32"/><rect class="mini-bar b2" x="56" y="4" width="30" height="36"/></svg>
+        <div class="calc-cta">Open Calculator →</div>
+      </a>
+      <a href="simulations/debt-freedom-planner.html" class="calc-card reveal" data-d="3">
+        <div class="calc-icon">🎯</div>
+        <h3>Debt Freedom Planner</h3>
+        <p>Compare payoff strategies, see when each debt clears, and what your freed payment could become invested.</p>
+        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="mini-area" d="M0,2 L0,2 C20,8 35,16 55,24 C72,31 85,35 100,38 L100,40 L0,40 Z"/><path class="mini-line" d="M0,2 C20,8 35,16 55,24 C72,31 85,35 100,38"/></svg>
+        <div class="calc-cta">Open Calculator →</div>
+      </a>
+      <a href="simulations/mortgage-payoff.html" class="calc-card reveal" data-d="4">
+        <div class="calc-icon">🏡</div>
+        <h3>Mortgage Payoff</h3>
+        <p>The true cost of a home loan — and how much extra payments save you.</p>
+        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="6" y="4" width="14" height="36"/><rect class="mini-bar b2" x="29" y="13" width="14" height="27"/><rect class="mini-bar b3" x="52" y="22" width="14" height="18"/><rect class="mini-bar b4" x="75" y="31" width="14" height="9"/></svg>
+        <div class="calc-cta">Open Calculator →</div>
+      </a>
+      <a href="simulations/investment-simulator.html" class="calc-card reveal" data-d="5">
+        <div class="calc-icon">📈</div>
+        <h3>Investment Simulator</h3>
+        <p>Practice trading with $10,000 in fake money — build a portfolio, risk-free. <span class="kids-tag">👦 Includes a Kids’ Money Adventure section</span></p>
+        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="mini-area" d="M0,38 L0,28 C15,30 25,18 40,20 C55,22 65,8 80,10 C90,11 95,6 100,5 L100,40 Z"/><path class="mini-line" d="M0,28 C15,30 25,18 40,20 C55,22 65,8 80,10 C90,11 95,6 100,5"/></svg>
+        <div class="calc-cta">Open Calculator →</div>
+      </a>
+      <a href="simulations/compound-interest.html" class="calc-card reveal" data-d="6">
+        <div class="calc-icon">🪙</div>
+        <h3>Compound Interest</h3>
+        <p>See what your money becomes over time — and what waiting really costs.</p>
+        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="mini-area" d="M0,38 L0,34 C20,30 35,24 55,16 C72,9 85,5 100,2 L100,40 Z"/><path class="mini-line" d="M0,34 C20,30 35,24 55,16 C72,9 85,5 100,2"/></svg>
+        <div class="calc-cta">Open Calculator →</div>
+      </a>
+    </div>
+    <div class="calc-seeall-wrap">
+      <a href="simulations.html" class="calc-seeall">See all 17 calculators →</a>
+    </div>
+  </div>
+</div>
+
 
 
 <div class="hub-promo-section">
@@ -519,6 +609,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[t
 </div>
 
 <!-- TRUST BAND -->
+
 <div class="trust-band">
   <div class="trust-inner">
     <div class="trust-head">
@@ -555,63 +646,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[t
   </div>
 </div>
 
-<div class="calc-section" id="calculators">
-  <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="mgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(14,165,160,.35)"/><stop offset="100%" stop-color="rgba(14,165,160,0)"/></linearGradient></defs></svg>
-  <div class="calc-inner">
-    <div class="section-head section-head-center reveal">
-      <span class="section-label section-label-center">Real Numbers, Real Answers</span>
-      <div class="section-title section-title-light">Calculators that show you exactly where you stand.</div>
-      <p class="section-sub section-sub-center" style="color:rgba(255,255,255,.6)">Enter your own numbers and see how today's decisions play out over time. No signup required.</p>
-    </div>
-    <div class="calc-grid">
-      <a href="simulations/budget-builder.html" class="calc-card reveal" data-d="1">
-        <div class="calc-icon">💰</div>
-        <h3>Smart Budget Builder</h3>
-        <p>50/30/20 budgeting with category insights — plus what your spending could become if invested instead.</p>
-        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="10" y="10" width="22" height="30"/><rect class="mini-bar b2" x="39" y="6" width="22" height="34"/><rect class="mini-bar b3" x="68" y="18" width="22" height="22"/></svg>
-        <div class="calc-cta">Open Calculator →</div>
-      </a>
-      <a href="simulations/roth-vs-traditional.html" class="calc-card reveal" data-d="2">
-        <div class="calc-icon">🏦</div>
-        <h3>Roth vs Pre-Tax 401(k)</h3>
-        <p>Compare Roth and Traditional — including the taxes you'll owe at retirement.</p>
-        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="14" y="8" width="30" height="32"/><rect class="mini-bar b2" x="56" y="4" width="30" height="36"/></svg>
-        <div class="calc-cta">Open Calculator →</div>
-      </a>
-      <a href="simulations/debt-freedom-planner.html" class="calc-card reveal" data-d="3">
-        <div class="calc-icon">🎯</div>
-        <h3>Debt Freedom Planner</h3>
-        <p>Compare payoff strategies, see when each debt clears, and what your freed payment could become invested.</p>
-        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="mini-area" d="M0,2 L0,2 C20,8 35,16 55,24 C72,31 85,35 100,38 L100,40 L0,40 Z"/><path class="mini-line" d="M0,2 C20,8 35,16 55,24 C72,31 85,35 100,38"/></svg>
-        <div class="calc-cta">Open Calculator →</div>
-      </a>
-      <a href="simulations/mortgage-payoff.html" class="calc-card reveal" data-d="4">
-        <div class="calc-icon">🏡</div>
-        <h3>Mortgage Payoff</h3>
-        <p>The true cost of a home loan — and how much extra payments save you.</p>
-        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><rect class="mini-bar" x="6" y="4" width="14" height="36"/><rect class="mini-bar b2" x="29" y="13" width="14" height="27"/><rect class="mini-bar b3" x="52" y="22" width="14" height="18"/><rect class="mini-bar b4" x="75" y="31" width="14" height="9"/></svg>
-        <div class="calc-cta">Open Calculator →</div>
-      </a>
-      <a href="simulations/investment-simulator.html" class="calc-card reveal" data-d="5">
-        <div class="calc-icon">📈</div>
-        <h3>Investment Simulator</h3>
-        <p>Practice trading with $10,000 in fake money — build a portfolio, risk-free.</p>
-        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="mini-area" d="M0,38 L0,28 C15,30 25,18 40,20 C55,22 65,8 80,10 C90,11 95,6 100,5 L100,40 Z"/><path class="mini-line" d="M0,28 C15,30 25,18 40,20 C55,22 65,8 80,10 C90,11 95,6 100,5"/></svg>
-        <div class="calc-cta">Open Calculator →</div>
-      </a>
-      <a href="simulations/compound-interest.html" class="calc-card reveal" data-d="6">
-        <div class="calc-icon">🪙</div>
-        <h3>Compound Interest</h3>
-        <p>See what your money becomes over time — and what waiting really costs.</p>
-        <svg class="mini-viz" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="mini-area" d="M0,38 L0,34 C20,30 35,24 55,16 C72,9 85,5 100,2 L100,40 Z"/><path class="mini-line" d="M0,34 C20,30 35,24 55,16 C72,9 85,5 100,2"/></svg>
-        <div class="calc-cta">Open Calculator →</div>
-      </a>
-    </div>
-    <div class="calc-seeall-wrap">
-      <a href="simulations.html" class="calc-seeall">See all 17 calculators →</a>
-    </div>
+
+<div class="stat-strip">
+  <div class="stat-inner">
+    <div class="stat-item reveal" data-d="1"><div class="stat-num" data-count="37" data-suffix="+">0</div><span class="stat-lbl">In-Depth Guides</span></div>
+    <div class="stat-item reveal" data-d="2"><div class="stat-num" data-count="17">0</div><span class="stat-lbl">Live Calculators</span></div>
+    <div class="stat-item reveal" data-d="3"><div class="stat-num" data-count="5">0</div><span class="stat-lbl">Life Stages</span></div>
+    <div class="stat-item reveal" data-d="4"><div class="stat-num" data-count="100" data-suffix="%">0</div><span class="stat-lbl">Free Forever</span></div>
   </div>
 </div>
+
 
 
 <div class="section section-light" id="browse-topics">
@@ -638,6 +682,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[t
   </div>
 </div>
 
+
 <div class="section section-roadmap">
   <div class="section-inner">
     <a href="money-roadmap.html" class="roadmap-band reveal">
@@ -650,6 +695,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[t
     </a>
   </div>
 </div>
+
 
 <div class="section">
   <div class="section-inner">
@@ -669,6 +715,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[t
     </div>
   </div>
 </div>
+
 
 <div class="section section-light">
   <div class="section-inner">
@@ -696,6 +743,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[t
     </div>
   </div>
 </div>
+
 
 <div class="section section-dark">
   <div class="section-inner">
