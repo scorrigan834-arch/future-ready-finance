@@ -151,6 +151,72 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
   .int-card .ic{font-size:2.5rem}
   .wrap{padding:1rem .9rem 3rem}
 }
+/* ===== Save For a Toy ===== */
+.goal-setup{display:grid;gap:1rem;max-width:520px;margin:0 auto}
+.goal-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.6rem}
+.goal-opt{background:#fff;border:2px solid #e2e8f0;border-radius:16px;padding:.9rem .5rem;cursor:pointer;text-align:center;transition:all .18s;font-family:inherit}
+.goal-opt .go-em{font-size:2rem;display:block;margin-bottom:.3rem}
+.goal-opt .go-lbl{font-size:.72rem;font-weight:700;color:#334155}
+.goal-opt:hover{border-color:#0EA5A0;transform:translateY(-2px)}
+.goal-opt.picked{border-color:#0EA5A0;background:linear-gradient(135deg,#ecfeff,#fff);box-shadow:0 6px 16px rgba(14,165,160,.2)}
+.goal-field{display:flex;flex-direction:column;gap:.35rem}
+.goal-field label{font-size:.85rem;font-weight:700;color:#475569}
+.goal-input{position:relative}
+.goal-input .dollar{position:absolute;left:.8rem;top:50%;transform:translateY(-50%);font-weight:700;color:#94a3b8}
+.goal-input input{width:100%;padding:.8rem .8rem .8rem 1.7rem;border:2px solid #e2e8f0;border-radius:12px;font-size:1.05rem;font-weight:700;color:#1e293b;font-family:inherit}
+.goal-input input:focus{outline:none;border-color:#0EA5A0}
+.goal-input.no-dollar input{padding-left:.9rem}
+.goal-result{background:linear-gradient(135deg,#0EA5A0,#3b82f6);border-radius:20px;padding:1.5rem;color:#fff;text-align:center;margin-top:1.25rem;display:none}
+.goal-result.show{display:block;animation:fadeUp .4s}
+.goal-weeks{font-size:2.8rem;font-weight:900;font-family:"Playfair Display",serif;line-height:1;margin:.3rem 0}
+.goal-bar-track{background:rgba(255,255,255,.25);border-radius:99px;height:16px;margin:1rem 0 .5rem;overflow:hidden}
+.goal-bar-fill{background:#fff;height:100%;border-radius:99px;width:0;transition:width .8s ease}
+.goal-milestones{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.85);margin-top:.4rem}
+
+/* ===== Needs vs Wants ===== */
+.nw-game{max-width:480px;margin:0 auto;text-align:center}
+.nw-scorebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;font-weight:800}
+.nw-score{background:#ecfeff;border:2px solid #a5f3eb;border-radius:12px;padding:.4rem .9rem;color:#0C7D79}
+.nw-progress{font-size:.85rem;color:#94a3b8}
+.nw-item-card{background:#fff;border:2px solid #e2e8f0;border-radius:24px;padding:2.5rem 1.5rem;margin-bottom:1.5rem;box-shadow:0 12px 30px rgba(11,25,41,.08)}
+.nw-item-emoji{font-size:4.5rem;line-height:1;margin-bottom:.75rem}
+.nw-item-name{font-size:1.4rem;font-weight:800;color:#1e293b;font-family:"Playfair Display",serif}
+.nw-buttons{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.nw-btn{border:none;border-radius:16px;padding:1.1rem;font-size:1.15rem;font-weight:800;cursor:pointer;font-family:inherit;transition:all .18s;color:#fff}
+.nw-btn.need{background:linear-gradient(135deg,#0EA5A0,#0C7D79);box-shadow:0 8px 20px rgba(14,165,160,.3)}
+.nw-btn.want{background:linear-gradient(135deg,#f97316,#ea580c);box-shadow:0 8px 20px rgba(249,115,22,.3)}
+.nw-btn:hover{transform:translateY(-2px)}
+.nw-feedback{border-radius:16px;padding:1.1rem 1.25rem;margin-bottom:1.5rem;font-size:.95rem;line-height:1.5;font-weight:600;display:none}
+.nw-feedback.show{display:block;animation:fadeUp .3s}
+.nw-feedback.correct{background:#dcfce7;border:2px solid #86efac;color:#166534}
+.nw-feedback.wrong{background:#fef3c7;border:2px solid #fcd34d;color:#92400e}
+.nw-feedback .nw-next{margin-top:.75rem;background:#0EA5A0;color:#fff;border:none;border-radius:10px;padding:.6rem 1.4rem;font-weight:700;cursor:pointer;font-family:inherit}
+.nw-done{background:linear-gradient(135deg,#0EA5A0,#3b82f6);border-radius:20px;padding:2rem 1.5rem;color:#fff;text-align:center;display:none}
+.nw-done.show{display:block;animation:fadeUp .4s}
+.nw-done .nw-star{font-size:3rem}
+.nw-replay{background:#fff;color:#0C7D79;border:none;border-radius:12px;padding:.75rem 1.75rem;font-weight:800;cursor:pointer;margin-top:1rem;font-family:inherit}
+
+/* ===== Save / Spend / Share jars ===== */
+.jar-intro{text-align:center;max-width:480px;margin:0 auto 1.25rem}
+.jar-allowance{background:#fff;border:2px solid #e2e8f0;border-radius:16px;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:center;gap:.6rem;max-width:340px;margin:0 auto 1.5rem;font-weight:700;color:#334155}
+.jar-allowance .ja-amt{font-size:1.6rem;font-weight:900;color:#0C7D79;font-family:"Playfair Display",serif}
+.jars-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;max-width:520px;margin:0 auto}
+.jar{background:#fff;border:2px solid #e2e8f0;border-radius:18px;padding:1.1rem .6rem;text-align:center;position:relative}
+.jar.save{border-color:#86efac}.jar.spend{border-color:#fcd34d}.jar.share{border-color:#f9a8d4}
+.jar-emoji{font-size:2.2rem;line-height:1}
+.jar-name{font-weight:800;font-size:.9rem;margin:.25rem 0;color:#1e293b}
+.jar-hint{font-size:.68rem;color:#94a3b8;line-height:1.3;margin-bottom:.6rem;min-height:2.4em}
+.jar-amt{font-size:1.35rem;font-weight:900;color:#0C7D79;font-family:"Playfair Display",serif;margin-bottom:.5rem}
+.jar-btns{display:flex;gap:.35rem;justify-content:center}
+.jar-btns button{width:2rem;height:2rem;border-radius:50%;border:2px solid #e2e8f0;background:#fff;font-weight:800;font-size:1.1rem;cursor:pointer;color:#475569;display:flex;align-items:center;justify-content:center;padding:0;line-height:1}
+.jar-btns button:hover{border-color:#0EA5A0;color:#0EA5A0}
+.jar-btns button:disabled{opacity:.3;cursor:not-allowed}
+.jar-left{text-align:center;margin:1.25rem auto 0;font-weight:700;color:#475569}
+.jar-left .jl-amt{font-size:1.4rem;color:#0C7D79;font-weight:900;font-family:"Playfair Display",serif}
+.jar-msg{text-align:center;max-width:460px;margin:1rem auto 0;border-radius:14px;padding:1rem 1.25rem;font-weight:600;font-size:.92rem;line-height:1.5;display:none}
+.jar-msg.show{display:block;animation:fadeUp .3s}
+.jar-msg.good{background:#dcfce7;border:2px solid #86efac;color:#166534}
+
 </style>
 </head>
 <body>
@@ -174,6 +240,9 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
   <div class="k-tabs">
     <button class="k-tab active" id="tabInvest" onclick="switchTab('invest')"><span class="t-emoji">📈</span> Company Explorer</button>
     <button class="k-tab biz" id="tabBiz" onclick="switchTab('biz')"><span class="t-emoji">🏪</span> Start a Business</button>
+    <button class="k-tab" id="tabGoal" onclick="switchTab('goal')"><span class="t-emoji">🎯</span> Save For a Toy</button>
+    <button class="k-tab" id="tabNW" onclick="switchTab('nw')"><span class="t-emoji">🛒</span> Needs or Wants?</button>
+    <button class="k-tab" id="tabJars" onclick="switchTab('jars')"><span class="t-emoji">🫙</span> Save/Spend/Share</button>
   </div>
 
   <!-- INVEST PANEL -->
@@ -199,6 +268,92 @@ body{font-family:"DM Sans",-apple-system,sans-serif;background:linear-gradient(1
     <div class="step-title"><span class="num">1</span> Pick a business to start!</div>
     <div class="biz-grid" id="bizGrid"></div>
     <div class="biz-work" id="bizWork"></div>
+  </div>
+
+
+  <!-- SAVE FOR A TOY PANEL -->
+  <div class="k-panel" id="panelGoal">
+    <div class="step-title"><span class="num">1</span> What do you want to save for?</div>
+    <div class="goal-setup">
+      <div class="goal-pick" id="goalPick"></div>
+      <div class="goal-field">
+        <label>💵 How much does it cost?</label>
+        <div class="goal-input"><span class="dollar">$</span><input type="text" inputmode="numeric" id="goalPrice" placeholder="25" oninput="calcGoal()"></div>
+      </div>
+      <div class="goal-field">
+        <label>🗓️ How much can you save each week?</label>
+        <div class="goal-input"><span class="dollar">$</span><input type="text" inputmode="numeric" id="goalWeekly" placeholder="5" oninput="calcGoal()"></div>
+      </div>
+    </div>
+    <div class="goal-result" id="goalResult">
+      <div style="font-size:.9rem;opacity:.9">🎉 You can save up for your <span id="goalName">toy</span> in</div>
+      <div class="goal-weeks"><span id="goalWeeks">0</span> weeks!</div>
+      <div class="goal-bar-track"><div class="goal-bar-fill" id="goalBar"></div></div>
+      <div id="goalMsg" style="font-size:.9rem;margin-top:.5rem"></div>
+    </div>
+    <div class="k-tip" style="margin-top:1.5rem"><span class="pt-ic">👨‍👩‍👧</span><div><b>For grown-ups:</b> Saving toward a goal is the single most powerful money habit a kid can build. Ask: "What could you give up now to get there faster?" Watching the weeks tick down makes patience feel rewarding instead of frustrating.</div></div>
+  </div>
+
+  <!-- NEEDS VS WANTS PANEL -->
+  <div class="k-panel" id="panelNW">
+    <div class="step-title"><span class="num">?</span> Is it a NEED or a WANT?</div>
+    <div class="nw-game">
+      <div class="nw-scorebar">
+        <span class="nw-score">⭐ <span id="nwScore">0</span></span>
+        <span class="nw-progress">Item <span id="nwNum">1</span> of <span id="nwTotal">8</span></span>
+      </div>
+      <div id="nwPlay">
+        <div class="nw-item-card">
+          <div class="nw-item-emoji" id="nwEmoji">🍎</div>
+          <div class="nw-item-name" id="nwName">Food</div>
+        </div>
+        <div class="nw-feedback" id="nwFeedback"></div>
+        <div class="nw-buttons" id="nwButtons">
+          <button class="nw-btn need" onclick="answerNW('need')">✅ Need</button>
+          <button class="nw-btn want" onclick="answerNW('want')">💛 Want</button>
+        </div>
+      </div>
+      <div class="nw-done" id="nwDone">
+        <div class="nw-star">🌟</div>
+        <div style="font-size:1.3rem;font-weight:800;font-family:'Playfair Display',serif">You scored <span id="nwFinal">0</span>/8!</div>
+        <div id="nwDoneMsg" style="margin-top:.5rem;opacity:.95"></div>
+        <button class="nw-replay" onclick="startNW()">Play Again 🔄</button>
+      </div>
+    </div>
+    <div class="k-tip" style="margin-top:1.5rem"><span class="pt-ic">👨‍👩‍👧</span><div><b>For grown-ups:</b> Telling needs from wants is the foundation of every budget. There are no trick answers — the goal is the conversation. "Why is a warm coat a need but a fancy coat a want?" gets kids thinking about the difference between <i>having</i> and <i>having the fancy version</i>.</div></div>
+  </div>
+
+  <!-- SAVE/SPEND/SHARE JARS PANEL -->
+  <div class="k-panel" id="panelJars">
+    <div class="step-title"><span class="num">1</span> Split your allowance!</div>
+    <div class="jar-intro">You got <b>$12</b> of pretend allowance. Smart money people split it three ways — put some in each jar!</div>
+    <div class="jar-allowance">Allowance: <span class="ja-amt">$12</span></div>
+    <div class="jars-row">
+      <div class="jar save">
+        <div class="jar-emoji">🏦</div>
+        <div class="jar-name">Save</div>
+        <div class="jar-hint">Keep it safe for something big later</div>
+        <div class="jar-amt">$<span id="jarSave">0</span></div>
+        <div class="jar-btns"><button onclick="jarChange('save',-1)">−</button><button onclick="jarChange('save',1)">+</button></div>
+      </div>
+      <div class="jar spend">
+        <div class="jar-emoji">🛍️</div>
+        <div class="jar-name">Spend</div>
+        <div class="jar-hint">For little treats you want now</div>
+        <div class="jar-amt">$<span id="jarSpend">0</span></div>
+        <div class="jar-btns"><button onclick="jarChange('spend',-1)">−</button><button onclick="jarChange('spend',1)">+</button></div>
+      </div>
+      <div class="jar share">
+        <div class="jar-emoji">❤️</div>
+        <div class="jar-name">Share</div>
+        <div class="jar-hint">To help others or give a gift</div>
+        <div class="jar-amt">$<span id="jarShare">0</span></div>
+        <div class="jar-btns"><button onclick="jarChange('share',-1)">−</button><button onclick="jarChange('share',1)">+</button></div>
+      </div>
+    </div>
+    <div class="jar-left">💰 Left to split: <span class="jl-amt">$<span id="jarLeft">12</span></span></div>
+    <div class="jar-msg" id="jarMsg"></div>
+    <div class="k-tip" style="margin-top:1.5rem"><span class="pt-ic">👨‍👩‍👧</span><div><b>For grown-ups:</b> The Save/Spend/Share system teaches that money has more than one job. There's no single right split — some families do equal thirds, others save more. The lesson is that <i>every</i> dollar gets a purpose on purpose, and that giving feels good too.</div></div>
   </div>
 
   <div class="k-foot">
@@ -349,14 +504,133 @@ function calcBiz(){
 
 // ---------- TABS ----------
 function switchTab(which){
-  document.getElementById('tabInvest').classList.toggle('active', which==='invest');
-  document.getElementById('tabBiz').classList.toggle('active', which==='biz');
-  document.getElementById('panelInvest').classList.toggle('show', which==='invest');
-  document.getElementById('panelBiz').classList.toggle('show', which==='biz');
+  var tabs = {invest:'tabInvest', biz:'tabBiz', goal:'tabGoal', nw:'tabNW', jars:'tabJars'};
+  var panels = {invest:'panelInvest', biz:'panelBiz', goal:'panelGoal', nw:'panelNW', jars:'panelJars'};
+  for(var k in tabs){ document.getElementById(tabs[k]).classList.toggle('active', k===which); }
+  for(var p in panels){ document.getElementById(panels[p]).classList.toggle('show', p===which); }
 }
+
+
+// ===== SAVE FOR A TOY =====
+var GOALS = [
+  ['🚲','Bike'],['🎮','Game'],['🧱','LEGO Set'],['⚽','Soccer Ball'],
+  ['🛹','Skateboard'],['🧸','Teddy Bear'],['🎨','Art Kit'],['📱','Tablet'],
+  ['🎧','Headphones'],['🐶','Pet Toy'],['👟','Sneakers'],['🪀','Fun Toy']
+];
+var goalPicked = null;
+function renderGoals(){
+  var g = document.getElementById('goalPick');
+  g.innerHTML = GOALS.map(function(it,i){
+    return '<button class="goal-opt" data-i="'+i+'" onclick="pickGoal('+i+')"><span class="go-em">'+it[0]+'</span><span class="go-lbl">'+it[1]+'</span></button>';
+  }).join('');
+}
+function pickGoal(i){
+  goalPicked = i;
+  var opts = document.querySelectorAll('#goalPick .goal-opt');
+  opts.forEach(function(o){ o.classList.toggle('picked', +o.dataset.i===i); });
+  calcGoal();
+}
+function calcGoal(){
+  var price = parseFloat((document.getElementById('goalPrice').value||'').replace(/[^0-9.]/g,''))||0;
+  var weekly = parseFloat((document.getElementById('goalWeekly').value||'').replace(/[^0-9.]/g,''))||0;
+  var res = document.getElementById('goalResult');
+  if(goalPicked===null || price<=0 || weekly<=0){ res.classList.remove('show'); return; }
+  var weeks = Math.ceil(price/weekly);
+  document.getElementById('goalName').textContent = GOALS[goalPicked][1];
+  document.getElementById('goalWeeks').textContent = weeks;
+  document.getElementById('goalBar').style.width = Math.min(100, (weekly/price*100)) + '%';
+  var msg = '';
+  if(weeks<=2) msg = 'Wow, so close! You could have it super soon! 🎉';
+  else if(weeks<=6) msg = 'Save a little each week and you\u2019ll get there! 💪';
+  else if(weeks<=15) msg = 'That\u2019s a big goal — saving takes patience, but you can do it! 🌟';
+  else msg = 'That\u2019s a long way — could you save a bit more each week to get there faster? 🚀';
+  document.getElementById('goalMsg').textContent = msg;
+  res.classList.add('show');
+}
+
+// ===== NEEDS VS WANTS =====
+var NW_ITEMS = [
+  ['🍎','Healthy Food','need','We all need food to grow strong and healthy!'],
+  ['🎮','Video Game','want','Games are super fun, but we can live without them!'],
+  ['🏠','A Home','need','Everyone needs a safe place to live and sleep.'],
+  ['🍭','Candy','want','Yummy! But candy is a treat, not something we need.'],
+  ['👕','Clothes','need','We need clothes to stay warm and covered.'],
+  ['🎢','Theme Park Trip','want','So exciting — but it\u2019s a special treat, not a need!'],
+  ['💧','Clean Water','need','Our bodies need water every single day.'],
+  ['🧸','A New Toy','want','Toys are fun, but we don\u2019t NEED a new one to be okay.']
+];
+var nwOrder=[], nwIdx=0, nwScore=0;
+function startNW(){
+  nwOrder = NW_ITEMS.map(function(x){return x;}).sort(function(){return Math.random()-0.5;});
+  nwIdx=0; nwScore=0;
+  document.getElementById('nwDone').classList.remove('show');
+  document.getElementById('nwPlay').style.display='block';
+  document.getElementById('nwScore').textContent='0';
+  document.getElementById('nwTotal').textContent=nwOrder.length;
+  showNWItem();
+}
+function showNWItem(){
+  var it = nwOrder[nwIdx];
+  document.getElementById('nwEmoji').textContent = it[0];
+  document.getElementById('nwName').textContent = it[1];
+  document.getElementById('nwNum').textContent = nwIdx+1;
+  document.getElementById('nwFeedback').classList.remove('show');
+  document.getElementById('nwButtons').style.display='grid';
+}
+function answerNW(choice){
+  var it = nwOrder[nwIdx];
+  var correct = it[2]===choice;
+  if(correct) nwScore++;
+  document.getElementById('nwScore').textContent = nwScore;
+  var fb = document.getElementById('nwFeedback');
+  fb.className = 'nw-feedback show ' + (correct?'correct':'wrong');
+  fb.innerHTML = (correct?'✅ You got it! ':'🤔 Good try! It\u2019s a <b>'+it[2].toUpperCase()+'</b>. ') + it[3]
+    + '<br><button class="nw-next" onclick="nextNW()">Next →</button>';
+  document.getElementById('nwButtons').style.display='none';
+}
+function nextNW(){
+  nwIdx++;
+  if(nwIdx>=nwOrder.length){
+    document.getElementById('nwPlay').style.display='none';
+    var d=document.getElementById('nwDone'); d.classList.add('show');
+    document.getElementById('nwFinal').textContent=nwScore;
+    var m = nwScore===8?'Perfect score! You\u2019re a money whiz! 🏆':nwScore>=6?'Great job telling needs from wants! 🌟':'Nice try — play again to get even better! 💪';
+    document.getElementById('nwDoneMsg').textContent=m;
+  } else showNWItem();
+}
+
+// ===== SAVE / SPEND / SHARE JARS =====
+var JAR_TOTAL = 12;
+var jars = {save:0, spend:0, share:0};
+function jarChange(which, delta){
+  var used = jars.save+jars.spend+jars.share;
+  if(delta>0 && used>=JAR_TOTAL) return;
+  if(delta<0 && jars[which]<=0) return;
+  jars[which]+=delta;
+  renderJars();
+}
+function renderJars(){
+  document.getElementById('jarSave').textContent=jars.save;
+  document.getElementById('jarSpend').textContent=jars.spend;
+  document.getElementById('jarShare').textContent=jars.share;
+  var left = JAR_TOTAL-(jars.save+jars.spend+jars.share);
+  document.getElementById('jarLeft').textContent=left;
+  var msg=document.getElementById('jarMsg');
+  if(left===0){
+    msg.className='jar-msg show good';
+    if(jars.save>0 && jars.spend>0 && jars.share>0)
+      msg.innerHTML='🎉 Awesome! You put money in all three jars — that\u2019s exactly what smart money people do! You saved for later, kept some to spend, AND shared some too. ❤️';
+    else
+      msg.innerHTML='✅ All split up! Next time, try putting a little in <b>every</b> jar — saving, spending, AND sharing all matter!';
+  } else {
+    msg.classList.remove('show');
+  }
+}
+
 
 // init
 renderInterests(); updateGoBtn(); renderBiz();
+renderGoals(); startNW(); renderJars();
 document.getElementById('goBtn').addEventListener('click', showStocks);
 
 </script>
