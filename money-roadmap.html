@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Money Roadmap — Future Ready Finance</title>
+<meta name="description" content="A guided, step-by-step plan for your money: income, budget, debt, savings, and what your money can become. Free, saved on your device, no signup.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:#0B1929;color:#0B1929;line-height:1.6}
+a{text-decoration:none}
+/* nav */
+.nav{position:sticky;top:0;z-index:100;background:rgba(11,25,41,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.5rem}
+.nav-brand{font-family:'Playfair Display',serif;font-weight:800;font-size:1.15rem;color:#fff}
+.nav-brand span{color:#0EA5A0}
+.nav-links{display:flex;gap:.3rem;align-items:center}
+.nav-link{color:rgba(255,255,255,.75);font-size:.88rem;font-weight:500;padding:.5rem .8rem;border-radius:7px;background:none;border:none;cursor:pointer;font-family:inherit}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav-home{color:#3fd0c9;font-weight:600}
+@media(max-width:640px){.nav-links{display:none}}
+/* page shell */
+.page{max-width:720px;margin:0 auto;padding:2rem 1.2rem 4rem}
+.rm-head{text-align:center;margin-bottom:1.5rem}
+.rm-eyebrow{display:inline-flex;align-items:center;gap:.4rem;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#3fd0c9;background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.25);padding:.3rem .8rem;border-radius:99px;margin-bottom:.9rem}
+.rm-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:#0EA5A0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:800;color:#fff;line-height:1.15;margin-bottom:.5rem}
+.rm-sub{color:rgba(255,255,255,.6);font-size:.95rem;max-width:520px;margin:0 auto}
+/* progress bar */
+.rm-progress{margin:1.6rem 0 2rem}
+.rm-progress-track{height:8px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
+.rm-progress-fill{height:100%;background:linear-gradient(90deg,#0EA5A0,#6ee7b7);border-radius:99px;width:0%;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.rm-progress-labels{display:flex;justify-content:space-between;margin-top:.7rem;gap:.2rem}
+.rm-plabel{flex:1;text-align:center;font-size:.64rem;font-weight:600;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.04em;transition:color .3s}
+.rm-plabel.active{color:#3fd0c9}
+.rm-plabel.done{color:rgba(110,231,183,.7)}
+@media(max-width:560px){.rm-plabel{font-size:0}.rm-plabel::first-letter{font-size:.7rem}.rm-plabel.active{font-size:.62rem}}
+/* card */
+.rm-card{background:#fff;border-radius:18px;padding:2rem 1.9rem;box-shadow:0 20px 60px rgba(0,0,0,.3);min-height:340px;display:flex;flex-direction:column}
+.step-panel{display:none;animation:fadeIn .4s ease}
+.step-panel.active{display:flex;flex-direction:column;flex:1}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.step-kicker{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#0C7D79;margin-bottom:.4rem}
+.step-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#0B1929;margin-bottom:.5rem;line-height:1.2}
+.step-desc{color:#64748B;font-size:.92rem;margin-bottom:1.5rem;line-height:1.55}
+/* inputs */
+.field{margin-bottom:1.3rem}
+.field-label{display:block;font-size:.86rem;font-weight:600;color:#334155;margin-bottom:.5rem}
+.field-hint{font-size:.76rem;color:#94a3b8;font-weight:400;margin-left:.3rem}
+.input-money{position:relative;display:flex;align-items:center}
+.input-money .cur{position:absolute;left:1rem;font-size:1.05rem;font-weight:700;color:#0C7D79;pointer-events:none}
+.input-money input{width:100%;padding:.85rem 1rem .85rem 2rem;font-size:1.05rem;font-weight:600;font-family:inherit;color:#0B1929;background:#F5F7F6;border:1.5px solid #E2E8F0;border-radius:10px;outline:none;transition:border-color .2s}
+.input-money input:focus{border-color:#0EA5A0;background:#fff}
+input[type=number]{width:100%;padding:.85rem 1rem;font-size:1.05rem;font-weight:600;font-family:inherit;color:#0B1929;background:#F5F7F6;border:1.5px solid #E2E8F0;border-radius:10px;outline:none;transition:border-color .2s}
+input[type=number]:focus{border-color:#0EA5A0;background:#fff}
+select{width:100%;padding:.85rem 1rem;font-size:1rem;font-weight:500;font-family:inherit;color:#0B1929;background:#F5F7F6;border:1.5px solid #E2E8F0;border-radius:10px;outline:none;cursor:pointer}
+select:focus{border-color:#0EA5A0}
+/* choice chips */
+.choice-row{display:flex;flex-wrap:wrap;gap:.6rem}
+.choice{padding:.7rem 1.1rem;background:#F5F7F6;border:1.5px solid #E2E8F0;border-radius:10px;font-size:.88rem;font-weight:600;color:#475569;cursor:pointer;transition:all .18s}
+.choice:hover{border-color:#0EA5A0}
+.choice.on{background:#0EA5A0;border-color:#0EA5A0;color:#fff}
+/* live feedback box */
+.feedback{background:linear-gradient(135deg,#0B1929,#0f2236);border-radius:12px;padding:1.1rem 1.3rem;margin-top:.4rem;color:#fff;display:none}
+.feedback.show{display:block;animation:fadeIn .3s ease}
+.feedback-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#3fd0c9;margin-bottom:.35rem}
+.feedback-main{font-size:1.05rem;font-weight:700;line-height:1.35}
+.feedback-main b{color:#6ee7b7}
+.feedback-note{font-size:.8rem;color:rgba(255,255,255,.6);margin-top:.4rem;line-height:1.45}
+/* deeper link */
+.deeper{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.83rem;font-weight:600;color:#4f46e5;padding:.5rem .85rem;background:rgba(79,70,229,.07);border:1px solid rgba(79,70,229,.18);border-radius:8px;transition:background .18s}
+.deeper:hover{background:rgba(79,70,229,.14)}
+/* nav buttons */
+.step-nav{display:flex;gap:.7rem;margin-top:auto;padding-top:1.6rem}
+.btn{font-family:inherit;font-weight:700;font-size:.92rem;border:none;border-radius:10px;cursor:pointer;padding:.85rem 1.6rem;transition:all .18s}
+.btn-back{background:#F1F5F4;color:#475569}
+.btn-back:hover{background:#E2E8F0}
+.btn-next{background:#0EA5A0;color:#fff;flex:1;box-shadow:0 6px 18px rgba(14,165,160,.3)}
+.btn-next:hover{background:#0C7D79;transform:translateY(-1px)}
+.btn-skip{background:none;color:#94a3b8;font-weight:600;padding:.85rem 1rem}
+.btn-skip:hover{color:#64748B}
+/* ===== final plan ===== */
+.plan-hero{text-align:center;margin-bottom:1.6rem}
+.plan-hero .step-title{font-size:1.7rem}
+.snapshot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.7rem;margin-bottom:1.6rem}
+.snap-card{background:#F5F7F6;border:1px solid #E2E8F0;border-radius:11px;padding:.9rem 1rem;text-align:center}
+.snap-lbl{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#94a3b8;margin-bottom:.3rem}
+.snap-val{font-size:1.3rem;font-weight:800;color:#0B1929;font-family:'Playfair Display',serif;line-height:1}
+.roadmap-steps{margin-bottom:1.5rem}
+.rstep{display:flex;gap:.9rem;padding:1rem 0;border-top:1px solid #EEF2F1}
+.rstep:first-child{border-top:none}
+.rstep-num{flex-shrink:0;width:2rem;height:2rem;border-radius:50%;background:linear-gradient(135deg,#0EA5A0,#0C7D79);color:#fff;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif}
+.rstep-body{flex:1}
+.rstep-kicker{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#0C7D79;margin-bottom:.15rem}
+.rstep-title{font-size:1rem;font-weight:700;color:#0B1929;margin-bottom:.2rem}
+.rstep-desc{font-size:.82rem;color:#64748B;line-height:1.45}
+.rstep-link{display:inline-block;margin-top:.4rem;font-size:.78rem;font-weight:600;color:#4f46e5}
+.plan-note{background:rgba(14,165,160,.08);border:1px solid rgba(14,165,160,.22);border-radius:11px;padding:.9rem 1.1rem;font-size:.86rem;color:#0C7D79;line-height:1.5;margin-bottom:1.4rem}
+.plan-note b{color:#0a6562}
+.grow-box{background:linear-gradient(135deg,#0B1929,#0f2236);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem;text-align:center;color:#fff}
+.grow-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#3fd0c9;margin-bottom:.5rem}
+.grow-headline{font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:1rem;line-height:1.5}
+.grow-headline b{color:#fff}
+.grow-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem}
+.grow-tier{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.9rem .5rem}
+.grow-tier.hl{background:rgba(14,165,160,.13);border-color:rgba(14,165,160,.35)}
+.grow-yr{font-size:.66rem;font-weight:700;text-transform:uppercase;color:#94a3b8;margin-bottom:.35rem}
+.grow-tier.hl .grow-yr{color:#6ee7b7}
+.grow-amt{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:900;color:#3fd0c9;line-height:1}
+.grow-tier.hl .grow-amt{color:#6ee7b7}
+.plan-actions{display:flex;gap:.7rem;flex-wrap:wrap}
+.plan-btn{flex:1;min-width:140px;text-align:center;padding:.85rem 1rem;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;border:none;font-family:inherit;transition:all .18s}
+.plan-btn-primary{background:#0EA5A0;color:#fff}
+.plan-btn-primary:hover{background:#0C7D79}
+.plan-btn-ghost{background:#F1F5F4;color:#475569}
+.plan-btn-ghost:hover{background:#E2E8F0}
+@media(max-width:560px){.grow-tiers{grid-template-columns:1fr;gap:.5rem}.grow-amt{font-size:1.5rem}h1{font-size:1.6rem}.rm-card{padding:1.5rem 1.2rem}}
+/* saved badge */
+.saved-badge{position:fixed;bottom:1.2rem;right:1.2rem;background:#059669;color:#fff;font-size:.8rem;font-weight:600;padding:.6rem 1rem;border-radius:99px;box-shadow:0 8px 24px rgba(5,150,105,.4);opacity:0;transform:translateY(10px);transition:all .3s;z-index:50}
+.saved-badge.show{opacity:1;transform:none}
+.resume-bar{background:rgba(14,165,160,.1);border:1px solid rgba(14,165,160,.25);border-radius:10px;padding:.75rem 1rem;margin-bottom:1.2rem;display:none;align-items:center;justify-content:space-between;gap:1rem;font-size:.83rem;color:#a7e8e3}
+.resume-bar.show{display:flex}
+.resume-bar b{color:#6ee7b7}
+.resume-btn{background:#0EA5A0;color:#fff;border:none;border-radius:7px;padding:.45rem .9rem;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap}
+.footer{text-align:center;padding:2rem 1rem;color:rgba(255,255,255,.3);font-size:.8rem}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="nav-brand">Future Ready <span>Finance</span></a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link nav-home">Home</a>
+    <a href="simulations.html" class="nav-link">Calculators</a>
+    <a href="guides.html" class="nav-link">Guides</a>
+    <a href="my-dashboard.html" class="nav-link">My Hub</a>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="rm-head">
+    <span class="rm-eyebrow"><span class="dot"></span>Your Personal Plan · Saved on Your Device</span>
+    <h1>Your Money Roadmap</h1>
+    <p class="rm-sub">Answer a few quick questions and get a step-by-step plan built around your real numbers. Takes about 5 minutes — and we'll save it so you can come back anytime.</p>
+  </div>
+
+  <div class="resume-bar" id="resumeBar">
+    <span>👋 <b>Welcome back!</b> We saved your roadmap.</span>
+    <button class="resume-btn" onclick="resumeSaved()">Jump to my plan →</button>
+  </div>
+
+  <div class="rm-progress">
+    <div class="rm-progress-track"><div class="rm-progress-fill" id="progressFill"></div></div>
+    <div class="rm-progress-labels" id="progressLabels">
+      <span class="rm-plabel">About You</span>
+      <span class="rm-plabel">Income</span>
+      <span class="rm-plabel">Budget</span>
+      <span class="rm-plabel">Debt</span>
+      <span class="rm-plabel">Savings</span>
+      <span class="rm-plabel">Your Plan</span>
+    </div>
+  </div>
+
+  <div class="rm-card">
+    <!-- STEP 1: About You -->
+    <div class="step-panel active" data-step="0">
+      <div class="step-kicker">Step 1 of 6</div>
+      <div class="step-title">First, a little about you</div>
+      <div class="step-desc">This helps us tailor the plan to where you are in life. Nothing here is required — skip anything you'd rather not answer.</div>
+      <div class="field">
+        <label class="field-label">Your age <span class="field-hint">(optional)</span></label>
+        <input type="number" id="age" placeholder="e.g. 25" min="14" max="100">
+      </div>
+      <div class="field">
+        <label class="field-label">Which best describes you right now?</label>
+        <div class="choice-row" id="stageChoices">
+          <div class="choice" data-v="student">🎓 Student</div>
+          <div class="choice" data-v="early-career">🚀 Early career</div>
+          <div class="choice" data-v="established">🏡 Established</div>
+          <div class="choice" data-v="figuring-out">🧭 Still figuring it out</div>
+        </div>
+      </div>
+      <div class="step-nav">
+        <button class="btn btn-next" onclick="nextStep()">Let's go →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Income -->
+    <div class="step-panel" data-step="1">
+      <div class="step-kicker">Step 2 of 6</div>
+      <div class="step-title">What's your monthly income?</div>
+      <div class="step-desc">Your take-home pay — the amount that actually hits your bank account each month, after taxes.</div>
+      <div class="field">
+        <label class="field-label">Monthly take-home pay</label>
+        <div class="input-money"><span class="cur">$</span><input type="number" id="income" placeholder="0" oninput="updateIncome()"></div>
+      </div>
+      <div class="feedback" id="incomeFeedback">
+        <div class="feedback-label">That's your starting point</div>
+        <div class="feedback-main" id="incomeFeedbackMain"></div>
+        <div class="feedback-note">Everything else builds from here — what you keep, what you owe, and what you grow.</div>
+      </div>
+      <a href="simulations/take-home-pay.html" class="deeper" target="_blank">💼 Not sure? Calculate your take-home pay →</a>
+      <div class="step-nav">
+        <button class="btn btn-back" onclick="prevStep()">← Back</button>
+        <button class="btn btn-next" onclick="nextStep()">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Budget -->
+    <div class="step-panel" data-step="2">
+      <div class="step-kicker">Step 3 of 6</div>
+      <div class="step-title">Where does it go?</div>
+      <div class="step-desc">Roughly how much do you spend each month on everything — rent, food, transport, fun? We'll show you what's left.</div>
+      <div class="field">
+        <label class="field-label">Total monthly spending</label>
+        <div class="input-money"><span class="cur">$</span><input type="number" id="spending" placeholder="0" oninput="updateBudget()"></div>
+      </div>
+      <div class="feedback" id="budgetFeedback">
+        <div class="feedback-label" id="budgetFeedbackLabel">What's left over</div>
+        <div class="feedback-main" id="budgetFeedbackMain"></div>
+        <div class="feedback-note" id="budgetFeedbackNote"></div>
+      </div>
+      <a href="simulations/budget-builder.html" class="deeper" target="_blank">💰 Build a detailed budget with the Budget Builder →</a>
+      <div class="step-nav">
+        <button class="btn btn-back" onclick="prevStep()">← Back</button>
+        <button class="btn btn-next" onclick="nextStep()">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Debt -->
+    <div class="step-panel" data-step="3">
+      <div class="step-kicker">Step 4 of 6</div>
+      <div class="step-title">Any debt to tackle?</div>
+      <div class="step-desc">Credit cards, student loans, car loans — the total you owe. If you're debt-free, just leave it at zero and move on. 🎉</div>
+      <div class="field">
+        <label class="field-label">Total debt <span class="field-hint">(all of it combined)</span></label>
+        <div class="input-money"><span class="cur">$</span><input type="number" id="debt" placeholder="0" oninput="updateDebt()"></div>
+      </div>
+      <div class="field">
+        <label class="field-label">Rough average interest rate <span class="field-hint">(optional)</span></label>
+        <input type="number" id="debtRate" placeholder="e.g. 18" oninput="updateDebt()">
+      </div>
+      <div class="feedback" id="debtFeedback">
+        <div class="feedback-label" id="debtFeedbackLabel">Your debt picture</div>
+        <div class="feedback-main" id="debtFeedbackMain"></div>
+        <div class="feedback-note" id="debtFeedbackNote"></div>
+      </div>
+      <a href="simulations/debt-freedom-planner.html" class="deeper" target="_blank">🎯 Build a full payoff plan with the Debt Freedom Planner →</a>
+      <div class="step-nav">
+        <button class="btn btn-back" onclick="prevStep()">← Back</button>
+        <button class="btn btn-next" onclick="nextStep()">Next →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Savings -->
+    <div class="step-panel" data-step="4">
+      <div class="step-kicker">Step 5 of 6</div>
+      <div class="step-title">What have you saved?</div>
+      <div class="step-desc">Your emergency fund, savings, and any investments. This is your cushion — and the seed of your future wealth.</div>
+      <div class="field">
+        <label class="field-label">Total saved &amp; invested</label>
+        <div class="input-money"><span class="cur">$</span><input type="number" id="savings" placeholder="0" oninput="updateSavings()"></div>
+      </div>
+      <div class="feedback" id="savingsFeedback">
+        <div class="feedback-label" id="savingsFeedbackLabel">Your safety net</div>
+        <div class="feedback-main" id="savingsFeedbackMain"></div>
+        <div class="feedback-note" id="savingsFeedbackNote"></div>
+      </div>
+      <a href="simulations/savings-goal.html" class="deeper" target="_blank">🎯 Plan a savings goal →</a>
+      <div class="step-nav">
+        <button class="btn btn-back" onclick="prevStep()">← Back</button>
+        <button class="btn btn-next" onclick="buildPlan()">See my roadmap →</button>
+      </div>
+    </div>
+
+    <!-- STEP 6: The Plan -->
+    <div class="step-panel" data-step="5">
+      <div class="plan-hero">
+        <div class="step-kicker" id="planGreetKicker">Your Roadmap</div>
+        <div class="step-title">Here's your money roadmap</div>
+        <div class="step-desc" id="planIntro">Built around your numbers, in the order that makes sense for you.</div>
+      </div>
+      <div class="snapshot-grid" id="planSnapshot"></div>
+      <div id="planNote"></div>
+      <div class="roadmap-steps" id="planRoadmap"></div>
+      <div class="grow-box" id="growBox" style="display:none">
+        <div class="grow-label">📈 The exciting part</div>
+        <div class="grow-headline" id="growHeadline"></div>
+        <div class="grow-tiers" id="growTiers"></div>
+      </div>
+      <div class="plan-actions">
+        <button class="plan-btn plan-btn-ghost" onclick="restart()">↺ Start over</button>
+        <a href="my-dashboard.html" class="plan-btn plan-btn-primary">Open My Money Hub →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Your answers are saved only on this device. Free forever, no signup.</div>
+</div>
+
+<div class="saved-badge" id="savedBadge">✓ Progress saved</div>
+
+<script src="search.js"></script>
+<script>
+var KEY='frf_roadmap_v1';
+var currentStep=0;
+var TOTAL_STEPS=6;
+var data={age:'',stage:'',income:'',spending:'',debt:'',debtRate:'',savings:''};
+
+function fmt(n){n=Math.round(Number(n)||0);return '$'+n.toLocaleString();}
+function fmtK(n){n=Number(n)||0;if(n>=1000000)return '$'+(n/1000000).toFixed(n>=10000000?0:1)+'M';if(n>=1000)return '$'+Math.round(n/1000)+'k';return '$'+Math.round(n);}
+
+// ---- persistence ----
+function save(){try{localStorage.setItem(KEY,JSON.stringify({data:data,step:currentStep,ts:Date.now()}));showSaved();}catch(e){}}
+function showSaved(){var b=document.getElementById('savedBadge');b.classList.add('show');clearTimeout(window._sbT);window._sbT=setTimeout(function(){b.classList.remove('show');},1600);}
+function load(){try{var raw=localStorage.getItem(KEY);if(!raw)return null;return JSON.parse(raw);}catch(e){return null;}}
+// Debounced auto-save: capture + persist shortly after any input, so nothing is lost on reload.
+var _saveT;
+function autoSave(){clearTimeout(_saveT);_saveT=setTimeout(function(){collect();save();},600);}
+
+// ---- collect current inputs into data ----
+function collect(){
+  data.age=val('age');data.stage=getChoice('stageChoices');
+  data.income=val('income');data.spending=val('spending');
+  data.debt=val('debt');data.debtRate=val('debtRate');data.savings=val('savings');
+}
+function val(id){var el=document.getElementById(id);return el?el.value.replace(/,/g,''):'';}
+function getChoice(id){var on=document.getElementById(id).querySelector('.choice.on');return on?on.getAttribute('data-v'):'';}
+
+// ---- navigation ----
+function showStep(n){
+  var panels=document.querySelectorAll('.step-panel');
+  panels.forEach(function(p){p.classList.remove('active');});
+  var target=document.querySelector('.step-panel[data-step="'+n+'"]');
+  if(target)target.classList.add('active');
+  currentStep=n;
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function updateProgress(){
+  var pct=(currentStep/(TOTAL_STEPS-1))*100;
+  document.getElementById('progressFill').style.width=pct+'%';
+  var labels=document.querySelectorAll('.rm-plabel');
+  labels.forEach(function(l,i){
+    l.classList.remove('active','done');
+    if(i<currentStep)l.classList.add('done');
+    if(i===currentStep)l.classList.add('active');
+  });
+}
+function nextStep(){collect();save();if(currentStep<TOTAL_STEPS-1)showStep(currentStep+1);}
+function prevStep(){collect();if(currentStep>0)showStep(currentStep-1);}
+
+// ---- choice chips ----
+document.getElementById('stageChoices').addEventListener('click',function(e){
+  var c=e.target.closest('.choice');if(!c)return;
+  this.querySelectorAll('.choice').forEach(function(x){x.classList.remove('on');});
+  c.classList.add('on');collect();save();
+});
+
+// ---- live feedback ----
+function updateIncome(){
+  autoSave();
+  var inc=Number(val('income'))||0;
+  var fb=document.getElementById('incomeFeedback');
+  if(inc>0){
+    document.getElementById('incomeFeedbackMain').innerHTML='You bring home about <b>'+fmt(inc)+'</b> a month, or <b>'+fmt(inc*12)+'</b> a year.';
+    fb.classList.add('show');
+  }else fb.classList.remove('show');
+}
+function updateBudget(){
+  autoSave();
+  var inc=Number(val('income'))||0, sp=Number(val('spending'))||0;
+  var fb=document.getElementById('budgetFeedback');
+  if(sp>0&&inc>0){
+    var left=inc-sp;
+    if(left>0){
+      var rate=Math.round(left/inc*100);
+      document.getElementById('budgetFeedbackLabel').textContent="What's left over";
+      document.getElementById('budgetFeedbackMain').innerHTML='You have about <b>'+fmt(left)+'</b> left each month.';
+      document.getElementById('budgetFeedbackNote').innerHTML="That's roughly "+rate+"% of your income — money you can put to work on debt, savings, and investing.";
+    }else if(left===0){
+      document.getElementById('budgetFeedbackLabel').textContent="Breaking even";
+      document.getElementById('budgetFeedbackMain').innerHTML="You're spending exactly what you earn.";
+      document.getElementById('budgetFeedbackNote').innerHTML="Finding even a little breathing room is the first win — the Budget Builder can help you spot it.";
+    }else{
+      document.getElementById('budgetFeedbackLabel').textContent="Spending more than you earn";
+      document.getElementById('budgetFeedbackMain').innerHTML="You're about <b>"+fmt(-left)+"</b> over each month.";
+      document.getElementById('budgetFeedbackNote').innerHTML="This is the most important thing to address first — and you're already facing it, which is the hard part.";
+    }
+    fb.classList.add('show');
+  }else if(sp>0){
+    document.getElementById('budgetFeedbackLabel').textContent="Your spending";
+    document.getElementById('budgetFeedbackMain').innerHTML='<b>'+fmt(sp)+'</b> a month.';
+    document.getElementById('budgetFeedbackNote').textContent="Add your income on the previous step to see what's left over.";
+    fb.classList.add('show');
+  }else fb.classList.remove('show');
+}
+function updateDebt(){
+  autoSave();
+  var debt=Number(val('debt'))||0, rate=Number(val('debtRate'))||0;
+  var fb=document.getElementById('debtFeedback');
+  if(debt>0){
+    document.getElementById('debtFeedbackLabel').textContent="Your debt picture";
+    var msg='You owe <b>'+fmt(debt)+'</b> total.';
+    var note="Paying this down — especially anything high-interest — is one of the best guaranteed returns you can get.";
+    if(rate>0){
+      var monthlyInt=debt*(rate/100/12);
+      msg='You owe <b>'+fmt(debt)+'</b> at about '+rate+'%.';
+      note="At that rate, interest alone costs you roughly <b>"+fmt(monthlyInt)+"/month</b> — money that could be yours instead.";
+    }
+    document.getElementById('debtFeedbackMain').innerHTML=msg;
+    document.getElementById('debtFeedbackNote').innerHTML=note;
+    fb.classList.add('show');
+  }else fb.classList.remove('show');
+}
+function updateSavings(){
+  autoSave();
+  var sav=Number(val('savings'))||0, inc=Number(val('income'))||0, sp=Number(val('spending'))||0;
+  var fb=document.getElementById('savingsFeedback');
+  if(sav>0){
+    document.getElementById('savingsFeedbackLabel').textContent="Your safety net";
+    var msg='You have <b>'+fmt(sav)+'</b> saved.';
+    var note="Great start — this is your foundation.";
+    if(sp>0){
+      var months=sav/sp;
+      if(months<3){note="That covers about <b>"+months.toFixed(1)+" months</b> of expenses. A fund of 3–6 months is the goal — you're on your way.";}
+      else if(months<=6){note="That's about <b>"+months.toFixed(1)+" months</b> of expenses — right in the healthy 3–6 month range. Nicely done.";}
+      else{note="That's about <b>"+Math.round(months)+" months</b> of expenses — a strong cushion. Beyond 6 months, extra cash may work harder invested.";}
+    }
+    document.getElementById('savingsFeedbackMain').innerHTML=msg;
+    document.getElementById('savingsFeedbackNote').innerHTML=note;
+    fb.classList.add('show');
+  }else fb.classList.remove('show');
+}
+
+// ---- build the final plan ----
+function buildPlan(){
+  collect();
+  var inc=Number(data.income)||0, sp=Number(data.spending)||0;
+  var debt=Number(data.debt)||0, rate=Number(data.debtRate)||0;
+  var sav=Number(data.savings)||0;
+  var leftover=Math.max(0,inc-sp);
+  var monthsCovered=sp>0?sav/sp:0;
+
+  // ----- snapshot -----
+  var snap='';
+  if(inc)snap+='<div class="snap-card"><div class="snap-lbl">Monthly Income</div><div class="snap-val">'+fmtK(inc)+'</div></div>';
+  if(leftover>0)snap+='<div class="snap-card"><div class="snap-lbl">Left / Month</div><div class="snap-val">'+fmtK(leftover)+'</div></div>';
+  if(debt)snap+='<div class="snap-card"><div class="snap-lbl">Total Debt</div><div class="snap-val">'+fmtK(debt)+'</div></div>';
+  if(sav)snap+='<div class="snap-card"><div class="snap-lbl">Saved</div><div class="snap-val">'+fmtK(sav)+'</div></div>';
+  document.getElementById('planSnapshot').innerHTML=snap;
+
+  // ----- build ordered roadmap steps -----
+  var steps=[];
+  // 1. Overspending is always first
+  if(inc>0&&sp>inc){
+    steps.push({k:'Fix this first',t:'Close the gap between spending and income',d:"You're spending more than you earn. Before anything else, let's find room in the budget — even small cuts change everything.",link:'simulations/budget-builder.html',linkText:'Open Budget Builder →'});
+  }
+  // 2. Emergency fund if thin
+  if(monthsCovered<3 && sp>0){
+    steps.push({k:steps.length===0?'Start here':'Then',t:'Build a starter emergency fund',d:"Aim for 3–6 months of expenses. This is the cushion that keeps a surprise from becoming a debt spiral.",link:'simulations/savings-goal.html',linkText:'Plan your savings goal →'});
+  }
+  // 3. Debt
+  if(debt>0){
+    var dk=steps.length===0?'Start here':'Then';
+    steps.push({k:dk,t:'Attack your debt',d:(rate>=15?'Your rate is high, so this is a priority. ':'')+"Use the avalanche method (highest rate first) to pay the least interest, and watch each debt disappear.",link:'simulations/debt-freedom-planner.html',linkText:'Build your payoff plan →'});
+  }
+  // 4. Grow emergency fund to full (if starter done but under 6mo and no debt priority)
+  // 5. Invest
+  if(leftover>0 || debt===0){
+    steps.push({k:steps.length===0?'Start here':'Then',t:'Start investing for the future',d:"Once you've got a cushion and debt under control, put your leftover money to work. Time is your biggest advantage — even small amounts compound into a lot.",link:'simulations/compound-interest.html',linkText:'See what your money becomes →'});
+  }
+  // 6. Track net worth (always a good closing step)
+  steps.push({k:'Keep going',t:'Track your net worth over time',d:"Check in every few months. Watching your number grow is the best motivation there is.",link:'simulations/net-worth.html',linkText:'Calculate your net worth →'});
+
+  // limit to 5
+  steps=steps.slice(0,5);
+
+  var rmHtml='';
+  for(var i=0;i<steps.length;i++){
+    var s=steps[i];
+    rmHtml+='<div class="rstep"><div class="rstep-num">'+(i+1)+'</div><div class="rstep-body">'+
+      '<div class="rstep-kicker">'+s.k+'</div>'+
+      '<div class="rstep-title">'+s.t+'</div>'+
+      '<div class="rstep-desc">'+s.d+'</div>'+
+      '<a class="rstep-link" href="'+s.link+'" target="_blank">'+s.linkText+'</a>'+
+      '</div></div>';
+  }
+  document.getElementById('planRoadmap').innerHTML=rmHtml;
+
+  // ----- priority note -----
+  var noteHtml='';
+  if(inc>0&&sp>inc){
+    noteHtml='<div class="plan-note">💡 <b>The big picture:</b> right now the priority is getting your spending below your income. Everything else gets easier once there\'s money left over each month.</div>';
+  }else if(debt>0&&rate>=15){
+    noteHtml='<div class="plan-note">💡 <b>The big picture:</b> that high-interest debt is costing you the most, so it leads your plan. Knock it out and you free up real money.</div>';
+  }else if(monthsCovered<3&&sp>0){
+    noteHtml='<div class="plan-note">💡 <b>The big picture:</b> a solid emergency fund comes first — it\'s the foundation that protects everything else you build.</div>';
+  }else if(leftover>0){
+    noteHtml='<div class="plan-note">💡 <b>You\'re in a strong spot:</b> with money left over each month and no urgent fires, your focus is growth — investing consistently and letting time do the work.</div>';
+  }
+  document.getElementById('planNote').innerHTML=noteHtml;
+
+  // ----- "what your money becomes" projection -----
+  var growBox=document.getElementById('growBox');
+  var investAmt=leftover>0?leftover:(inc>0?Math.round(inc*0.1):0);
+  if(investAmt>0){
+    function fv(months){var r=0.07/12;return investAmt*((Math.pow(1+r,months)-1)/r);}
+    var headline=leftover>0
+      ? 'If you invested your <b>'+fmt(leftover)+'/month</b> at a 7% average return:'
+      : 'If you invested just <b>10% of your income</b> ('+fmt(investAmt)+'/mo) at 7%:';
+    document.getElementById('growHeadline').innerHTML=headline;
+    document.getElementById('growTiers').innerHTML=
+      '<div class="grow-tier"><div class="grow-yr">10 years</div><div class="grow-amt">'+fmtK(fv(120))+'</div></div>'+
+      '<div class="grow-tier hl"><div class="grow-yr">20 years</div><div class="grow-amt">'+fmtK(fv(240))+'</div></div>'+
+      '<div class="grow-tier"><div class="grow-yr">30 years</div><div class="grow-amt">'+fmtK(fv(360))+'</div></div>';
+    growBox.style.display='block';
+  }else{
+    growBox.style.display='none';
+  }
+
+  // ----- intro line -----
+  var name=data.stage==='student'?'As a student, ':(data.stage==='early-career'?'Early in your career, ':'');
+  document.getElementById('planIntro').innerHTML=name+'here\'s where to focus, in order — with the tools to go deeper on each.';
+
+  save();
+  showStep(5);
+}
+
+function restart(){
+  if(!confirm('Start over? This clears your saved roadmap.'))return;
+  try{localStorage.removeItem(KEY);}catch(e){}
+  data={age:'',stage:'',income:'',spending:'',debt:'',debtRate:'',savings:''};
+  ['age','income','spending','debt','debtRate','savings'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  document.querySelectorAll('.choice.on').forEach(function(c){c.classList.remove('on');});
+  document.querySelectorAll('.feedback').forEach(function(f){f.classList.remove('show');});
+  document.getElementById('resumeBar').classList.remove('show');
+  showStep(0);
+}
+function resumeSaved(){buildPlan();}
+
+// ---- restore on load ----
+(function init(){
+  var saved=load();
+  if(saved&&saved.data){
+    data=saved.data;
+    // repopulate inputs
+    if(data.age)setV('age',data.age);
+    if(data.income)setV('income',data.income);
+    if(data.spending)setV('spending',data.spending);
+    if(data.debt)setV('debt',data.debt);
+    if(data.debtRate)setV('debtRate',data.debtRate);
+    if(data.savings)setV('savings',data.savings);
+    if(data.stage){var c=document.querySelector('#stageChoices .choice[data-v="'+data.stage+'"]');if(c)c.classList.add('on');}
+    // refresh feedback
+    updateIncome();updateBudget();updateDebt();updateSavings();
+    // if they'd completed enough, offer resume to plan
+    if(data.income||data.debt||data.savings){
+      document.getElementById('resumeBar').classList.add('show');
+    }
+  }
+  updateProgress();
+})();
+function setV(id,v){var el=document.getElementById(id);if(el)el.value=v;}
+// Auto-save on age input too
+var ageEl=document.getElementById('age');if(ageEl)ageEl.addEventListener('input',autoSave);
+</script>
+</body>
+</html>
