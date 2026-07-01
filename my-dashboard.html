@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Money Hub â Future Ready Finance</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+<title>My Money Hub — Future Ready Finance</title>
+<meta name="description" content="Track your budget, investments, savings goals, and net worth in one place — with a personalized health score.">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -318,7 +318,21 @@ a{text-decoration:none}
 (function(){
   function money(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
   function read(key){ try{ var r=localStorage.getItem(key); return r?JSON.parse(r):null; }catch(e){ return null; } }
+  // Safely sum an array of {amount} items; returns 0 if not a valid array.
+  function sumAmt(arr){ if(!Array.isArray(arr)) return 0; var s=0; for(var i=0;i<arr.length;i++){ s+=Number(arr[i]&&arr[i].amount)||0; } return s; }
+  // Get the latest valid budget month (one that actually has income/expenses arrays). Returns null if none.
+  function latestBudgetMonth(b){
+    if(!b||!b.months) return null;
+    var keys=Object.keys(b.months).sort();
+    for(var i=keys.length-1;i>=0;i--){
+      var m=b.months[keys[i]];
+      if(m && (Array.isArray(m.income)||Array.isArray(m.expenses))) return m;
+    }
+    return null;
+  }
 
+  // ===== RENDER (guarded so bad data can never blank the page) =====
+  try{
   // ===== READ ALL DATA SOURCES =====
   var profile = read('frf_profile_v1');
   var budget = read('frf_budget_v1');
@@ -329,7 +343,7 @@ a{text-decoration:none}
 
   // Determine if there's ANY data
   var hasProfile = profile && ((profile.interests&&profile.interests.length)||(profile.needhelp&&profile.needhelp.length)||profile.income||profile.debt||profile.invested);
-  var hasBudget = budget && budget.months && Object.keys(budget.months).length>0;
+  var hasBudget = !!latestBudgetMonth(budget);
   var hasSim = sim && (sim.cash!==undefined);
   var hasNetworth = networth && (networth.cash||networth.savings||networth.investments||networth.property);
   var hasSavgoal = savgoal && savgoal.goalTarget;
@@ -345,13 +359,9 @@ a{text-decoration:none}
   // ===== GREETING =====
   var greetSub = 'Here\'s your complete financial picture.';
   if(hasBudget){
-    // find current month budget
-    var mk = Object.keys(budget.months).sort();
-    var latest = budget.months[mk[mk.length-1]];
+    var latest = latestBudgetMonth(budget);
     if(latest){
-      var binc=0, bexp=0;
-      latest.income.forEach(function(x){ binc+=Number(x.amount)||0; });
-      latest.expenses.forEach(function(x){ bexp+=Number(x.amount)||0; });
+      var binc=sumAmt(latest.income), bexp=sumAmt(latest.expenses);
       var left = binc-bexp;
       if(left>0) greetSub = 'You have '+money(left)+' left in your budget this month. Nice work staying ahead.';
       else if(left<0) greetSub = 'Your budget is '+money(Math.abs(left))+' over this month — let\'s find a way to rebalance.';
@@ -364,11 +374,8 @@ a{text-decoration:none}
 
   // BUDGET tile
   if(hasBudget){
-    var mkeys = Object.keys(budget.months).sort();
-    var cur = budget.months[mkeys[mkeys.length-1]];
-    var inc=0, exp=0;
-    cur.income.forEach(function(x){ inc+=Number(x.amount)||0; });
-    cur.expenses.forEach(function(x){ exp+=Number(x.amount)||0; });
+    var cur = latestBudgetMonth(budget);
+    var inc=sumAmt(cur.income), exp=sumAmt(cur.expenses);
     var left = inc-exp;
     var savRate = inc>0 ? Math.round((left>0?left:0)/inc*100) : 0;
     tiles.push('<a class="hub-tile" href="simulations/budget-builder.html"><div class="tile-head"><div class="tile-title"><span class="tile-icon">💰</span>Budget</div><span class="tile-arrow">→</span></div><div class="tile-main '+(left>=0?'green':'red')+'">'+(left>=0?'':'-')+money(Math.abs(left))+'</div><div class="tile-sub">left over this month</div><div class="tile-mini-stats"><div class="tile-mini"><div class="tm-label">Income</div><div class="tm-val">'+money(inc)+'</div></div><div class="tile-mini"><div class="tm-label">Spent</div><div class="tm-val">'+money(exp)+'</div></div></div></a>');
@@ -427,8 +434,8 @@ a{text-decoration:none}
     var score = 0; var factors = 0; var notes = [];
     // Budget: positive cashflow
     if(hasBudget){
-      var mk = Object.keys(budget.months).sort(); var cur=budget.months[mk[mk.length-1]];
-      var inc=0,exp=0; cur.income.forEach(function(x){inc+=Number(x.amount)||0;}); cur.expenses.forEach(function(x){exp+=Number(x.amount)||0;});
+      var cur=latestBudgetMonth(budget);
+      var inc=sumAmt(cur.income), exp=sumAmt(cur.expenses);
       factors++;
       if(inc>0){ var sr=(inc-exp)/inc; if(sr>=0.2){ score+=25; notes.push('strong savings rate'); } else if(sr>=0){ score+=15; } else { score+=5; notes.push('spending more than income'); } }
     }
@@ -485,6 +492,15 @@ a{text-decoration:none}
     var html='';
     for(var a=0;a<Math.min(recs.length,5);a++){ var g=recs[a]; html+='<a class="rec-card" href="decisions/'+g[0]+'.html"><span class="rec-icon">'+g[1]+'</span><span class="rec-text"><span class="rec-title">'+g[2]+'</span><span class="rec-desc">'+g[3]+'</span></span><span class="rec-arrow">→</span></a>'; }
     document.getElementById('hubRecs').innerHTML = html;
+  }
+  }catch(err){
+    // Something in the saved data was unexpected. Fail gracefully: show the empty state
+    // instead of a blank page, so the person can still use the site.
+    try{
+      var es=document.getElementById('emptyState'); if(es) es.style.display='block';
+      var hc=document.getElementById('hubContent'); if(hc) hc.classList.remove('show');
+    }catch(e2){}
+    if(window.console&&console.warn) console.warn('Money Hub render skipped:', err);
   }
 })();
 </script>
